@@ -1,123 +1,31 @@
-/* IMPORT BRAND FONTS */
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@200;400&display=swap');
-
-:root {
-    /* THE BRAND KIT PALETTE */
-    --vcs-obsidian: #0D0D0D;
-    --vcs-shadow: #050505;
-    --vcs-gold: #D4AF37;
-    --vcs-purple: #BF94FF;
-    --vcs-white: #F5F5F7;
-    --vcs-gray: #86868B;
-
-    /* ANIMATION SPEEDS (SNAPPY & WEIGHTLESS) */
-    --snap-fast: 0.15s cubic-bezier(0.2, 0, 0, 1);
-    --snap-main: 0.3s cubic-bezier(0.2, 0, 0, 1);
-    
-    /* GLASSMORPHISM (THE TECH UPGRADE) */
-    --glass-bg: rgba(13, 13, 13, 0.7);
-    --glass-border: rgba(212, 175, 55, 0.2);
-    --glow-purple: 0 0 20px rgba(191, 148, 255, 0.3);
+.nav-back {
+    position: fixed;
+    top: 40px;
+    left: 40px;
+    z-index: 100;
 }
 
-/* RESET & BASE */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    background-color: var(--vcs-shadow);
-    color: var(--vcs-white);
+.nav-back a {
     font-family: 'Inter', sans-serif;
-    line-height: 1.6;
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
-}
-
-/* THE GATEWAY (SWORD & SHIELD LAYOUT) */
-.gateway {
-    display: flex;
-    height: 100vh;
-    width: 100vw;
-    align-items: center;
-    justify-content: center;
-    gap: 100px;
-    background: radial-gradient(circle at center, #1a1a1a 0%, var(--vcs-shadow) 100%);
-}
-
-.node {
-    cursor: pointer;
-    text-align: center;
-    transition: var(--snap-main);
-    user-select: none;
-    perspective: 1000px; /* Prepare for 3D tilt */
-}
-
-.node-icon {
-    width: 120px;
-    height: 120px;
-    margin-bottom: 20px;
-    fill: var(--vcs-gray);
-    transition: var(--snap-fast);
-    filter: drop-shadow(0 0 0px transparent);
-}
-
-.node span {
-    display: block;
-    font-family: 'Cinzel', serif;
-    font-size: 0.9rem;
-    letter-spacing: 0.3em;
     color: var(--vcs-gray);
-    transition: var(--snap-fast);
-}
-
-/* HOVER STATES (THE POWER-UP) */
-.node:hover .node-icon {
-    fill: var(--vcs-gold);
-    transform: scale(1.1) translateZ(20px);
-    filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.4));
-}
-
-.node:hover span {
-    color: var(--vcs-gold);
-    text-shadow: 0 0 10px rgba(191, 148, 255, 0.5); /* Subtle Purple Glow Injection */
-}
-
-/* THE ROUND TABLE (HIDDEN BY DEFAULT) */
-.round-table {
-    display: none; /* Controlled by script.js */
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 600px;
-    height: 600px;
-    border-radius: 50%;
-    border: 1px solid var(--glass-border);
-    box-shadow: var(--glow-purple);
-}
-
-.seat {
-    position: absolute;
-    font-family: 'Cinzel', serif;
-    font-weight: 700;
-    color: var(--vcs-white);
     text-decoration: none;
-    font-size: 1.2rem;
+    font-size: 0.75rem;
     letter-spacing: 0.2em;
     transition: var(--snap-fast);
-    cursor: pointer;
+    text-transform: uppercase;
 }
 
-.seat:hover {
-    color: var(--vcs-purple);
-    transform: scale(1.1);
+.nav-back a:hover {
+    color: var(--vcs-gold);
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
 }
 
-/* GRABBING PHYSICS */
-.grabbing {
-    cursor: grabbing !important;
-    transform: scale(0.95) !important;
+/* Ensure the page content fades in when the new file loads */
+body {
+    animation: pageFadeIn 0.4s ease-out;
+}
+
+@keyframes pageFadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
 }
