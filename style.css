@@ -43,6 +43,7 @@ body {
     align-items: center;
     text-align: center;
     width: 100%;
+    transition: var(--snap);
 }
 
 .brand-text, .seat-label {
@@ -55,7 +56,7 @@ body {
 }
 
 .brand-text { font-size: 1.1rem; color: var(--text-main); }
-.seat-label { font-size: clamp(1rem, 3.5vw, 1.5rem); color: var(--text-dim); }
+.seat-label { font-size: clamp(0.85rem, 2.5vw, 1.1rem); color: var(--text-dim); }
 
 .role-text {
     font-family: 'Inter', sans-serif;
@@ -111,7 +112,7 @@ body {
 }
 
 /* =========================================
-   5. TABLE.HTML: STAGGERED MENU & HELMET
+   5. TABLE.HTML: ROUND TABLE & TOP CREST
 ========================================= */
 .doorway-stage {
     display: grid;
@@ -121,56 +122,57 @@ body {
     position: relative;
 }
 
-/* The Background Helmet */
-.bg-helmet {
+.top-crest {
     position: absolute;
-    top: 50%;
+    top: 5vh; 
     left: 50%;
-    transform: translate(-50%, -50%);
-    width: min(85vw, 600px); /* Keeps it large but inside the screen */
-    opacity: 0.08; /* Extremely faint watermark */
-    z-index: 0;
-    pointer-events: none;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 60px;
+    z-index: 20;
 }
 
-.watermark-svg {
+.helmet-svg {
     width: 100%;
     height: 100%;
     fill: var(--vcs-gold);
+    filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.5));
 }
 
-/* The Staggered Menu Container */
-.staggered-menu {
+.round-table-container {
     position: relative;
     z-index: 10;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: clamp(40px, 8vh, 80px); /* Auto-adjusts vertical spacing based on screen height */
-    width: 100%;
-    max-width: 800px;
-    padding: 0 5vw;
+    width: min(85vw, 650px);
+    height: min(85vw, 650px);
 }
 
-/* Staggered Positions (Zig-Zag) */
 .seat { 
+    position: absolute; 
     text-decoration: none; 
-    transition: var(--snap); 
 }
 
-.archive  { align-self: flex-start; margin-left: 5%; }
-.citizens { align-self: flex-end; margin-right: 15%; }
-.horizon  { align-self: flex-start; margin-left: 20%; }
-.vanguard { align-self: flex-end; margin-right: 5%; }
+.archive  { top: 0; left: 50%; transform: translateX(-50%); }
+.horizon  { bottom: 0; left: 50%; transform: translateX(-50%); }
+.citizens { top: 50%; right: 0; transform: translateY(-50%); }
+.vanguard { top: 50%; left: 0; transform: translateY(-50%); }
 
 /* =========================================
    6. INTERACTIVE GLOWS & HOVERS
 ========================================= */
-/* Shield Hover (Gold) */
+.glass-pane:has(.node:hover) .node:not(:hover),
+.round-table-container:has(.seat:hover) .seat:not(:hover) {
+    opacity: 0.15;
+    filter: blur(4px);
+}
+
 .shield-node:hover .brand-text, 
 .seat:hover .seat-label { 
     color: var(--vcs-gold); 
     text-shadow: 0 0 15px rgba(212, 175, 55, 0.6); 
+}
+
+.seat:hover .text-group {
+    transform: scale(1.1);
 }
 
 .shield-node:hover .icon-svg { 
@@ -178,7 +180,6 @@ body {
     filter: drop-shadow(0 0 15px var(--vcs-gold)); 
 }
 
-/* Sword Hover (Purple) */
 .sword-node:hover .brand-text { 
     color: var(--vcs-purple); 
     text-shadow: 0 0 15px rgba(191, 148, 255, 0.6); 
@@ -187,13 +188,6 @@ body {
 .sword-node:hover .icon-svg { 
     fill: var(--vcs-purple); 
     filter: drop-shadow(0 0 15px var(--vcs-purple)); 
-}
-
-/* Focus Fade (Dim others) */
-.glass-pane:has(.node:hover) .node:not(:hover),
-.staggered-menu:has(.seat:hover) .seat:not(:hover) {
-    opacity: 0.15;
-    filter: blur(4px);
 }
 
 /* =========================================
@@ -284,7 +278,7 @@ body {
     opacity: 0; 
     z-index: 1;
     pointer-events: none;
-    animation-duration: 15s; /* SLOWED DOWN: 5 seconds per color */
+    animation-duration: 15s; 
     animation-timing-function: ease-in-out;
     animation-iteration-count: infinite;
 }
@@ -338,7 +332,10 @@ body {
     
     .divider { width: 60px; height: 1px; }
 
-    .staggered-menu {
-        gap: 6vh;
+    .top-crest { top: 8vh; width: 45px; height: 45px; }
+    
+    .round-table-container {
+        width: 90vw;
+        height: 90vw;
     }
 }
