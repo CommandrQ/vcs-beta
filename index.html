@@ -4,7 +4,166 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vanguard | The Gateway</title>
-    <link rel="stylesheet" href="style.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@200;400&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --true-black: #000000;
+            --vcs-gold: #D4AF37;
+            --vcs-purple: #BF94FF;
+            --text-main: #F5F5F7;
+            --text-dim: rgba(245, 245, 247, 0.4);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --snap: 0.5s cubic-bezier(0.2, 0, 0, 1);
+        }
+
+        /* --- GLOBAL RESET --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: var(--true-black);
+            color: var(--text-main);
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden; 
+            display: grid;
+            place-items: center; 
+        }
+
+        /* --- TYPOGRAPHY --- */
+        .text-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+        }
+
+        .brand-text {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            color: var(--text-main);
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            text-align: center;
+            transition: var(--snap);
+            margin-right: -0.3em; /* Offsets letter-spacing for true center */
+        }
+
+        .role-text {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.6rem;
+            color: var(--text-dim);
+            letter-spacing: 0.5em;
+            text-transform: uppercase;
+            margin-top: 10px;
+            text-align: center;
+            margin-right: -0.5em; 
+            transition: var(--snap);
+        }
+
+        /* --- THE FROSTED GLASS WINDOW --- */
+        .glass-pane {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 80px;
+            padding: 60px 100px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px); 
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border);
+            border-radius: 4px;
+            z-index: 10;
+        }
+
+        .node {
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: var(--snap);
+            cursor: pointer;
+        }
+
+        .icon-wrapper {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 25px;
+        }
+
+        .icon-svg {
+            width: 100%;
+            height: 100%;
+            fill: var(--text-dim);
+            transition: var(--snap);
+        }
+
+        .divider {
+            width: 1px;
+            height: 100px;
+            background: linear-gradient(to bottom, transparent, var(--glass-border), transparent);
+        }
+
+        /* --- HOVER EFFECTS --- */
+        
+        /* Dim the un-hovered side */
+        .glass-pane:has(.node:hover) .node:not(:hover) {
+            opacity: 0.15;
+            filter: blur(4px);
+        }
+
+        /* Shield Hover (Gold) */
+        .shield-node:hover .brand-text { 
+            color: var(--vcs-gold); 
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.6); 
+        }
+        .shield-node:hover .icon-svg { 
+            fill: var(--vcs-gold); 
+            filter: drop-shadow(0 0 15px var(--vcs-gold)); 
+        }
+        .shield-node:hover .role-text {
+            color: rgba(212, 175, 55, 0.6);
+        }
+
+        /* Sword Hover (Purple) */
+        .sword-node:hover .brand-text { 
+            color: var(--vcs-purple); 
+            text-shadow: 0 0 15px rgba(191, 148, 255, 0.6); 
+        }
+        .sword-node:hover .icon-svg { 
+            fill: var(--vcs-purple); 
+            filter: drop-shadow(0 0 15px var(--vcs-purple)); 
+        }
+        .sword-node:hover .role-text {
+            color: rgba(191, 148, 255, 0.6);
+        }
+
+        /* --- MOBILE RESPONSIVENESS --- */
+        @media (max-width: 768px) {
+            .glass-pane {
+                flex-direction: column;
+                gap: 40px;
+                padding: 40px;
+                width: 85vw;
+            }
+            
+            .divider { 
+                width: 60px; 
+                height: 1px; 
+                background: linear-gradient(to right, transparent, var(--glass-border), transparent);
+            }
+        }
+    </style>
 </head>
 <body>
 
