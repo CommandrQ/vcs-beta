@@ -219,3 +219,109 @@ body {
     50% { opacity: 0.3; }
     100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
 }
+/* CENTERING ENGINE */
+.doorway-stage {
+    display: grid;
+    place-items: center; /* Centers everything on X and Y axis */
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+    overflow: hidden;
+    animation: zoomIn 1s cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* THE SUBTLE TABLE SURFACE */
+.table-surface {
+    position: absolute;
+    width: min(80vw, 600px); /* Responsive: 80% of screen or max 600px */
+    height: min(80vw, 600px);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.table-outline {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.1));
+}
+
+/* THE CONTENT WRAPPER */
+.round-table-container {
+    position: relative;
+    z-index: 10;
+    width: min(90vw, 550px);
+    height: min(90vw, 550px);
+    display: grid;
+    place-items: center;
+}
+
+/* RESPONSIVE SEAT POSITIONS */
+.seat {
+    position: absolute;
+    text-decoration: none;
+    transition: var(--snap);
+}
+
+/* CLOCK-FACE POSITIONING */
+.archive  { top: 5%; }
+.citizens { right: 0; }
+.horizon  { bottom: 5%; }
+.vanguard { left: 0; }
+
+.seat-label {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.8rem, 2.5vw, 1.1rem); /* Auto-fits text size */
+    letter-spacing: 0.3em;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    transition: 0.4s;
+    white-space: nowrap;
+}
+
+/* HOVER ANIMATION */
+.seat:hover .seat-label {
+    color: #D4AF37;
+    text-shadow: 0 0 20px rgba(212, 175, 55, 0.7);
+    letter-spacing: 0.4em; /* Subtle "expanding" effect */
+}
+
+/* THE CENTER POINT */
+.table-center {
+    width: 4px;
+    height: 4px;
+    background: #D4AF37;
+    border-radius: 50%;
+    box-shadow: 0 0 20px #D4AF37;
+}
+
+.pulse-ring {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 50%;
+    animation: centerPulse 3s ease-out infinite;
+}
+
+/* ANIMATIONS */
+@keyframes zoomIn {
+    from { opacity: 0; transform: scale(1.2); filter: blur(10px); }
+    to { opacity: 1; transform: scale(1); filter: blur(0px); }
+}
+
+@keyframes centerPulse {
+    0% { transform: scale(0.5); opacity: 0; }
+    50% { opacity: 0.2; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
+
+/* MOBILE ADJUSTMENTS */
+@media (max-width: 600px) {
+    .round-table-container {
+        width: 85vw;
+        height: 85vw;
+    }
+    
+    .archive { top: 10%; }
+    .horizon { bottom: 10%; }
+}
