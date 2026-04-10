@@ -69,7 +69,7 @@
             text-transform: uppercase;
             letter-spacing: 0.3em;
             font-size: 0.75rem;
-            color: #FFFFFF; /* Updated to White */
+            color: #FFFFFF;
             transition: all 0.5s ease;
             z-index: 5;
         }
@@ -90,17 +90,13 @@
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Dynamic Positioning Script-style Math */
+        /* Desktop Positions */
         .seat:nth-child(1) { transform: translate(calc(cos(0deg) * var(--radius)), calc(sin(0deg) * var(--radius))); }
-        .seat:nth-child(2) { transform: translate(calc(cos(72deg) * var(--radius)), calc(sin(72deg) * var(--radius))); }
-        .seat:nth-child(3) { transform: translate(calc(cos(144deg) * var(--radius)), calc(sin(144deg) * var(--radius))); }
-        .seat:nth-child(4) { transform: translate(calc(cos(216deg) * var(--radius)), calc(sin(216deg) * var(--radius))); }
-        .seat:nth-child(5) { transform: translate(calc(cos(288deg) * var(--radius)), calc(sin(288deg) * var(--radius))); }
+        .seat:nth-child(2) { transform: translate(calc(cos(120deg) * var(--radius)), calc(sin(120deg) * var(--radius))); }
+        .seat:nth-child(3) { transform: translate(calc(cos(240deg) * var(--radius)), calc(sin(240deg) * var(--radius))); }
 
-        /* --- 5. THE BOXES (INTERACTIVE NODES) --- */
-        .floater {
-            animation: float 6s ease-in-out infinite;
-        }
+        /* --- 5. THE BOXES --- */
+        .floater { animation: float 6s ease-in-out infinite; }
 
         .text-group {
             background: var(--glass);
@@ -147,60 +143,39 @@
         .orbital-container:has(.seat:hover) ~ .holo-table .ring {
             opacity: 0.6;
             border-color: var(--vcs-gold);
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
         }
 
-        /* --- 7. CINEMATIC ENTRANCE --- */
-        .fade-in {
-            animation: fadeIn 2s forwards;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; filter: blur(10px); }
-            to { opacity: 1; filter: blur(0); }
-        }
-
-        /* --- 8. SCANLINE EFFECT --- */
-        body::after {
-            content: " ";
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
-                        linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
-            z-index: 100;
-            background-size: 100% 2px, 3px 100%;
-            pointer-events: none;
-        }
-
-        /* --- 9. MOBILE RESPONSIVENESS --- */
+        /* --- 7. MOBILE RESPONSIVENESS (THE FIX) --- */
         @media (max-width: 768px) {
             body { 
                 display: flex; 
                 flex-direction: column; 
                 justify-content: flex-start;
-                padding-top: 4vh; /* Reduced gap at top */
+                padding-top: 3vh; /* Significantly reduced top black space */
                 overflow-x: hidden; 
                 overflow-y: auto; 
             }
 
             .holo-table { 
                 position: relative;
-                width: 50vw; height: 50vw; 
-                margin: 0 auto 4vh auto; /* Reduced gap before boxes */
+                width: 40vw; height: 40vw; 
+                margin: 0 auto 2vh auto; /* Minimal gap before text */
                 flex-shrink: 0;
             }
 
             #center-hud { 
-                width: 140%; 
+                width: 85vw; 
                 font-size: 0.70rem; 
-                top: 115%; 
+                top: 110%; /* Positions text exactly between rings and boxes */
                 color: #FFFFFF; 
                 opacity: 1; 
+                position: relative; /* Allow it to push content down */
             }
 
             .orbital-container { 
                 position: relative;
                 width: 100%; height: auto; 
-                margin-top: 2vh; 
+                margin-top: 8vh; /* Added space so buttons start after the mission text */
                 padding-bottom: 10vh;
                 display: flex;
                 flex-direction: column;
@@ -213,17 +188,10 @@
                 top: auto; left: auto;
                 transform: none !important; 
                 width: 85%;
-                max-width: 350px;
             }
 
             .floater { animation: none; } 
-
-            .text-group { 
-                width: 100%; 
-                padding: 18px; 
-            }
-            
-            .seat-label { font-size: 0.85rem; }
+            .text-group { width: 100%; padding: 18px; }
         }
     </style>
 </head>
@@ -239,41 +207,19 @@
     <nav class="orbital-container">
         <a href="team.html" class="seat" data-hud="DIRECTORY: PERSONNEL & FOUNDERS">
             <div class="floater">
-                <div class="text-group">
-                    <span class="seat-label">The Team</span>
-                </div>
-            </div>
-        </a>
-
-        <a href="#" class="seat" data-hud="MODULE: STRATEGIC SOLUTIONS & MEDIA">
-            <div class="floater">
-                <div class="text-group">
-                    <span class="seat-label">Services</span>
-                </div>
-            </div>
-        </a>
-
-        <a href="#" class="seat" data-hud="ARCHIVE: THE MUSUBI TIMELINE">
-            <div class="floater">
-                <div class="text-group">
-                    <span class="seat-label">The Codex</span>
-                </div>
+                <div class="text-group"><span class="seat-label">The Team</span></div>
             </div>
         </a>
 
         <a href="#" class="seat" data-hud="LOGS: THE OTHERS // CURRENT PRODUCTION">
             <div class="floater">
-                <div class="text-group">
-                    <span class="seat-label">Projects</span>
-                </div>
+                <div class="text-group"><span class="seat-label">Projects</span></div>
             </div>
         </a>
 
         <a href="https://vcs-hq.carrd.co" target="_blank" class="seat" data-hud="COMM-LINK: INITIATE STRATEGIC CONTACT">
             <div class="floater">
-                <div class="text-group">
-                    <span class="seat-label">Contact</span>
-                </div>
+                <div class="text-group"><span class="seat-label">Contact</span></div>
             </div>
         </a>
     </nav>
