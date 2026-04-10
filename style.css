@@ -28,9 +28,9 @@ body {
     color: var(--text-main);
     height: 100vh;
     width: 100vw;
-    overflow: hidden; /* Disables scrolling */
+    overflow: hidden; 
     display: grid;
-    place-items: center; /* Dead-centering engine */
+    place-items: center; 
     -webkit-font-smoothing: antialiased;
 }
 
@@ -51,11 +51,11 @@ body {
     text-transform: uppercase;
     text-align: center;
     transition: var(--snap);
-    margin-right: -0.3em; /* Offsets the letter-spacing for true center */
+    margin-right: -0.3em; 
 }
 
 .brand-text { font-size: 1.1rem; color: var(--text-main); }
-.seat-label { font-size: clamp(0.85rem, 2.5vw, 1.1rem); color: var(--text-dim); }
+.seat-label { font-size: clamp(1rem, 3.5vw, 1.5rem); color: var(--text-dim); }
 
 .role-text {
     font-family: 'Inter', sans-serif;
@@ -64,7 +64,7 @@ body {
     color: var(--text-dim);
     margin-top: 10px;
     text-align: center;
-    margin-right: -0.5em; /* Offsets the letter-spacing for true center */
+    margin-right: -0.5em; 
 }
 
 /* =========================================
@@ -77,7 +77,7 @@ body {
     gap: 80px;
     padding: 60px 100px;
     background: var(--glass-bg);
-    backdrop-filter: blur(25px); /* Frosted Glass Look */
+    backdrop-filter: blur(25px); 
     -webkit-backdrop-filter: blur(25px);
     border: 1px solid var(--glass-border);
     z-index: 10;
@@ -111,7 +111,7 @@ body {
 }
 
 /* =========================================
-   5. ROUND TABLE (TABLE.HTML) STYLING
+   5. TABLE.HTML: STAGGERED MENU & HELMET
 ========================================= */
 .doorway-stage {
     display: grid;
@@ -121,33 +121,47 @@ body {
     position: relative;
 }
 
-.round-table-container {
-    position: relative;
-    z-index: 10;
-    width: min(90vw, 550px);
-    height: min(90vw, 550px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* The Background Helmet */
+.bg-helmet {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(85vw, 600px); /* Keeps it large but inside the screen */
+    opacity: 0.08; /* Extremely faint watermark */
+    z-index: 0;
+    pointer-events: none;
 }
 
-.table-logo {
-    width: 60px;
-    height: 60px;
-}
-
-.helmet-svg {
+.watermark-svg {
     width: 100%;
     height: 100%;
     fill: var(--vcs-gold);
-    filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.4));
 }
 
-.seat { position: absolute; text-decoration: none; transition: var(--snap); }
-.archive  { top: 0; }
-.citizens { right: 0; }
-.horizon  { bottom: 0; }
-.vanguard { left: 0; }
+/* The Staggered Menu Container */
+.staggered-menu {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: clamp(40px, 8vh, 80px); /* Auto-adjusts vertical spacing based on screen height */
+    width: 100%;
+    max-width: 800px;
+    padding: 0 5vw;
+}
+
+/* Staggered Positions (Zig-Zag) */
+.seat { 
+    text-decoration: none; 
+    transition: var(--snap); 
+}
+
+.archive  { align-self: flex-start; margin-left: 5%; }
+.citizens { align-self: flex-end; margin-right: 15%; }
+.horizon  { align-self: flex-start; margin-left: 20%; }
+.vanguard { align-self: flex-end; margin-right: 5%; }
 
 /* =========================================
    6. INTERACTIVE GLOWS & HOVERS
@@ -177,7 +191,7 @@ body {
 
 /* Focus Fade (Dim others) */
 .glass-pane:has(.node:hover) .node:not(:hover),
-.round-table-container:has(.seat:hover) .seat:not(:hover) {
+.staggered-menu:has(.seat:hover) .seat:not(:hover) {
     opacity: 0.15;
     filter: blur(4px);
 }
@@ -257,7 +271,7 @@ body {
 }
 
 /* =========================================
-   9. INFINITE 3-COLOR PULSE ENGINE
+   9. INFINITE 3-COLOR PULSE ENGINE (SLOWED)
 ========================================= */
 .pulse-layer {
     position: absolute;
@@ -270,23 +284,23 @@ body {
     opacity: 0; 
     z-index: 1;
     pointer-events: none;
-    animation-duration: 9s;
+    animation-duration: 15s; /* SLOWED DOWN: 5 seconds per color */
     animation-timing-function: ease-in-out;
     animation-iteration-count: infinite;
 }
 
 .pulse-blue {
-    background: radial-gradient(circle, rgba(0, 102, 255, 0.25) 0%, transparent 60%);
+    background: radial-gradient(circle, rgba(0, 102, 255, 0.2) 0%, transparent 60%);
     animation-name: pulseBlueCycle;
 }
 
 .pulse-red {
-    background: radial-gradient(circle, rgba(229, 0, 0, 0.2) 0%, transparent 60%);
+    background: radial-gradient(circle, rgba(229, 0, 0, 0.15) 0%, transparent 60%);
     animation-name: pulseRedCycle;
 }
 
 .pulse-gold {
-    background: radial-gradient(circle, rgba(212, 175, 55, 0.2) 0%, transparent 60%);
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 60%);
     animation-name: pulseGoldCycle;
 }
 
@@ -324,8 +338,7 @@ body {
     
     .divider { width: 60px; height: 1px; }
 
-    .round-table-container {
-        width: 80vw;
-        height: 80vw;
+    .staggered-menu {
+        gap: 6vh;
     }
 }
