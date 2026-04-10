@@ -102,6 +102,8 @@
         .holo-table {
             position: absolute;
             width: 40vw; height: 40vw; max-width: 450px; max-height: 450px;
+            /* Shifted up to balance vertical empty space */
+            margin-top: -10vh; 
             display: flex; align-items: center; justify-content: center;
             pointer-events: none; z-index: 1;
         }
@@ -138,6 +140,8 @@
         .orbital-container {
             position: relative;
             width: 85vw; height: 85vw; max-width: 700px; max-height: 700px;
+            /* Shifted up to match the rings */
+            margin-top: -10vh; 
             z-index: 10;
         }
 
@@ -164,14 +168,12 @@
             50% { transform: translateY(-12px); }
         }
 
-        /* --- 7. TEXT BOX STYLING (NOW TRANSPARENT) --- */
+        /* --- 7. TEXT BOX STYLING --- */
         .text-group {
             display: flex; justify-content: center; align-items: center;
-            background: transparent; /* Removed dark background */
-            padding: 15px 30px; 
-            border: 1px solid transparent; /* Hidden border */
-            border-radius: 4px; 
-            transition: all 0.4s ease;
+            background: rgba(0, 0, 0, 0.7); padding: 15px 30px; 
+            border: 1px solid rgba(255,255,255,0.05); border-radius: 4px; 
+            backdrop-filter: blur(10px); transition: all 0.4s ease;
         }
 
         .seat-label {
@@ -186,11 +188,8 @@
         .seat:hover .floater { transform: scale(1.15); }
         
         .seat:hover .text-group {
-            /* The glass box and glow reveal themselves on hover */
-            background: rgba(212, 175, 55, 0.1); 
-            border-color: rgba(212, 175, 55, 0.4);
+            background: rgba(212, 175, 55, 0.1); border-color: rgba(212, 175, 55, 0.4);
             box-shadow: 0 0 30px rgba(212, 175, 55, 0.2); 
-            backdrop-filter: blur(10px); 
         }
 
         .seat:hover .seat-label {
@@ -202,8 +201,8 @@
 
         /* --- 9. MOBILE RESPONSIVENESS --- */
         @media (max-width: 768px) {
-            .orbital-container { width: 95vw; height: 95vw; }
-            .holo-table { width: 55vw; height: 55vw; }
+            .orbital-container { width: 95vw; height: 95vw; margin-top: -5vh; }
+            .holo-table { width: 55vw; height: 55vw; margin-top: -5vh; }
             
             .pos-left   { left: 2%; }
             .pos-right  { right: 2%; }
@@ -258,7 +257,7 @@
                 </div>
             </a>
 
-            <a href="#" class="seat pos-left">
+            <a href="knights.html" class="seat pos-left">
                 <div class="floater delay-4">
                     <div class="text-group"><span class="seat-label">Vanguard Knights</span></div>
                 </div>
