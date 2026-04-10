@@ -33,7 +33,6 @@
             z-index: 9999;
             pointer-events: none; 
             opacity: 0;
-            /* Sped up from 1.5s down to 0.6s for a snappy cinematic feel */
             transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -58,7 +57,7 @@
             100% { transform: translateX(-50%); }
         }
 
-        /* --- 3. GOLDEN GLOWING NAVIGATION --- */
+        /* --- 3. GOLDEN GLOWING PILL NAVIGATION --- */
         .nav-bar {
             position: fixed;
             top: 0; left: 0; width: 100%;
@@ -79,15 +78,26 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            /* The base golden glow */
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.8), 0 0 20px rgba(212, 175, 55, 0.4);
+            
+            /* The Dark Frosted Pill Box */
+            background: rgba(0, 0, 0, 0.4); 
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 12px 24px;
+            border: 1px solid rgba(212, 175, 55, 0.3); 
+            border-radius: 50px; 
+            
+            /* Golden text glow */
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
         }
 
         .return-btn:hover {
             color: #FFFFFF;
-            /* Intensifies to bright white-gold on hover */
+            background: rgba(0, 0, 0, 0.7); 
+            border-color: var(--vcs-gold); 
             text-shadow: 0 0 15px var(--vcs-gold), 0 0 30px var(--vcs-gold);
             transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2); 
         }
 
         /* --- 4. GLASS PANEL & SHEEN ANIMATION --- */
@@ -137,23 +147,21 @@
         .page-title {
             font-family: 'Cinzel', serif;
             font-size: clamp(2rem, 4vw, 3rem);
-            color: #111111; /* Near black */
+            color: #111111; 
             letter-spacing: 0.1em;
             text-transform: uppercase;
             text-align: center;
             margin-bottom: 20px;
             border-bottom: 1px solid rgba(0, 0, 0, 0.2);
             padding-bottom: 30px;
-            /* Raised text effect: Dark drop shadow on bottom-right, white highlight on top-left */
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5), -1px -1px 2px rgba(255,255,255,0.8);
         }
 
         .content-block {
             font-size: 1.05rem;
             line-height: 1.8;
-            color: #222222; /* Dark Grey/Black */
-            font-weight: 400; /* Bolder weight to help dark text pop on the background */
-            /* Raised chiseled effect for body text */
+            color: #222222; 
+            font-weight: 400; 
             text-shadow: 1px 1px 3px rgba(0,0,0,0.4), -1px -1px 1px rgba(255,255,255,0.7);
         }
 
@@ -228,7 +236,7 @@
 
             // 2. EXIT PROTOCOL (Fade back to black on click)
             exitBtn.addEventListener('click', function(e) {
-                e.preventDefault(); // Stop instant navigation
+                e.preventDefault(); 
                 const targetUrl = this.getAttribute('href');
                 
                 // Bring the black screen back up
