@@ -1,4 +1,4 @@
-/* BRAND KIT FOUNDATION */
+/* BRAND KIT RECAP */
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@200;400&display=swap');
 
 :root {
@@ -7,52 +7,52 @@
     --knight-purple: #BF94FF;
     --text-main: #F5F5F7;
     --text-muted: rgba(245, 245, 247, 0.4);
-    --snap: 0.3s cubic-bezier(0.2, 0, 0, 1);
+    --snap: 0.4s cubic-bezier(0.2, 0, 0, 1);
 }
 
-* {
+/* DISABLE SCROLLING ON THIS PAGE ONLY */
+.lock-screen {
     margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden; /* Disables scroll */
+    position: fixed; /* Ensures no bounce on mobile */
 }
 
-body {
-    background-color: var(--bg-dark);
-    color: var(--text-main);
-    overflow: hidden;
+/* THE SCREEN BUFFER (SAFE ZONE) */
+.viewport-frame {
     height: 100vh;
+    width: 100vw;
+    padding: 40px; /* This is your small buffer from the edges */
     display: flex;
     align-items: center;
     justify-content: center;
-    -webkit-font-smoothing: antialiased;
+    box-sizing: border-box;
 }
 
-.gateway {
+/* THE CENTERED CONTAINER */
+.gateway-container {
     display: flex;
     width: 100%;
-    max-width: 1000px;
-    justify-content: space-around;
+    max-width: 1200px; /* Keeps content from spreading too wide on ultra-wide monitors */
+    justify-content: center;
     align-items: center;
-    position: relative;
-    z-index: 10;
+    gap: 10vw; /* Responsive gap */
 }
 
-/* THE CHOICE NODES */
 .choice {
     text-decoration: none;
     display: flex;
     flex-direction: column;
     align-items: center;
     transition: var(--snap);
-    cursor: pointer;
-    width: 40%;
+    flex: 1; /* Ensures both sides take equal space */
 }
 
 .icon-box {
-    width: 80px;
-    height: 80px;
-    margin-bottom: 30px;
-    transition: var(--snap);
+    width: 60px;
+    height: 60px;
+    margin-bottom: 25px;
 }
 
 .icon {
@@ -64,82 +64,57 @@ body {
 
 .title {
     font-family: 'Cinzel', serif;
-    font-size: 1rem;
-    letter-spacing: 0.3em;
+    font-size: 1.2rem;
+    letter-spacing: 0.35em;
     text-align: center;
     text-transform: uppercase;
     color: var(--text-main);
     transition: var(--snap);
+    white-space: nowrap; /* Keeps title on one line */
 }
 
 .subtitle {
     font-family: 'Inter', sans-serif;
-    font-size: 0.6rem;
+    font-size: 0.65rem;
     letter-spacing: 0.5em;
     text-align: center;
-    margin-top: 10px;
+    margin-top: 12px;
     color: var(--text-muted);
     transition: var(--snap);
 }
 
-/* THE DIVIDER */
-.divider {
+/* THE VERTICAL DIVIDER */
+.v-divider {
     width: 1px;
-    height: 60px;
-    background-color: var(--text-muted);
+    height: 120px;
+    background: linear-gradient(to bottom, transparent, var(--text-muted), transparent);
     opacity: 0.2;
 }
 
-/* INTERACTION LOGIC (CSS ONLY) */
-
-/* 1. Shield Hover (VCS) */
-.choice.vcs:hover .icon {
-    fill: var(--vcs-gold);
-    filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.4));
-    transform: scale(1.1);
-}
-
-.choice.vcs:hover .title {
-    color: var(--vcs-gold);
-    text-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
-}
-
-/* 2. Sword Hover (Knights) */
-.choice.knights:hover .icon {
-    fill: var(--knight-purple);
-    filter: drop-shadow(0 0 20px rgba(191, 148, 255, 0.4));
-    transform: scale(1.1);
-}
-
-.choice.knights:hover .title {
-    color: var(--knight-purple);
-    text-shadow: 0 0 15px rgba(191, 148, 255, 0.3);
-}
-
-/* 3. The Atmosphere (Background Pulse) */
-body::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+/* ATMOSPHERIC GLOWS */
+.gateway-bg {
     background: radial-gradient(circle at center, #111111 0%, #050505 100%);
-    z-index: -1;
-    transition: opacity 0.8s ease;
+    transition: background 0.8s ease;
 }
 
-/* This is the clever bit: using the choice state to change the body background */
 body:has(.vcs:hover) {
-    background: radial-gradient(circle at 30% 50%, #1a1608 0%, #050505 70%);
+    background: radial-gradient(circle at 35% 50%, #1a1608 0%, #050505 80%);
 }
 
 body:has(.knights:hover) {
-    background: radial-gradient(circle at 70% 50%, #0e081a 0%, #050505 70%);
+    background: radial-gradient(circle at 65% 50%, #0e081a 0%, #050505 80%);
 }
 
-/* Focus fade: Dim the side NOT being hovered */
-.gateway:has(.choice:hover) .choice:not(:hover) {
-    opacity: 0.15;
-    filter: blur(2px);
+/* HOVER FEEDBACK */
+.choice:hover .icon {
+    transform: scale(1.15) translateY(-5px);
+}
+
+.vcs:hover .icon { fill: var(--vcs-gold); filter: drop-shadow(0 0 15px var(--vcs-gold)); }
+.knights:hover .icon { fill: var(--knight-purple); filter: drop-shadow(0 0 15px var(--knight-purple)); }
+
+/* FOCUS FADE */
+.gateway-container:has(.choice:hover) .choice:not(:hover) {
+    opacity: 0.1;
+    filter: blur(4px);
 }
