@@ -7,18 +7,13 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@200;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            /* Text is pure white to stand out on the glass */
-            --text-main: #FFFFFF;
-            --text-dim: rgba(255, 255, 255, 0.85);
             --vcs-gold: #D4AF37;
-            /* Frosted glass variables for a daylight/sky background */
             --glass-bg: rgba(255, 255, 255, 0.15);
             --glass-border: rgba(255, 255, 255, 0.4);
-            --snap: 0.8s cubic-bezier(0.2, 0, 0, 1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
@@ -26,26 +21,31 @@
         body {
             /* Light blue sky gradient */
             background: linear-gradient(135deg, #74b9ff, #0984e3);
-            color: var(--text-main);
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
             min-height: 100vh;
         }
 
-        /* --- 1. ENTRANCE FADE FROM BLACK --- */
+        /* --- 1. BLACKOUT SCREEN (FASTER ENTRANCE & EXIT) --- */
         #blackout-screen {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background-color: #000000;
             z-index: 9999;
-            pointer-events: none; /* Allows clicking once faded */
-            transition: opacity 1.5s ease-in-out;
+            pointer-events: none; 
+            opacity: 0;
+            /* Sped up from 1.5s down to 0.6s for a snappy cinematic feel */
+            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .blackout-active {
+            opacity: 1 !important;
+            pointer-events: all !important;
         }
 
         /* --- 2. DRIFTING CLOUDS BACKGROUND --- */
         .clouds {
             position: fixed;
             top: 0; left: 0; width: 200vw; height: 100vh;
-            /* Using a lightweight SVG Data URI for seamless clouds */
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600' opacity='0.3'%3E%3Cpath d='M150 200 a40 40 0 0 1 80 0 a50 50 0 0 1 90 20 a40 40 0 0 1 -40 50 h-130 a30 30 0 0 1 0 -70 z' fill='%23ffffff'/%3E%3Cpath d='M450 400 a40 40 0 0 1 80 0 a50 50 0 0 1 90 20 a40 40 0 0 1 -40 50 h-130 a30 30 0 0 1 0 -70 z' fill='%23ffffff'/%3E%3C/svg%3E");
             background-repeat: repeat;
             z-index: 0;
@@ -58,7 +58,7 @@
             100% { transform: translateX(-50%); }
         }
 
-        /* --- 3. NAVIGATION / RETURN BUTTON --- */
+        /* --- 3. GOLDEN GLOWING NAVIGATION --- */
         .nav-bar {
             position: fixed;
             top: 0; left: 0; width: 100%;
@@ -69,22 +69,25 @@
         }
 
         .return-btn {
-            color: var(--text-main);
+            color: var(--vcs-gold);
             text-decoration: none;
             font-family: 'Cinzel', serif;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             letter-spacing: 0.2em;
             text-transform: uppercase;
-            transition: color 0.4s ease, text-shadow 0.4s ease;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             gap: 10px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3); /* Keeps it legible over clouds */
+            /* The base golden glow */
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.8), 0 0 20px rgba(212, 175, 55, 0.4);
         }
 
         .return-btn:hover {
-            color: var(--vcs-gold);
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+            color: #FFFFFF;
+            /* Intensifies to bright white-gold on hover */
+            text-shadow: 0 0 15px var(--vcs-gold), 0 0 30px var(--vcs-gold);
+            transform: scale(1.05);
         }
 
         /* --- 4. GLASS PANEL & SHEEN ANIMATION --- */
@@ -108,7 +111,7 @@
             display: flex;
             flex-direction: column;
             gap: 30px;
-            overflow: hidden; /* Crucial for hiding the sheen when it's outside the box */
+            overflow: hidden; 
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
         }
 
@@ -118,44 +121,45 @@
             position: absolute;
             top: 0; left: -150%;
             width: 50%; height: 100%;
-            /* A bright, angled beam of light */
             background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.5), transparent);
             transform: skewX(-25deg);
             animation: glassSheen 7s infinite;
-            pointer-events: none; /* So you can still click/select text underneath */
+            pointer-events: none; 
         }
 
         @keyframes glassSheen {
             0% { left: -150%; }
             15% { left: 200%; }
-            100% { left: 200%; } /* Pauses out of frame before repeating */
+            100% { left: 200%; }
         }
 
-        /* --- 5. TYPOGRAPHY --- */
+        /* --- 5. CHISELED BLACK TYPOGRAPHY --- */
         .page-title {
             font-family: 'Cinzel', serif;
             font-size: clamp(2rem, 4vw, 3rem);
-            color: var(--text-main);
+            color: #111111; /* Near black */
             letter-spacing: 0.1em;
             text-transform: uppercase;
             text-align: center;
             margin-bottom: 20px;
-            border-bottom: 1px solid var(--glass-border);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.2);
             padding-bottom: 30px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.15);
+            /* Raised text effect: Dark drop shadow on bottom-right, white highlight on top-left */
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5), -1px -1px 2px rgba(255,255,255,0.8);
         }
 
         .content-block {
             font-size: 1.05rem;
             line-height: 1.8;
-            color: var(--text-dim);
-            font-weight: 200;
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); /* Adds contrast against bright clouds */
+            color: #222222; /* Dark Grey/Black */
+            font-weight: 400; /* Bolder weight to help dark text pop on the background */
+            /* Raised chiseled effect for body text */
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.4), -1px -1px 1px rgba(255,255,255,0.7);
         }
 
         .content-block strong {
-            color: var(--text-main);
-            font-weight: 600;
+            color: #000000;
+            font-weight: 700;
         }
 
         /* --- 6. PROGRESSIONAL FADE ANIMATION --- */
@@ -179,12 +183,12 @@
 </head>
 <body>
 
-    <div id="blackout-screen"></div>
+    <div id="blackout-screen" class="blackout-active"></div>
 
     <div class="clouds"></div>
 
     <nav class="nav-bar">
-        <a href="table.html" class="return-btn">
+        <a href="table.html" class="return-btn" id="exit-btn">
             <span>&#8592;</span> Return
         </a>
     </nav>
@@ -213,15 +217,30 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            
-            // 1. Cinematic Fade In From Black
             const blackoutScreen = document.getElementById('blackout-screen');
-            // Wait 200ms before starting the fade to ensure a smooth transition from the previous page
-            setTimeout(() => {
-                blackoutScreen.style.opacity = '0';
-            }, 200);
+            const exitBtn = document.getElementById('exit-btn');
 
-            // 2. Progressional Scroll Animation for Text
+            // 1. FAST CINEMATIC ENTRANCE
+            // Wait just 50ms, then drop the blackout layer to reveal the page
+            setTimeout(() => {
+                blackoutScreen.classList.remove('blackout-active');
+            }, 50);
+
+            // 2. EXIT PROTOCOL (Fade back to black on click)
+            exitBtn.addEventListener('click', function(e) {
+                e.preventDefault(); // Stop instant navigation
+                const targetUrl = this.getAttribute('href');
+                
+                // Bring the black screen back up
+                blackoutScreen.classList.add('blackout-active');
+                
+                // Wait 600ms for the animation to finish, then go to the Round Table
+                setTimeout(() => {
+                    window.location.href = targetUrl;
+                }, 600);
+            });
+
+            // 3. PROGRESSIONAL SCROLL ANIMATION
             const elements = document.querySelectorAll('.fade-element');
             const observerOptions = {
                 root: null,
