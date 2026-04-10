@@ -113,10 +113,9 @@
             pointer-events: none; z-index: 1;
         }
 
-        /* The dynamic text readout in the center */
         #center-hud {
             position: absolute;
-            width: 65%; /* Keeps it inside the inner ring */
+            width: 65%; 
             text-align: center;
             font-family: 'Inter', monospace;
             font-size: clamp(0.55rem, 1.5vw, 0.75rem);
@@ -127,7 +126,6 @@
             transition: color 0.3s ease, text-shadow 0.3s ease;
         }
 
-        /* When hovering over a category, the HUD lights up */
         .hud-active {
             color: var(--vcs-gold) !important;
             text-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
@@ -169,7 +167,6 @@
             max-width: 800px; max-height: 800px;
             margin-top: -4vh; 
             z-index: 10;
-            /* This variable controls how far the buttons sit from the center */
             --radius: clamp(140px, 28vw, 300px); 
         }
 
@@ -177,7 +174,6 @@
             position: absolute; 
             top: 50%; left: 50%;
             text-decoration: none; 
-            /* The CSS uses a variable set by the JavaScript to calculate the perfect circle */
             --angle: 0deg; 
             transform: translate(-50%, -50%) rotate(var(--angle)) translateY(calc(var(--radius) * -1)) rotate(calc(var(--angle) * -1));
         }
@@ -188,7 +184,6 @@
             transition: transform 0.4s cubic-bezier(0.2, 0, 0, 1);
         }
 
-        /* Randomizes the floating so they don't move exactly together */
         .seat:nth-child(even) .floater { animation-delay: -2s; animation-duration: 7s; }
         .seat:nth-child(odd) .floater { animation-delay: -4s; animation-duration: 5.5s; }
 
@@ -226,19 +221,66 @@
             letter-spacing: 0.4em;
         }
 
-        /* Dim the rings when hovering */
         .cinematic-entrance:has(.seat:hover) .ring,
         .instant-entrance:has(.seat:hover) .ring { 
             opacity: 0.1; transition: opacity 0.4s ease; 
         }
 
-        /* --- 9. MOBILE RESPONSIVENESS --- */
+        /* --- 9. MOBILE RESPONSIVENESS (VERTICAL TERMINAL DESIGN) --- */
         @media (max-width: 768px) {
-            .orbital-container { width: 100vw; height: 100vw; margin-top: -5vh; --radius: 35vw; }
-            .holo-table { width: 55vw; height: 55vw; margin-top: -5vh; }
-            .text-group { padding: 10px 15px; }
-            .seat-label { font-size: clamp(0.55rem, 3.5vw, 0.85rem); letter-spacing: 0.2em; }
-            #center-hud { width: 80%; }
+            body { 
+                display: flex; 
+                flex-direction: column; 
+                justify-content: flex-start;
+                padding-top: 8vh;
+            }
+
+            .holo-table { 
+                position: relative;
+                width: 55vw; height: 55vw; 
+                margin: 0 auto 5vh auto; 
+            }
+
+            #center-hud { 
+                width: 120%; /* Lets the text expand slightly past the inner ring */
+                font-size: 0.65rem; 
+            }
+
+            .orbital-container { 
+                position: relative;
+                width: 100%; height: auto; 
+                margin-top: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 15px; /* Spacing between the stacked buttons */
+            }
+
+            .seat {
+                position: relative;
+                top: auto; left: auto;
+                /* This line instantly disables the circular math on mobile! */
+                transform: none !important; 
+                width: 85%;
+                max-width: 350px;
+            }
+
+            /* Disables the bobbing animation so the vertical list is easy to tap */
+            .floater { animation: none; transition: transform 0.2s; } 
+            .seat:active .floater { transform: scale(0.98); } /* Subtle click effect */
+
+            .text-group { 
+                width: 100%; 
+                padding: 16px; 
+            }
+            
+            .seat-label { font-size: 0.85rem; letter-spacing: 0.2em; }
+            
+            /* Keep the rings visible when scrolling the menu */
+            .cinematic-entrance:has(.seat:hover) .ring,
+            .instant-entrance:has(.seat:hover) .ring { 
+                opacity: 0.4; 
+            }
         }
     </style>
 </head>
@@ -294,7 +336,7 @@
                 </div>
             </a>
             
-            </div>
+        </div>
     </main>
 
     <script>
@@ -313,11 +355,9 @@
             if (!loadText || !loader || !mainStage) return;
 
             // --- 1. DYNAMIC ORBIT CALCULATOR ---
-            // Automatically spaces any number of links in a perfect circle
             const totalSeats = seats.length;
             seats.forEach((seat, index) => {
                 const angle = (360 / totalSeats) * index;
-                // Subtracting 90 ensures the first item is always perfectly at the Top (12 o'clock)
                 seat.style.setProperty('--angle', `${angle}deg`);
             });
 
