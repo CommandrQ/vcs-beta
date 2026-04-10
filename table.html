@@ -16,7 +16,7 @@
             --vcs-purple: #BF94FF;
             --text-main: #F5F5F7;
             --text-dim: rgba(245, 245, 247, 0.4);
-            --snap: 0.5s cubic-bezier(0.2, 0, 0, 1);
+            --snap: 0.8s cubic-bezier(0.2, 0, 0, 1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
@@ -34,7 +34,8 @@
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background-color: var(--true-black);
             display: flex; align-items: center; justify-content: center;
-            z-index: 9999; transition: opacity 0.5s ease;
+            z-index: 9999; 
+            /* We removed the opacity transition here so the black background stays solid */
         }
 
         .loader-content {
@@ -70,19 +71,19 @@
             z-index: 1; pointer-events: none;
         }
 
-        /* --- 2. MAIN STAGE & FLASH ENTRANCE --- */
+        /* --- 2. MAIN STAGE & CINEMATIC ENTRANCE --- */
         .hidden-stage { display: none; }
         
-        .flash-entrance {
-            display: flex; align-items: center; justify-content: center;
+        .cinematic-entrance {
+            display: grid; place-items: center;
             height: 100vh; width: 100vw; position: relative;
-            animation: blastOpen 1.5s var(--snap) forwards;
+            /* Changed from a flashy spin to a smooth, slow fade from the black void */
+            animation: emergeFromBlack 2.5s ease-out forwards;
         }
 
-        @keyframes blastOpen {
-            0% { opacity: 0; transform: scale(0.2) rotate(-45deg); filter: blur(20px); }
-            50% { opacity: 1; filter: blur(0px); }
-            100% { opacity: 1; transform: scale(1) rotate(0deg); }
+        @keyframes emergeFromBlack {
+            0% { opacity: 0; transform: scale(0.9); filter: blur(20px); }
+            100% { opacity: 1; transform: scale(1); filter: blur(0px); }
         }
 
         /* --- 3. HOLOGRAPHIC RINGS --- */
@@ -138,7 +139,6 @@
 
         /* --- 5. THE SAFE FLOATING ANIMATION --- */
         .floater {
-            /* This nested div handles the animation so it doesn't break the positioning transforms */
             animation: bob 6s ease-in-out infinite;
             transition: transform 0.4s cubic-bezier(0.2, 0, 0, 1);
         }
@@ -183,15 +183,13 @@
             letter-spacing: 0.4em;
         }
 
-        /* Dim rings on hover */
-        .flash-entrance:has(.seat:hover) .holo-table { opacity: 0.2; transition: opacity 0.4s ease; }
+        .cinematic-entrance:has(.seat:hover) .holo-table { opacity: 0.2; transition: opacity 0.4s ease; }
 
         /* --- 8. MOBILE RESPONSIVENESS --- */
         @media (max-width: 768px) {
             .orbital-container { width: 95vw; height: 95vw; }
             .holo-table { width: 55vw; height: 55vw; }
             
-            /* Pull the left and right seats in tightly so they don't get cut off */
             .pos-left   { left: 2%; }
             .pos-right  { right: 2%; }
             
@@ -257,6 +255,8 @@
             const loadText = document.getElementById('load-percent');
             const progressBar = document.getElementById('progress-bar');
             const loader = document.getElementById('loader-screen');
+            const loaderContent = document.querySelector('.loader-content');
+            const scanlines = document.querySelector('.scanlines');
             const mainStage = document.getElementById('main-stage');
             const sysLog = document.getElementById('sys-log');
             
@@ -288,13 +288,19 @@
                 if (progress < 100) {
                     setTimeout(simulateLoad, Math.random() * 200 + 50);
                 } else {
+                    // STAGE 1: Fade out text & scanlines (leaves pure black)
                     setTimeout(() => {
-                        loader.style.opacity = '0'; 
+                        loaderContent.style.transition = 'opacity 0.5s ease';
+                        scanlines.style.transition = 'opacity 0.5s ease';
+                        loaderContent.style.opacity = '0';
+                        scanlines.style.opacity = '0';
+                        
+                        // STAGE 2: Wait 800ms in total darkness, then fade in the table
                         setTimeout(() => {
                             loader.style.display = 'none';
                             mainStage.classList.remove('hidden-stage');
-                            mainStage.classList.add('flash-entrance'); 
-                        }, 500);
+                            mainStage.classList.add('cinematic-entrance'); 
+                        }, 800); 
                     }, 600); 
                 }
             }
