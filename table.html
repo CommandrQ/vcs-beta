@@ -12,7 +12,6 @@
     <style>
         :root {
             --vcs-gold: #D4AF37;
-            --vcs-purple: #BF94FF;
             --true-black: #050505;
             --text-main: #F5F5F7;
             --text-dim: rgba(245, 245, 247, 0.5);
@@ -30,7 +29,8 @@
             font-family: 'Inter', sans-serif;
             height: 100vh;
             width: 100vw;
-            overflow: hidden;
+            /* Desktop Scrolling Locked */
+            overflow: hidden; 
             display: grid;
             place-items: center;
             background-image: radial-gradient(circle at center, #111 0%, #000 70%);
@@ -71,7 +71,7 @@
             font-size: 0.75rem;
             color: #FFFFFF;
             transition: all 0.5s ease;
-            z-index: 5;
+            z-index: 15; /* High z-index to stay above rings */
         }
 
         /* --- 4. ORBITAL SYSTEM --- */
@@ -90,10 +90,10 @@
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Desktop Positions */
         .seat:nth-child(1) { transform: translate(calc(cos(0deg) * var(--radius)), calc(sin(0deg) * var(--radius))); }
-        .seat:nth-child(2) { transform: translate(calc(cos(120deg) * var(--radius)), calc(sin(120deg) * var(--radius))); }
-        .seat:nth-child(3) { transform: translate(calc(cos(240deg) * var(--radius)), calc(sin(240deg) * var(--radius))); }
+        .seat:nth-child(2) { transform: translate(calc(cos(90deg) * var(--radius)), calc(sin(90deg) * var(--radius))); }
+        .seat:nth-child(3) { transform: translate(calc(cos(180deg) * var(--radius)), calc(sin(180deg) * var(--radius))); }
+        .seat:nth-child(4) { transform: translate(calc(cos(270deg) * var(--radius)), calc(sin(270deg) * var(--radius))); }
 
         /* --- 5. THE BOXES --- */
         .floater { animation: float 6s ease-in-out infinite; }
@@ -131,7 +131,6 @@
             50% { transform: translateY(-10px); }
         }
 
-        /* --- 6. HOVER LOGIC --- */
         .seat:hover .text-group {
             background: rgba(212, 175, 55, 0.1);
             border-color: var(--vcs-gold);
@@ -140,42 +139,46 @@
 
         .seat:hover .text-group::before { transform: scaleY(1); }
 
-        .orbital-container:has(.seat:hover) ~ .holo-table .ring {
-            opacity: 0.6;
-            border-color: var(--vcs-gold);
-        }
-
-        /* --- 7. MOBILE RESPONSIVENESS (THE FIX) --- */
+        /* --- 7. MOBILE RESPONSIVENESS --- */
         @media (max-width: 768px) {
             body { 
                 display: flex; 
                 flex-direction: column; 
                 justify-content: flex-start;
-                padding-top: 3vh; /* Significantly reduced top black space */
+                padding-top: 5vh; 
+                /* Allow scrolling on mobile */
                 overflow-x: hidden; 
                 overflow-y: auto; 
+                height: auto;
+                min-height: 100vh;
             }
 
             .holo-table { 
                 position: relative;
-                width: 40vw; height: 40vw; 
-                margin: 0 auto 2vh auto; /* Minimal gap before text */
+                width: 60vw; height: 60vw; 
+                margin: 0 auto 5vh auto; 
                 flex-shrink: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
 
             #center-hud { 
-                width: 85vw; 
+                position: absolute; /* Overlays on top of the circle */
+                width: 80%; 
                 font-size: 0.70rem; 
-                top: 110%; /* Positions text exactly between rings and boxes */
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%); /* Centers text inside rings */
                 color: #FFFFFF; 
                 opacity: 1; 
-                position: relative; /* Allow it to push content down */
+                z-index: 100;
             }
 
             .orbital-container { 
                 position: relative;
                 width: 100%; height: auto; 
-                margin-top: 8vh; /* Added space so buttons start after the mission text */
+                margin-top: 0; 
                 padding-bottom: 10vh;
                 display: flex;
                 flex-direction: column;
@@ -207,19 +210,25 @@
     <nav class="orbital-container">
         <a href="team.html" class="seat" data-hud="DIRECTORY: PERSONNEL & FOUNDERS">
             <div class="floater">
-                <div class="text-group"><span class="seat-label">The Team</span></div>
+                <div class="text-group"><span class="seat-label">Our Team</span></div>
             </div>
         </a>
 
-        <a href="#" class="seat" data-hud="LOGS: THE OTHERS // CURRENT PRODUCTION">
+        <a href="our-story.html" class="seat" data-hud="CHRONICLE: ORIGINS OF THE VANGUARD">
             <div class="floater">
-                <div class="text-group"><span class="seat-label">Projects</span></div>
+                <div class="text-group"><span class="seat-label">Our Story</span></div>
             </div>
         </a>
 
-        <a href="https://vcs-hq.carrd.co" target="_blank" class="seat" data-hud="COMM-LINK: INITIATE STRATEGIC CONTACT">
+        <a href="work.html" class="seat" data-hud="PHILOSOPHY: THE ARCHITECTURE OF INSO">
             <div class="floater">
-                <div class="text-group"><span class="seat-label">Contact</span></div>
+                <div class="text-group"><span class="seat-label">Our Vision</span></div>
+            </div>
+        </a>
+
+        <a href="soon.html" class="seat" data-hud="ACCESS: CITIZEN PORTAL [UNDER CONSTRUCTION]">
+            <div class="floater">
+                <div class="text-group"><span class="seat-label">The Collective</span></div>
             </div>
         </a>
     </nav>
