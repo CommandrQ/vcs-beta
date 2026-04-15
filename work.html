@@ -47,7 +47,6 @@
         .cyber-grid {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 200vh;
-            /* Changed to Vanguard Gold and increased opacity to 20% to make it pop */
             background-image: 
                 linear-gradient(rgba(212, 175, 55, 0.2) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(212, 175, 55, 0.2) 1px, transparent 1px);
@@ -55,7 +54,6 @@
             z-index: 0;
             animation: scrollGrid 30s linear infinite;
             pointer-events: none;
-            /* Widened the mask so more of the grid is visible before fading into black edges */
             mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 90%);
             -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 90%);
         }
@@ -65,7 +63,6 @@
             100% { transform: translateY(-50px); }
         }
 
-        /* Ambient glowing orb in the center - brightened to illuminate the grid */
         .core-glow {
             position: fixed;
             top: 50%; left: 50%;
@@ -104,7 +101,6 @@
             padding: 12px 24px;
             border: 1px solid rgba(212, 175, 55, 0.3); 
             border-radius: 50px; 
-            
             text-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
         }
 
@@ -159,7 +155,7 @@
             100% { left: 200%; }
         }
 
-        /* --- 5. TYPOGRAPHY --- */
+        /* --- 5. TYPOGRAPHY & LISTS --- */
         .page-title {
             font-family: 'Cinzel', serif;
             font-size: clamp(2rem, 4vw, 3rem);
@@ -186,7 +182,37 @@
             letter-spacing: 0.05em;
         }
 
-        /* --- 6. PROGRESSIONAL FADE ANIMATION --- */
+        .services-list {
+            list-style: none;
+            margin-top: 25px;
+        }
+
+        .services-list li {
+            margin-bottom: 30px;
+            padding-left: 30px;
+            position: relative;
+            color: var(--text-dim);
+            line-height: 1.6;
+        }
+
+        .services-list li::before {
+            content: '•';
+            color: var(--vcs-gold);
+            position: absolute;
+            left: 0;
+            font-size: 2rem;
+            line-height: 0.7;
+            text-shadow: 0 0 10px var(--vcs-gold);
+        }
+
+        .services-list li strong {
+            display: block;
+            color: var(--text-main);
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+
+        /* --- 6. ANIMATIONS --- */
         .fade-element {
             opacity: 0;
             transform: translateY(20px);
@@ -198,10 +224,9 @@
             transform: translateY(0);
         }
 
-        /* --- 7. MOBILE RESPONSIVENESS --- */
         @media (max-width: 768px) {
             .glass-panel { padding: 40px 25px; }
-            .page-container { margin-top: 12vh; gap: 20px; }
+            .page-container { margin-top: 12vh; }
         }
     </style>
 </head>
@@ -224,21 +249,35 @@
             
             <h1 class="page-title fade-element">What We Do</h1>
 
-            <p class="content-block fade-element">
-                <strong>Empower. Educate. Elevate.</strong> We are a team of creators and problem-solvers who believe that to truly help someone, you have to provide both the tools to succeed and the inspiration to keep going. We are a grounded collective dedicated to achieving this miision by helping people reclaim their focus and reach their potential.
-            </p>
+            <div class="content-block fade-element">
+                <strong>Empower. Educate. Elevate.</strong>
+                <p>VCS is a creative studio built to bridge the gap between practical support and high-level vision. We provide both the tools to succeed and the inspiration to keep going. We are a grounded collective dedicated to helping people reclaim their focus and reach their potential.</p>
+            </div>
 
-            <p class="content-block fade-element">
-                <strong>Our Services Build The Foundation</strong> We provide the essential technical services that keep a community moving forward. By handling the complex "necessary" tasks, we allow you to focus on your own growth. We specialize in:
+            <div class="content-block fade-element">
+                <strong>Our Services Build The Foundation</strong>
+                <p>We provide essential technical services that keep a community moving forward. By handling the complex tasks, we allow you to focus on your own growth. We specialize in:</p>
                 
-• Web & Tech Management: We provide professional web management and tech support for local businesses and individuals in Hardin County, Kentucky.
-• Structural Support: We use our ability to simplify complex systems to help others learn faster and execute their own visions with precision.
-• Community Volunteering: We actively engage in local initiatives to strengthen the "emotional armor" and resilience of the people around us.
-            </p>
+                <ul class="services-list">
+                    <li>
+                        <strong>Web & Tech Management</strong>
+                        Professional web management and tech support for local businesses and individuals in Hardin County, Kentucky.
+                    </li>
+                    <li>
+                        <strong>Structural Support</strong>
+                        Simplifying complex systems to help others learn faster and execute their own visions with precision.
+                    </li>
+                    <li>
+                        <strong>Community Volunteering</strong>
+                        Engaging in local initiatives to strengthen the emotional resilience and "armor" of the people around us.
+                    </li>
+                </ul>
+            </div>
 
-            <p class="content-block fade-element">
-                <strong>The Horizon.</strong> Through our creative guild, The Vanguard Knights, we create immersive projects and narratives that explore the human experience. The Knights represent our creative output where we turn our vision into art.
-            </p>
+            <div class="content-block fade-element">
+                <strong>The Horizon</strong>
+                <p>Through our creative guild, <strong>The Vanguard Knights</strong>, we create immersive projects and narratives that explore the human experience. The Knights represent our creative output, where we turn vision into art and encourage every citizen to become the best version of themselves.</p>
+            </div>
 
         </article>
 
@@ -249,32 +288,21 @@
             const blackoutScreen = document.getElementById('blackout-screen');
             const exitBtn = document.getElementById('exit-btn');
 
-            // 1. FAST CINEMATIC ENTRANCE
             setTimeout(() => {
                 blackoutScreen.classList.remove('blackout-active');
             }, 50);
 
-            // 2. EXIT PROTOCOL
             exitBtn.addEventListener('click', function(e) {
                 e.preventDefault(); 
                 const targetUrl = this.getAttribute('href');
-                
                 blackoutScreen.classList.add('blackout-active');
-                
-                setTimeout(() => {
-                    window.location.href = targetUrl;
-                }, 600);
+                setTimeout(() => { window.location.href = targetUrl; }, 600);
             });
 
-            // 3. PROGRESSIONAL SCROLL ANIMATION
             const elements = document.querySelectorAll('.fade-element');
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.15 
-            };
+            const observerOptions = { threshold: 0.15 };
 
-            const observer = new IntersectionObserver((entries, observer) => {
+            const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
@@ -283,9 +311,7 @@
                 });
             }, observerOptions);
 
-            elements.forEach(el => {
-                observer.observe(el);
-            });
+            elements.forEach(el => observer.observe(el));
         });
     </script>
 </body>
