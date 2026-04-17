@@ -3,28 +3,225 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vanguard Citizen Knights | The Gates</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <title>The Grand Citadel | The Gates</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <style>
+        :root {
+            --void-obsidian: #0D0D0D;
+            --deep-shadow: #050505;
+            --relic-gold: #D4AF37;
+            --aura-purple: #BF94FF;
+            --success-green: #00FF41;
+            --starlight-white: #F5F5F7;
+            --iron-mist: #86868B;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: var(--deep-shadow);
+            font-family: 'SF Pro', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: var(--starlight-white);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Tech Grid Background */
+        .grid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(to right, rgba(191, 148, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(191, 148, 255, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 1;
+        }
+
+        /* Pulsing 3-Color Aura */
+        .aura {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            filter: blur(100px);
+            z-index: 2;
+            opacity: 0.4;
+            animation: auraLoop 9s infinite ease-in-out;
+        }
+
+        @keyframes auraLoop {
+            0% { background: radial-gradient(circle, rgba(0, 0, 255, 0.8), transparent 70%); transform: scale(1); }
+            33% { background: radial-gradient(circle, rgba(255, 0, 0, 0.8), transparent 70%); transform: scale(1.1); }
+            66% { background: radial-gradient(circle, rgba(212, 175, 55, 0.8), transparent 70%); transform: scale(1); }
+            100% { background: radial-gradient(circle, rgba(0, 0, 255, 0.8), transparent 70%); transform: scale(1); }
+        }
+
+        /* Main Container */
+        .container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+        }
+
+        /* RPG Box Style Button */
+        .rpg-btn {
+            background: rgba(13, 13, 13, 0.8);
+            border: 2px solid var(--relic-gold);
+            color: var(--relic-gold);
+            padding: 20px 40px;
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+            animation: pulseBtn 2s infinite;
+        }
+
+        .rpg-btn:hover {
+            background: var(--relic-gold);
+            color: var(--void-obsidian);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+        }
+
+        @keyframes pulseBtn {
+            0% { transform: scale(1); box-shadow: 0 0 15px rgba(212, 175, 55, 0.2); }
+            50% { transform: scale(1.05); box-shadow: 0 0 25px rgba(212, 175, 55, 0.4); }
+            100% { transform: scale(1); box-shadow: 0 0 15px rgba(212, 175, 55, 0.2); }
+        }
+
+        /* Question Sequence */
+        .question-box {
+            display: none;
+            opacity: 0;
+            transition: opacity 1s ease-in;
+        }
+
+        .question-text {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: var(--starlight-white);
+            text-shadow: 0 0 10px rgba(191, 148, 255, 0.5);
+        }
+
+        .proceed-btn {
+            background: transparent;
+            border: 1px solid var(--aura-purple);
+            color: var(--aura-purple);
+            padding: 10px 30px;
+            font-family: 'SF Pro', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .proceed-btn:hover {
+            background: var(--aura-purple);
+            color: var(--void-obsidian);
+        }
+
+        /* Pop-in animation */
+        .pop-in {
+            animation: pop 0.4s cubic-bezier(0.26, 0.53, 0.74, 1.48) forwards;
+        }
+
+        @keyframes pop {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Flash Transition */
+        #flash-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--starlight-white);
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1.5s ease-in;
+        }
+
+        .hidden { display: none !important; }
+        .visible { display: block !important; opacity: 1 !important; }
+
+    </style>
 </head>
 <body>
 
+    <div class="grid-bg"></div>
+    <div class="aura"></div>
     <div id="flash-overlay"></div>
 
-    <main id="the-gates" class="fullscreen-flex">
-        <div id="tech-background"></div>
-        <div id="center-aura"></div>
+    <div class="container">
+        <button id="gate-btn" class="rpg-btn">KNOCK ON THE GATES</button>
 
-        <button id="btn-knock" class="rpg-box hover-glow idle-pulse">Knock on the Gates</button>
-
-        <div id="dialogue-box" class="rpg-box hidden">
-            <h2 id="question-text" class="cinzel-heading starlight-text"></h2>
-            <button id="btn-next-quest" class="rpg-box hover-glow hidden">Proceed</button>
+        <div id="q1" class="question-box">
+            <h2 class="question-text">When was the last time you were Educated?</h2>
+            <button class="proceed-btn" onclick="showNext('q1', 'q2')">Proceed</button>
         </div>
-    </main>
 
-    <script src="js/engine.js"></script>
+        <div id="q2" class="question-box">
+            <h2 class="question-text">Empowered?</h2>
+            <button class="proceed-btn" onclick="showNext('q2', 'q3')">Proceed</button>
+        </div>
+
+        <div id="q3" class="question-box">
+            <h2 class="question-text">Elevated?</h2>
+            <button class="proceed-btn" onclick="triggerFinalTransition()">Proceed</button>
+        </div>
+    </div>
+
+    <script>
+        const gateBtn = document.getElementById('gate-btn');
+        const flashOverlay = document.getElementById('flash-overlay');
+
+        // Initialize First Interaction
+        gateBtn.addEventListener('click', () => {
+            gateBtn.classList.add('hidden');
+            const q1 = document.getElementById('q1');
+            q1.classList.add('visible');
+        });
+
+        // Question Progression
+        function showNext(currentId, nextId) {
+            const current = document.getElementById(currentId);
+            const next = document.getElementById(nextId);
+            
+            current.classList.remove('visible');
+            current.classList.add('hidden');
+            
+            next.classList.add('visible');
+            next.classList.add('pop-in');
+        }
+
+        // Final Transition to Home
+        function triggerFinalTransition() {
+            flashOverlay.style.opacity = '1';
+            setTimeout(() => {
+                // Redirecting to home.html after the flash
+                window.location.href = 'home.html';
+            }, 1500);
+        }
+    </script>
 </body>
 </html>
