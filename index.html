@@ -74,11 +74,11 @@
             font-family: monospace;
             color: var(--success-green);
             text-shadow: 0 0 5px var(--success-green);
-            /* Fluid typography for mobile and desktop */
             font-size: clamp(0.9rem, 3vw, 1.2rem); 
             line-height: 1.8;
             opacity: 1;
             transition: opacity 0.5s ease;
+            text-align: center; /* Centered the intro text */
         }
 
         .terminal-line {
@@ -128,7 +128,6 @@
 
         .citadel-title {
             font-family: 'Cinzel', serif;
-            /* Fluid scaling for the title */
             font-size: clamp(2.5rem, 8vw, 5rem); 
             color: var(--relic-gold);
             text-shadow: 0 0 20px rgba(212, 175, 55, 0.5), 0 0 40px rgba(212, 175, 55, 0.2);
@@ -139,7 +138,6 @@
         }
 
         .citadel-subtitle {
-            /* Fluid scaling for the subtitle */
             font-size: clamp(0.8rem, 3vw, 1.2rem);
             color: var(--aura-purple);
             letter-spacing: clamp(4px, 2vw, 10px);
@@ -200,7 +198,6 @@
             z-index: 100;
             opacity: 0;
             pointer-events: none;
-            /* Accelerated fade to white */
             transition: opacity 0.4s ease-in; 
         }
 
@@ -256,17 +253,15 @@
 
                 const currentData = terminalData[lineIndex];
                 
-                // Create container for the new line if starting it
                 if (charIndex === 0) {
                     const lineDiv = document.createElement('div');
                     lineDiv.className = 'terminal-line';
                     lineDiv.id = `line-${lineIndex}`;
                     if(currentData.specialClass) {
                         lineDiv.style.color = currentData.color;
-                        lineDiv.style.marginTop = "20px"; // Give "Welcome, Citizen" some breathing room
+                        lineDiv.style.marginTop = "20px";
                     }
                     
-                    // Add cursor to current line
                     const cursor = document.createElement('span');
                     cursor.className = 'cursor';
                     cursor.id = 'active-cursor';
@@ -278,14 +273,12 @@
                 const currentLineDiv = document.getElementById(`line-${lineIndex}`);
                 const cursor = document.getElementById('active-cursor');
 
-                // Type out characters
                 if (charIndex < currentData.text.length) {
                     const charNode = document.createTextNode(currentData.text.charAt(charIndex));
                     currentLineDiv.insertBefore(charNode, cursor);
                     charIndex++;
                     setTimeout(typeLine, typeSpeed);
                 } else {
-                    // Line text finished, append status bracket
                     if (currentData.status) {
                         const statusSpan = document.createElement('span');
                         statusSpan.style.color = currentData.color;
@@ -293,7 +286,6 @@
                         currentLineDiv.insertBefore(statusSpan, cursor);
                     }
                     
-                    // Cleanup cursor and move to next line
                     cursor.remove();
                     lineIndex++;
                     charIndex = 0;
@@ -311,7 +303,7 @@
                         bootScreen.style.display = 'none';
                         mainUI.classList.add('active');
                     }, 500);
-                }, 1000); // Pause on "Welcome, Citizen" before transitioning
+                }, 1000); 
             }
 
             // Quick White Fade & Redirect
@@ -319,7 +311,6 @@
                 body.classList.add('warp-active');
                 warpOverlay.style.opacity = '1';
 
-                // Accelerated redirect to match the fast white fade (0.4s fade + buffer)
                 setTimeout(() => {
                     window.location.href = 'home.html';
                 }, 600); 
