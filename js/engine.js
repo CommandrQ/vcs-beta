@@ -2,14 +2,12 @@
    THE VANGUARD ENGINE (Logic & Choreography)
    ========================================================================== */
 
-// --- DOM ELEMENTS (Connecting the logic to the HTML structure) ---
+// --- DOM ELEMENTS ---
 const btnKnock = document.getElementById('btn-knock');
 const dialogueBox = document.getElementById('dialogue-box');
 const questionText = document.getElementById('question-text');
-
+const btnNext = document.getElementById('btn-next');
 const flashOverlay = document.getElementById('flash-overlay');
-const theGates = document.getElementById('the-gates');
-const theCitadel = document.getElementById('the-citadel');
 
 // --- THE INITIATION SCRIPT ---
 const questions = [
@@ -18,9 +16,7 @@ const questions = [
     "When was the last time you were Elevated?"
 ];
 
-// --- PACING CONFIGURATION ---
-const typingSpeed = 50; // Speed of the typewriter effect (milliseconds per letter)
-const pauseBetweenQuestions = 2500; // How long the question stays on screen before the next one
+let currentQuestionIndex = 0;
 
 /* ==========================================================================
    ACT I: THE SEQUENCE
@@ -28,97 +24,63 @@ const pauseBetweenQuestions = 2500; // How long the question stays on screen bef
 
 // 1. The user interacts with the gate
 btnKnock.addEventListener('click', () => {
-    // Hide the 'Knock' button
+    // Hide the 'Knock' button and reveal the dialogue box
     btnKnock.classList.add('hidden');
-    // Reveal the empty FF7-style dialogue box
     dialogueBox.classList.remove('hidden');
     
-    // Begin asking the three questions, starting at index 0
-    runDialogueSequence(0);
+    // Load the first question and apply the smooth fade-in animation
+    questionText.innerText = questions[currentQuestionIndex];
+    questionText.classList.add('fade-in');
+
+    // Reveal the "Proceed" button immediately
+    btnNext.classList.remove('hidden');
 });
 
-// 2. The Dialogue Manager
-function runDialogueSequence(index) {
-    // Check if we have asked all three questions
-    if (index >= questions.length) {
-        triggerCitadelTransition();
-        return;
-    }
+// 2. The Navigation Logic
+btnNext.addEventListener('click', () => {
+    currentQuestionIndex++;
 
-    // Clear the box for the new question
-    questionText.innerHTML = "";
-    
-    // Execute the typewriter effect for the current question
-    typeWriterEffect(questions[index], questionText, () => {
-        // Once the typing is fully complete, wait a few seconds, then loop to the next question
+    if (currentQuestionIndex === 1) {
+        // Question 2: Reset animations and quickly pop it in
+        resetAnimations();
+        questionText.innerText = questions[currentQuestionIndex];
+        questionText.classList.add('pop-in');
+
+    } else if (currentQuestionIndex === 2) {
+        // Question 3 (Final): Reset animations, pop it in, and hide the button
+        resetAnimations();
+        questionText.innerText = questions[currentQuestionIndex];
+        questionText.classList.add('pop-in');
+        
+        btnNext.classList.add('hidden');
+
+        // Wait exactly 2 seconds, then trigger the cinematic transition
         setTimeout(() => {
-            runDialogueSequence(index + 1);
-        }, pauseBetweenQuestions);
-    });
-}
-
-// 3. The Typewriter Effect (Forces the user to read at the Vanguard's pace)
-function typeWriterEffect(text, element, callback) {
-    let charIndex = 0;
-
-    function type() {
-        if (charIndex < text.length) {
-            // Add the next character
-            element.innerHTML += text.charAt(charIndex);
-            charIndex++;
-            // Loop the function after a short delay
-            setTimeout(type, typingSpeed);
-        } else {
-            // Typing is finished, trigger the callback (the pause)
-            if (callback) callback();
-        }
+            triggerCitadelTransition();
+        }, 2000);
     }
+});
 
-    // Start the typing loop
-    type();
+// Utility function to clear CSS animation states so they can be re-triggered
+function resetAnimations() {
+    questionText.classList.remove('fade-in');
+    questionText.classList.remove('pop-in');
+    // Forcing a browser reflow so the animation restarts cleanly
+    void questionText.offsetWidth; 
 }
 
 /* ==========================================================================
    ACT II: THE CITADEL TRANSITION
    ========================================================================== */
 
-// 4. The Cinematic Screen Wipe
+// 3. The Cinematic Screen Wipe & Redirect
 function triggerCitadelTransition() {
-    // Ignite the pure white CSS flash overlay (opacity transitions to 1)
+    // Ignite the pure white CSS flash overlay
     flashOverlay.classList.add('flash-active');
 
-    // Wait exactly 1.5 seconds for the screen to go completely blind (matches CSS transition)
+    // Wait 1.5 seconds for the screen to go completely blind, then redirect
     setTimeout(() => {
-        // While the screen is white, swap the rooms
-        theGates.classList.add('hidden');
-        theCitadel.classList.remove('hidden');
-        
-        // Fade the flash away to reveal the RPG HUD
-        flashOverlay.classList.remove('flash-active');
-        
-        // Check if this citizen needs their initiation guidance
-        checkFirstTimeUser();
+        // Directs the user to the newly separated Hub page
+        window.location.href = 'home.html';
     }, 1500); 
-}
-
-// 5. The Memory Check (Local Storage)
-function checkFirstTimeUser() {
-    // Check the browser's local memory to see if they hold the 'initiated' token
-    const hasVisited = localStorage.getItem('vanguardInitiated');
-    
-    if (!hasVisited) {
-        console.log("System: First-time citizen detected. Initiating tutorial sequence...");
-        
-        // Give the user exactly 1 second to take in the new environment before speaking to them
-        setTimeout(() => {
-            alert("Welcome to The Grand Citadel.\n\nYou are no longer waiting. Use the Mirrorgates to explore our directory. Return periodically for new operations.");
-            
-            // Mark the user as initiated so they aren't bothered upon return visits
-            localStorage.setItem('vanguardInitiated', 'true');
-        }, 1000);
-        
-    } else {
-        console.log("System: Initiated Sovereign returned. Welcome back to the Citadel.");
-        // The user is free to interact with the Mirrorgates immediately
-    }
 }
