@@ -22,38 +22,53 @@
     <main class="fullscreen-flex">
         
         <header class="hud-header rpg-box">
-            <h1 class="cinzel-heading relic-gold-text">The Grand Citadel</h1>
-            <p class="iron-mist-text">Status: Sovereign | User: Initiated</p>
+            <h1 class="cinzel-heading relic-gold-text">Welcome to The Vanguard Citadel</h1>
+            <div class="os-status-container">
+                <p class="iron-mist-text">Vanguard OS Active</p>
+                <div class="status-dot"></div>
+            </div>
         </header>
 
         <section class="mirrorgates-viewport">
             <div id="carousel-track" class="carousel-track">
-                <div class="mirrorgate-node rpg-box hover-glow" data-destination="mission.html" data-angle="0">
+                
+                <div class="mirrorgate-node rpg-box hover-glow" data-destination="mission.html">
+                    <div class="gate-image-container">
+                        <img src="https://via.placeholder.com/180x120/0D0D0D/D4AF37?text=MISSION" alt="Mission">
+                    </div>
                     <h2 class="cinzel-heading starlight-text">The Mission</h2>
-                    <p class="iron-mist-text">Empower. Educate. Elevate.</p>
                 </div>
                 
-                <div class="mirrorgate-node rpg-box hover-glow" data-destination="roster.html" data-angle="120">
+                <div class="mirrorgate-node rpg-box hover-glow" data-destination="roster.html">
+                    <div class="gate-image-container">
+                        <img src="https://via.placeholder.com/180x120/0D0D0D/D4AF37?text=ROSTER" alt="Roster">
+                    </div>
                     <h2 class="cinzel-heading starlight-text">The Roster</h2>
-                    <p class="iron-mist-text">Meet the Vanguard.</p>
                 </div>
                 
-                <div class="mirrorgate-node rpg-box hover-glow" data-destination="skyfox.html" data-angle="240">
+                <div class="mirrorgate-node rpg-box hover-glow" data-destination="skyfox.html">
+                    <div class="gate-image-container">
+                        <img src="https://via.placeholder.com/180x120/0D0D0D/D4AF37?text=SKYFOX" alt="Sky Fox">
+                    </div>
                     <h2 class="cinzel-heading starlight-text">The Sky Fox</h2>
-                    <p class="iron-mist-text">Forward Operations.</p>
                 </div>
+
+                <div class="mirrorgate-node rpg-box hover-glow" data-destination="support.html">
+                    <div class="gate-image-container">
+                        <img src="https://via.placeholder.com/180x120/0D0D0D/D4AF37?text=SUPPORT" alt="Support">
+                    </div>
+                    <h2 class="cinzel-heading starlight-text">Stand With Us</h2>
+                </div>
+
             </div>
         </section>
 
         <div class="carousel-controls">
-            <button id="btn-prev" class="rpg-box hover-glow">◄ Rotate Left</button>
-            <button id="btn-enter" class="rpg-box hover-glow">Enter Mirrorgate</button>
-            <button id="btn-next" class="rpg-box hover-glow">Rotate Right ►</button>
+            <button id="btn-prev" class="rpg-box hover-glow">◄ Rotate</button>
+            <button id="btn-enter" class="rpg-box hover-glow">Access Mirrorgate</button>
+            <button id="btn-next" class="rpg-box hover-glow">Rotate ►</button>
         </div>
         
-        <footer class="hud-footer">
-            <button id="btn-support" class="rpg-box hover-glow">Stand With Us</button>
-        </footer>
     </main>
 
     <script src="js/hub.js"></script>
