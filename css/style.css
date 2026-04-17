@@ -8,6 +8,9 @@
     --aura-purple: #BF94FF;
     --starlight-white: #F5F5F7;
     --iron-mist: #86868B;
+    /* Tech Background Colors */
+    --tech-blue: #0055FF;
+    --tech-red: #FF0055;
 }
 
 /* ==========================================================================
@@ -18,22 +21,19 @@ body {
     padding: 0;
     background-color: var(--deep-shadow);
     color: var(--starlight-white);
-    /* Using SF Pro / System default for ultra-clean secondary text */
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro", "Helvetica Neue", sans-serif;
-    overflow: hidden; /* Locks the viewport for the cinematic app feel */
-    user-select: none; /* Prevents text highlighting to maintain the game feel */
+    overflow: hidden; 
+    user-select: none; 
 }
 
-/* Primary Heading Font (Cinzel imported in your HTML) */
 .cinzel-heading {
     font-family: 'Cinzel', serif;
     font-weight: 700;
     margin: 0 0 0.5rem 0;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9); /* High-contrast drop shadow */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9); 
     letter-spacing: 1px;
 }
 
-/* Color Utilities mapped to your HTML classes */
 .starlight-text { color: var(--starlight-white); }
 .relic-gold-text { color: var(--relic-gold); }
 .iron-mist-text { color: var(--iron-mist); }
@@ -56,10 +56,35 @@ body {
 }
 
 /* ==========================================================================
+   THE ANIMATED TECH BACKGROUND
+   ========================================================================== */
+#tech-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    /* Subtle tech grid using linear gradients */
+    background-image: 
+        linear-gradient(rgba(245, 245, 247, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(245, 245, 247, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    background-color: var(--deep-shadow);
+    /* 9 second total loop = 3 seconds per color */
+    animation: techPulse 9s infinite;
+}
+
+@keyframes techPulse {
+    0%, 100% { box-shadow: inset 0 0 200px rgba(0, 85, 255, 0.2); } /* Blue */
+    33% { box-shadow: inset 0 0 200px rgba(255, 0, 85, 0.2); }    /* Red */
+    66% { box-shadow: inset 0 0 200px rgba(212, 175, 55, 0.2); }  /* Gold */
+}
+
+/* ==========================================================================
    THE RPG UI (Vanguard FF7 Aesthetic)
    ========================================================================== */
 .rpg-box {
-    /* Deep obsidian gradient for the menu background */
     background: linear-gradient(135deg, var(--void-obsidian) 0%, var(--deep-shadow) 100%);
     border: 2px solid var(--relic-gold);
     border-radius: 6px;
@@ -70,71 +95,66 @@ body {
     position: relative;
 }
 
-/* Specific styling for actionable RPG buttons */
 button.rpg-box {
     cursor: pointer;
     font-family: 'Cinzel', serif;
     font-size: 1.5rem;
     transition: all 0.3s ease;
     outline: none;
-    color: var(--starlight-white); /* Prevents default black text on buttons */
+    color: var(--starlight-white);
 }
 
-/* The interactive glow for buttons and Mirrorgates */
 .hover-glow:hover {
     box-shadow: inset 0 0 20px rgba(191, 148, 255, 0.4), 0 0 20px rgba(212, 175, 55, 0.8);
     border-color: var(--starlight-white);
     transform: scale(1.03);
-    color: var(--starlight-white);
 }
 
-/* Act I: Dialogue Box specific sizing to keep it from jumping around while typing */
+.idle-pulse {
+    animation: buttonPulse 3s infinite alternate ease-in-out;
+}
+
+@keyframes buttonPulse {
+    0% { box-shadow: inset 0 0 10px rgba(0,0,0,0.9), 0 0 5px rgba(212, 175, 55, 0.3); }
+    100% { box-shadow: inset 0 0 15px rgba(191, 148, 255, 0.2), 0 0 20px rgba(212, 175, 55, 0.6); }
+}
+
+/* Act I: Dialogue Box */
 #dialogue-box {
     min-width: 600px;
-    min-height: 120px;
+    min-height: 180px;
     display: flex;
+    flex-direction: column; /* Stack text and button */
     align-items: center;
     justify-content: center;
+    gap: 1.5rem;
+}
+
+#btn-next {
+    font-size: 1.1rem;
+    padding: 0.5rem 2rem;
 }
 
 /* ==========================================================================
-   THE CITADEL HUD (Heads Up Display)
+   TEXT ANIMATIONS
    ========================================================================== */
-.hud-header {
-    position: absolute;
-    top: 2rem;
-    left: 2rem;
-    text-align: left;
-    padding: 1rem 1.5rem;
-    min-width: 280px;
-    margin: 0;
+.fade-in {
+    opacity: 0;
+    animation: fadeInAnim 1.5s ease-in forwards;
 }
 
-.hud-footer {
-    position: absolute;
-    bottom: 2rem;
-    right: 2rem;
-    padding: 0; 
-    border: none;
-    background: transparent;
-    box-shadow: none;
+.pop-in {
+    opacity: 0;
+    transform: scale(0.95);
+    animation: popInAnim 0.3s ease-out forwards;
 }
 
-/* Mirrorgates 3D Hub Area */
-.mirrorgates-container {
-    display: flex;
-    gap: 3rem;
-    perspective: 1000px; /* Prepares the space for future 3D CSS/JS transforms */
+@keyframes fadeInAnim {
+    to { opacity: 1; }
 }
 
-.mirrorgate-node {
-    width: 240px;
-    height: 340px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+@keyframes popInAnim {
+    to { opacity: 1; transform: scale(1); }
 }
 
 /* ==========================================================================
@@ -149,11 +169,10 @@ button.rpg-box {
     background-color: var(--starlight-white);
     z-index: 9999;
     opacity: 0;
-    pointer-events: none; /* Ensures the invisible flash doesn't block clicks */
+    pointer-events: none;
     transition: opacity 1.5s ease-in-out;
 }
 
-/* This class is added by your JavaScript to trigger the white screen wipe */
 .flash-active {
     opacity: 1 !important;
 }
