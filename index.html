@@ -3,9 +3,102 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Musubi | Vanguard Citizen Services</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Vanguard Citizen Services</title>
+  
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Reset margins and set the global font */
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Orbitron', sans-serif;
+      background-color: #050505; /* Deep black behind everything */
+      overflow: hidden; /* Prevents scrolling on the title screen */
+    }
+
+    /* Background setup using your specific image path */
+    #title-screen {
+      height: 100vh;
+      width: 100vw;
+      background-image: url('images/introbkgd.png');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      transition: opacity 1.5s ease-in-out; /* Smooth fade out later */
+    }
+
+    /* Dark gradient overlay so the glowing text is readable */
+    #title-screen::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(circle, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.8) 100%);
+    }
+
+    /* Container for text to keep it above the overlay */
+    .title-container {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      color: #ffffff;
+    }
+
+    .company-name {
+      font-size: 1.2rem;
+      letter-spacing: 4px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      color: #a0a0a0;
+    }
+
+    /* Big, glowing game title */
+    .game-title {
+      font-size: 6rem;
+      margin: 0 0 50px 0;
+      letter-spacing: 8px;
+      text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 40px #00ffff;
+    }
+
+    /* SAO/Retro style start button */
+    #start-button {
+      padding: 15px 50px;
+      font-size: 1.5rem;
+      font-family: 'Orbitron', sans-serif;
+      background: rgba(0, 255, 255, 0.1);
+      color: #00ffff;
+      border: 2px solid #00ffff;
+      box-shadow: 0 0 10px #00ffff inset, 0 0 10px #00ffff;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      animation: pulse 2s infinite; /* Pulsing effect */
+    }
+
+    #start-button:hover {
+      background: #00ffff;
+      color: #000000;
+      box-shadow: 0 0 20px #00ffff inset, 0 0 30px #00ffff;
+    }
+
+    /* Makes the button slowly blink like "Press Start" screens */
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.6; }
+      100% { opacity: 1; }
+    }
+
+    /* Temporary styling for the hidden game world */
+    #game-world {
+      color: #00ffff;
+      padding: 50px;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
 
@@ -22,6 +115,29 @@
     <p>Your journey begins here...</p>
     </div>
 
-  <script src="script.js"></script>
+  <script>
+    document.getElementById('start-button').addEventListener('click', function() {
+      const titleScreen = document.getElementById('title-screen');
+      const gameWorld = document.getElementById('game-world');
+
+      // Play a quick visual cue on the button
+      this.style.background = '#ffffff';
+      this.style.color = '#000000';
+      this.innerText = 'LOGGING IN...';
+
+      // Fade out the title screen after a short delay
+      setTimeout(() => {
+        titleScreen.style.opacity = '0';
+        
+        // Once faded out, hide it completely and show the game world
+        setTimeout(() => {
+          titleScreen.style.display = 'none';
+          gameWorld.style.display = 'block';
+          // Re-enable scrolling now that they are in the site
+          document.body.style.overflow = 'auto'; 
+        }, 1500); // 1.5 seconds to match the CSS transition
+      }, 800); // 0.8 seconds delay before fading starts
+    });
+  </script>
 </body>
 </html>
