@@ -10,7 +10,6 @@
         :root {
             --gold: #D4AF37;
             --gold-glow: rgba(212, 175, 55, 0.5);
-            --ambient-glow: rgba(212, 175, 55, 0.2);
             --dark-glass: rgba(10, 10, 10, 0.85);
             --border-gold: rgba(212, 175, 55, 0.4);
         }
@@ -19,14 +18,13 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            scroll-behavior: smooth;
         }
 
         body {
             font-family: 'Inter', sans-serif;
             background-color: #000;
             color: white;
-            overflow-x: hidden;
+            overflow: hidden; /* Prevents scrolling since content is now one screen */
         }
 
         /* --- STARFIELD ENGINE --- */
@@ -84,33 +82,24 @@
             position: relative;
         }
 
-        .hero-logo { width: 280px; margin-bottom: 40px; filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.4)); }
-        .slogan { font-family: 'Cinzel', serif; font-size: 2rem; letter-spacing: 8px; color: white; animation: pulse-glow 3.5s infinite ease-in-out; }
+        .hero-logo { 
+            width: 320px; /* Made slightly larger for the single-page focus */
+            margin-bottom: 40px; 
+            filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.4)); 
+        }
+
+        .slogan { 
+            font-family: 'Cinzel', serif; 
+            font-size: 2.2rem; 
+            letter-spacing: 10px; 
+            color: white; 
+            animation: pulse-glow 3.5s infinite ease-in-out; 
+        }
 
         @keyframes pulse-glow {
             0%, 100% { text-shadow: 0 0 10px var(--gold-glow); opacity: 0.7; }
             50% { text-shadow: 0 0 30px var(--gold), 0 0 50px var(--gold); opacity: 1; }
         }
-
-        .scroll-arrow { position: absolute; bottom: 120px; cursor: pointer; animation: bounce 2s infinite; text-decoration: none; color: var(--gold); font-size: 2.5rem; }
-        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-15px);} }
-
-        /* --- CONTENT --- */
-        section { height: 100vh; display: flex; justify-content: center; align-items: center; padding: 0 10%; }
-        .glass-panel {
-            background: var(--dark-glass);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid var(--border-gold);
-            border-radius: 24px;
-            padding: 70px;
-            max-width: 850px;
-            text-align: center;
-            box-shadow: 0 0 100px 10px var(--ambient-glow);
-        }
-
-        h2 { font-family: 'Cinzel', serif; color: var(--gold); font-size: 3rem; margin-bottom: 25px; letter-spacing: 4px; }
-        p { font-size: 1.15rem; line-height: 2; color: #ececec; font-weight: 300; }
 
         /* --- PERSISTENT FOOTER --- */
         footer {
@@ -118,20 +107,20 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            padding: 20px 0;
+            padding: 30px 0;
             text-align: center;
             background: linear-gradient(to top, rgba(0,0,0,1), transparent);
             z-index: 1000;
         }
 
-        .legal-links { margin-bottom: 8px; }
+        .legal-links { margin-bottom: 10px; }
         .legal-links a {
             color: white;
             text-decoration: none;
-            font-size: 0.8rem;
-            margin: 0 15px;
+            font-size: 0.85rem;
+            margin: 0 20px;
             font-weight: 400;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             transition: 0.3s;
         }
         .legal-links a:hover { color: var(--gold); }
@@ -139,8 +128,8 @@
         .copyright {
             color: var(--gold);
             font-family: 'Cinzel', serif;
-            font-size: 0.75rem;
-            letter-spacing: 1px;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
             opacity: 0.8;
         }
     </style>
@@ -161,21 +150,7 @@
     <header class="hero">
         <img src="images/vanguardorglogo.png" alt="Vanguard Knights Logo" class="hero-logo">
         <div class="slogan">Empower. Educate. Elevate.</div>
-        <a href="#about" class="scroll-arrow">▼</a>
     </header>
-
-    <section id="about">
-        <div class="glass-panel">
-            <h2>About Us</h2>
-            <p>
-                The Vanguard Knights represent a standard of unwavering excellence. 
-                We are a dedicated collective of specialists committed to the 
-                fortification of civic life. Through strategic intervention and 
-                steadfast support, we ensure that every citizen has the vantage 
-                point needed to thrive in an ever-changing world.
-            </p>
-        </div>
-    </section>
 
     <footer>
         <div class="legal-links">
@@ -204,9 +179,9 @@
                 });
             } catch (error) {
                 console.error('Nav Load Error:', error);
-                // Fallback updated to your new tab order
+                // Updated Fallback with About Us first
                 navContainer.innerHTML = `
-                    <li><a href="#about">About Us</a></li>
+                    <li><a href="about.html">About Us</a></li>
                     <li><a href="story.html">Our Story</a></li>
                     <li><a href="team.html">Our Team</a></li>
                     <li><a href="contact.html">Contact Us</a></li>
