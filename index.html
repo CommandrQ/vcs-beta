@@ -14,7 +14,7 @@
             --dark-glass: rgba(15, 15, 15, 0.95);
             --border-gold: rgba(212, 175, 55, 0.4);
             --nav-height: 90px;
-            --footer-height: 80px;
+            --footer-height: 85px;
         }
 
         * {
@@ -28,10 +28,10 @@
             font-family: 'Inter', sans-serif;
             background-color: #000;
             color: white;
-            overflow: hidden; /* Cinematic landing page focus */
+            overflow: hidden; /* Maintains cinematic focus */
         }
 
-        /* --- STARFIELD FLIGHT ENGINE --- */
+        /* --- STARFIELD ENGINE --- */
         .stars-container {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -39,27 +39,23 @@
             background: radial-gradient(circle at center, #111 0%, #000 100%);
             overflow: hidden;
         }
-
         .star-layer {
             position: absolute;
             top: -100%; left: 0; width: 200%; height: 200%;
             background-repeat: repeat;
             animation: move-stars linear infinite;
         }
-
         .layer-1 { background-image: radial-gradient(1px 1px at 10% 10%, #fff, transparent); background-size: 300px 300px; animation-duration: 120s; opacity: 0.3; }
         .layer-2 { background-image: radial-gradient(2px 2px at 20% 80%, #fff, transparent); background-size: 400px 400px; animation-duration: 80s; opacity: 0.5; }
-        .layer-3 { background-image: radial-gradient(4px 4px at 40% 40%, #fff, transparent), radial-gradient(5px 5px at 10% 90%, #fff, transparent); background-size: 600px 600px; animation-duration: 40s; opacity: 0.7; }
-
+        .layer-3 { background-image: radial-gradient(4px 4px at 40% 40%, #fff, transparent); background-size: 600px 600px; animation-duration: 40s; opacity: 0.7; }
         @keyframes move-stars { from { transform: translateY(0); } to { transform: translateY(50%); } }
 
-        /* --- UNIFORM HEADER (SCROLLABLE ON MOBILE) --- */
+        /* --- PERSISTENT NAVIGATION --- */
         nav {
             position: fixed;
             top: 0; width: 100%;
             height: var(--nav-height);
             display: flex;
-            justify-content: center; /* Centered on Desktop */
             align-items: center;
             background: rgba(0,0,0,0.9);
             border-bottom: 1px solid var(--border-gold);
@@ -67,10 +63,20 @@
             backdrop-filter: blur(20px);
         }
 
+        .nav-container {
+            position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: center; /* Desktop centered */
+            align-items: center;
+            overflow: hidden;
+        }
+
         nav ul {
             display: flex;
             list-style: none;
             gap: 45px;
+            padding: 0 40px;
         }
 
         nav ul li a {
@@ -83,9 +89,24 @@
             text-transform: uppercase; 
             transition: 0.4s;
             white-space: nowrap;
-            cursor: pointer;
         }
         nav ul li a:hover { color: white; text-shadow: 0 0 15px var(--gold); }
+
+        #scroll-indicator {
+            display: none;
+            position: absolute;
+            right: 15px;
+            color: var(--gold);
+            font-size: 1.2rem;
+            pointer-events: none;
+            z-index: 2001;
+            animation: arrow-pulse 2s infinite;
+        }
+
+        @keyframes arrow-pulse {
+            0%, 100% { opacity: 0; transform: translateX(0); }
+            50% { opacity: 1; transform: translateX(5px); }
+        }
 
         /* --- HERO SECTION --- */
         .hero {
@@ -117,7 +138,7 @@
             50% { text-shadow: 0 0 30px var(--gold), 0 0 50px var(--gold); opacity: 1; }
         }
 
-        /* --- UNIFORM FOOTER --- */
+        /* --- PERSISTENT FOOTER --- */
         footer {
             position: fixed;
             bottom: 0; left: 0; width: 100%;
@@ -128,19 +149,16 @@
             align-items: center;
             background: linear-gradient(to top, rgba(0,0,0,1) 70%, transparent);
             z-index: 2000;
-            padding: 0 20px;
         }
 
-        .legal-links { margin-bottom: 5px; }
+        .legal-links { margin-bottom: 8px; }
         .legal-links a {
             color: white;
             text-decoration: none;
             font-size: 0.8rem;
             margin: 0 15px;
             letter-spacing: 1px;
-            transition: 0.3s;
         }
-        .legal-links a:hover { color: var(--gold); }
 
         .copyright {
             color: var(--gold);
@@ -150,38 +168,36 @@
             opacity: 0.8;
         }
 
-        /* --- MOBILE OPTIMIZATION --- */
+        /* --- MOBILE HUD OPTIMIZATION --- */
         @media (max-width: 600px) {
-            /* Scrollable Header */
-            nav {
-                justify-content: flex-start;
-                padding: 0 20px;
+            .nav-container { justify-content: flex-start; }
+            
+            nav::after {
+                content: "";
+                position: absolute; right: 0; top: 0;
+                height: 100%; width: 60px;
+                background: linear-gradient(to right, transparent, rgba(0,0,0,0.9));
+                pointer-events: none; z-index: 10;
             }
+
             nav ul {
                 gap: 30px;
                 overflow-x: auto;
                 scrollbar-width: none;
                 width: 100%;
+                padding: 0 20px;
             }
             nav ul::-webkit-scrollbar { display: none; }
-            nav ul li a { 
-                font-size: 1.1rem; 
-                letter-spacing: 1px; 
-            }
+            
+            nav ul li a { font-size: 1.1rem; }
+            #scroll-indicator { display: block; }
 
-            /* Single Line Footer */
-            footer {
-                flex-direction: row;
-                justify-content: center;
-                white-space: nowrap;
-                padding: 10px;
-            }
+            footer { flex-direction: row; white-space: nowrap; }
             .legal-links { margin-bottom: 0; display: flex; align-items: center; }
             .legal-links a { font-size: 0.65rem; margin: 0 8px; }
             .legal-links::after { content: "|"; color: var(--gold); margin-right: 10px; font-size: 0.7rem; }
             .copyright { font-size: 0.65rem; }
 
-            /* Logo scaling */
             .hero-logo { width: 220px; }
             .slogan { font-size: 1.2rem; letter-spacing: 4px; }
         }
@@ -196,8 +212,11 @@
     </div>
 
     <nav>
-        <ul id="main-nav">
-            </ul>
+        <div class="nav-container">
+            <ul id="main-nav">
+                </ul>
+            <span id="scroll-indicator">❯</span>
+        </div>
     </nav>
 
     <main class="hero">
@@ -216,32 +235,42 @@
     </footer>
 
     <script>
+        const navList = document.getElementById('main-nav');
+        const indicator = document.getElementById('scroll-indicator');
+
+        // Logic to load links
         async function loadNavigation() {
-            const navContainer = document.getElementById('main-nav');
             try {
                 const response = await fetch('json/nav.json');
                 const navData = await response.json();
-                navContainer.innerHTML = '';
+                navList.innerHTML = '';
                 navData.forEach(item => {
                     const li = document.createElement('li');
                     const a = document.createElement('a');
                     a.href = item.link;
                     a.textContent = item.name;
                     li.appendChild(a);
-                    navContainer.appendChild(li);
+                    navList.appendChild(li);
                 });
             } catch (error) {
-                console.error('Nav Load Error:', error);
-                // Fallback Tabs
-                navContainer.innerHTML = `
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="story.html">Our Story</a></li>
-                    <li><a href="team.html">Our Team</a></li>
-                    <li><a href="knights.html">The Knights</a></li>
-                    <li><a href="contact.html">Contact Us</a></li>
+                navList.innerHTML = `
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="story.html">Story</a></li>
+                    <li><a href="team.html">Team</a></li>
+                    <li><a href="knights.html">Knights</a></li>
                 `;
             }
         }
+
+        // Logic to hide indicator on scroll
+        navList.addEventListener('scroll', () => {
+            if (navList.scrollLeft > 20) {
+                indicator.style.opacity = "0";
+                indicator.style.transition = "0.5s";
+                setTimeout(() => indicator.style.display = "none", 500);
+            }
+        });
+
         window.onload = loadNavigation;
     </script>
 
