@@ -1,6 +1,6 @@
 [
+  { "name": "About Us", "link": "about.html" },
   { "name": "Our Story", "link": "story.html" },
   { "name": "Our Team", "link": "team.html" },
-  { "name": "Contact Us", "link": "contact.html" },
-  { "name": "New Tab", "link": "new-page.html" }
+  { "name": "Contact Us", "link": "contact.html" }
 ]
