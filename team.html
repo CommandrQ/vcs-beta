@@ -13,21 +13,22 @@
             --ambient-glow: rgba(212, 175, 55, 0.2);
             --dark-glass: rgba(15, 15, 15, 0.95);
             --border-gold: rgba(212, 175, 55, 0.4);
-            --nav-height: 85px;
-            --footer-height: 100px;
+            --nav-height: 90px;
+            --footer-height: 80px;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            scroll-behavior: smooth;
         }
 
         body {
             font-family: 'Inter', sans-serif;
             background-color: #000;
             color: white;
-            overflow: hidden;
+            overflow: hidden; /* Maintains cinematic flight look */
         }
 
         /* --- STARFIELD ENGINE --- */
@@ -44,12 +45,12 @@
             background-repeat: repeat;
             animation: move-stars linear infinite;
         }
-        .layer-1 { background-image: radial-gradient(1px 1px at 10% 10%, #fff, transparent), radial-gradient(1px 1px at 50% 50%, #fff, transparent); background-size: 300px 300px; animation-duration: 120s; opacity: 0.3; }
-        .layer-2 { background-image: radial-gradient(2px 2px at 20% 80%, #fff, transparent), radial-gradient(2px 2px at 80% 10%, var(--gold), transparent); background-size: 400px 400px; animation-duration: 80s; opacity: 0.5; }
-        .layer-3 { background-image: radial-gradient(4px 4px at 40% 40%, #fff, transparent), radial-gradient(5px 5px at 10% 90%, #fff, transparent); background-size: 600px 600px; animation-duration: 40s; opacity: 0.7; }
+        .layer-1 { background-image: radial-gradient(1px 1px at 10% 10%, #fff, transparent); background-size: 300px 300px; animation-duration: 120s; opacity: 0.3; }
+        .layer-2 { background-image: radial-gradient(2px 2px at 20% 80%, #fff, transparent); background-size: 400px 400px; animation-duration: 80s; opacity: 0.5; }
+        .layer-3 { background-image: radial-gradient(4px 4px at 40% 40%, #fff, transparent); background-size: 600px 600px; animation-duration: 40s; opacity: 0.7; }
         @keyframes move-stars { from { transform: translateY(0); } to { transform: translateY(50%); } }
 
-        /* --- NAVIGATION --- */
+        /* --- UNIFORM HEADER --- */
         nav {
             position: fixed;
             top: 0; width: 100%;
@@ -57,28 +58,51 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: rgba(0,0,0,0.85);
+            background: rgba(0,0,0,0.9);
             border-bottom: 1px solid var(--border-gold);
-            z-index: 1000;
-            backdrop-filter: blur(15px);
+            z-index: 2000;
+            backdrop-filter: blur(20px);
         }
-        nav ul { display: flex; list-style: none; gap: 40px; }
+        nav ul { display: flex; list-style: none; gap: 45px; }
         nav ul li a {
             text-decoration: none; color: var(--gold);
             font-family: 'Cinzel', serif; font-weight: bold;
-            font-size: 0.85rem; letter-spacing: 2px;
+            font-size: 0.9rem; letter-spacing: 2px;
             text-transform: uppercase; transition: 0.4s;
         }
         nav ul li a:hover { color: white; text-shadow: 0 0 15px var(--gold); }
 
-        /* --- CONTENT CONTAINER --- */
+        /* --- UNIFORM FOOTER --- */
+        footer {
+            position: fixed;
+            bottom: 0; left: 0; width: 100%;
+            height: var(--footer-height);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(to top, rgba(0,0,0,1) 70%, transparent);
+            z-index: 2000;
+            padding: 0 20px;
+        }
+        .legal-links { margin-bottom: 5px; }
+        .legal-links a {
+            color: white; text-decoration: none;
+            font-size: 0.8rem; margin: 0 15px;
+            letter-spacing: 1px; transition: 0.3s;
+        }
+        .copyright {
+            color: var(--gold); font-family: 'Cinzel', serif;
+            font-size: 0.75rem; letter-spacing: 1.5px; opacity: 0.8;
+        }
+
+        /* --- CONTENT WINDOW --- */
         .page-content {
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding-top: var(--nav-height);
-            padding-bottom: var(--footer-height);
+            padding: var(--nav-height) 20px var(--footer-height);
         }
 
         .glass-panel {
@@ -88,16 +112,20 @@
             border: 1px solid var(--border-gold);
             border-radius: 20px;
             padding: 50px;
-            width: 90%;
+            width: 100%;
             max-width: 750px;
             text-align: center;
             box-shadow: 0 0 100px 5px var(--ambient-glow);
-            max-height: calc(100vh - (var(--nav-height) + var(--footer-height) + 40px));
+            
+            /* Safe Height Calculation */
+            max-height: 100%;
+            
+            /* Stealth Scrolling */
             overflow-y: auto; 
-            scrollbar-width: none;
-            -ms-overflow-style: none;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE/Edge */
         }
-        .glass-panel::-webkit-scrollbar { display: none; }
+        .glass-panel::-webkit-scrollbar { display: none; } /* Chrome/Safari */
 
         h1 {
             font-family: 'Cinzel', serif;
@@ -136,7 +164,6 @@
             font-weight: 600;
         }
 
-        /* Button Grouping for multiple links */
         .button-group {
             display: flex;
             justify-content: center;
@@ -164,26 +191,21 @@
             box-shadow: 0 0 15px var(--gold);
         }
 
-        /* --- FOOTER --- */
-        footer {
-            position: fixed;
-            bottom: 0; left: 0; width: 100%;
-            height: var(--footer-height);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(to top, rgba(0,0,0,1) 60%, transparent);
-            z-index: 1000;
+        /* --- MOBILE OPTIMIZATION --- */
+        @media (max-width: 600px) {
+            nav ul { gap: 20px; }
+            nav ul li a { font-size: 1.1rem; letter-spacing: 1px; }
+
+            footer { flex-direction: row; justify-content: center; white-space: nowrap; }
+            .legal-links { margin-bottom: 0; display: flex; align-items: center; }
+            .legal-links a { font-size: 0.65rem; margin: 0 8px; }
+            .legal-links::after { content: "|"; color: var(--gold); margin-right: 10px; font-size: 0.7rem; }
+            .copyright { font-size: 0.65rem; }
+            
+            h1 { font-size: 2rem; margin-bottom: 30px; }
+            .member-name { font-size: 1.4rem; }
+            .member-title { font-size: 0.85rem; }
         }
-        .legal-links { margin-bottom: 8px; }
-        .legal-links a {
-            color: white; text-decoration: none;
-            font-size: 0.75rem; margin: 0 15px;
-            letter-spacing: 1.5px; transition: 0.3s;
-        }
-        .legal-links a:hover { color: var(--gold); }
-        .copyright { color: var(--gold); font-family: 'Cinzel', serif; font-size: 0.75rem; opacity: 0.8; }
     </style>
 </head>
 <body>
@@ -195,7 +217,8 @@
     </div>
 
     <nav>
-        <ul id="main-nav"></ul>
+        <ul id="main-nav">
+            </ul>
     </nav>
 
     <main class="page-content">
@@ -224,11 +247,11 @@
 
     <footer>
         <div class="legal-links">
-            <a href="privacy.html">Privacy Policy</a>
-            <a href="terms.html">Terms of Use</a>
+            <a href="privacy.html">Privacy</a>
+            <a href="terms.html">Terms</a>
         </div>
         <div class="copyright">
-            Vanguard Citizen Services &copy; 2026. All Rights Reserved.
+            VCS &copy; 2026
         </div>
     </footer>
 
@@ -248,10 +271,17 @@
                     navContainer.appendChild(li);
                 });
             } catch (error) {
-                navContainer.innerHTML = `<li><a href="about.html">About Us</a></li><li><a href="story.html">Our Story</a></li><li><a href="team.html">Our Team</a></li><li><a href="contact.html">Contact Us</a></li>`;
+                // Fallback Tabs
+                navContainer.innerHTML = `
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="story.html">Our Story</a></li>
+                    <li><a href="team.html">Our Team</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                `;
             }
         }
         window.onload = loadNavigation;
     </script>
+
 </body>
 </html>
