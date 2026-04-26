@@ -10,24 +10,28 @@
         :root {
             --gold: #D4AF37;
             --gold-glow: rgba(212, 175, 55, 0.5);
-            --dark-glass: rgba(10, 10, 10, 0.85);
+            --ambient-glow: rgba(212, 175, 55, 0.2);
+            --dark-glass: rgba(15, 15, 15, 0.95);
             --border-gold: rgba(212, 175, 55, 0.4);
+            --nav-height: 90px;
+            --footer-height: 80px;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            scroll-behavior: smooth;
         }
 
         body {
             font-family: 'Inter', sans-serif;
             background-color: #000;
             color: white;
-            overflow: hidden;
+            overflow: hidden; /* Cinematic landing page focus */
         }
 
-        /* --- STARFIELD ENGINE --- */
+        /* --- STARFIELD FLIGHT ENGINE --- */
         .stars-container {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -35,36 +39,53 @@
             background: radial-gradient(circle at center, #111 0%, #000 100%);
             overflow: hidden;
         }
+
         .star-layer {
             position: absolute;
             top: -100%; left: 0; width: 200%; height: 200%;
             background-repeat: repeat;
             animation: move-stars linear infinite;
         }
+
         .layer-1 { background-image: radial-gradient(1px 1px at 10% 10%, #fff, transparent); background-size: 300px 300px; animation-duration: 120s; opacity: 0.3; }
         .layer-2 { background-image: radial-gradient(2px 2px at 20% 80%, #fff, transparent); background-size: 400px 400px; animation-duration: 80s; opacity: 0.5; }
-        .layer-3 { background-image: radial-gradient(4px 4px at 40% 40%, #fff, transparent); background-size: 600px 600px; animation-duration: 40s; opacity: 0.7; }
+        .layer-3 { background-image: radial-gradient(4px 4px at 40% 40%, #fff, transparent), radial-gradient(5px 5px at 10% 90%, #fff, transparent); background-size: 600px 600px; animation-duration: 40s; opacity: 0.7; }
+
         @keyframes move-stars { from { transform: translateY(0); } to { transform: translateY(50%); } }
 
-        /* --- NAVIGATION --- */
+        /* --- UNIFORM HEADER (SCROLLABLE ON MOBILE) --- */
         nav {
             position: fixed;
             top: 0; width: 100%;
+            height: var(--nav-height);
             display: flex;
-            justify-content: center;
-            padding: 25px;
-            background: rgba(0,0,0,0.85);
+            justify-content: center; /* Centered on Desktop */
+            align-items: center;
+            background: rgba(0,0,0,0.9);
             border-bottom: 1px solid var(--border-gold);
-            z-index: 1000;
-            backdrop-filter: blur(15px);
+            z-index: 2000;
+            backdrop-filter: blur(20px);
         }
-        nav ul { display: flex; list-style: none; gap: 30px; }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 45px;
+        }
+
         nav ul li a {
-            text-decoration: none; color: var(--gold);
-            font-family: 'Cinzel', serif; font-weight: bold;
-            font-size: 0.8rem; letter-spacing: 2px;
-            text-transform: uppercase; transition: 0.4s;
+            text-decoration: none; 
+            color: var(--gold);
+            font-family: 'Cinzel', serif; 
+            font-weight: bold;
+            font-size: 0.9rem; 
+            letter-spacing: 2px;
+            text-transform: uppercase; 
+            transition: 0.4s;
+            white-space: nowrap;
+            cursor: pointer;
         }
+        nav ul li a:hover { color: white; text-shadow: 0 0 15px var(--gold); }
 
         /* --- HERO SECTION --- */
         .hero {
@@ -74,93 +95,95 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-        }
-        .hero-logo { 
-            width: 280px; 
-            margin-bottom: 40px; 
-            filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.4)); 
-        }
-        .slogan { 
-            font-family: 'Cinzel', serif; 
-            font-size: 1.8rem; 
-            letter-spacing: 8px; 
-            color: white; 
-            animation: pulse-glow 3.5s infinite ease-in-out; 
             padding: 0 20px;
         }
+
+        .hero-logo {
+            width: 320px;
+            margin-bottom: 40px;
+            filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.4));
+        }
+
+        .slogan {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2rem;
+            letter-spacing: 10px;
+            color: white;
+            animation: pulse-glow 3.5s infinite ease-in-out;
+        }
+
         @keyframes pulse-glow {
             0%, 100% { text-shadow: 0 0 10px var(--gold-glow); opacity: 0.7; }
-            50% { text-shadow: 0 0 30px var(--gold); opacity: 1; }
+            50% { text-shadow: 0 0 30px var(--gold), 0 0 50px var(--gold); opacity: 1; }
         }
 
-        /* --- PERSISTENT FOOTER --- */
+        /* --- UNIFORM FOOTER --- */
         footer {
             position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 20px 0;
-            text-align: center;
-            background: linear-gradient(to top, rgba(0,0,0,1) 80%, transparent);
-            z-index: 1000;
+            bottom: 0; left: 0; width: 100%;
+            height: var(--footer-height);
             display: flex;
             flex-direction: column;
+            justify-content: center;
             align-items: center;
+            background: linear-gradient(to top, rgba(0,0,0,1) 70%, transparent);
+            z-index: 2000;
+            padding: 0 20px;
         }
 
-        .legal-links { margin-bottom: 8px; }
+        .legal-links { margin-bottom: 5px; }
         .legal-links a {
             color: white;
             text-decoration: none;
             font-size: 0.8rem;
             margin: 0 15px;
             letter-spacing: 1px;
+            transition: 0.3s;
         }
+        .legal-links a:hover { color: var(--gold); }
 
         .copyright {
             color: var(--gold);
             font-family: 'Cinzel', serif;
             font-size: 0.75rem;
-            letter-spacing: 1.5px;
+            letter-spacing: 2px;
+            opacity: 0.8;
         }
 
-        /* --- MOBILE AUTO-ADJUST (ONE LINE) --- */
+        /* --- MOBILE OPTIMIZATION --- */
         @media (max-width: 600px) {
-            nav ul { gap: 15px; }
-            nav ul li a { font-size: 0.65rem; letter-spacing: 1px; }
-            .hero-logo { width: 200px; }
-            .slogan { font-size: 1.2rem; letter-spacing: 4px; }
+            /* Scrollable Header */
+            nav {
+                justify-content: flex-start;
+                padding: 0 20px;
+            }
+            nav ul {
+                gap: 30px;
+                overflow-x: auto;
+                scrollbar-width: none;
+                width: 100%;
+            }
+            nav ul::-webkit-scrollbar { display: none; }
+            nav ul li a { 
+                font-size: 1.1rem; 
+                letter-spacing: 1px; 
+            }
 
+            /* Single Line Footer */
             footer {
-                flex-direction: row; /* Force content onto one line */
+                flex-direction: row;
                 justify-content: center;
-                flex-wrap: nowrap;
-                padding: 15px 5px;
-            }
-
-            .legal-links {
-                margin-bottom: 0;
-                display: flex;
-            }
-
-            .legal-links a {
-                margin: 0 5px;
-                font-size: 0.6rem; /* Shrunk for mobile fitting */
                 white-space: nowrap;
+                padding: 10px;
             }
+            .legal-links { margin-bottom: 0; display: flex; align-items: center; }
+            .legal-links a { font-size: 0.65rem; margin: 0 8px; }
+            .legal-links::after { content: "|"; color: var(--gold); margin-right: 10px; font-size: 0.7rem; }
+            .copyright { font-size: 0.65rem; }
 
-            /* Add a gold separator between links and copyright */
-            .legal-links::after {
-                content: "|";
-                color: var(--gold);
-                margin: 0 5px;
-                font-size: 0.6rem;
-            }
-
-            .copyright {
-                font-size: 0.6rem; /* Shrunk for mobile fitting */
-                white-space: nowrap;
-            }
+            /* Logo scaling */
+            .hero-logo { width: 220px; }
+            .slogan { font-size: 1.2rem; letter-spacing: 4px; }
         }
     </style>
 </head>
@@ -173,13 +196,14 @@
     </div>
 
     <nav>
-        <ul id="main-nav"></ul>
+        <ul id="main-nav">
+            </ul>
     </nav>
 
-    <header class="hero">
+    <main class="hero">
         <img src="images/vanguardorglogo.png" alt="Vanguard Knights Logo" class="hero-logo">
         <div class="slogan">Empower. Educate. Elevate.</div>
-    </header>
+    </main>
 
     <footer>
         <div class="legal-links">
@@ -187,7 +211,7 @@
             <a href="terms.html">Terms</a>
         </div>
         <div class="copyright">
-            Vanguard Citizen Services &copy; 2026
+            VCS &copy; 2026
         </div>
     </footer>
 
@@ -207,7 +231,15 @@
                     navContainer.appendChild(li);
                 });
             } catch (error) {
-                navContainer.innerHTML = `<li><a href="about.html">About Us</a></li><li><a href="story.html">Our Story</a></li><li><a href="team.html">Our Team</a></li><li><a href="contact.html">Contact Us</a></li>`;
+                console.error('Nav Load Error:', error);
+                // Fallback Tabs
+                navContainer.innerHTML = `
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="story.html">Our Story</a></li>
+                    <li><a href="team.html">Our Team</a></li>
+                    <li><a href="knights.html">The Knights</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                `;
             }
         }
         window.onload = loadNavigation;
