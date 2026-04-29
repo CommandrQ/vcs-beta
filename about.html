@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About VCS | Vanguard Citizen Services</title>
+    <title>Vanguard Citizen Services | About</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     
     <style>
@@ -28,10 +28,10 @@
             font-family: 'Inter', sans-serif;
             background-color: #000;
             color: white;
-            overflow: hidden; /* Keeps background static */
+            overflow: hidden; /* Cinematic look - background doesn't scroll */
         }
 
-        /* --- STARFIELD ENGINE --- */
+        /* --- STARFIELD BACKGROUND --- */
         .stars-container {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -50,45 +50,56 @@
         .layer-3 { background-image: radial-gradient(4px 4px at 40% 40%, #fff, transparent); background-size: 600px 600px; animation-duration: 40s; opacity: 0.7; }
         @keyframes move-stars { from { transform: translateY(0); } to { transform: translateY(50%); } }
 
-        /* --- NAVIGATION --- */
+        /* --- HUD NAVIGATION --- */
         nav {
             position: fixed;
             top: 0; width: 100%;
             height: var(--nav-height);
             display: flex;
             align-items: center;
-            background: rgba(0,0,0,0.9);
+            background: rgba(0,0,0,0.95);
             border-bottom: 1px solid var(--border-gold);
             z-index: 2000;
             backdrop-filter: blur(20px);
         }
+
         .nav-container {
-            position: relative;
-            width: 100%;
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            overflow: hidden;
         }
+
+        /* LOGO FIX */
+        .nav-logo {
+            height: 45px; /* STRICT CONTROL ON LOGO SIZE */
+            width: auto;
+            filter: drop-shadow(0 0 5px var(--gold-glow));
+            transition: 0.3s;
+        }
+        .nav-logo:hover { transform: scale(1.05); }
+
         nav ul {
             display: flex;
             list-style: none;
-            gap: 45px;
-            padding: 0 40px;
+            gap: 35px;
         }
+
         nav ul li a {
             text-decoration: none; 
             color: var(--gold);
             font-family: 'Cinzel', serif; 
             font-weight: bold;
-            font-size: 0.9rem; 
+            font-size: 0.85rem; 
             letter-spacing: 2px;
             text-transform: uppercase; 
             transition: 0.4s;
         }
         nav ul li a:hover { color: white; text-shadow: 0 0 15px var(--gold); }
 
-        /* --- CONTENT PANEL --- */
+        /* --- MAIN PANEL --- */
         .page-content {
             height: 100vh;
             display: flex;
@@ -102,58 +113,62 @@
             backdrop-filter: blur(30px);
             border: 1px solid var(--border-gold);
             border-radius: 20px;
-            padding: 60px 50px;
+            padding: 60px 40px;
             width: 100%;
-            max-width: 800px;
+            max-width: 850px;
             text-align: center;
-            box-shadow: 0 0 100px 5px var(--ambient-glow);
-            max-height: 85vh; /* Constraints panel height */
+            box-shadow: 0 0 80px var(--ambient-glow);
+            max-height: 80vh; /* Keeps panel within viewport */
             overflow-y: auto; 
             scrollbar-width: thin;
             scrollbar-color: var(--gold) transparent;
         }
+        .glass-panel::-webkit-scrollbar { width: 6px; }
+        .glass-panel::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
 
-        /* Responsive Image Fix */
+        /* CONTENT IMAGE FIX */
         .content-image {
             width: 100%;
-            max-width: 500px;
+            max-width: 550px;
             height: auto;
             border-radius: 10px;
-            margin: 0 auto 30px;
+            margin: 0 auto 40px;
             display: block;
             border: 1px solid var(--border-gold);
-            box-shadow: 0 0 20px var(--gold-glow);
+            box-shadow: 0 0 25px var(--gold-glow);
         }
 
         section {
-            padding-bottom: 60px;
-            margin-bottom: 40px;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+            padding-bottom: 80px;
+            margin-bottom: 60px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
         }
-        section:last-of-type { border-bottom: none; margin-bottom: 0; }
+        section:last-of-type { border-bottom: none; margin-bottom: 0; padding-bottom: 20px; }
 
         h1, h2 {
             font-family: 'Cinzel', serif;
             color: var(--gold);
             letter-spacing: 4px;
             margin-bottom: 20px;
+            text-transform: uppercase;
         }
-        h1 { font-size: 2.8rem; }
-        h2 { font-size: 2rem; }
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 1.8rem; }
 
         .divider {
-            height: 1px; width: 80px;
+            height: 1px; width: 60px;
             background: var(--gold);
             margin: 0 auto 30px;
-            box-shadow: 0 0 10px var(--gold);
+            box-shadow: 0 0 8px var(--gold);
         }
 
         p {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             line-height: 1.8;
             color: #ececec;
             font-weight: 300;
-            text-align: justify;
+            max-width: 700px;
+            margin: 0 auto;
         }
 
         /* --- FOOTER --- */
@@ -166,17 +181,20 @@
             justify-content: center;
             align-items: center;
             background: rgba(0,0,0,0.9);
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
             z-index: 2000;
         }
-        .legal-links a { color: white; text-decoration: none; font-size: 0.8rem; margin: 0 15px; }
-        .copyright { color: var(--gold); font-family: 'Cinzel', serif; font-size: 0.75rem; margin-top: 5px; }
+        .legal-links a { color: white; text-decoration: none; font-size: 0.75rem; margin: 0 15px; opacity: 0.7; }
+        .copyright { color: var(--gold); font-family: 'Cinzel', serif; font-size: 0.7rem; margin-top: 8px; letter-spacing: 1px; }
 
         /* --- MOBILE --- */
         @media (max-width: 600px) {
-            .glass-panel { padding: 30px 20px; }
+            .nav-container { flex-direction: column; gap: 10px; padding: 10px 0; }
+            .nav-logo { height: 35px; }
+            nav { height: auto; padding: 10px 0; }
+            .page-content { padding-top: 120px; }
             h1 { font-size: 1.8rem; }
-            h2 { font-size: 1.5rem; }
-            nav ul { gap: 20px; }
+            p { font-size: 0.95rem; }
         }
     </style>
 </head>
@@ -190,6 +208,9 @@
 
     <nav>
         <div class="nav-container">
+            <a href="index.html">
+                <img src="logo.png" alt="VCS Logo" class="nav-logo">
+            </a>
             <ul id="main-nav">
                 <li><a href="#impact">Impact</a></li>
                 <li><a href="#story">Story</a></li>
@@ -202,7 +223,7 @@
         <div class="glass-panel" id="scroll-panel">
             
             <section id="impact">
-                <img src="https://via.placeholder.com/800x400" alt="Civic Impact" class="content-image">
+                <img src="impact-visual.jpg" alt="Civic Impact" class="content-image">
                 <h1>Civic Impact</h1>
                 <div class="divider"></div>
                 <p>
@@ -247,8 +268,8 @@
     </footer>
 
     <script>
-        // Smooth scrolling for the internal glass panel
-        document.querySelectorAll('nav a').forEach(anchor => {
+        // Smooth scroll logic for internal panel
+        document.querySelectorAll('#main-nav a').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 const targetId = this.getAttribute('href').substring(1);
@@ -256,7 +277,7 @@
                 const panel = document.getElementById('scroll-panel');
                 
                 panel.scrollTo({
-                    top: targetElement.offsetTop - panel.offsetTop - 20,
+                    top: targetElement.offsetTop - panel.offsetTop - 30,
                     behavior: 'smooth'
                 });
             });
