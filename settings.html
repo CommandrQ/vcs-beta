@@ -3,299 +3,171 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Vanguard | Identity Terminal</title>
+    <title>Fort Toward | Citizen Profile</title>
     
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        /* --- LOCKED VIEWPORT ENGINE --- */
+        :root { 
+            --gold: #d4af37; 
+            --v-curve: cubic-bezier(0.4, 0, 0.2, 1); 
+        }
+
         html, body {
             margin: 0; padding: 0;
-            height: 100vh;
-            width: 100vw;
-            overflow: hidden; /* Strict: No page scrolling */
-            background: #000;
-            color: #fff;
+            height: 100dvh; width: 100vw;
+            overflow: hidden; background: #000; color: #fff;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            display: flex; flex-direction: column;
         }
 
-        /* --- LARGE ANIMATED STARFIELD --- */
-        .universe-bg {
-            position: fixed; inset: 0; z-index: -1;
-            background: radial-gradient(circle at center, #0a0a0a 0%, #000 100%);
-        }
-        .star-layer {
-            position: absolute; inset: -500px;
-            background-repeat: repeat;
-            animation: starDrift linear infinite;
-        }
-        .stars-1 { 
-            background-image: radial-gradient(3.5px 3.5px at 25px 50px, #fff, transparent),
-                              radial-gradient(2.5px 2.5px at 150px 150px, #fff, transparent); 
-            background-size: 400px 400px; animation-duration: 160s; opacity: 0.4; 
-        }
-        .stars-2 { 
-            background-image: radial-gradient(5px 5px at 200px 100px, var(--gold), transparent),
-                              radial-gradient(3.5px 3.5px at 350px 350px, var(--gold), transparent); 
-            background-size: 600px 600px; animation-duration: 110s; opacity: 0.25; 
-        }
-        @keyframes starDrift { from { transform: translateY(0); } to { transform: translateY(500px); } }
+        .universe-bg { position: fixed; inset: 0; z-index: -1; background: radial-gradient(circle at center, #0a0a0a 0%, #000 100%); }
+        .star-layer { position: absolute; inset: -500px; background-image: radial-gradient(2px 2px at 20px 30px, #fff, transparent); background-size: 300px 300px; animation: drift 180s linear infinite; opacity: 0.2; }
+        @keyframes drift { from { transform: translateY(0); } to { transform: translateY(500px); } }
 
-        /* --- CENTERING & DIMENSIONS --- */
         .viewport-wrapper {
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            width: 100%;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            box-sizing: border-box;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            height: 100%; width: 100%; padding: 15px; box-sizing: border-box;
         }
 
-        .identity-terminal {
-            width: 100%;
-            max-width: 850px; /* Widened to fit all elements side-by-side */
-            max-height: 90vh;
-            display: flex;
-            flex-direction: column;
-            padding: 40px;
-            gap: 15px;
-            box-sizing: border-box;
-            position: relative;
-            overflow: hidden; /* Ensures the card itself doesn't scroll */
+        /* --- SETTINGS TERMINAL --- */
+        .directory-terminal {
+            width: 100%; max-width: 600px; /* Slimmer for form focus */
+            height: auto; max-height: 85vh; display: flex; flex-direction: column;
+            background: rgba(10, 10, 10, 0.9); backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 24px;
+            overflow: hidden; box-shadow: 0 0 40px rgba(0,0,0,0.8);
         }
 
-        /* --- DUAL COLUMN GRID --- */
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr; /* Side-by-side on desktop */
-            gap: 15px 25px;
-            width: 100%;
-            margin-top: 5px;
+        .terminal-header { padding: 30px 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .greeting-text { color: var(--gold); font-size: 1.5rem; font-weight: 700; letter-spacing: 1px; }
+
+        /* --- FORM STYLING --- */
+        .settings-content { padding: 30px; overflow-y: auto; }
+        
+        .form-group { margin-bottom: 25px; }
+        .form-group label { 
+            display: block; color: #fff; font-size: 0.75rem; 
+            text-transform: uppercase; letter-spacing: 2px; 
+            margin-bottom: 10px; font-weight: bold;
         }
 
-        /* Span logic for wider fields */
-        .span-2 { grid-column: 1 / -1; }
+        .form-input {
+            width: 100%; background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 12px;
+            padding: 12px 15px; color: #fff; font-size: 1rem;
+            box-sizing: border-box; transition: 0.3s;
+        }
+        .form-input:focus { outline: none; border-color: var(--gold); background: rgba(255,255,255,0.08); }
 
-        @media (max-width: 750px) {
-            .form-grid { grid-template-columns: 1fr; }
-            .identity-terminal { max-width: 450px; padding: 25px; max-height: 85vh; }
-            .terminal-body { overflow-y: auto; } /* Allow scrolling ONLY on mobile */
-        }
+        .btn-row { display: flex; gap: 15px; margin-top: 10px; }
 
-        /* --- UI COMPONENTS --- */
-        .identity-header { text-align: center; margin-bottom: 5px; }
-        .rank-tag {
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255,255,255,0.4);
-            color: #fff;
-            font-size: 0.7rem;
-            font-weight: 800;
-            padding: 5px 20px;
-            border-radius: 50px;
-            text-transform: uppercase;
-            display: inline-block;
+        .btn-gold {
+            flex: 2; background: var(--gold); color: #000;
+            border: none; padding: 15px; border-radius: 50px;
+            font-weight: 800; text-transform: uppercase; letter-spacing: 1px;
+            cursor: pointer; transition: 0.3s; font-size: 0.85rem;
         }
-        .tag-verified { border-color: var(--gold); color: var(--gold); background: rgba(212, 175, 55, 0.15); }
+        .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3); }
 
-        .white-divider {
-            width: 100%; height: 1px; background: #fff; border: none;
-            box-shadow: 0 0 10px #fff, 0 0 5px #fff; margin: 10px 0;
+        .btn-outline {
+            flex: 1; background: transparent; color: #fff;
+            border: 1px solid rgba(255,255,255,0.3); padding: 15px; border-radius: 50px;
+            font-weight: 800; text-transform: uppercase; letter-spacing: 1px;
+            cursor: pointer; transition: 0.3s; font-size: 0.8rem; text-align: center; text-decoration: none;
         }
+        .btn-outline:hover { border-color: #fff; background: rgba(255,255,255,0.05); }
 
-        .form-group { text-align: left; }
-        .form-group label {
-            display: block; font-size: 0.65rem; font-weight: 700;
-            text-transform: uppercase; color: var(--gold);
-            margin-bottom: 6px; letter-spacing: 1.5px;
-        }
-        .form-group input {
-            width: 100%; background: rgba(0, 0, 0, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 12px; padding: 14px; color: #fff;
-            font-size: 1rem; box-sizing: border-box;
-            transition: border-color 0.3s;
-        }
-        .form-group input:focus { outline: none; border-color: var(--gold); }
-
-        .action-stack {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-            margin-top: 15px;
-        }
-
-        .helper-link {
-            background: none; border: none; color: #fff;
-            font-size: 0.8rem; text-decoration: underline;
-            cursor: pointer; opacity: 0.9;
-        }
-        .helper-link:hover { opacity: 1; color: var(--gold); }
-
-        /* --- FOOTER --- */
-        .vanguard-footer {
-            position: absolute; bottom: 15px; width: 100%; text-align: center;
-            pointer-events: none; z-index: 10;
-        }
-        .vanguard-footer p { font-size: 0.75rem; color: #fff; margin: 0; font-weight: 700; letter-spacing: 1px; }
+        .status-msg { margin-top: 20px; font-size: 0.85rem; text-align: center; min-height: 1.2rem; }
+        .success { color: #4ade80; }
+        .error { color: #f87171; }
     </style>
 </head>
 <body>
 
-    <div class="universe-bg">
-        <div class="star-layer stars-1"></div>
-        <div class="star-layer stars-2"></div>
-    </div>
+    <div class="universe-bg"><div class="star-layer"></div></div>
 
     <div class="viewport-wrapper">
-        <article class="glass-card identity-terminal animate-wake" id="identity-card">
-            
-            <div class="identity-header">
-                <div id="auth-tag" class="rank-tag">Unauthenticated</div>
-                <h2 id="citizen-name" style="margin: 8px 0 0; font-size: 2.2rem; font-weight: 900; text-transform: uppercase; color: #fff; letter-spacing: 1px;">Guest Mode</h2>
-            </div>
+        <article class="directory-terminal">
+            <header class="terminal-header">
+                <div class="greeting-text">Citizen Profile</div>
+                <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; opacity: 0.6; margin-top: 5px;">Update Sanctuary Records</div>
+            </header>
 
-            <div style="display: flex; justify-content: center;">
-                <a href="directory.html" class="gold-pill" style="width: auto; padding: 12px 50px; font-size: 0.9rem;">Return Home</a>
-            </div>
-
-            <hr class="white-divider">
-
-            <div class="terminal-body">
-                <div id="state-loading" style="text-align: center; color: #fff; padding: 20px; font-weight: bold;">Initialising Ledger...</div>
-
-                <div id="state-unauth" class="form-grid" style="display: none;">
-                    <div class="form-group">
-                        <label>Full Name</label>
-                        <input type="text" id="reg-name" placeholder="John Doe">
-                    </div>
+            <div class="settings-content">
+                <form id="profile-form">
                     <div class="form-group">
                         <label>Email Address</label>
-                        <input type="email" id="reg-email" placeholder="name@email.com">
+                        <input type="email" id="email-display" class="form-input" readonly style="opacity: 0.5; cursor: not-allowed;">
                     </div>
-                    <div class="form-group span-2">
-                        <label>Security Password</label>
-                        <input type="password" id="reg-password" placeholder="••••••••">
-                    </div>
-                    <div class="action-stack span-2">
-                        <button class="gold-pill" style="width: 100%; max-width: 350px;" onclick="handleSignUp()">Sync Identity</button>
-                        <button class="helper-link" onclick="setView('restore')">lost access? Restore via email</button>
-                    </div>
-                </div>
 
-                <div id="state-restore" class="form-grid" style="display: none;">
-                    <div class="form-group">
-                        <label>Verified Name</label>
-                        <input type="text" id="res-name" placeholder="John Doe">
-                    </div>
-                    <div class="form-group">
-                        <label>Verified Email</label>
-                        <input type="email" id="res-email" placeholder="name@email.com">
-                    </div>
-                    <div class="action-stack span-2">
-                        <button class="gold-pill" style="width: 100%; max-width: 350px;" onclick="handleRestoreAccess()">Restore Access</button>
-                        <button class="helper-link" onclick="setView('unauth')">return to log in</button>
-                    </div>
-                </div>
-
-                <div id="state-auth" class="form-grid" style="display: none;">
-                    <div class="form-group">
-                        <label>Identity Email</label>
-                        <input type="email" id="auth-email" disabled>
-                    </div>
                     <div class="form-group">
                         <label>Full Name</label>
-                        <input type="text" id="auth-name">
+                        <input type="text" id="full-name" class="form-input" placeholder="e.g. John Doe">
                     </div>
-                    <div class="action-stack span-2">
-                        <button class="gold-pill" style="width: 100%; max-width: 350px;" onclick="handleUpdateProfile()">Update Profile</button>
-                        <button class="gold-pill" style="background: transparent; color: #f87171; border-color: #f87171; width: auto; font-size: 0.75rem;" onclick="handleLogout()">Disconnect Identity</button>
+
+                    <div class="btn-row">
+                        <button type="submit" class="btn-gold">Update Profile</button>
+                        <a href="directory.html" class="btn-outline">Return</a>
                     </div>
-                </div>
+                </form>
+                
+                <div id="status-msg" class="status-msg"></div>
+
+                <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 30px 0;">
+                
+                <button id="btn-logout" class="btn-outline" style="width: 100%; border-color: #f87171; color: #f87171;">Sign Out of Sanctuary</button>
             </div>
-            
-            <div id="sys-msg" style="text-align: center; font-size: 0.85rem; font-weight: bold; min-height: 1.2em; color: #fff; margin-top: 5px;"></div>
         </article>
     </div>
-
-    <footer class="vanguard-footer">
-        <p id="footer-text">Vanguard OS v7.4 | Identity Protocol Enabled</p>
-    </footer>
 
     <script>
         const SB_URL = 'https://dvyjupytbwbrcoyouxpf.supabase.co';
         const SB_KEY = 'sb_publishable_wjgbPekKmodd5mSDXIeUeg_Wq73GzOk';
         const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
 
-        const ui = {
-            tag: document.getElementById('auth-tag'),
-            nameDisplay: document.getElementById('citizen-name'),
-            msg: document.getElementById('sys-msg'),
-            states: {
-                loading: document.getElementById('state-loading'),
-                unauth: document.getElementById('state-unauth'),
-                restore: document.getElementById('state-restore'),
-                auth: document.getElementById('state-auth')
+        const form = document.getElementById('profile-form');
+        const nameInput = document.getElementById('full-name');
+        const emailDisplay = document.getElementById('email-display');
+        const statusMsg = document.getElementById('status-msg');
+        const logoutBtn = document.getElementById('btn-logout');
+
+        async function loadProfile() {
+            const { data: { user } } = await supabaseClient.auth.getUser();
+
+            if (user) {
+                emailDisplay.value = user.email;
+                nameInput.value = user.user_metadata?.full_name || '';
+            } else {
+                // If not logged in, send them back to the Hub
+                window.location.href = 'directory.html';
             }
-        };
-
-        async function checkAuth() {
-            const { data: { session } } = await supabaseClient.auth.getSession();
-            if (session) loadAuth(session.user);
-            else setView('unauth');
         }
 
-        function setView(key) {
-            Object.keys(ui.states).forEach(k => ui.states[k].style.display = 'none');
-            ui.states[key].style.display = (key === 'loading' ? 'block' : 'grid');
-            if (key === 'unauth') { ui.tag.innerText = "Unauthenticated"; ui.tag.classList.remove('tag-verified'); ui.nameDisplay.innerText = "Guest Mode"; }
-        }
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            statusMsg.innerText = "Syncing with Sanctuary...";
+            statusMsg.className = "status-msg";
 
-        async function loadAuth(user) {
-            ui.tag.innerText = "Authenticated";
-            ui.tag.classList.add('tag-verified');
-            const { data } = await supabaseClient.from('citizens').select('full_name').eq('auth_id', user.id).single();
-            const name = data ? data.full_name : user.email.split('@')[0];
-            ui.nameDisplay.innerText = name;
-            document.getElementById('auth-email').value = user.email;
-            document.getElementById('auth-name').value = name;
-            setView('auth');
-        }
+            const { data, error } = await supabaseClient.auth.updateUser({
+                data: { full_name: nameInput.value }
+            });
 
-        async function handleSignUp() {
-            const name = document.getElementById('reg-name').value;
-            const email = document.getElementById('reg-email').value;
-            const password = document.getElementById('reg-password').value;
-            notify("Syncing...", "var(--gold)");
-            const { error } = await supabaseClient.auth.signUp({ email, password, options: { data: { full_name: name } } });
-            error ? notify(error.message, "#f87171") : notify("Verification sent.", "#4ade80");
-        }
+            if (error) {
+                statusMsg.innerText = "Error: " + error.message;
+                statusMsg.classList.add('error');
+            } else {
+                statusMsg.innerText = "Profile updated successfully.";
+                statusMsg.classList.add('success');
+            }
+        });
 
-        async function handleRestoreAccess() {
-            const email = document.getElementById('res-email').value;
-            notify("Transmitting...", "var(--gold)");
-            const { error } = await supabaseClient.auth.signInWithOtp({ email, options: { emailRedirectTo: window.location.href } });
-            error ? notify(error.message, "#f87171") : notify("Link sent.", "#4ade80");
-        }
+        logoutBtn.addEventListener('click', async () => {
+            await supabaseClient.auth.signOut();
+            window.location.href = 'directory.html';
+        });
 
-        async function handleUpdateProfile() {
-            const { data: { session } } = await supabaseClient.auth.getSession();
-            const name = document.getElementById('auth-name').value;
-            const { error } = await supabaseClient.from('citizens').update({ full_name: name }).eq('auth_id', session.user.id);
-            if (!error) { ui.nameDisplay.innerText = name; notify("Profile Updated.", "#4ade80"); }
-        }
-
-        async function handleLogout() { await supabaseClient.auth.signOut(); location.reload(); }
-        function notify(t, c) { ui.msg.innerText = t; ui.msg.style.color = c; }
-        
-        supabaseClient.auth.onAuthStateChange((ev) => { if (ev === 'SIGNED_IN') checkAuth(); });
-        window.onload = checkAuth;
+        window.onload = loadProfile;
     </script>
 </body>
 </html>
