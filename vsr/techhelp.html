@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Vanguard | Tech Coaching</title>
+    <title>Vanguard | Personal Tech Coaching</title>
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="techhelp.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -13,7 +13,7 @@
 
     <div class="announcement-ticker">
         <div class="ticker-content">
-            ::: IN-PERSON TECH COACHING NOW AVAILABLE IN HARDIN & JEFFERSON COUNTIES, KY ::: BUILDING YOUR DIGITAL CONFIDENCE :::
+            ::: IN-PERSON TECH COACHING AVAILABLE IN HARDIN & JEFFERSON COUNTIES, KY ::: BUILDING DIGITAL CONFIDENCE TOGETHER :::
         </div>
     </div>
 
@@ -27,62 +27,84 @@
         </header>
 
         <section class="intro-section">
-            <h2>Take a deep breath. We can figure this out together.</h2>
-            
-            <p>Technology is supposed to make life easier, but it often just feels overwhelming. Vanguard offers patient, one-on-one guidance to help you comfortably use your devices, protect your personal information, and stay connected with the people who matter most.</p>
+            <h2>Take a deep breath. We'll figure it out.</h2>
+            <p>
+                Technology shouldn't be a source of stress. Whether you want to secure your home Wi-Fi, 
+                master your new tablet, or stay connected with family without the headache, 
+                Vanguard provides patient, one-on-one guidance right in your home.
+            </p>
         </section>
 
         <section class="services-container" id="tiers-container"></section>
     </div>
 
-    <footer class="vanguard-footer">Powered by Vanguard Citizen Services &copy; <span id="current-year"></span></footer>
+    <footer class="vanguard-footer">
+        Powered by Vanguard Citizen Services &copy; <span id="current-year"></span>
+    </footer>
 
     <div class="modal-overlay" id="request-modal">
         <div class="modal-card">
             <header class="modal-header">
-                <h2>Request a Coach</h2>
-                <button type="button" class="close-modal" id="close-btn">&times;</button>
+                <h2 id="modal-package-title">Package Details</h2>
+                <button type="button" class="close-modal" id="close-btn" aria-label="Close">&times;</button>
             </header>
             
-            <div class="modal-body">
-                <div class="modal-notice">
-                    <p><strong>Heads up:</strong> Clicking the "Review Draft" button below will securely open your device's email app and generate a prefilled message. You can review it before sending!</p>
-                    <p>A Vanguard Knight will get back to you as soon as possible.</p>
-                    <p class="cs-note">Not sure where to start or have other questions? <a href="vsrsupport.html">Contact Customer Service.</a></p>
+            <div id="modal-step-1" class="modal-view">
+                <div class="modal-body">
+                    <div class="package-info-display">
+                        <p id="modal-package-description" style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 25px; color: #ddd;"></p>
+                    </div>
+                    <div class="modal-actions-row" style="display: flex; gap: 15px;">
+                        <button type="button" id="btn-continue-to-form" class="btn-primary" style="flex: 2;">Continue to Request</button>
+                        <button type="button" id="btn-go-back" class="btn-secondary" style="background: #444; color: white; border: none; padding: 15px; border-radius: 6px; cursor: pointer; flex: 1;">Go Back</button>
+                    </div>
                 </div>
+            </div>
 
-                <form id="tech-request-form">
-                    <div class="form-group">
-                        <label for="req-name">Your Name</label>
-                        <input type="text" id="req-name" required placeholder="e.g., Jane Doe">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="req-email">Your Email</label>
-                        <input type="email" id="req-email" required placeholder="e.g., jane@example.com">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="req-phone">Phone Number</label>
-                        <input type="tel" id="req-phone" placeholder="(Optional) Best number to reach you">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="req-goal">What would you like to achieve today?</label>
-                        <textarea id="req-goal" rows="4" required placeholder="e.g., I need help setting up my new iPad and making sure my home Wi-Fi is secure."></textarea>
+            <div id="modal-step-2" class="modal-view" style="display: none;">
+                <div class="modal-body">
+                    <div class="modal-notice">
+                        <p><strong>Note:</strong> Clicking "Review Draft" will open your email app so you can preview and send your request. A Vanguard Knight will respond shortly.</p>
+                        <p class="cs-note">Not sure where to start? <a href="vsrsupport.html">Contact Customer Service.</a></p>
                     </div>
 
-                    <div class="agreement-group">
-                        <input type="checkbox" id="req-adult" required>
-                        <label for="req-adult">I agree that an adult (18+) will be present for the duration of the appointment.</label>
-                    </div>
+                    <form id="tech-request-form">
+                        <div class="form-group">
+                            <label for="req-name">Your Name</label>
+                            <input type="text" id="req-name" required placeholder="Enter your full name">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="req-email">Your Email</label>
+                            <input type="email" id="req-email" required placeholder="Enter your email address">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="req-phone">Phone Number (Optional)</label>
+                            <input type="tel" id="req-phone" placeholder="Best number to reach you">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="req-goal">What can we help you achieve?</label>
+                            <textarea id="req-goal" rows="3" required placeholder="e.g., Help setting up a secure backup for my family photos..."></textarea>
+                        </div>
 
-                    <button type="button" id="review-draft-btn" class="btn-primary">Review Draft</button>
-                </form>
+                        <div class="agreement-group">
+                            <input type="checkbox" id="req-adult" required>
+                            <label for="req-adult">I agree that an adult (18+) will be present for the duration of the appointment.</label>
+                        </div>
+
+                        <button type="button" id="review-draft-btn" class="btn-primary">Review Draft & Send</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 
     <script src="techhelp.js"></script>
+    <script>
+        // Simple year update for footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
 </body>
 </html>
