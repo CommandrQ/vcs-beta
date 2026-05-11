@@ -1,7 +1,3 @@
-/* ==========================================
-   VANGUARD MASTER DESIGN SYSTEM
-   ========================================== */
-
 :root { 
     --gold: #d4af37; 
     --dark-gold: rgba(212, 175, 1, 0.2);
@@ -12,224 +8,74 @@
     --onyx: #0a0a0a;
 }
 
-/* --- FOUNDATION --- */
 html, body {
-    margin: 0; padding: 0; 
-    height: 100dvh; width: 100vw;
-    background-color: #000 !important; 
-    color: #ffffff !important;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
-    overflow: hidden; 
-    -webkit-font-smoothing: antialiased;
+    margin: 0; padding: 0; height: 100dvh; width: 100vw;
+    background-color: #000 !important; color: #fff !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    overflow: hidden; -webkit-font-smoothing: antialiased;
 }
 
-/* --- LAYER 1: THE DEEP CANVAS (STARFIELD) --- */
-#vanguard-universe {
-    position: fixed; inset: 0; z-index: -1;
-    background: #000;
-}
-
+/* --- THE DEEP CANVAS --- */
+#vanguard-universe { position: fixed; inset: 0; z-index: -1; background: #000; }
 .gold-star-layer {
     position: absolute; inset: -500px;
-    background-image: 
-        radial-gradient(1.5px 1.5px at 20px 30px, var(--dark-gold), transparent),
-        radial-gradient(1px 1px at 80px 70px, rgba(255,255,255,0.05), transparent);
-    background-size: 250px 250px;
-    animation: drift 120s linear infinite;
+    background-image: radial-gradient(1.5px 1.5px at 20px 30px, var(--dark-gold), transparent),
+                      radial-gradient(1px 1px at 80px 70px, rgba(255,255,255,0.05), transparent);
+    background-size: 250px 250px; animation: drift 120s linear infinite;
 }
+@keyframes drift { from { transform: translateY(0); } to { transform: translateY(500px); } }
 
-@keyframes drift { 
-    from { transform: translateY(0); } 
-    to { transform: translateY(500px); } 
-}
-
-/* --- LAYER 2: THE APP ARCHITECTURE --- */
+/* --- APP STRUCTURE --- */
 #app-wrapper {
-    display: flex; flex-direction: column;
-    height: 100dvh; width: 100%; 
-    max-width: 650px; 
-    margin: 0 auto; position: relative;
-    box-shadow: 0 0 80px rgba(0,0,0,1);
-    background-color: #000;
+    display: flex; flex-direction: column; height: 100dvh; width: 100%; 
+    max-width: 650px; margin: 0 auto; position: relative; background: #000;
 }
 
-/* --- GLASS MORPHISM COMPONENTS --- */
 .glass-module {
-    background: var(--glass-bg);
-    backdrop-filter: blur(30px); 
-    -webkit-backdrop-filter: blur(30px);
-    border-bottom: 1px solid var(--glass-border);
-    border-top: 1px solid var(--glass-border); 
-    z-index: 10;
+    background: var(--glass-bg); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+    border-bottom: 1px solid var(--glass-border); z-index: 10; padding: 30px;
 }
 
-#top-glass-panel { padding: 30px; flex-shrink: 0; }
-#bottom-glass-panel { position: absolute; bottom: 0; width: 100%; height: 60px; }
-
-/* --- HEADER NAVIGATION (Button on Right) --- */
-.citizen-status { 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    width: 100%;
-    gap: 15px;
+/* --- THE ONYX SHIELD INPUTS --- */
+.settings-input, .form-input, #hub-search {
+    width: 100%; box-sizing: border-box; background: var(--onyx) !important;
+    border: 1px solid var(--glass-border) !important; border-radius: 14px;
+    padding: 18px; color: #fff !important; font-size: 1.1rem; outline: none;
 }
 
-h1 { font-size: 1.6rem; font-weight: 700; color: var(--gold); margin: 0; letter-spacing: 0.5px; }
-
-.back-btn { 
-    text-decoration: none; 
-    color: var(--gold); 
-    font-weight: 800; 
-    font-size: 1rem; 
-    text-transform: uppercase; 
-    letter-spacing: 1px;
-    padding: 10px 22px; 
-    border: 1px solid var(--glass-border);
-    border-radius: 12px;
-    background: rgba(212, 175, 55, 0.08);
-    transition: all 0.3s var(--v-curve);
-    white-space: nowrap;
-}
-
-.back-btn:hover {
-    background: rgba(212, 175, 55, 0.15);
-    border-color: var(--gold);
-    box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
-}
-
-/* --- THE ONYX SHIELD (INPUTS & AUTOFILL KILLER) --- */
-.settings-input, .form-input, #hub-search, select, textarea {
-    width: 100%;
-    box-sizing: border-box;
-    background-color: var(--onyx) !important;
-    background: var(--onyx) !important;
-    border: 1px solid var(--glass-border) !important;
-    border-radius: 14px;
-    padding: 18px 20px;
-    color: #ffffff !important; /* Forces White Text */
-    font-size: 1.1rem;
-    font-family: inherit;
-    outline: none;
-    transition: all 0.3s var(--v-curve);
-    appearance: none;
-    -webkit-appearance: none;
-}
-
-/* Force dark backgrounds on browser autofill */
-input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus,
-textarea:-webkit-autofill,
-textarea:-webkit-autofill:hover,
-textarea:-webkit-autofill:focus,
-select:-webkit-autofill,
-select:-webkit-autofill:hover,
-select:-webkit-autofill:focus {
-    -webkit-text-fill-color: #ffffff !important;
+input:-webkit-autofill {
+    -webkit-text-fill-color: #fff !important;
     -webkit-box-shadow: 0 0 0px 1000px var(--onyx) inset !important;
-    transition: background-color 5000s ease-in-out 0s;
 }
 
-.settings-input:focus, #hub-search:focus {
-    border-color: var(--gold) !important;
-    background-color: #000 !important;
-    box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
-}
-
-.settings-input::placeholder { color: rgba(255, 255, 255, 0.3); }
-
-/* Custom Select Arrow */
-select.settings-input, select.form-input {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23d4af37' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 15px center;
-    background-size: 18px;
-    padding-right: 45px;
-}
-
-/* --- SCROLLABLE CONTENT AREA --- */
-#directory-core {
-    flex-grow: 1; 
-    overflow-y: auto; 
-    overflow-x: hidden;
-    padding-bottom: 100px; 
-    -webkit-overflow-scrolling: touch;
-    background-color: #000;
-}
-
-#directory-list { display: flex; flex-direction: column; gap: 20px; padding: 30px; }
-
-/* --- CARDS --- */
-.link-card {
-    background: rgba(15, 15, 15, 0.9); 
-    backdrop-filter: blur(10px); 
-    border: 1px solid var(--glass-border); 
-    border-radius: 20px;
-    padding: 35px; 
-    display: flex; flex-direction: column;
-    align-items: center; text-align: center;
-}
-
-.card-title { font-size: 1.3rem; font-weight: 800; color: #fff; margin: 0 0 12px; text-transform: uppercase; letter-spacing: 1px; }
-.card-desc { font-size: 1.05rem; color: rgba(255,255,255,0.75); line-height: 1.6; margin: 0 0 20px; }
-
-/* --- HUB CATEGORY BUTTONS --- */
-#category-bar {
-    display: flex; gap: 12px; padding: 20px 30px; 
-    overflow-x: auto; justify-content: center;
-    white-space: nowrap; -webkit-overflow-scrolling: touch;
-    border-bottom: 1px solid var(--glass-border);
+/* --- BUTTONS & NAV --- */
+.back-btn { 
+    text-decoration: none; color: var(--gold); font-weight: 800; 
+    padding: 10px 20px; border: 1px solid var(--glass-border); border-radius: 12px;
+    background: rgba(212, 175, 55, 0.08); transition: 0.3s;
 }
 
 .cat-btn {
-    background-color: var(--onyx) !important;
-    border: 1px solid var(--glass-border) !important;
-    color: rgba(255, 255, 255, 0.6) !important;
-    padding: 12px 24px; border-radius: 30px;
-    font-size: 0.9rem; font-weight: 700; 
-    cursor: pointer; transition: 0.3s var(--v-curve);
-    text-transform: uppercase; letter-spacing: 1px;
+    background: var(--onyx); border: 1px solid var(--glass-border); color: rgba(255,255,255,0.6);
+    padding: 12px 24px; border-radius: 30px; cursor: pointer; transition: 0.3s;
+}
+.cat-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(212,175,55,0.1); }
+
+.link-card {
+    background: rgba(15,15,15,0.9); border: 1px solid var(--glass-border);
+    border-radius: 20px; padding: 30px; text-align: center; margin-bottom: 20px;
 }
 
-.cat-btn.active {
-    background-color: rgba(212, 175, 55, 0.1) !important;
-    border-color: var(--gold) !important;
-    color: var(--gold) !important;
-}
-
-/* --- ACTION BUTTONS --- */
 .card-btn {
-    cursor: pointer; color: var(--gold) !important; font-size: 0.9rem; font-weight: 700; text-transform: uppercase;
-    text-decoration: none; background: var(--onyx) !important; padding: 14px 30px;
-    border-radius: 10px; border: 1px solid var(--gold) !important; transition: 0.3s;
+    display: inline-block; cursor: pointer; color: var(--gold); font-weight: 700;
+    text-decoration: none; border: 1px solid var(--gold); padding: 12px 25px; border-radius: 10px;
 }
 
-.card-btn:hover { background: var(--gold) !important; color: #000 !important; }
-.card-btn.secondary { border-color: rgba(255,255,255,0.3) !important; color: #fff !important; }
-.card-btn.danger { border-color: var(--danger) !important; color: var(--danger) !important; }
-
-/* --- GATE BUTTON (SLOW FILL) --- */
-.gate-button {
-    position: relative; display: inline-block; width: 100%; box-sizing: border-box; padding: 22px 50px;
-    font-size: 1.1rem; font-weight: 800; text-transform: uppercase;
-    letter-spacing: 3px; color: var(--gold); text-decoration: none;
-    border: 1px solid var(--gold); border-radius: 12px;
-    background: var(--onyx); overflow: hidden; transition: color 0.8s ease; z-index: 1; text-align: center;
+/* --- LOGIN TOAST --- */
+.login-confirmation {
+    position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
+    background: var(--gold); color: #000; padding: 12px 30px; border-radius: 30px;
+    font-size: 0.8rem; font-weight: 800; text-transform: uppercase; z-index: 1000;
+    transition: top 0.5s var(--v-curve); box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
 }
-
-.gate-button::before {
-    content: ''; position: absolute; top: 0; left: 0; width: 0; height: 100%;
-    background: var(--gold); transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1); z-index: -1;
-}
-
-.gate-button:hover::before { width: 100%; }
-.gate-button:hover { color: #000; box-shadow: 0 0 30px rgba(212, 175, 55, 0.4); }
-
-/* --- FOOTER LOGIC --- */
-.footer-container { position: relative; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }
-.footer-msg {
-    position: absolute; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase;
-    color: var(--gold); font-weight: bold; opacity: 0; transition: opacity 0.8s ease; text-align: center;
-}
-.footer-msg.active { opacity: 1; }
+.login-confirmation.active { top: 20px; }
