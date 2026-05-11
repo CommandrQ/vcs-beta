@@ -10,64 +10,94 @@
     
     <!-- Supabase Core -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <style>
+        /* RADIANT LOGO EFFECT */
+        .vanguard-logo {
+            width: 180px;
+            height: auto;
+            margin-bottom: 20px;
+            /* Creates the golden glow radiating from the PNG outline */
+            filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.6)) 
+                    drop-shadow(0 0 30px rgba(212, 175, 55, 0.2));
+            animation: pulseGlow 4s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.5)); }
+            50% { filter: drop-shadow(0 0 25px rgba(212, 175, 55, 0.8)); }
+        }
+
+        /* Transition Overlay */
+        #fade-overlay {
+            position: fixed; inset: 0;
+            background: #000;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 999;
+            transition: opacity 1s ease;
+        }
+        #fade-overlay.active { opacity: 1; }
+    </style>
 </head>
 <body class="gate-body">
 
-    <!-- LAYER 1: The Deep Canvas -->
     <div id="vanguard-universe" aria-hidden="true">
         <div class="gold-star-layer"></div>
     </div>
 
-    <!-- LAYER 2: Transition Overlay -->
     <div id="fade-overlay"></div>
 
-    <!-- LAYER 3: The Command Wrapper -->
     <main id="app-wrapper" style="justify-content: center; align-items: center; background: transparent; box-shadow: none;">
         
-        <div id="gate-interface" style="text-align: center; padding: 40px;">
-            <!-- BRANDING -->
-            <div class="vanguard-branding" style="margin-bottom: 60px;">
-                <h1 style="font-size: 3rem; letter-spacing: 12px; color: var(--gold); margin: 0; font-weight: 900; text-transform: uppercase;">Vanguard</h1>
-                <p style="font-size: 0.8rem; letter-spacing: 5px; color: rgba(255,255,255,0.5); text-transform: uppercase; margin-top: 10px;">Citizen Services</p>
+        <div id="gate-interface" style="text-align: center; padding: 40px; width: 100%;">
+            <!-- BRANDING WITH RADIANT LOGO -->
+            <div class="vanguard-branding" style="margin-bottom: 50px;">
+                <img src="images/vanguardorglogo.png" alt="Vanguard Logo" class="vanguard-logo">
+                <h1 style="font-size: 2.2rem; letter-spacing: 10px; color: var(--gold); margin: 0; font-weight: 900; text-transform: uppercase;">Vanguard</h1>
+                <p style="font-size: 0.75rem; letter-spacing: 4px; color: rgba(255,255,255,0.4); text-transform: uppercase; margin-top: 5px;">Citizen Services</p>
             </div>
 
-            <!-- THE SLOW-FILL GATE -->
-            <button onclick="initiateUplink()" class="gate-button">
-                Enter The Gates
-            </button>
+            <!-- FIXED GATE BUTTON -->
+            <div style="width: 100%; max-width: 320px; margin: 0 auto;">
+                <button onclick="initiateUplink()" class="gate-button">
+                    Initialize Uplink
+                </button>
+            </div>
 
-            <p style="margin-top: 40px; font-size: 0.7rem; color: var(--gold); opacity: 0.6; letter-spacing: 2px; text-transform: uppercase;">
-                2026
+            <p style="margin-top: 40px; font-size: 0.65rem; color: var(--gold); opacity: 0.5; letter-spacing: 2px; text-transform: uppercase;">
+                Authorized Personnel Only
             </p>
         </div>
 
     </main>
 
-    <!-- UI Logic -->
     <script src="app.js"></script>
     <script>
         function initiateUplink() {
             const overlay = document.getElementById('fade-overlay');
             const gate = document.getElementById('gate-interface');
             
-            // Start visual fade
+            // Activate transition
             overlay.classList.add('active');
             gate.style.opacity = '0';
-            gate.style.transition = 'opacity 0.8s ease';
+            gate.style.transform = 'scale(0.98)';
+            gate.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
 
-            // Navigate to Hub after transition
+            // Navigate to Hub
             setTimeout(() => {
                 window.location.href = 'hub.html';
             }, 1000);
         }
 
-        // Ensure clean state on back-button navigation
-        window.addEventListener('pageshow', (event) => {
+        // Fix for back-button caching
+        window.onpageshow = function(event) {
             if (event.persisted) {
                 document.getElementById('fade-overlay').classList.remove('active');
                 document.getElementById('gate-interface').style.opacity = '1';
+                document.getElementById('gate-interface').style.transform = 'scale(1)';
             }
-        });
+        };
     </script>
 </body>
 </html>
