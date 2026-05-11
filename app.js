@@ -1,5 +1,5 @@
 // ==========================================
-// VANGUARD COMMAND LOGIC v3.2
+// VANGUARD COMMAND LOGIC v3.3
 // ==========================================
 
 // 1. SUPABASE INITIALIZATION
@@ -7,16 +7,16 @@ const supabaseUrl = 'https://dvyjupytbwbrcoyouxpf.supabase.co';
 const supabaseKey = 'sb_publishable_wjgbPekKmodd5mSDXIeUeg_Wq73GzOk';
 const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
-// 2. THE RESOURCE DIRECTORY
+// 2. THE RESOURCE DIRECTORY (Renamed System Settings -> System)
 const directoryDataRaw = {
     "Vanguard Tech Lab": [
         { 
             title: "Tech Consulting", 
-            desc: "Simple tech help and advice.", 
+            desc: "Expert strategy and support sessions for seniors, parents, and high-performance individuals.", 
             url: "vsr/techhelp.html" 
         }
     ],
-    "System Settings": [
+    "System": [ // Renamed for a sleeker interface
         { 
             title: "Support Terminal", 
             desc: "Connect directly with Vanguard support for technical help or general inquiries.", 
@@ -26,6 +26,11 @@ const directoryDataRaw = {
             title: "Legal Documents", 
             desc: "Review our Citizen Agreements, Privacy Protocols, and Service Terms.", 
             url: "legal.html" 
+        },
+        {
+            title: "Terminal Settings",
+            desc: "Manage your local cache, request access, or perform a factory reset.",
+            url: "settings.html"
         }
     ]
 };
@@ -38,19 +43,15 @@ function renderHub(category = currentCategory, filterText = "") {
     const list = document.getElementById('directory-list');
     if (!nav || !list) return;
 
-    // Check if the user is typing in the search bar
     if (filterText.trim() === "") {
-        // --- NORMAL CATEGORY MODE ---
-        currentCategory = category; // Save their place
-        nav.style.display = 'flex'; // Show navigation tabs
+        currentCategory = category; 
+        nav.style.display = 'flex'; 
         
-        // Render Tabs
         nav.innerHTML = Object.keys(directoryDataRaw).map(cat => `
             <button class="cat-btn ${cat === currentCategory ? 'active' : ''}" 
                     onclick="renderHub('${cat}')">${cat}</button>
         `).join('');
 
-        // Render Category Cards
         const items = directoryDataRaw[currentCategory];
         list.innerHTML = items.map(item => `
             <div class="link-card">
@@ -61,22 +62,18 @@ function renderHub(category = currentCategory, filterText = "") {
         `).join('');
 
     } else {
-        // --- OMNI-SEARCH MODE ---
-        nav.style.display = 'none'; // Hide tabs to prevent confusion
+        nav.style.display = 'none'; 
         
-        // Flatten all categories into one master list
         let allItems = [];
         for (let cat in directoryDataRaw) {
             allItems = allItems.concat(directoryDataRaw[cat]);
         }
 
-        // Filter the master list by the search keyword
         const matched = allItems.filter(item => 
             item.title.toLowerCase().includes(filterText.toLowerCase()) || 
             item.desc.toLowerCase().includes(filterText.toLowerCase())
         );
 
-        // Render Results or Empty State
         if (matched.length === 0) {
             list.innerHTML = `
                 <div style="text-align: center; margin-top: 60px; opacity: 0.6;">
@@ -100,7 +97,6 @@ function renderHub(category = currentCategory, filterText = "") {
 const searchInput = document.getElementById('hub-search');
 if (searchInput) {
     searchInput.addEventListener('input', (e) => {
-        // Triggers the render loop instantly on every keystroke
         renderHub(currentCategory, e.target.value);
     });
 }
@@ -141,5 +137,5 @@ document.addEventListener('DOMContentLoaded', () => {
     if (yearSpan) yearSpan.innerText = new Date().getFullYear();
 
     updateUI();
-    renderHub(); // Boot up the Hub with default view
+    renderHub(); 
 });
