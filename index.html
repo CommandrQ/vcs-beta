@@ -3,27 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Vanguard | Enter Fort Toward</title>
+    <title>Vanguard | The Gate</title>
+    
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <link rel="stylesheet" href="style.css">
+    
+    <!-- Supabase Core -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body class="gate-body">
 
-    <div id="fade-overlay"></div>
-
+    <!-- LAYER 1: The Deep Canvas -->
     <div id="vanguard-universe" aria-hidden="true">
         <div class="gold-star-layer"></div>
     </div>
 
-    <main id="gate-interface">
-        <div class="logo-container">
-            <img src="images/vanguardorglogo.png" alt="Vanguard Logo" class="vanguard-logo">
+    <!-- LAYER 2: Transition Overlay -->
+    <div id="fade-overlay"></div>
+
+    <!-- LAYER 3: The Command Wrapper -->
+    <main id="app-wrapper" style="justify-content: center; align-items: center; background: transparent; box-shadow: none;">
+        
+        <div id="gate-interface" style="text-align: center; padding: 40px;">
+            <!-- BRANDING -->
+            <div class="vanguard-branding" style="margin-bottom: 60px;">
+                <h1 style="font-size: 3rem; letter-spacing: 12px; color: var(--gold); margin: 0; font-weight: 900; text-transform: uppercase;">Vanguard</h1>
+                <p style="font-size: 0.8rem; letter-spacing: 5px; color: rgba(255,255,255,0.5); text-transform: uppercase; margin-top: 10px;">Citizen Services</p>
+            </div>
+
+            <!-- THE SLOW-FILL GATE -->
+            <button onclick="initiateUplink()" class="gate-button">
+                Initialize Uplink
+            </button>
+
+            <p style="margin-top: 40px; font-size: 0.7rem; color: var(--gold); opacity: 0.6; letter-spacing: 2px; text-transform: uppercase;">
+                Authorized Personnel Only
+            </p>
         </div>
 
-        <div class="action-zone">
-            <a href="hub.html" id="enter-btn" class="gate-button">Enter Fort Toward</a>
-        </div>
     </main>
 
+    <!-- UI Logic -->
     <script src="app.js"></script>
+    <script>
+        function initiateUplink() {
+            const overlay = document.getElementById('fade-overlay');
+            const gate = document.getElementById('gate-interface');
+            
+            // Start visual fade
+            overlay.classList.add('active');
+            gate.style.opacity = '0';
+            gate.style.transition = 'opacity 0.8s ease';
+
+            // Navigate to Hub after transition
+            setTimeout(() => {
+                window.location.href = 'hub.html';
+            }, 1000);
+        }
+
+        // Ensure clean state on back-button navigation
+        window.addEventListener('pageshow', (event) => {
+            if (event.persisted) {
+                document.getElementById('fade-overlay').classList.remove('active');
+                document.getElementById('gate-interface').style.opacity = '1';
+            }
+        });
+    </script>
 </body>
 </html>
