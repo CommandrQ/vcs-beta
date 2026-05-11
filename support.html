@@ -3,122 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Project V | Support</title>
+    <title>Vanguard | Support Terminal</title>
     
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <link rel="stylesheet" href="style.css">
-    
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
+    <!-- Deep Canvas Background -->
     <div id="vanguard-universe" aria-hidden="true">
         <div class="gold-star-layer"></div>
     </div>
 
     <main id="app-wrapper">
+
+        <!-- HEADER (Hub Button Top Right) -->
         <header id="top-glass-panel" class="glass-module">
-            <div class="citizen-status">
-                <!-- TEXT ON LEFT -->
-                <h1>Support</h1>
-                <!-- BIGGER BUTTON ON RIGHT -->
+            <div class="citizen-status" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                <h1 id="support-title">Support</h1>
                 <a href="hub.html" class="back-btn">HUB →</a>
             </div>
         </header>
 
-        <section id="directory-core">
-            <div id="directory-list">
+        <!-- CORE CONTENT (No Footer Below) -->
+        <section id="directory-core" style="flex-grow: 1; overflow-y: auto;">
+            <div id="directory-list" style="padding: 20px;">
                 
+                <!-- Transmission Card -->
                 <div class="link-card">
-                    <h3 class="card-title">Talk to us</h3>
-                    <p class="card-desc">Need help? Send a message and we'll get back to you at your frequency.</p>
+                    <h3 class="card-title">Direct Uplink</h3>
+                    <p class="card-desc">Submit a secure request to the Vanguard Support Core. We will respond via your registered email.</p>
                     
-                    <div class="form-group" style="width: 100%; text-align: left; margin-bottom: 20px;">
-                        <label style="font-size: 0.8rem; color: var(--gold); font-weight: 800; letter-spacing: 2px;">TOPIC</label>
-                        <select id="f-category" class="settings-input" style="margin-top: 8px;">
-                            <option value="Tech Support">Tech Help</option>
-                            <option value="General">General Inquiry</option>
-                            <option value="Guild">Joining the Guild</option>
-                        </select>
+                    <div class="form-group" style="text-align: left; margin-bottom: 20px;">
+                        <label style="font-size: 0.7rem; color: var(--gold); font-weight: 800; letter-spacing: 2px;">YOUR MESSAGE</label>
+                        <textarea id="support-msg" class="settings-input" style="height: 180px; margin-top: 10px;" placeholder="Describe the issue, ask a question, or request assistance..."></textarea>
                     </div>
-
-                    <div class="form-group" style="width: 100%; text-align: left; margin-bottom: 20px;">
-                        <label style="font-size: 0.8rem; color: var(--gold); font-weight: 800; letter-spacing: 2px;">YOUR NAME</label>
-                        <input type="text" id="f-name" class="settings-input" style="margin-top: 8px;" placeholder="Identify yourself...">
-                    </div>
-
-                    <div class="form-group" style="width: 100%; text-align: left; margin-bottom: 20px;">
-                        <label style="font-size: 0.8rem; color: var(--gold); font-weight: 800; letter-spacing: 2px;">RETURN EMAIL</label>
-                        <input type="email" id="f-email" class="settings-input" style="margin-top: 8px;" placeholder="Where can we reach you?">
-                    </div>
-
-                    <div class="form-group" style="width: 100%; text-align: left; margin-bottom: 25px;">
-                        <label style="font-size: 0.8rem; color: var(--gold); font-weight: 800; letter-spacing: 2px;">MESSAGE</label>
-                        <textarea id="f-msg" class="settings-input" style="margin-top: 8px; height: 180px; text-align: left;" placeholder="What's happening?"></textarea>
-                    </div>
-
-                    <button onclick="compileDraft()" class="gate-button" style="width: 100%;">
-                        Initialize Uplink
+                    
+                    <button onclick="transmitRequest()" class="gate-button" style="width: 100%; padding: 15px !important; font-size: 1rem !important;">
+                        Transmit Message
                     </button>
-                    
-                    <div id="sys-msg" style="margin-top: 25px; font-size: 0.9rem; font-weight: 700; text-transform: uppercase;"></div>
+                </div>
+
+                <!-- Status Card -->
+                <div class="link-card" style="background: rgba(15,15,15,0.5);">
+                    <h3 class="card-title" style="font-size: 1rem;">System Status</h3>
+                    <p class="card-desc" style="margin-bottom: 0; color: var(--success); font-weight: 700;">
+                        ● All Vanguard Citizen Services are currently operational.
+                    </p>
                 </div>
 
             </div>
         </section>
 
-        <footer id="bottom-glass-panel" class="glass-module">
-            <div class="footer-container">
-                <p class="footer-msg active">Direct Uplink Active</p>
-            </div>
-        </footer>
     </main>
 
-    <script src="app.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const cached = JSON.parse(localStorage.getItem('vanguard_profile'));
-            if (cached) {
-                if (cached.name) document.getElementById('f-name').value = cached.name;
-                if (cached.email) document.getElementById('f-email').value = cached.email;
+        function transmitRequest() {
+            const msg = document.getElementById('support-msg').value.trim();
+            if (!msg) {
+                return alert("Please enter a message before transmitting.");
             }
-        });
-
-        function compileDraft() {
-            const cat = document.getElementById('f-category').value;
-            const name = document.getElementById('f-name').value.trim();
-            const email = document.getElementById('f-email').value.trim();
-            const msgBody = document.getElementById('f-msg').value.trim();
-            const sys = document.getElementById('sys-msg');
-
-            if (!name || !email || !msgBody) {
-                sys.innerText = "Error: Complete all fields.";
-                sys.style.color = "#ff4d4d";
-                return;
-            }
-
-            sys.innerText = "Uplink Established...";
-            sys.style.color = "var(--gold)";
-
-            const destination = "support@vcscitizen.org";
-            const subject = encodeURIComponent(`[${cat}] Uplink from ${name}`);
             
-            const body = encodeURIComponent(
-`CITIZEN ID: ${name}
-RETURN FREQUENCY: ${email}
-CATEGORY: ${cat}
-
-TRANSCRIPTION:
--------------------------
-${msgBody}
--------------------------
-END TRANSMISSION`
-            );
-
-            setTimeout(() => {
-                window.location.href = `mailto:${destination}?subject=${subject}&body=${body}`;
-                sys.innerText = "Transmission Ready.";
-            }, 600);
+            // Pull the user's name from local storage if they are registered/logged in
+            const cached = JSON.parse(localStorage.getItem('vanguard_profile')) || {};
+            const citizenName = cached.name ? cached.name : 'Unidentified Citizen';
+            
+            // Format the email
+            const subject = `[Vanguard Support] Uplink from ${citizenName}`;
+            const body = `CITIZEN LOG: ${citizenName}\n\nTRANSMISSION:\n${msg}`;
+            
+            // Open the user's email client
+            window.location.href = `mailto:support@vcscitizen.org?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            
+            // Clear the box after clicking
+            document.getElementById('support-msg').value = '';
         }
     </script>
 </body>
