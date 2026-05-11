@@ -19,7 +19,7 @@
 
     <main id="app-wrapper">
 
-        <!-- HEADER (Button aligned to Top Right) -->
+        <!-- HEADER -->
         <header id="top-glass-panel" class="glass-module">
             <div class="citizen-status" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
                 <h1 id="settings-title">Settings</h1>
@@ -35,7 +35,6 @@
                 <div id="auth-card" class="link-card">
                     <h3 class="card-title" id="auth-header">Citizen Access</h3>
                     
-                    <!-- Purpose and Disclaimer -->
                     <div id="auth-info" style="margin-bottom: 25px;">
                         <p class="card-desc" style="margin-bottom: 10px;">
                             An account secures your identity within the Vanguard network, granting you access to private tech consulting, system tools, and direct support.
@@ -45,7 +44,6 @@
                         </p>
                     </div>
                     
-                    <!-- Guest Input View -->
                     <div id="guest-view" style="width: 100%;">
                         <div class="form-group" style="text-align: left; margin-bottom: 20px;">
                             <label style="font-size: 0.7rem; color: var(--gold); font-weight: 800; letter-spacing: 2px;">FULL NAME</label>
@@ -57,11 +55,9 @@
                             <input type="email" id="auth-email" class="settings-input" style="margin-top: 10px;" placeholder="name@email.com">
                         </div>
                         
-                        <!-- Renamed Button -->
                         <button onclick="handleAuth()" class="gate-button" style="width: 100%; padding: 15px !important; font-size: 1rem !important;">Request Access</button>
                     </div>
 
-                    <!-- Logged In View -->
                     <div id="citizen-view" style="width: 100%; display: none;">
                         <button onclick="signOut()" class="gate-button" style="width: 100%; padding: 15px !important; border-color: var(--danger) !important; color: var(--danger) !important;">Disconnect / Logout</button>
                     </div>
@@ -94,6 +90,15 @@
 
     <script src="app.js"></script>
     <script>
+        // --- REAL-TIME AUTH LISTENER ---
+        // This acts as a sensor. If they open their email in a new tab and click the magic link,
+        // this listener detects the new session and instantly updates this settings page.
+        supabaseClient.auth.onAuthStateChange((event, session) => {
+            if (event === 'SIGNED_IN' || event === 'SIGNED_OUT') {
+                syncState();
+            }
+        });
+
         // --- PAGE INITIALIZATION ---
         async function syncState() {
             const { data: { user } } = await supabaseClient.auth.getUser();
@@ -105,21 +110,21 @@
             document.getElementById('current-year').innerText = new Date().getFullYear();
 
             if (user) {
-                // Logged In State
+                // Logged In
                 guestView.style.display = 'none';
-                authInfo.style.display = 'none'; // Hide purpose text once logged in
+                authInfo.style.display = 'none'; 
                 citizenView.style.display = 'block';
                 header.innerText = "Citizen Connected";
                 
-                // Show connected email
                 document.getElementById('auth-msg').innerText = `Active Session: ${user.email}`;
                 document.getElementById('auth-msg').style.color = "var(--gold)";
             } else {
-                // Guest State
+                // Guest
                 guestView.style.display = 'block';
                 authInfo.style.display = 'block';
                 citizenView.style.display = 'none';
                 header.innerText = "Citizen Access";
+                document.getElementById('auth-msg').innerText = "";
             }
         }
 
@@ -138,15 +143,15 @@
             msg.innerText = "Transmitting request...";
             msg.style.color = "var(--gold)";
 
-            // Cache name locally
             localStorage.setItem('vanguard_profile', JSON.stringify({ name: fullname }));
 
-            // OTP Magic Link System (Handles both Create and Login securely)
+            // OTP Magic Link: Creates account if new, logs in if existing.
             const { error } = await supabaseClient.auth.signInWithOtp({
                 email: email,
                 options: { 
+                    // Redirects them to the Hub once they click the email link
                     emailRedirectTo: window.location.origin + '/hub.html',
-                    data: { full_name: fullname } // Sends metadata for your DB Trigger
+                    data: { full_name: fullname } 
                 }
             });
 
@@ -161,18 +166,16 @@
 
         // --- SYSTEM MAINTENANCE ---
         function refreshApp() {
-            // Clears local cache but attempts to preserve the Vanguard profile name
             const prof = localStorage.getItem('vanguard_profile');
             localStorage.clear();
             sessionStorage.clear();
             if(prof) localStorage.setItem('vanguard_profile', prof);
             
             alert("Local cache cleared. The interface will now refresh.");
-            location.reload(true); // Force reload from server
+            location.reload(true);
         }
 
         async function factoryReset() {
-            // High-warning destructive action
             const warningMessage = "WARNING: Factory Reset initiated.\n\nThis will completely wipe your local data, sever your connection, and force you to request access again. \n\nAre you sure you want to proceed?";
             
             if(confirm(warningMessage)) {
