@@ -58,3 +58,62 @@
     <script src="app.js"></script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Project V | Hub</title>
+    
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Supabase Core -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+    <!-- LAYER 1: Deep Canvas -->
+    <div id="vanguard-universe" aria-hidden="true">
+        <div class="gold-star-layer"></div>
+    </div>
+
+    <!-- LAYER 2: App Wrapper -->
+    <main id="app-wrapper">
+
+        <!-- HEADER: Command Zone -->
+        <header id="top-glass-panel" class="glass-module">
+            <div class="citizen-status">
+                <h1 id="user-greeting">Welcome</h1>
+                <!-- Settings button removed per command -->
+            </div>
+            
+            <!-- ONYX SEARCH -->
+            <div style="margin-top: 25px;">
+                <input type="text" id="hub-search" class="form-input" placeholder="Search the Hub Resources...">
+            </div>
+        </header>
+
+        <!-- SCROLLABLE CORE -->
+        <section id="directory-core">
+            <!-- Dynamic Category Navigation -->
+            <nav id="category-bar"></nav>
+            
+            <!-- Dynamic Card List -->
+            <article id="directory-list"></article>
+        </section>
+
+        <!-- FOOTER: System Status -->
+        <footer id="bottom-glass-panel" class="glass-module">
+            <div class="footer-container">
+                <p id="footer-msg-1" class="footer-msg active">Vanguard Citizen Services &copy; <span id="current-year"></span></p>
+                <p id="footer-msg-2" class="footer-msg">Empower . Educate . Elevate</p>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- Unified Logic Engine -->
+    <script src="app.js"></script>
+</body>
+</html>
