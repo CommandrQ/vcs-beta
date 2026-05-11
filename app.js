@@ -1,9 +1,13 @@
-// --- INITIALIZE SUPABASE ---
+// ==========================================
+// VANGUARD COMMAND LOGIC v3.1
+// ==========================================
+
+// 1. SUPABASE INITIALIZATION
 const supabaseUrl = 'https://dvyjupytbwbrcoyouxpf.supabase.co';
 const supabaseKey = 'sb_publishable_wjgbPekKmodd5mSDXIeUeg_Wq73GzOk';
 const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
-// --- THE HUB DATA ---
+// 2. THE RESOURCE DIRECTORY
 const directoryDataRaw = {
     "Vanguard Tech Lab": [
         { 
@@ -12,7 +16,7 @@ const directoryDataRaw = {
             url: "vsr/techhelp.html" 
         }
     ],
-    "System": [
+    "System Settings": [
         { 
             title: "Support Terminal", 
             desc: "Connect directly with Vanguard support for technical help or general inquiries.", 
@@ -26,30 +30,34 @@ const directoryDataRaw = {
     ]
 };
 
-// --- RENDER LOGIC ---
-function renderHub(category = Object.keys(directoryDataRaw)[0]) {
+// 3. RENDER THE HUB
+function renderHub(category = Object.keys(directoryDataRaw)[0], filterText = "") {
     const nav = document.getElementById('category-bar');
     const list = document.getElementById('directory-list');
     if (!nav || !list) return;
 
-    // Render Navigation Tabs
+    // Render Navigation (Enlarged Buttons)
     nav.innerHTML = Object.keys(directoryDataRaw).map(cat => `
         <button class="cat-btn ${cat === category ? 'active' : ''}" 
                 onclick="renderHub('${cat}')">${cat}</button>
     `).join('');
 
-    // Render Resource Cards
-    const items = directoryDataRaw[category];
+    // Filter and Render Cards
+    const items = directoryDataRaw[category].filter(item => 
+        item.title.toLowerCase().includes(filterText.toLowerCase()) || 
+        item.desc.toLowerCase().includes(filterText.toLowerCase())
+    );
+
     list.innerHTML = items.map(item => `
         <div class="link-card">
-            <h3 style="color: var(--gold); margin: 0 0 10px; font-size: 1.2rem; text-transform: uppercase;">${item.title}</h3>
-            <p style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 25px; line-height: 1.4;">${item.desc}</p>
-            <a href="${item.url}" class="card-btn">Initialize Link</a>
+            <h3 class="card-title">${item.title}</h3>
+            <p class="card-desc">${item.desc}</p>
+            <a href="${item.url}" class="card-btn">Go</a>
         </div>
     `).join('');
 }
 
-// --- AUTH & GREETING ---
+// 4. AUTH & IDENTITY GREETING
 async function updateUI() {
     const greeting = document.getElementById('user-greeting');
     const toast = document.getElementById('login-toast');
@@ -59,10 +67,11 @@ async function updateUI() {
     const cached = JSON.parse(localStorage.getItem('vanguard_profile'));
 
     if (user) {
+        // Use the name they registered with, otherwise default to Citizen
         const displayName = (cached && cached.name) ? cached.name : "Citizen";
         greeting.innerText = `Welcome, ${displayName}`;
 
-        // Login Recognition
+        // Trigger Success Notification if just arriving from Magic Link
         if (sessionStorage.getItem('just_logged_in') === 'true') {
             if (toast) {
                 toast.innerText = "Uplink Established: Signed In";
@@ -73,22 +82,33 @@ async function updateUI() {
         }
     } else {
         greeting.innerText = "Welcome";
-        localStorage.removeItem('vanguard_profile'); // Clean ghost data
+        // Do not clear cache if they are just guest browsing
     }
 }
 
-// --- SYSTEM BOOTSTRAP ---
+// 5. SEARCH SYSTEM
+const searchInput = document.getElementById('hub-search');
+if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+        // Keep current active category and filter cards
+        const activeBtn = document.querySelector('.cat-btn.active');
+        const currentCat = activeBtn ? activeBtn.innerText : Object.keys(directoryDataRaw)[0];
+        renderHub(currentCat, e.target.value);
+    });
+}
+
+// 6. SYSTEM BOOTSTRAP
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Capture Login Flag
+    // Check for Magic Link token in URL
     if (window.location.hash.includes('access_token')) {
         sessionStorage.setItem('just_logged_in', 'true');
     }
 
-    // 2. Set Current Year
+    // Set Footer Year
     const yearSpan = document.getElementById('current-year');
     if (yearSpan) yearSpan.innerText = new Date().getFullYear();
 
-    // 3. Kick off UI
+    // Start UI
     updateUI();
     renderHub();
 });
