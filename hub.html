@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Project V | Hub</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+    <div id="vanguard-universe" aria-hidden="true">
+        <div class="gold-star-layer"></div>
+    </div>
+
+    <main id="app-wrapper">
+
+        <header id="top-glass-panel" class="glass-module">
+            <div class="citizen-status">
+                <h1 id="user-greeting">Welcome, Citizen</h1>
+                <div class="population-tracker">
+                    <span class="label">SANCTUARY POP:</span>
+                    <span id="population-count">...</span>
+                </div>
+            </div>
+            
+            <div class="search-module">
+                <input type="text" id="hub-search" placeholder="Search the Knowledge Hub...">
+            </div>
+        </header>
+
+        <section id="directory-core">
+            <nav id="category-bar"></nav>
+            <article id="directory-list"></article>
+        </section>
+
+        <footer id="bottom-glass-panel" class="glass-module">
+            <div class="footer-container">
+                <p id="footer-msg-1" class="footer-msg active">Powered by Vanguard Citizen Services &copy; <span id="current-year"></span></p>
+                <p id="footer-msg-2" class="footer-msg">Mission: Reclaim & Elevate</p>
+            </div>
+        </footer>
+
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
