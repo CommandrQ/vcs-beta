@@ -30,15 +30,15 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initHub() {
-    // Supabase Configuration
     const SB_URL = 'https://dvyjupytbwbrcoyouxpf.supabase.co';
     const SB_KEY = 'sb_publishable_wjgbPekKmodd5mSDXIeUeg_Wq73GzOk';
     const supabaseClient = window.supabase ? window.supabase.createClient(SB_URL, SB_KEY) : null;
 
-    // Focused Tech Directory Data
     const directoryDataRaw = {
         "Vanguard Tech Lab": [
-            { title: "Tech Consulting", desc: "Digital or in-person help understanding and connecting with technology.", url: "vsr/techhelp.html" }
+            { title: "Tech Consulting", desc: "Digital or in-person help understanding and connecting with technology.", url: "vsr/techhelp.html" },
+            { title: "Web & Platform Development", desc: "Guidance on building digital platforms, utilizing GitHub, and understanding the user journey.", url: "vsr/webdev.html" },
+            { title: "Artificial Intelligence Tools", desc: "Consultation on integrating AI systems for research, creation, and workflow automation.", url: "vsr/ai.html" }
         ],
         "System Settings": [
             { title: "Citizen Profile", desc: "Manage your connection and digital sanctuary preferences here.", url: "settings.html" },
@@ -56,7 +56,6 @@ function initHub() {
         searchInput: document.getElementById('hub-search')
     };
 
-    // Initialize UI
     const cached = JSON.parse(localStorage.getItem('vanguard_profile'));
     if (cached && cached.name && uiElements.greeting) {
         uiElements.greeting.innerText = `Welcome, ${cached.name}`;
@@ -70,7 +69,6 @@ function initHub() {
     renderHub(globalDirectoryData, uiElements);
     startFooterCycle();
 
-    // Search Listener
     uiElements.searchInput.addEventListener('input', (e) => {
         const term = e.target.value.toLowerCase().trim();
         if (!term) {
@@ -80,7 +78,6 @@ function initHub() {
 
         document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
         const matches = [];
-        
         Object.values(globalDirectoryData).forEach(categoryArray => {
             categoryArray.forEach(card => {
                 if (card.title.toLowerCase().includes(term) || card.desc.toLowerCase().includes(term)) {
@@ -90,12 +87,8 @@ function initHub() {
         });
 
         matches.sort((a, b) => a.title.localeCompare(b.title));
-
-        if (matches.length > 0) {
-            renderCards(matches, uiElements);
-        } else {
-            uiElements.dirList.innerHTML = '<div style="text-align: center; padding: 40px; color: rgba(255,255,255,0.5);">No matching tech resources found in the archives.</div>';
-        }
+        if (matches.length > 0) { renderCards(matches, uiElements); }
+        else { uiElements.dirList.innerHTML = '<div style="text-align: center; padding: 40px; color: rgba(255,255,255,0.5);">No matching tech resources found.</div>'; }
     });
 }
 
@@ -119,9 +112,7 @@ async function checkUser(client, ui) {
 
 async function fetchPop(client, ui) {
     const { count, error } = await client.from('citizens').select('*', { count: 'exact', head: true });
-    if (ui.pop) {
-        ui.pop.innerText = error ? "Online" : count.toLocaleString();
-    }
+    if (ui.pop) { ui.pop.innerText = error ? "Online" : count.toLocaleString(); }
 }
 
 function renderHub(data, ui) {
@@ -129,22 +120,15 @@ function renderHub(data, ui) {
     ui.catBar.innerHTML = categories.map((cat, i) => `
         <button class="cat-btn ${i === 0 ? 'active' : ''}" onclick="showCat('${cat}', this)">${cat}</button>
     `).join('');
-    
-    if(categories.length > 0) {
-        window.showCat(categories[0], ui.catBar.querySelector('.cat-btn'));
-    }
+    if(categories.length > 0) { window.showCat(categories[0], ui.catBar.querySelector('.cat-btn')); }
 }
 
 window.showCat = (name, btn) => {
     if(uiElements.searchInput) uiElements.searchInput.value = '';
-    
     document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
     if(btn) btn.classList.add('active');
     if(btn) btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-    
-    if(globalDirectoryData[name]) {
-        renderCards(globalDirectoryData[name], uiElements);
-    }
+    if(globalDirectoryData[name]) { renderCards(globalDirectoryData[name], uiElements); }
 }
 
 function renderCards(cardsArray, ui) {
@@ -162,7 +146,6 @@ function renderCards(cardsArray, ui) {
 function startFooterCycle() {
     const msg1 = document.getElementById('footer-msg-1');
     const msg2 = document.getElementById('footer-msg-2');
-    
     setInterval(() => {
         if (msg1 && msg1.classList.contains('active')) {
             msg1.classList.remove('active');
