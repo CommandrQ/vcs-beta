@@ -3,49 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Vanguard | Consulting</title>
+    <title>Vanguard | Consumer Consulting</title>
     
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <!-- Pathing back to your root CSS -->
     <link rel="stylesheet" href="../style.css">
     
-    <!-- Supabase Core -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
     <style>
-        /* Ticker logic for the Consulting Header */
-        .announcement-ticker {
-            background: rgba(212, 175, 55, 0.1);
-            border-bottom: 1px solid var(--glass-border);
-            color: var(--gold);
-            padding: 10px 0;
-            font-size: 0.7rem;
-            font-weight: 800;
-            letter-spacing: 2px;
-            overflow: hidden;
-            white-space: nowrap;
+        /* Persona Grid */
+        .persona-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
         }
 
-        /* Modal Overlay for Request Forms */
-        .modal-overlay {
-            position: fixed; inset: 0;
-            background: rgba(0,0,0,0.95);
-            backdrop-filter: blur(20px);
-            display: none; align-items: center; justify-content: center;
-            z-index: 1000; padding: 20px;
-        }
-
-        .modal-content {
-            background: #0a0a0a;
+        .persona-btn {
+            background: rgba(15,15,15,0.9);
             border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            width: 100%; max-width: 500px;
-            padding: 30px;
-            max-height: 90vh;
-            overflow-y: auto;
+            color: rgba(255,255,255,0.7);
+            padding: 20px 10px;
+            border-radius: 16px;
+            cursor: pointer;
+            font-weight: 800;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s var(--v-curve);
         }
 
-        .price-tag { font-size: 1.4rem; color: var(--gold); font-weight: 900; margin: 15px 0; }
+        .persona-btn:hover { border-color: rgba(212, 175, 55, 0.5); }
+        .persona-btn.active {
+            border-color: var(--gold);
+            color: var(--gold);
+            background: rgba(212, 175, 55, 0.1);
+            transform: scale(1.02);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.15);
+        }
+
+        .price-tag { font-size: 1.5rem; color: var(--gold); font-weight: 900; margin: 15px 0; }
         
         .service-features {
             list-style: none; padding: 0; margin: 20px 0;
@@ -55,10 +51,9 @@
         .service-features li {
             font-size: 0.9rem; margin-bottom: 10px;
             color: rgba(255,255,255,0.7);
-            display: flex; align-items: center; gap: 10px;
+            display: flex; align-items: flex-start; gap: 10px;
         }
-
-        .service-features li::before { content: '•'; color: var(--gold); }
+        .service-features li::before { content: '•'; color: var(--gold); font-weight: bold; }
     </style>
 </head>
 <body>
@@ -68,141 +63,126 @@
     </div>
 
     <main id="app-wrapper">
-        
-        <div class="announcement-ticker">
-            <div style="display: inline-block; padding-left: 100%; animation: tickerDrift 40s linear infinite;">
-                ::: SERVICE NOTICE: IN-PERSON CONSULTING AVAILABLE FOR HARDIN AND JEFFERSON COUNTIES, KY ::: REMOTE STRATEGY SESSIONS AVAILABLE WORLDWIDE :::
-            </div>
-        </div>
 
         <header id="top-glass-panel" class="glass-module">
-            <div class="citizen-status">
-                <h1>Consulting</h1>
+            <div class="citizen-status" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                <h1>Tech Lab</h1>
                 <a href="../hub.html" class="back-btn">HUB →</a>
             </div>
         </header>
 
-        <section id="directory-core">
-            <div id="directory-list">
+        <section id="directory-core" style="flex-grow: 1; overflow-y: auto;">
+            <div id="directory-list" style="padding: 20px;">
                 
-                <div class="link-card">
-                    <h3 class="card-title">Digital Strategy</h3>
-                    <p class="card-desc">We simplify complexity. Choose the path that fits your life goals.</p>
+                <h3 class="card-title" style="text-align: center; margin-bottom: 20px; font-size: 1rem;">Identify Your Identity</h3>
+                
+                <!-- The Identity Selection -->
+                <div class="persona-grid" id="persona-controls">
+                    <button class="persona-btn active" onclick="loadPersona('senior')">The Senior</button>
+                    <button class="persona-btn" onclick="loadPersona('parent')">The Parent</button>
+                    <button class="persona-btn" onclick="loadPersona('student')">The Student</button>
+                    <button class="persona-btn" onclick="loadPersona('gamer')">The Gamer</button>
+                    <button class="persona-btn" onclick="window.location.href='commercial.html'" style="border-color: #4ade80; color: #4ade80;">Commercial →</button>
                 </div>
 
-                <!-- CARDS LOAD HERE -->
-                <div id="tiers-container"></div>
+                <!-- Dynamic Packages Inject Here -->
+                <div id="packages-container"></div>
 
             </div>
         </section>
 
-        <footer id="bottom-glass-panel" class="glass-module">
-            <div class="footer-container" style="display:flex; justify-content:center; align-items:center; height:100%;">
-                <p style="font-size: 0.7rem; color: var(--gold); letter-spacing: 2px;">VANGUARD CONSULTING CORE</p>
-            </div>
-        </footer>
     </main>
 
-    <!-- THE REQUEST MODAL -->
-    <div class="modal-overlay" id="request-modal">
-        <div class="modal-content">
-            <h2 id="modal-tier-title" style="color: var(--gold); margin: 0; text-transform: uppercase; font-size: 1.1rem;">Package</h2>
-            
-            <div style="margin-top: 25px;">
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label style="font-size: 0.7rem; color: var(--gold); font-weight: 800;">FULL NAME</label>
-                    <input type="text" id="f-name" class="settings-input" style="margin-top: 8px;">
-                </div>
-
-                <div class="form-group" style="margin-bottom: 15px;">
-                    <label style="font-size: 0.7rem; color: var(--gold); font-weight: 800;">EMAIL</label>
-                    <input type="email" id="f-email" class="settings-input" style="margin-top: 8px;">
-                </div>
-
-                <div class="form-group" style="margin-bottom: 20px;">
-                    <label style="font-size: 0.7rem; color: var(--gold); font-weight: 800;">PROJECT OBJECTIVES</label>
-                    <textarea id="f-issue" class="settings-input" style="height: 100px; margin-top: 8px;" placeholder="What do you need to achieve?"></textarea>
-                </div>
-
-                <div style="display: flex; gap: 10px;">
-                    <button onclick="closeModal()" class="card-btn secondary" style="flex: 1;">Cancel</button>
-                    <button onclick="submitRequest()" class="card-btn" style="flex: 2;">Review Draft</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script>
-        // --- DATA ---
-        const tiers = [
-            {
-                title: "The Golden Year Upgrade",
-                desc: "Best for seniors. We focus on patience, security, and making technology feel natural and helpful.",
-                price: "$75 / session",
-                features: ["Scam prevention audit", "Simple video call setup", "Text-size & visibility tuning", "Hardware optimization"]
-            },
-            {
-                title: "The Digital Household",
-                desc: "Best for parents. Strategic tools for family safety, screen-time balance, and education.",
-                price: "$100 / session",
-                features: ["Parental control mastery", "Educational tech review", "Network security sweep", "Family boundary strategy"]
-            },
-            {
-                title: "The Strategic Uplink",
-                desc: "Best for business owners and students. High-performance tuning and advanced digital workflows.",
-                price: "$125 / session",
-                features: ["Workflow automation", "Custom hardware strategy", "Network performance tuning", "Remote-work optimization"]
-            }
-        ];
+        // Data Structure for Hardin County Adjusted Rates
+        const packageData = {
+            senior: [
+                {
+                    title: "Basic Diagnostic",
+                    desc: "Quick troubleshooting for frozen devices, password resets, or checking a suspicious message.",
+                    price: "$20 flat",
+                    features: ["15-30 Minute Session", "Password & Account Recovery", "Scam / Phishing Verification"]
+                },
+                {
+                    title: "The Golden Protocol",
+                    desc: "A comprehensive hour of patience. We set up your device to be easy, readable, and highly secure.",
+                    price: "$50 flat",
+                    features: ["60 Minute Deep-Dive", "Text size & visibility tuning", "Video call mastery", "Security lockdown"]
+                }
+            ],
+            parent: [
+                {
+                    title: "Basic Setup",
+                    desc: "Quickly lock down a single device or check your current router safety.",
+                    price: "$30 flat",
+                    features: ["15-30 Minute Session", "Single-device content filter", "Quick safety Q&A"]
+                },
+                {
+                    title: "The Digital Household",
+                    desc: "Whole-house network sweep and comprehensive family digital boundaries.",
+                    price: "$75 flat",
+                    features: ["60-90 Minute Strategy", "Network-wide safety sweep", "Screen-time automation", "Microsoft Family Safety setup"]
+                }
+            ],
+            student: [
+                {
+                    title: "Basic Unblock",
+                    desc: "Affordable triage for campus network issues or software formatting bugs.",
+                    price: "$20 flat",
+                    features: ["15-30 Minute Session", "Software / Formatting fixes", "Campus Wi-Fi routing"]
+                },
+                {
+                    title: "The Scholar Uplink",
+                    desc: "Deep workflow optimization to keep you focused and prevent data loss.",
+                    price: "$45 flat",
+                    features: ["60 Minute Session", "Automated cloud backups", "Workflow optimization", "Hardware lifespan extension"]
+                }
+            ],
+            gamer: [
+                {
+                    title: "Basic Diagnostic",
+                    desc: "Quick checks for latency, ping drops, or Discord routing issues.",
+                    price: "$35 flat",
+                    features: ["30 Minute Check", "Ping / Latency diagnostics", "Discord / Comm setup"]
+                },
+                {
+                    title: "The Competitor's Edge",
+                    desc: "Advanced hardware and OS optimization for maximum frame rates and zero latency.",
+                    price: "$85 flat",
+                    features: ["60-90 Minute Deep-Dive", "OS stripping for max FPS", "Stream-lab configuration", "Deep network optimization"]
+                }
+            ]
+        };
 
-        // --- RENDER ---
-        function render() {
-            const container = document.getElementById('tiers-container');
-            container.innerHTML = tiers.map(t => `
-                <div class="link-card" style="margin-top: 20px;">
-                    <h3 class="card-title">${t.title}</h3>
-                    <p class="card-desc">${t.desc}</p>
-                    <div class="price-tag">${t.price}</div>
+        function loadPersona(type) {
+            // Update Active Button Style
+            document.querySelectorAll('.persona-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Render the cards
+            const container = document.getElementById('packages-container');
+            const data = packageData[type];
+            
+            container.innerHTML = data.map(pkg => `
+                <div class="link-card" style="animation: fadeUp 0.4s ease;">
+                    <h3 class="card-title">${pkg.title}</h3>
+                    <p class="card-desc">${pkg.desc}</p>
+                    <div class="price-tag">${pkg.price}</div>
                     <ul class="service-features">
-                        ${t.features.map(f => `<li>${f}</li>`).join('')}
+                        ${pkg.features.map(f => `<li>${f}</li>`).join('')}
                     </ul>
-                    <button onclick="openModal('${t.title}')" class="gate-button">Identify This Path</button>
+                    <a href="../support.html" class="gate-button" style="display: block; text-decoration: none; padding: 15px !important; margin-top: 10px;">Select</a>
                 </div>
             `).join('');
         }
 
-        // --- ACTIONS ---
-        function openModal(title) {
-            document.getElementById('modal-tier-title').innerText = title;
-            document.getElementById('request-modal').style.display = 'flex';
-        }
+        // Add a simple fade-up animation to the CSS dynamically
+        const style = document.createElement('style');
+        style.innerHTML = `@keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }`;
+        document.head.appendChild(style);
 
-        function closeModal() {
-            document.getElementById('request-modal').style.display = 'none';
-        }
-
-        function submitRequest() {
-            const tier = document.getElementById('modal-tier-title').innerText;
-            const name = document.getElementById('f-name').value;
-            const email = document.getElementById('f-email').value;
-            const issue = document.getElementById('f-issue').value;
-
-            if(!name || !email || !issue) return alert("All identification fields are required.");
-
-            const subject = `[Consulting Request] ${tier} - ${name}`;
-            const body = `NAME: ${name}\nEMAIL: ${email}\nPACKAGE: ${tier}\n\nGOALS:\n${issue}`;
-
-            window.location.href = `mailto:support@vcscitizen.org?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-            closeModal();
-        }
-
-        document.addEventListener('DOMContentLoaded', render);
+        // Auto-load Senior on boot
+        document.addEventListener('DOMContentLoaded', () => loadPersona('senior'));
     </script>
-    <style>
-        @keyframes tickerDrift {
-            0% { transform: translate3d(0, 0, 0); }
-            100% { transform: translate3d(-100%, 0, 0); }
-        }
-    </style>
 </body>
 </html>
