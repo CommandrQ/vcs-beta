@@ -1,103 +1,69 @@
-const SB_URL = 'https://dvyjupytbwbrcoyouxpf.supabase.co';
-const SB_KEY = 'sb_publishable_wjgbPekKmodd5mSDXIeUeg_Wq73GzOk';
-const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
-
-let currentSelection = { tier: '', price: '' };
-let isUserSignedIn = false;
-
-window.onload = () => {
-    document.getElementById('current-year').innerText = new Date().getFullYear();
-    loadTiers();
-    checkAuth();
-};
-
-async function loadTiers() {
-    try {
-        const response = await fetch('tiers.json');
-        const tiers = await response.json();
-        const container = document.getElementById('tiers-container');
-        const now = new Date();
-
-        tiers.forEach(tier => {
-            const featuresHTML = tier.features.map(f => `<li>${f}</li>`).join('');
-            let promoBadge = '';
-            let displayPrice = tier.price;
-            
-            // Check Student Promo
-            if (tier.studentPromo && tier.studentPromo.active && now <= new Date(tier.studentPromo.deadline)) {
-                promoBadge = `<div class="student-badge">${tier.studentPromo.label}</div>`;
-                displayPrice = `${tier.price} <span style="display:block; font-size:0.8rem; font-weight:400; color:#fff; margin-top:4px;">(${tier.studentPromo.price} Student Rate)</span>`;
-            }
-
-            const card = document.createElement('div');
-            card.className = 'solid-card';
-            card.innerHTML = `
-                ${promoBadge}
-                <div style="width: 100%;">
-                    <h3 class="tier-title">${tier.title}</h3>
-                    <p class="tier-price">${displayPrice}</p>
-                    <ul class="tier-features">${featuresHTML}</ul>
-                </div>
-                <button class="btn-request" onclick="openModal('${tier.title}', '${tier.price}', ${!!tier.studentPromo})">Request Help</button>
-            `;
-            container.appendChild(card);
-        });
-    } catch (error) {
-        console.error("Error loading tiers:", error);
+// --- SERVICE PACKAGE DATA ---
+const serviceTiers = [
+    {
+        id: "senior",
+        title: "The Golden Year Upgrade",
+        desc: "Best for seniors. We focus on patience, simplicity, and making technology work for you, not against you.",
+        price: "$75 / session",
+        features: ["Large-text optimization", "Scam prevention setup", "Simple video call training", "Hardware setup & cleanup"]
+    },
+    {
+        id: "parent",
+        title: "The Digital Household",
+        desc: "Best for parents. Focus on family safety, screen-time management, and educational tech strategy.",
+        price: "$100 / session",
+        features: ["Parental control setup", "Educational tool audits", "Home network safety", "Device boundaries strategy"]
+    },
+    {
+        id: "other",
+        title: "The Strategic Uplink",
+        desc: "Best for business owners and students. Advanced optimization and high-performance strategy.",
+        price: "$125 / session",
+        features: ["High-speed network tuning", "Remote work optimization", "Custom hardware builds", "Project strategy sessions"]
     }
+];
+
+// --- RENDER ENGINE ---
+function renderTiers() {
+    const container = document.getElementById('tiers-container');
+    container.innerHTML = serviceTiers.map(tier => `
+        <div class="link-card" style="margin-top: 20px;">
+            <h3 class="card-title">${tier.title}</h3>
+            <p class="card-desc">${tier.desc}</p>
+            <div class="price-tag">${tier.price}</div>
+            <ul class="service-features">
+                ${tier.features.map(f => `<li>${f}</li>`).join('')}
+            </ul>
+            <button onclick="openModal('${tier.title}')" class="gate-button">Request This Path</button>
+        </div>
+    `).join('');
 }
 
-async function checkAuth() {
-    const { data: { session } } = await supabaseClient.auth.getSession();
-    if (session) {
-        isUserSignedIn = true;
-        document.getElementById('auth-section').style.display = 'block';
-        document.getElementById('auth-address-field').style.display = 'block';
-        
-        const { data } = await supabaseClient.from('citizens').select('full_name').eq('auth_id', session.user.id).single();
-        if (data) document.getElementById('f-name').value = data.full_name;
-        
-        const emailInput = document.getElementById('f-email');
-        emailInput.value = session.user.email;
-        emailInput.disabled = true;
-    }
-}
-
-function openModal(tier, price, hasPromo) {
-    currentSelection = { tier, price };
-    document.getElementById('modal-tier-title').innerText = tier;
-    document.getElementById('student-check-container').style.display = hasPromo ? 'block' : 'none';
+// --- MODAL CONTROLS ---
+function openModal(title) {
+    document.getElementById('modal-tier-title').innerText = title;
     document.getElementById('request-modal').style.display = 'flex';
 }
 
-function closeModal() { 
-    document.getElementById('request-modal').style.display = 'none'; 
+function closeModal() {
+    document.getElementById('request-modal').style.display = 'none';
 }
 
+// --- SUBMIT REQUEST (Mailto) ---
 function submitRequest() {
-    const name = document.getElementById('f-name').value.trim();
-    const email = document.getElementById('f-email').value.trim();
-    const phone = document.getElementById('f-phone').value.trim();
-    const issue = document.getElementById('f-issue').value.trim();
-    const isStudent = document.getElementById('f-student').checked;
+    const tier = document.getElementById('modal-tier-title').innerText;
+    const name = document.getElementById('f-name').value;
+    const email = document.getElementById('f-email').value;
+    const phone = document.getElementById('f-phone').value;
+    const issue = document.getElementById('f-issue').value;
 
-    if (!name || !phone || !issue) { 
-        alert("Please complete the required fields (Name, Phone, Message)."); 
-        return; 
-    }
+    if(!name || !email || !issue) return alert("Please identify yourself and your goals.");
 
-    let body = `--- VANGUARD DISPATCH LOG ---\nTier: ${currentSelection.tier}\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nStudent Rate Active: ${isStudent ? 'YES' : 'NO'}\n\n[MESSAGE DETAILS]\n${issue}`;
-    
-    if (isUserSignedIn) {
-        const address = document.getElementById('f-address').value.trim();
-        const adult = document.getElementById('f-adult').value.toUpperCase();
-        if (!address || adult !== "YES") { 
-            alert("Vanguard protocol requires Service Address and Adult Verification for dispatch."); 
-            return; 
-        }
-        body += `\n\n[LOGISTICS]\nAddress: ${address}\nAdult Present: YES`;
-    }
+    const subject = `[Consulting Request] ${tier} - ${name}`;
+    const body = `NAME: ${name}\nEMAIL: ${email}\nPHONE: ${phone}\nPACKAGE: ${tier}\n\nGOALS:\n${issue}`;
 
-    window.location.href = `mailto:commandrq@gmail.com?subject=Vanguard Support Request: ${currentSelection.tier}&body=${encodeURIComponent(body)}`;
+    window.location.href = `mailto:support@vcscitizen.org?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     closeModal();
 }
+
+document.addEventListener('DOMContentLoaded', renderTiers);
