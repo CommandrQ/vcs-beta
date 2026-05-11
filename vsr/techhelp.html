@@ -3,22 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Vanguard | Tech Consulting</title>
+    <title>Vanguard | Consulting</title>
     
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <link rel="stylesheet" href="../style.css"> <!-- Path adjusted for /vsr/ folder -->
+    <link rel="stylesheet" href="../style.css">
+    
+    <!-- Supabase Core -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <style>
+        /* Ticker styling to match dark theme */
+        .announcement-ticker {
+            background: rgba(212, 175, 55, 0.1);
+            border-bottom: 1px solid var(--glass-border);
+            color: var(--gold);
+            padding: 10px 0;
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        /* Modal Overrides to match Onyx Shield */
+        .modal-overlay {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(15px);
+            display: none; align-items: center; justify-content: center;
+            z-index: 1000; padding: 20px;
+        }
+
+        .modal-content {
+            background: #0a0a0a;
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            width: 100%; max-width: 500px;
+            padding: 30px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .price-tag {
+            font-size: 1.5rem;
+            color: var(--gold);
+            font-weight: 900;
+            margin: 10px 0;
+        }
+
+        .service-features {
+            list-style: none; padding: 0; margin: 15px 0;
+            text-align: left; width: 100%;
+        }
+
+        .service-features li {
+            font-size: 0.9rem; margin-bottom: 8px;
+            color: rgba(255,255,255,0.8);
+            display: flex; align-items: center; gap: 10px;
+        }
+
+        .service-features li::before { content: '•'; color: var(--gold); font-weight: bold; }
+    </style>
 </head>
 <body>
 
-    <!-- LAYER 1: Deep Canvas -->
     <div id="vanguard-universe" aria-hidden="true">
         <div class="gold-star-layer"></div>
     </div>
 
-    <!-- LAYER 2: App Wrapper -->
     <main id="app-wrapper">
+        
+        <!-- SERVICE TICKER -->
+        <div class="announcement-ticker">
+            <div style="display: inline-block; padding-left: 100%; animation: tickerDrift 30s linear infinite;">
+                ::: IN-PERSON CONSULTING: HARDIN & JEFFERSON COUNTY, KY ::: REMOTE STRATEGY AVAILABLE WORLDWIDE :::
+            </div>
+        </div>
 
-        <!-- HEADER -->
         <header id="top-glass-panel" class="glass-module">
             <div class="citizen-status">
                 <h1>Tech Help</h1>
@@ -26,63 +87,65 @@
             </div>
         </header>
 
-        <!-- SCROLLABLE CORE -->
         <section id="directory-core">
             <div id="directory-list">
                 
-                <!-- INTRO -->
-                <div class="link-card" style="border: none; background: transparent; padding-bottom: 0;">
-                    <h3 class="card-title" style="color: var(--gold);">Choose Your Path</h3>
-                    <p class="card-desc">Technology should serve you, not confuse you. Select the package that matches your mission below.</p>
+                <div class="link-card">
+                    <h3 class="card-title">The Strategy</h3>
+                    <p class="card-desc">We don't just fix computers; we build ecosystems. Choose the path that fits your life.</p>
                 </div>
 
-                <!-- PACKAGE 1: SENIORS -->
-                <div class="link-card">
-                    <h3 class="card-title">The Legacy Connection</h3>
-                    <p class="card-desc">Designed for ease of use and staying connected with family without the headache.</p>
-                    <ul style="text-align: left; color: rgba(255,255,255,0.8); font-size: 0.95rem; margin-bottom: 20px; line-height: 1.8;">
-                        *   **Simple Setup:** Large-text interfaces and easy-to-use video calling.
-                        *   **Scam Protection:** Hardening your devices against digital intruders.
-                        *   **Patient Guidance:** One-on-one sessions at your own speed.
-                    </ul>
-                    <a href="../support.html" class="card-btn">Select This Path</a>
-                </div>
-
-                <!-- PACKAGE 2: PARENTS -->
-                <div class="link-card">
-                    <h3 class="card-title">The Digital Shield</h3>
-                    <p class="card-desc">Protect your household and manage your family's digital footprint with confidence.</p>
-                    <ul style="text-align: left; color: rgba(255,255,255,0.8); font-size: 0.95rem; margin-bottom: 20px; line-height: 1.8;">
-                        *   **Safety Guards:** Setting up effective parental controls and screen limits.
-                        *   **Education Tech:** Optimizing devices for learning and growth.
-                        *   **Privacy Audit:** Ensuring your family’s data stays private and secure.
-                    </ul>
-                    <a href="../support.html" class="card-btn">Select This Path</a>
-                </div>
-
-                <!-- PACKAGE 3: OTHERS / PRO -->
-                <div class="link-card">
-                    <h3 class="card-title">The Tech Uplink</h3>
-                    <p class="card-desc">For creators, small business owners, or anyone needing a custom technical solution.</p>
-                    <ul style="text-align: left; color: rgba(255,255,255,0.8); font-size: 0.95rem; margin-bottom: 20px; line-height: 1.8;">
-                        *   **Performance Tuning:** Speeding up slow systems and clearing bloatware.
-                        *   **Custom Projects:** Support for website building, databases, or smart homes.
-                        *   **Emergency Repair:** Direct troubleshooting for sudden tech failures.
-                    </ul>
-                    <a href="../support.html" class="card-btn">Select This Path</a>
-                </div>
+                <!-- DYNAMIC TIERS WILL LOAD HERE -->
+                <div id="tiers-container"></div>
 
             </div>
         </section>
 
-        <!-- FOOTER -->
         <footer id="bottom-glass-panel" class="glass-module">
             <div class="footer-container">
-                <p class="footer-msg active">Vanguard Consulting Core</p>
+                <p class="footer-msg active">Vanguard Consulting Active</p>
             </div>
         </footer>
-
     </main>
 
+    <!-- THE REQUEST MODAL -->
+    <div class="modal-overlay" id="request-modal">
+        <div class="modal-content">
+            <h2 id="modal-tier-title" style="color: var(--gold); margin-top: 0; text-transform: uppercase; font-size: 1.2rem;">Select Package</h2>
+            
+            <div class="form-group" style="margin-top: 20px;">
+                <label style="font-size: 0.7rem; color: var(--gold); font-weight: 800;">FULL NAME</label>
+                <input type="text" id="f-name" class="settings-input">
+            </div>
+
+            <div class="form-group" style="margin-top: 15px;">
+                <label style="font-size: 0.7rem; color: var(--gold); font-weight: 800;">EMAIL</label>
+                <input type="email" id="f-email" class="settings-input">
+            </div>
+
+            <div class="form-group" style="margin-top: 15px;">
+                <label style="font-size: 0.7rem; color: var(--gold); font-weight: 800;">PHONE</label>
+                <input type="tel" id="f-phone" class="settings-input" placeholder="(555) 000-0000">
+            </div>
+
+            <div class="form-group" style="margin-top: 15px;">
+                <label style="font-size: 0.7rem; color: var(--gold); font-weight: 800;">HOW CAN WE HELP?</label>
+                <textarea id="f-issue" class="settings-input" style="height: 100px;" placeholder="Describe your goals..."></textarea>
+            </div>
+
+            <div style="display: flex; gap: 10px; margin-top: 25px;">
+                <button onclick="closeModal()" class="card-btn secondary" style="flex: 1;">Cancel</button>
+                <button onclick="submitRequest()" class="card-btn" style="flex: 2;">Review Draft</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="techhelp.js"></script>
+    <style>
+        @keyframes tickerDrift {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-100%, 0, 0); }
+        }
+    </style>
 </body>
 </html>
