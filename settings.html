@@ -19,9 +19,9 @@
 
     <main id="app-wrapper">
 
-        <!-- HEADER -->
+        <!-- HEADER (Button aligned to Top Right) -->
         <header id="top-glass-panel" class="glass-module">
-            <div class="citizen-status">
+            <div class="citizen-status" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
                 <h1 id="settings-title">Settings</h1>
                 <a href="hub.html" class="back-btn">HUB →</a>
             </div>
@@ -31,11 +31,21 @@
         <section id="directory-core">
             <div id="directory-list">
                 
-                <!-- THE ENTRANCE (Login or Join) -->
+                <!-- 1. CITIZEN REGISTRATION & ACCESS -->
                 <div id="auth-card" class="link-card">
-                    <h3 class="card-title" id="auth-header">Vanguard Access</h3>
-                    <p class="card-desc" id="auth-desc">Enter your details to enter the sanctuary.</p>
+                    <h3 class="card-title" id="auth-header">Citizen Access</h3>
                     
+                    <!-- Purpose and Disclaimer -->
+                    <div id="auth-info" style="margin-bottom: 25px;">
+                        <p class="card-desc" style="margin-bottom: 10px;">
+                            An account secures your identity within the Vanguard network, granting you access to private tech consulting, system tools, and direct support.
+                        </p>
+                        <p style="font-size: 0.75rem; color: var(--gold); opacity: 0.9; font-weight: 700; border-top: 1px solid var(--glass-border); padding-top: 10px;">
+                            PRIVACY NOTICE: We do not use your data for tracking, advertising, or third-party sales. Your information remains strictly within the Sanctuary.
+                        </p>
+                    </div>
+                    
+                    <!-- Guest Input View -->
                     <div id="guest-view" style="width: 100%;">
                         <div class="form-group" style="text-align: left; margin-bottom: 20px;">
                             <label style="font-size: 0.7rem; color: var(--gold); font-weight: 800; letter-spacing: 2px;">FULL NAME</label>
@@ -47,41 +57,26 @@
                             <input type="email" id="auth-email" class="settings-input" style="margin-top: 10px;" placeholder="name@email.com">
                         </div>
                         
-                        <button onclick="handleAuth()" class="gate-button">Request Access Link</button>
+                        <!-- Renamed Button -->
+                        <button onclick="handleAuth()" class="gate-button" style="width: 100%; padding: 15px !important; font-size: 1rem !important;">Request Access</button>
                     </div>
 
-                    <!-- LOGOUT SECTION (Hidden for Guests) -->
+                    <!-- Logged In View -->
                     <div id="citizen-view" style="width: 100%; display: none;">
-                        <button onclick="signOut()" class="gate-button" style="border-color: var(--danger); color: var(--danger);">Disconnect / Logout</button>
+                        <button onclick="signOut()" class="gate-button" style="width: 100%; padding: 15px !important; border-color: var(--danger) !important; color: var(--danger) !important;">Disconnect / Logout</button>
                     </div>
                     
                     <div id="auth-msg" style="margin-top: 20px; font-size: 0.9rem; font-weight: 700;"></div>
                 </div>
 
-                <!-- PROFILE SYSTEM -->
-                <div id="identity-card" class="link-card" style="display: none;">
-                    <h3 class="card-title">Identity</h3>
-                    <p class="card-desc">Your Hero Name is how you are identified in the Hub.</p>
-                    
-                    <div class="form-group" style="width: 100%; text-align: left; margin-bottom: 20px;">
-                        <label style="font-size: 0.8rem; color: var(--gold); font-weight: 800; letter-spacing: 2px;">HERO NAME</label>
-                        <input type="text" id="new-name" class="settings-input" style="margin-top: 10px;" placeholder="Update name...">
-                    </div>
-
-                    <div class="button-group">
-                        <button onclick="updateName()" class="card-btn">Update Profile</button>
-                        <button onclick="sendRestoreLink()" class="card-btn secondary">Security Email</button>
-                    </div>
-                </div>
-
-                <!-- MAINTENANCE -->
+                <!-- 2. SYSTEM TOOLS -->
                 <div class="link-card">
                     <h3 class="card-title">System Tools</h3>
-                    <p class="card-desc">Use these if the interface feels slow or broken.</p>
+                    <p class="card-desc">Use these protocols if the web interface is not working correctly or feels unstable.</p>
                     
-                    <div class="button-group">
-                        <button onclick="clearCache()" class="card-btn">Refresh App</button>
-                        <button onclick="fullReset()" class="card-btn danger">Factory Reset</button>
+                    <div class="button-group" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                        <button onclick="refreshApp()" class="card-btn" style="flex: 1; min-width: 120px;">Refresh App</button>
+                        <button onclick="factoryReset()" class="card-btn danger" style="flex: 1; min-width: 120px;">Factory Reset</button>
                     </div>
                 </div>
 
@@ -89,66 +84,69 @@
         </section>
 
         <!-- FOOTER -->
-        <footer id="bottom-glass-panel" class="glass-module">
-            <div class="footer-container">
-                <p class="footer-msg active">Vanguard Command Core Active</p>
-            </div>
+        <footer id="bottom-glass-panel" class="glass-module" style="padding: 15px; text-align: center;">
+            <p style="font-size: 0.7rem; color: var(--gold); letter-spacing: 2px; margin: 0;">
+                VANGUARD SECURITY CORE &copy; <span id="current-year"></span>
+            </p>
         </footer>
 
     </main>
 
     <script src="app.js"></script>
     <script>
-        // --- AUTH LOGIC ---
+        // --- PAGE INITIALIZATION ---
         async function syncState() {
             const { data: { user } } = await supabaseClient.auth.getUser();
             const guestView = document.getElementById('guest-view');
             const citizenView = document.getElementById('citizen-view');
-            const idCard = document.getElementById('identity-card');
+            const authInfo = document.getElementById('auth-info');
             const header = document.getElementById('auth-header');
-            const desc = document.getElementById('auth-desc');
-            const title = document.getElementById('settings-title');
+            
+            document.getElementById('current-year').innerText = new Date().getFullYear();
 
             if (user) {
+                // Logged In State
                 guestView.style.display = 'none';
+                authInfo.style.display = 'none'; // Hide purpose text once logged in
                 citizenView.style.display = 'block';
-                idCard.style.display = 'flex';
-                header.innerText = "Citizen Connection";
-                desc.innerText = `Active Session: ${user.email}`;
-                title.innerText = "Command Center";
+                header.innerText = "Citizen Connected";
                 
-                const cached = JSON.parse(localStorage.getItem('vanguard_profile')) || {};
-                if(cached.name) document.getElementById('new-name').value = cached.name;
+                // Show connected email
+                document.getElementById('auth-msg').innerText = `Active Session: ${user.email}`;
+                document.getElementById('auth-msg').style.color = "var(--gold)";
             } else {
+                // Guest State
                 guestView.style.display = 'block';
+                authInfo.style.display = 'block';
                 citizenView.style.display = 'none';
-                idCard.style.display = 'none';
-                header.innerText = "Vanguard Access";
-                title.innerText = "Connect";
+                header.innerText = "Citizen Access";
             }
         }
 
         document.addEventListener('DOMContentLoaded', syncState);
 
+        // --- AUTHENTICATION LOGIC ---
         async function handleAuth() {
             const fullname = document.getElementById('reg-fullname').value.trim();
             const email = document.getElementById('auth-email').value.trim();
             const msg = document.getElementById('auth-msg');
 
-            if(!fullname || !email) return alert("Full Name and Email are required.");
+            if(!fullname || !email) {
+                return alert("Full Name and Email are required to request access.");
+            }
             
-            msg.innerText = "Opening secure channel...";
+            msg.innerText = "Transmitting request...";
             msg.style.color = "var(--gold)";
 
-            // Cache name locally so the Hub can say hello immediately
+            // Cache name locally
             localStorage.setItem('vanguard_profile', JSON.stringify({ name: fullname }));
 
-            // With "Confirm Email" OFF, this link will immediately log them in
+            // OTP Magic Link System (Handles both Create and Login securely)
             const { error } = await supabaseClient.auth.signInWithOtp({
                 email: email,
                 options: { 
                     emailRedirectTo: window.location.origin + '/hub.html',
-                    data: { full_name: fullname } 
+                    data: { full_name: fullname } // Sends metadata for your DB Trigger
                 }
             });
 
@@ -156,44 +154,40 @@
                 msg.innerText = "Error: " + error.message;
                 msg.style.color = "var(--danger)";
             } else {
-                msg.innerText = "Check your email for your access link!";
+                msg.innerText = "Secure link sent. Check your email to approve this device.";
                 msg.style.color = "#4ade80";
             }
         }
 
-        // --- PROFILE HANDLERS ---
-        async function updateName() {
-            const name = document.getElementById('new-name').value.trim();
-            if(!name) return alert("Provide a valid name.");
-            localStorage.setItem('vanguard_profile', JSON.stringify({ name: name }));
-            alert("Identity synchronized.");
-            location.reload();
-        }
-
-        async function sendRestoreLink() {
-            const { data: { user } } = await supabaseClient.auth.getUser();
-            const { error } = await supabaseClient.auth.resetPasswordForEmail(user.email);
-            alert(error ? error.message : "Restore protocols dispatched to your email.");
-        }
-
-        // --- MAINTENANCE HANDLERS ---
-        function clearCache() {
+        // --- SYSTEM MAINTENANCE ---
+        function refreshApp() {
+            // Clears local cache but attempts to preserve the Vanguard profile name
             const prof = localStorage.getItem('vanguard_profile');
             localStorage.clear();
+            sessionStorage.clear();
             if(prof) localStorage.setItem('vanguard_profile', prof);
-            location.reload();
+            
+            alert("Local cache cleared. The interface will now refresh.");
+            location.reload(true); // Force reload from server
         }
 
-        function fullReset() {
-            if(confirm("DANGER: Wiping all local data and logging out. Proceed?")) {
+        async function factoryReset() {
+            // High-warning destructive action
+            const warningMessage = "WARNING: Factory Reset initiated.\n\nThis will completely wipe your local data, sever your connection, and force you to request access again. \n\nAre you sure you want to proceed?";
+            
+            if(confirm(warningMessage)) {
                 localStorage.clear();
-                signOut();
+                sessionStorage.clear();
+                await supabaseClient.auth.signOut();
+                alert("Reset complete. Returning to the Gate.");
+                window.location.href = 'index.html';
             }
         }
 
         async function signOut() {
             await supabaseClient.auth.signOut();
-            localStorage.removeItem('vanguard_profile');
+            localStorage.clear();
+            sessionStorage.clear();
             window.location.href = 'index.html';
         }
     </script>
