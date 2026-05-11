@@ -6,207 +6,223 @@
     <title>Vanguard | Support Terminal</title>
     
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-
     <link rel="stylesheet" href="style.css">
+    
     <style>
-        /* --- LOCKED VIEWPORT ENGINE --- */
-        html, body {
-            margin: 0; padding: 0;
-            height: 100dvh; 
-            width: 100vw;
-            overflow: hidden; 
-            background: #000; color: #fff;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            display: flex; flex-direction: column;
+        /* --- TERMINAL SPECIFIC OVERRIDES --- */
+        #directory-core {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
 
-        /* --- ANIMATED STARFIELD --- */
-        .universe-bg { position: fixed; inset: 0; z-index: -1; background: radial-gradient(circle at center, #0a0a0a 0%, #000 100%); }
-        .star-layer { position: absolute; inset: -500px; background-repeat: repeat; animation: starDrift linear infinite; }
-        .stars-1 { background-image: radial-gradient(3.5px 3.5px at 25px 50px, #fff, transparent), radial-gradient(2.5px 2.5px at 150px 150px, #fff, transparent); background-size: 400px 400px; animation-duration: 160s; opacity: 0.4; }
-        .stars-2 { background-image: radial-gradient(5px 5px at 200px 100px, var(--gold), transparent), radial-gradient(3px 3px at 350px 350px, var(--gold), transparent); background-size: 600px 600px; animation-duration: 110s; opacity: 0.25; }
-        @keyframes starDrift { from { transform: translateY(0); } to { transform: translateY(500px); } }
-
-        /* --- FLEXBOX CENTERING & MOBILE SAFE-ZONE --- */
-        .viewport-wrapper {
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            height: 100%; width: 100%;
-            padding: 15px 15px 65px 15px; 
-            box-sizing: border-box;
-        }
-
-        /* --- TERMINAL CARD --- */
-        .support-terminal {
-            width: 100%; max-width: 650px;
-            flex: 1 1 auto; 
-            min-height: 0; 
-            display: flex; flex-direction: column;
-            padding: 35px 40px; gap: 15px;
-            box-sizing: border-box; position: relative;
-            background: rgba(15, 15, 15, 0.7);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .support-card {
+            width: 100%;
+            max-width: 600px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border);
             border-radius: 24px;
+            padding: 40px;
+            box-sizing: border-box;
+            text-align: center;
+            animation: terminalFade 0.6s var(--v-curve) forwards;
         }
 
-        /* --- INTERNAL SCROLLING --- */
-        .terminal-body {
-            flex: 1 1 auto;
-            overflow-y: auto;
-            padding-right: 8px;
+        .instruction-box {
+            background: rgba(212, 175, 55, 0.05);
+            border: 1px dashed var(--dark-gold);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 25px;
+        }
+
+        .instruction-box p {
+            margin: 0;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.8);
+            line-height: 1.5;
+        }
+
+        /* --- UPLINK FORM --- */
+        .form-group {
+            text-align: left;
+            margin-bottom: 20px;
             width: 100%;
         }
-        .terminal-body::-webkit-scrollbar { width: 4px; }
-        .terminal-body::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
 
-        /* --- UI COMPONENTS --- */
-        .identity-header { text-align: center; margin-bottom: 5px; }
-
-        .white-divider {
-            width: 100%; height: 1px; background: #fff; border: none;
-            box-shadow: 0 0 10px #fff, 0 0 5px #fff; margin: 10px 0;
-            flex: 0 0 auto;
-        }
-
-        /* --- FORM STYLING --- */
-        .instruction-box {
-            background: rgba(212, 175, 55, 0.08);
-            border: 1px dashed rgba(212, 175, 55, 0.4);
-            border-radius: 12px; padding: 15px;
-            margin-bottom: 20px; text-align: center;
-        }
-        .instruction-box p {
-            margin: 0; color: #fff; font-size: 0.85rem; line-height: 1.5;
-        }
-
-        .form-group { text-align: left; margin-bottom: 15px; }
         .form-group label {
-            display: block; font-size: 0.7rem; font-weight: 700;
-            text-transform: uppercase; color: var(--gold);
-            margin-bottom: 6px; letter-spacing: 1px;
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 8px;
+            letter-spacing: 2px;
         }
-        
-        /* Unified input styling for text, email, select, and textarea */
+
         .form-input {
-            width: 100%; background: rgba(0, 0, 0, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 12px; padding: 14px; color: #fff;
-            font-size: 1rem; box-sizing: border-box;
-            transition: border-color 0.3s; font-family: inherit;
-        }
-        .form-input:focus { outline: none; border-color: var(--gold); }
-        .form-input::placeholder { color: rgba(255,255,255,0.5); }
-        
-        /* Specific tweaks */
-        textarea.form-input { resize: vertical; min-height: 120px; }
-        select.form-input { cursor: pointer; appearance: none; }
-        select.form-input option { background: #111; color: #fff; padding: 10px; }
-
-        .btn-container { display: flex; justify-content: center; margin-top: 10px; }
-
-        @media (max-width: 600px) {
-            .support-terminal { padding: 25px 20px; border-radius: 16px; }
-            .identity-header h2 { font-size: 1.6rem !important; }
+            width: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 14px;
+            color: #fff;
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+            font-family: inherit;
         }
 
-        /* --- ANIMATED FOOTER ENGINE --- */
-        .vanguard-footer {
-            position: fixed; bottom: 0; width: 100%;
-            height: 40px; background: #000;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            display: flex; align-items: center; justify-content: center;
-            z-index: 100; overflow: hidden; pointer-events: none;
+        .form-input:focus {
+            outline: none;
+            border-color: var(--gold);
+            background: rgba(0, 0, 0, 0.6);
         }
-        .footer-text-container { position: relative; width: 100%; text-align: center; }
-        .footer-text {
-            position: absolute; width: 100%; left: 0; top: 50%;
-            transform: translateY(-50%); margin: 0; font-size: 0.75rem; font-weight: 700;
-            letter-spacing: 1.5px; text-transform: uppercase; color: #fff;
-            transition: opacity 1s, filter 1s;
-        }
-        .motto-text { clip-path: inset(0 100% 0 0); transition: clip-path 1.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 1s; color: var(--gold); }
 
-        .state-copyright .copyright-text { opacity: 1; filter: blur(0); }
-        .state-copyright .motto-text { opacity: 0; filter: blur(5px); clip-path: inset(0 100% 0 0); }
-        .state-motto .copyright-text { opacity: 0; filter: blur(5px); }
-        .state-motto .motto-text { opacity: 1; filter: blur(0); clip-path: inset(0 0 0 0); }
+        textarea.form-input {
+            min-height: 120px;
+            resize: none;
+        }
+
+        select.form-input {
+            cursor: pointer;
+        }
+
+        /* --- SLOW FILL SUBMIT --- */
+        .uplink-btn {
+            position: relative;
+            width: 100%;
+            padding: 18px;
+            font-size: 0.9rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--gold);
+            background: transparent;
+            border: 1px solid var(--gold);
+            border-radius: 12px;
+            cursor: pointer;
+            overflow: hidden;
+            transition: color 0.8s ease;
+            z-index: 1;
+        }
+
+        .uplink-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 0; height: 100%;
+            background: var(--gold);
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: -1;
+        }
+
+        .uplink-btn:hover::before {
+            width: 100%;
+        }
+
+        .uplink-btn:hover {
+            color: #000;
+        }
+
+        #sys-msg {
+            margin-top: 15px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            min-height: 1.2em;
+        }
     </style>
 </head>
-<body class="state-copyright">
+<body>
 
-    <div class="universe-bg">
-        <div class="star-layer stars-1"></div>
-        <div class="star-layer stars-2"></div>
+    <!-- LAYER 1: Deep Canvas -->
+    <div id="vanguard-universe" aria-hidden="true">
+        <div class="gold-star-layer"></div>
     </div>
 
-    <div class="viewport-wrapper">
-        <article class="support-terminal animate-wake">
-            
-            <div class="identity-header">
-                <h2 style="margin: 0; font-size: 2rem; font-weight: 900; text-transform: uppercase; color: #fff; letter-spacing: 1px;">Support Terminal</h2>
+    <!-- LAYER 2: App Wrapper -->
+    <main id="app-wrapper">
+
+        <!-- HEADER -->
+        <header id="top-glass-panel" class="glass-module">
+            <div class="citizen-status">
+                <a href="hub.html" class="back-btn">← BACK TO HUB</a>
+                <h1 id="user-greeting">Support Terminal</h1>
             </div>
+        </header>
 
-            <div style="display: flex; justify-content: center;">
-                <a href="directory.html" class="gold-pill" style="width: auto; padding: 10px 40px; font-size: 0.85rem;">Return Home</a>
-            </div>
-
-            <hr class="white-divider">
-
-            <div class="terminal-body">
+        <!-- CORE TERMINAL -->
+        <section id="directory-core">
+            <div class="support-card">
                 
                 <div class="instruction-box">
-                    <p><strong>HOW THIS WORKS:</strong> Fill out the form below. When you click "Review Draft," your device's email app will open. You can double-check your message there before actually sending it to us. A Vanguard Representative will get back to you as soon as possible!</p>
+                    <p><strong>UPLINK PROTOCOL:</strong> Fill out the form below. Reviewing the draft will initialize your local email client. Ensure your message is complete before transmission.</p>
                 </div>
 
+                <!-- CATEGORY -->
                 <div class="form-group">
-                    <label>How can we help?</label>
+                    <label>Inquiry Type</label>
                     <select id="f-category" class="form-input">
-                        <option value="General">General Inquiry</option>
-                        <option value="Support">Technical Support</option>
-                        <option value="Business Opportunities">Business Opportunities</option>
-                        <option value="Partnerships">Partnerships</option>
+                        <option value="Technical Uplink">Technical Support</option>
+                        <option value="Mastery Guidance">Mastery Guidance</option>
+                        <option value="Guild Inquiry">Guild Inquiry</option>
+                        <option value="General Comms">General Communications</option>
                     </select>
                 </div>
 
+                <!-- NAME -->
                 <div class="form-group">
-                    <label>Your Full Name</label>
-                    <input type="text" id="f-name" class="form-input" placeholder="Enter your name...">
+                    <label>Citizen Identity</label>
+                    <input type="text" id="f-name" class="form-input" placeholder="Name Loading...">
                 </div>
 
+                <!-- EMAIL -->
                 <div class="form-group">
-                    <label>Return Email Address</label>
-                    <input type="email" id="f-email" class="form-input" placeholder="Where should we reply?">
+                    <label>Return Frequency (Email)</label>
+                    <input type="email" id="f-email" class="form-input" placeholder="Frequency Loading...">
                 </div>
 
+                <!-- MESSAGE -->
                 <div class="form-group">
-                    <label>Your Message</label>
-                    <textarea id="f-msg" class="form-input" placeholder="Detail your request or inquiry here..."></textarea>
+                    <label>The Message</label>
+                    <textarea id="f-msg" class="form-input" placeholder="Transmission details..."></textarea>
                 </div>
 
-                <div class="btn-container">
-                    <button class="gold-pill" style="width: 100%; max-width: 350px; font-size: 0.9rem; padding: 15px;" onclick="compileDraft()">Review Draft</button>
-                </div>
+                <button class="uplink-btn" onclick="compileDraft()">Initialize Uplink</button>
 
-                <div id="sys-msg" style="text-align: center; font-size: 0.85rem; font-weight: bold; min-height: 1.2em; color: #fff; margin-top: 15px;"></div>
+                <div id="sys-msg"></div>
 
             </div>
-        </article>
-    </div>
+        </section>
 
-    <footer class="vanguard-footer">
-        <div class="footer-text-container">
-            <p class="footer-text copyright-text">Powered by Vanguard Citizen Services &copy; <span id="current-year"></span></p>
-            <p class="footer-text motto-text">Empower . Educate . Elevate</p>
-        </div>
-    </footer>
+        <!-- FOOTER -->
+        <footer id="bottom-glass-panel" class="glass-module">
+            <div class="footer-container">
+                <p id="footer-msg-1" class="footer-msg active">Vanguard Citizen Services &copy; <span id="current-year"></span></p>
+                <p id="footer-msg-2" class="footer-msg">Direct Uplink Enabled</p>
+            </div>
+        </footer>
 
+    </main>
+
+    <script src="app.js"></script>
     <script>
-        // ==========================================
-        // DRAFT COMPILER PROTOCOL (Mailto Logic)
-        // ==========================================
+        // --- AUTO-POPULATE IDENTITY ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const cached = JSON.parse(localStorage.getItem('vanguard_profile'));
+            if (cached) {
+                if (cached.name) document.getElementById('f-name').value = cached.name;
+                if (cached.email) document.getElementById('f-email').value = cached.email;
+            }
+        });
+
+        // --- MAILTO COMPILER ---
         function compileDraft() {
             const category = document.getElementById('f-category').value;
             const name = document.getElementById('f-name').value.trim();
@@ -214,72 +230,39 @@
             const msgText = document.getElementById('f-msg').value.trim();
             const sysMsg = document.getElementById('sys-msg');
 
-            // Basic validation
             if (!name || !msgText) {
-                sysMsg.innerText = "Please provide your name and a message.";
-                sysMsg.style.color = "#f87171"; // Red
+                sysMsg.innerText = "Error: Citizen ID or Message missing.";
+                sysMsg.style.color = "#ff4d4d";
                 return;
             }
 
-            sysMsg.innerText = "Opening your email app...";
+            sysMsg.innerText = "Uplink Established. Opening client...";
             sysMsg.style.color = "var(--gold)";
 
-            // Configuration
-            const destinationEmail = "support@vcscitizen.org"; // Ensure this matches your actual support email
+            const destination = "support@vcscitizen.org";
+            const subject = encodeURIComponent(`[${category}] Uplink from ${name}`);
             
-            // Constructing the Subject
-            const subjectLine = encodeURIComponent(`[${category}] Support Request from ${name}`);
-            
-            // Constructing the Body
-            const bodyContent = encodeURIComponent(
+            const body = encodeURIComponent(
 `CITIZEN IDENTIFICATION:
-Name: ${name}
-Return Email: ${email || "Not Provided"}
-Category: ${category}
+-------------------------
+NAME: ${name}
+RETURN FREQUENCY: ${email || "NOT PROVIDED"}
+CATEGORY: ${category}
 
-----------------------------------------
-MESSAGE:
-----------------------------------------
-
+MESSAGE TRANSCRIPTION:
+-------------------------
 ${msgText}
 
-`
+-------------------------
+VANGUARD SECURE TRANSITION`
             );
 
-            // Create the Mailto Link
-            const mailtoLink = `mailto:${destinationEmail}?subject=${subjectLine}&body=${bodyContent}`;
-
-            // Execute the opening of the mail client with a slight delay for visual feedback
             setTimeout(() => {
-                window.location.href = mailtoLink;
-                sysMsg.innerText = "Draft successfully sent to your email app.";
-                sysMsg.style.color = "#4ade80"; // Green
-                
-                // Clear fields after routing
-                setTimeout(() => {
-                    document.getElementById('f-msg').value = '';
-                    sysMsg.innerText = '';
-                }, 4000);
+                window.location.href = `mailto:${destination}?subject=${subject}&body=${body}`;
+                sysMsg.innerText = "Uplink successful. Transmission drafted.";
+                sysMsg.style.color = "#4ade80";
             }, 600);
         }
-
-        // ==========================================
-        // ANIMATED FOOTER LOOP
-        // ==========================================
-        window.onload = () => {
-            document.getElementById('current-year').innerText = new Date().getFullYear();
-            
-            setInterval(() => {
-                const body = document.body;
-                if (body.classList.contains('state-copyright')) {
-                    body.classList.remove('state-copyright');
-                    body.classList.add('state-motto');
-                } else {
-                    body.classList.remove('state-motto');
-                    body.classList.add('state-copyright');
-                }
-            }, 6000); 
-        };
     </script>
 </body>
 </html>
