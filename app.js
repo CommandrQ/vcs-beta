@@ -16,7 +16,7 @@ const directoryDataRaw = {
             url: "vsr/techhelp.html" 
         }
     ],
-    "System Settings": [
+    "System": [
         { 
             title: "Support Terminal", 
             desc: "Connect directly with Vanguard support for technical help or general inquiries.", 
