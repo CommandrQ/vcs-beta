@@ -31,6 +31,21 @@
             color: var(--white);
             font-family: 'Inter', system-ui, sans-serif;
             overflow: hidden;
+            font-size: 16px; /* Base size for mobile */
+        }
+
+        /* --- DESKTOP ENHANCEMENTS --- */
+        @media (min-width: 1024px) {
+            body, html {
+                font-size: 18px; /* Slightly bigger font for desktop */
+            }
+            h1#user-greeting {
+                font-size: 2.2rem !important;
+            }
+            .glass-window {
+                max-width: 900px !important;
+                padding: 60px 50px !important;
+            }
         }
 
         /* --- THE STARFIELD --- */
@@ -158,7 +173,7 @@
             animation: gold-pulse-text 3s infinite ease-in-out;
         }
 
-        /* --- SERVICE CARDS (TEXT FLOW STYLE) --- */
+        /* --- SERVICE CARDS --- */
         #directory-list {
             width: 100%;
             margin-top: 20px;
@@ -182,7 +197,7 @@
 
         .card-desc {
             color: rgba(255, 255, 255, 0.8);
-            font-size: 0.95rem;
+            font-size: 1rem;
             line-height: 1.8;
             margin-bottom: 25px;
             max-width: 500px;
@@ -211,7 +226,7 @@
             box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
         }
 
-        /* --- FOOTER --- */
+        /* --- FOOTER (WHITE TEXT) --- */
         footer {
             width: 100%;
             padding: 40px;
@@ -219,8 +234,9 @@
             font-size: 0.65rem;
             letter-spacing: 4px;
             text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.4);
+            color: var(--white); /* Updated to full white */
             text-align: center;
+            opacity: 0.9;
         }
 
         /* --- ANIMATIONS --- */
@@ -251,7 +267,8 @@
             <header>
                 <h1 id="user-greeting">Welcome, Citizen</h1>
                 <div class="subtitle">System Online | Vanguard Hub</div>
-                <a href="settings.html" class="config-btn">⚙️ Config Terminal</a>
+                <!-- Renamed to Settings -->
+                <a href="settings.html" class="config-btn">Settings</a>
             </header>
 
             <nav id="category-bar"></nav>
