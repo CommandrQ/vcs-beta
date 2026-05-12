@@ -79,11 +79,27 @@
             border-radius: 4px;
             transition: 0.3s;
         }
-        .return-btn:hover {
-            border-color: var(--gold);
+        .return-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(212, 175, 55, 0.05); }
+
+        /* Inquiry Button - High Visibility Gold */
+        .inquiry-btn {
+            background: transparent;
             color: var(--gold);
-            background: rgba(212, 175, 55, 0.05);
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border: 1px solid var(--gold);
+            padding: 14px 25px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 40px;
+            width: 100%;
+            max-width: 320px;
         }
+        .inquiry-btn:hover { background: rgba(212, 175, 55, 0.1); box-shadow: 0 0 15px rgba(212, 175, 55, 0.2); }
 
         .go-btn {
             display: inline-block; width: 100%; max-width: 250px;
@@ -136,7 +152,6 @@
         <article class="glass-window">
             <header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
                 <h1 style="letter-spacing: 5px; text-transform: uppercase; font-weight: 900; color: var(--commercial-green);">Business Hub</h1>
-                <!-- Return to Tech Lab Button -->
                 <a href="techhelp.html" class="return-btn">← Return to Lab</a>
             </header>
 
@@ -172,7 +187,8 @@
                 <button onclick="openTOS('Strategic Retainer')" class="go-btn">Initiate Consultation</button>
             </section>
 
-            <button onclick="window.location.href='../support.html'" class="return-btn" style="margin-top: 40px; width: 100%; max-width: 300px;">Specific B2B Questions? →</button>
+            <!-- High Visibility B2B Inquiry Button -->
+            <button onclick="window.location.href='../support.html'" class="inquiry-btn">Specific B2B Questions? →</button>
         </article>
         <footer>Vanguard Citizen Services &copy; <span id="year"></span></footer>
     </main>
