@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Vanguard | Hub</title>
+    <title>Vanguard | Fort Toward Hub</title>
     
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
         :root {
             --gold: #D4AF37;
-            --solid-black: #080808;
-            --window-border: #222222;
+            --solid-black: #000000;
+            --deep-gray: #111111;
             --v-curve: cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* --- BASE RESET --- */
+        /* --- FOUNDATION --- */
         * {
             margin: 0;
             padding: 0;
@@ -25,85 +25,89 @@
 
         body, html {
             height: 100%;
-            background-color: #000;
+            background: #000;
             color: #ffffff;
             font-family: 'Inter', sans-serif;
             overflow: hidden;
         }
 
-        /* --- THE ANIMATED GOLDEN STARFIELD --- */
-        /* Fixed visibility issues by ensuring explicit dimensions and z-indexing */
+        /* --- THE GOLDEN STARFIELD --- */
         #vanguard-universe {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            z-index: -1;
-            background: black;
+            z-index: 1; /* Lowest layer */
+            background: #000;
             overflow: hidden;
         }
 
-        .stars {
+        .star-engine {
             position: absolute;
             top: -50%;
             left: -50%;
             width: 200%;
             height: 200%;
             background-image: 
-                radial-gradient(2px 2px at 40px 60px, var(--gold), transparent),
-                radial-gradient(1.5px 1.5px at 150px 200px, #ffffff, transparent),
-                radial-gradient(2.5px 2.5px at 300px 100px, var(--gold), transparent),
-                radial-gradient(1px 1px at 400px 350px, #ffffff, transparent);
-            background-size: 500px 500px;
-            animation: orbital-drift 200s linear infinite;
+                radial-gradient(2px 2px at 50px 80px, var(--gold), transparent),
+                radial-gradient(1.5px 1.5px at 200px 300px, #ffffff, transparent),
+                radial-gradient(2px 2px at 400px 150px, var(--gold), transparent),
+                radial-gradient(1.2px 1.2px at 600px 450px, #ffffff, transparent);
+            background-size: 600px 600px;
+            animation: star-drift 180s linear infinite;
+            opacity: 0.9;
         }
 
-        @keyframes orbital-drift {
+        @keyframes star-drift {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
 
-        /* --- LAYOUT ENGINE (CENTERED) --- */
+        /* --- THE INTERFACE (CENTERED) --- */
         #app-wrapper {
+            position: relative;
+            z-index: 10; /* Above the stars */
             display: flex;
             flex-direction: column;
             align-items: center;
             height: 100vh;
             width: 100%;
-            text-align: center;
+            background: transparent; /* Allows stars to show */
         }
 
         header {
             width: 100%;
-            padding: 30px;
+            padding: 40px 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 15px;
+            gap: 20px;
         }
 
-        h1 {
-            font-size: 1.3rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
+        #user-greeting {
+            font-size: 1.4rem;
             font-weight: 900;
-            animation: pulse-white 4s ease-in-out infinite;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: #ffffff;
+            animation: white-pulse 4s infinite ease-in-out;
         }
 
-        .settings-link {
+        .config-btn {
             color: #ffffff;
             text-decoration: none;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
+            font-weight: 800;
             letter-spacing: 2px;
-            border: 1px solid #ffffff;
-            padding: 8px 16px;
-            border-radius: 2px;
             text-transform: uppercase;
+            border: 1px solid #ffffff;
+            padding: 10px 20px;
+            border-radius: 4px;
             transition: 0.3s;
         }
 
-        .settings-link:hover {
+        .config-btn:hover {
             border-color: var(--gold);
             color: var(--gold);
         }
@@ -111,22 +115,24 @@
         /* --- NAVIGATION --- */
         #category-bar {
             display: flex;
-            gap: 10px;
-            padding: 10px;
-            margin-bottom: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+            width: 90%;
         }
 
         .cat-btn {
             background: transparent;
             border: 1px solid #ffffff;
             color: #ffffff;
-            padding: 10px 20px;
-            font-size: 0.7rem;
+            padding: 12px 25px;
+            font-size: 0.75rem;
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 1px;
             cursor: pointer;
-            transition: 0.3s;
+            transition: 0.4s;
         }
 
         .cat-btn.active {
@@ -141,50 +147,48 @@
             width: 90%;
             max-width: 500px;
             overflow-y: auto;
-            padding-bottom: 50px;
+            padding-bottom: 60px;
             scrollbar-width: none;
         }
 
         #directory-list::-webkit-scrollbar { display: none; }
 
-        .link-card {
-            background: var(--solid-black); /* Solid Background Fix */
-            border: 2px solid var(--window-border);
-            padding: 40px 25px;
-            margin-bottom: 25px;
-            border-radius: 4px; /* Hardened edges for a professional look */
+        .service-window {
+            background: #000000; /* Solid Background */
+            border: 1px solid #222222;
+            padding: 45px 30px;
+            margin-bottom: 30px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            transition: border-color 0.4s;
+            text-align: center;
+            border-radius: 2px;
         }
 
-        .link-card:hover {
-            border-color: var(--gold);
-        }
-
-        .card-title {
+        .window-title {
             color: var(--gold);
-            font-size: 1.2rem;
+            font-size: 1.3rem;
+            font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             margin-bottom: 15px;
+            animation: gold-glow 3s infinite ease-in-out;
         }
 
-        .card-desc {
+        .window-desc {
             color: #ffffff;
-            font-size: 0.9rem;
-            line-height: 1.6;
-            margin-bottom: 30px;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 35px;
         }
 
-        .action-btn {
+        .access-btn {
             width: 100%;
-            max-width: 250px;
+            max-width: 220px;
+            padding: 15px;
             background: transparent;
             border: 1px solid var(--gold);
             color: var(--gold);
-            padding: 15px;
             text-decoration: none;
             font-weight: 900;
             text-transform: uppercase;
@@ -192,38 +196,48 @@
             transition: 0.3s;
         }
 
-        .action-btn:hover {
+        .access-btn:hover {
             background: var(--gold);
-            color: #000000;
+            color: #000;
         }
 
         /* --- FOOTER --- */
         footer {
             width: 100%;
-            padding: 20px;
-            font-size: 0.6rem;
-            letter-spacing: 2px;
+            padding: 25px;
+            text-align: center;
+            font-size: 0.65rem;
+            letter-spacing: 3px;
             text-transform: uppercase;
+            color: #ffffff;
+            border-top: 1px solid #222222;
             background: #000;
-            border-top: 1px solid var(--window-border);
         }
 
-        @keyframes pulse-white {
+        /* --- ANIMATIONS --- */
+        @keyframes white-pulse {
             0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
+            50% { opacity: 0.6; }
+        }
+
+        @keyframes gold-glow {
+            0%, 100% { text-shadow: 0 0 5px rgba(212, 175, 55, 0.2); }
+            50% { text-shadow: 0 0 15px rgba(212, 175, 55, 0.6); }
         }
     </style>
 </head>
 <body>
 
+    <!-- Unified Star Engine -->
     <div id="vanguard-universe">
-        <div class="stars"></div>
+        <div class="star-engine"></div>
     </div>
 
+    <!-- Interface Wrapper -->
     <main id="app-wrapper">
         <header>
             <h1 id="user-greeting">Welcome, Citizen</h1>
-            <a href="settings.html" class="settings-link">⚙️ Terminal Config</a>
+            <a href="settings.html" class="config-btn">⚙️ Config Terminal</a>
         </header>
 
         <nav id="category-bar"></nav>
@@ -236,49 +250,45 @@
     </main>
 
     <script>
-        /* --- DIRECTORY DATA --- */
-        const HUB_DATA = {
+        const HUB_CONTENT = {
             "Tech Lab": [
                 { title: "Consulting", desc: "Expert strategy and support sessions for system health and digital security.", url: "vsr/techhelp.html" }
             ],
             "System": [
                 { title: "Mission", desc: "Our history and commitment to the citizens of Hardin County.", url: "about.html" },
-                { title: "Support", desc: "Connect with our team for technical inquiries.", url: "support.html" }
+                { title: "Support", desc: "Connect with our team for technical inquiries and uplink assistance.", url: "support.html" }
             ]
         };
 
-        /* --- SUPABASE --- */
         const supabaseUrl = 'https://dvyjupytbwbrcoyouxpf.supabase.co';
         const supabaseKey = 'sb_publishable_wjgbPekKmodd5mSDXIeUeg_Wq73GzOk';
         const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
-        let currentCat = Object.keys(HUB_DATA)[0];
+        let activeCat = Object.keys(HUB_CONTENT)[0];
 
-        /* --- ENGINE --- */
-        function render(cat = currentCat) {
-            currentCat = cat;
+        function renderHub(cat = activeCat) {
+            activeCat = cat;
             
             const nav = document.getElementById('category-bar');
-            nav.innerHTML = Object.keys(HUB_DATA).map(c => `
-                <button class="cat-btn ${c === currentCat ? 'active' : ''}" onclick="render('${c}')">${c}</button>
+            nav.innerHTML = Object.keys(HUB_CONTENT).map(c => `
+                <button class="cat-btn ${c === activeCat ? 'active' : ''}" onclick="renderHub('${c}')">${c}</button>
             `).join('');
 
             const list = document.getElementById('directory-list');
-            list.innerHTML = HUB_DATA[currentCat].map(item => `
-                <div class="link-card">
-                    <h2 class="card-title">${item.title}</h2>
-                    <p class="card-desc">${item.desc}</p>
-                    <a href="${item.url}" class="action-btn">Initialize Access</a>
+            list.innerHTML = HUB_CONTENT[activeCat].map(item => `
+                <div class="service-window">
+                    <h2 class="window-title">${item.title}</h2>
+                    <p class="window-desc">${item.desc}</p>
+                    <a href="${item.url}" class="access-btn">Open Uplink</a>
                 </div>
             `).join('');
         }
 
-        async function bootGreeting() {
+        async function updateCitizenGreeting() {
             const el = document.getElementById('user-greeting');
             const { data: { user } } = await supabaseClient.auth.getUser();
 
             if (user) {
-                // Query the citizens table for full_name
                 const { data: profile } = await supabaseClient
                     .from('citizens')
                     .select('full_name')
@@ -293,8 +303,8 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('year').innerText = new Date().getFullYear();
-            bootGreeting();
-            render();
+            updateCitizenGreeting();
+            renderHub();
         });
     </script>
 </body>
