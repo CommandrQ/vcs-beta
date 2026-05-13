@@ -11,12 +11,13 @@
     <style>
         :root {
             --gold: #D4AF37;
+            --gold-glow: rgba(212, 175, 55, 0.4);
             --white: #ffffff;
-            --apple-glass: rgba(28, 28, 30, 0.65);
-            --apple-border: rgba(255, 255, 255, 0.08);
+            --apple-glass: rgba(28, 28, 30, 0.75);
+            --apple-border: rgba(255, 255, 255, 0.1);
         }
 
-        /* --- BASIC SETUP & APPLE TYPOGRAPHY --- */
+        /* --- BASIC SETUP --- */
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body, html {
@@ -28,7 +29,7 @@
             overflow: hidden;
         }
 
-        /* --- THE GOLDEN STARS --- */
+        /* --- BACKGROUND --- */
         #vanguard-stars {
             position: fixed;
             inset: 0;
@@ -50,7 +51,6 @@
 
         @keyframes rotate-stars { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        /* --- MAIN WRAPPER --- */
         #app-wrapper {
             position: relative;
             z-index: 10;
@@ -67,21 +67,21 @@
 
         #app-wrapper::-webkit-scrollbar { display: none; }
 
-        /* --- HEADER --- */
         header {
             width: 90%;
             max-width: 600px;
-            padding: 30px 20px;
-            margin-top: 40px;
+            padding: 40px 20px 20px 20px;
         }
 
         h1 {
-            font-size: 1.7rem;
+            font-size: 1.8rem;
             font-weight: 700;
-            letter-spacing: -0.5px; 
+            letter-spacing: -0.5px;
+            /* Subtle text glow */
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
         }
 
-        /* --- APPLE SEGMENTED CONTROL (TABS) --- */
+        /* --- TABS WITH GLOW ACCENT --- */
         #tab-nav {
             display: flex;
             background: rgba(118, 118, 128, 0.24); 
@@ -89,9 +89,10 @@
             -webkit-backdrop-filter: blur(20px);
             border-radius: 100px;
             padding: 4px;
-            margin: 10px 0 30px 0;
+            margin: 10px 0 35px 0;
             width: 90%;
             max-width: 500px;
+            border: 1px solid var(--apple-border);
         }
 
         .tab-btn {
@@ -99,136 +100,110 @@
             background: transparent;
             border: none;
             color: var(--white);
-            padding: 8px 12px;
+            padding: 10px 12px;
             font-size: 0.85rem;
             font-weight: 500;
             cursor: pointer;
             border-radius: 100px;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
         .tab-btn.active {
-            background: rgba(255, 255, 255, 0.15); 
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.12); 
+            color: var(--gold);
+            /* Glowing Tab Accent */
+            box-shadow: 0 0 15px var(--gold-glow);
         }
 
-        /* --- CONTENT SECTIONS --- */
-        .content-section {
-            display: none; 
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            padding-bottom: 60px;
-            animation: fadeIn 0.4s ease-out;
-        }
-
-        .content-section.active { display: flex; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* --- APPLE STYLE CARDS --- */
+        /* --- CARDS WITH SUBTLE ACCENTS --- */
         .window {
             width: 90%;
             max-width: 550px;
             background: var(--apple-glass);
-            backdrop-filter: saturate(180%) blur(30px);
-            -webkit-backdrop-filter: saturate(180%) blur(30px);
+            backdrop-filter: saturate(180%) blur(35px);
+            -webkit-backdrop-filter: saturate(180%) blur(35px);
             border: 1px solid var(--apple-border);
             padding: 32px 28px;
-            margin-bottom: 20px;
-            border-radius: 24px; 
+            margin-bottom: 25px;
+            border-radius: 28px; 
             text-align: left;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            /* Subtle outer card glow */
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4), 0 0 1px var(--gold-glow);
         }
 
-        .center-text { text-align: center; }
+        .window:hover {
+            transform: translateY(-2px);
+        }
 
         .card-title { 
             color: var(--white); 
-            font-size: 1.3rem; 
+            font-size: 1.35rem; 
             font-weight: 600; 
             margin-bottom: 8px; 
-            letter-spacing: -0.3px;
         }
         
         .card-desc { 
             font-size: 0.95rem; 
             margin-bottom: 24px; 
-            line-height: 1.5; 
+            line-height: 1.6; 
             color: var(--white); 
         }
         
-        /* --- APPLE STYLE BUTTONS --- */
+        /* --- BUTTONS --- */
         .action-link {
             display: inline-block;
             background: var(--white);
             color: #000;
-            padding: 14px 0;
+            padding: 15px 0;
             width: 100%; 
             text-decoration: none;
             font-weight: 600;
-            font-size: 1rem;
-            border-radius: 14px; 
-            transition: transform 0.2s, background 0.2s;
+            border-radius: 16px; 
+            transition: 0.2s;
             text-align: center;
         }
         
-        .action-link:hover { 
-            background: #e5e5ea; 
-            transform: scale(0.98); 
-        }
+        .action-link:active { transform: scale(0.97); }
 
         .action-link.gold-btn {
             background: var(--gold);
-            color: #000;
+            box-shadow: 0 4px 15px var(--gold-glow);
         }
-        .action-link.gold-btn:hover { background: #b8972e; }
 
-        /* --- TEXT SPECIFICS --- */
-        .founder-role {
-            font-size: 0.8rem;
-            font-weight: 500;
-            color: var(--gold);
-            margin-bottom: 16px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .mission-text {
-            font-size: 1.05rem;
-            line-height: 1.5;
-            color: var(--white);
-            font-weight: 400;
-        }
+        /* --- ACCENT HEADERS --- */
         .mission-header {
-            font-size: 0.8rem; 
-            color: var(--white); 
+            font-size: 0.75rem; 
+            color: var(--gold); /* Gold color for subheaders */
             text-transform: uppercase; 
             letter-spacing: 2px; 
-            margin-bottom: 12px;
-            font-weight: 600;
+            margin-bottom: 14px;
+            font-weight: 700;
+            /* Subtle header glow */
+            text-shadow: 0 0 8px var(--gold-glow);
         }
 
-        /* --- DESKTOP SCALING --- */
-        @media (min-width: 1024px) {
-            h1 { font-size: 2.2rem; }
-            #tab-nav { max-width: 600px; padding: 6px; }
-            .tab-btn { font-size: 1rem; padding: 10px 24px; }
-            .window { max-width: 650px; padding: 40px; border-radius: 30px; }
-            .card-title { font-size: 1.6rem; }
-            .card-desc, .mission-text { font-size: 1.1rem; }
-            .action-link { font-size: 1.1rem; padding: 16px 0; }
+        .content-section {
+            display: none; 
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            padding-bottom: 80px;
+            animation: fadeIn 0.5s ease;
         }
+
+        .content-section.active { display: flex; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
         footer {
             width: 100%;
-            padding: 30px;
-            font-size: 0.75rem;
-            color: #ffffff;
+            padding: 40px 20px;
+            font-size: 0.8rem;
+            color: var(--white);
             margin-top: auto;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
+            font-weight: 300;
         }
     </style>
 </head>
@@ -247,47 +222,49 @@
             <button class="tab-btn" id="btn-knights" onclick="switchTab('knights')">Knights</button>
         </nav>
 
-        <!-- SECTION 1: OUR VISION -->
+        <!-- VISION SECTION -->
         <section id="sec-vision" class="content-section active">
             <div class="window center-text">
                 <div class="mission-header">The Mission</div>
-                <p class="mission-text">
+                <p style="font-size: 1.1rem; line-height: 1.6;">
                     "To bridge the gap between digital accessibility and community resources, creating a hub where every citizen has the tools to succeed."
                 </p>
             </div>
 
             <div class="window">
+                <div class="mission-header">Lead Developer</div>
                 <h2 class="card-title">Kona Agpalza</h2>
-                <div class="founder-role">Lead Developer & Strategist</div>
                 <p class="card-desc">
-                    The architect behind the Vanguard infrastructure. Kona focuses on building secure, fast, and community-driven digital tools that empower citizens to navigate the modern internet with ease.
+                    The architect behind the Vanguard infrastructure, focusing on secure, fast, and community-driven digital tools for the modern internet.
                 </p>
             </div>
 
             <div class="window">
+                <div class="mission-header">Creative Director</div>
                 <h2 class="card-title">Quincy Jones</h2>
-                <div class="founder-role">Creative Director & Community Lead</div>
                 <p class="card-desc">
-                    The vision behind the Vanguard experience. Quincy ensures that every interaction within the network is intuitive, accessible, and aligned with our mission to serve the people.
+                    The vision behind the Vanguard experience, ensuring every interaction is intuitive, accessible, and aligned with our community mission.
                 </p>
             </div>
         </section>
 
-        <!-- SECTION 2: CURRENT PROJECTS -->
+        <!-- PROJECTS SECTION -->
         <section id="sec-projects" class="content-section">
             <!-- Project cards injected by JS -->
         </section>
 
-        <!-- SECTION 3: VANGUARD KNIGHTS (Updated Text) -->
+        <!-- KNIGHTS SECTION -->
         <section id="sec-knights" class="content-section">
             <div class="window">
-                <h2 class="card-title">Who are the Knights?</h2>
+                <h2 class="card-title">The Community Engine</h2>
                 <p class="card-desc">
-                    The Vanguard Knights are not a distant elite—they are the heartbeat of this community. They are the neighbors, creators, and innovators who provide the raw power behind the various projects hosted here in the hub.
+                    The Vanguard Knights are the heartbeat of this community. They are the neighbors and innovators who power the projects hosted here in the hub.
                 </p>
                 <p class="card-desc">
-                    From refining our digital tools to leading community initiatives, the Knights are the hands and minds that turn our shared vision into a living reality. By contributing your time, skills, or ideas, you fuel the engine of Vanguard Citizen Services.
+                    From refining digital tools to leading local initiatives, the Knights turn our vision into reality. Every contribution fuels the engine of Vanguard Citizen Services.
                 </p>
+                <div style="height: 1px; background: var(--apple-border); margin: 20px 0;"></div>
+                <p class="mission-header" style="text-align: center; margin-bottom: 0;">Status: Recruiting Citizens</p>
             </div>
         </section>
 
@@ -298,19 +275,12 @@
         const vanguardHub = supabase.createClient(
             'https://dvyjupytbwbrcoyouxpf.supabase.co', 
             'sb_publishable_wjgbPekKmodd5mSDXIeUeg_Wq73GzOk',
-            {
-                auth: {
-                    persistSession: true,
-                    autoRefreshToken: true,
-                    detectSessionInUrl: true
-                }
-            }
+            { auth: { persistSession: true, autoRefreshToken: true } }
         );
 
         function switchTab(tabName) {
             document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-
             document.getElementById(`sec-${tabName}`).classList.add('active');
             document.getElementById(`btn-${tabName}`).classList.add('active');
         }
@@ -319,24 +289,23 @@
             try {
                 const response = await fetch('projects.json');
                 const projects = await response.json();
+                const container = document.getElementById('sec-projects');
                 
-                const projectContainer = document.getElementById('sec-projects');
-                
-                if (projects.length === 0) {
-                    projectContainer.innerHTML = `<div class="window center-text"><p class="card-desc">No active projects to display.</p></div>`;
+                if (!projects || projects.length === 0) {
+                    container.innerHTML = `<div class="window center-text"><p class="card-desc">Awaiting deployment...</p></div>`;
                     return;
                 }
 
-                projectContainer.innerHTML = projects.map(item => `
+                container.innerHTML = projects.map(item => `
                     <div class="window">
+                        <div class="mission-header">Active Project</div>
                         <h2 class="card-title">${item.title}</h2>
                         <p class="card-desc">${item.desc}</p>
-                        <a href="${item.url}" class="action-link gold-btn">View Project</a>
+                        <a href="${item.url}" class="action-link gold-btn">Launch Terminal</a>
                     </div>
                 `).join('');
             } catch (err) { 
-                console.error("Failed to load projects JSON:", err); 
-                document.getElementById('sec-projects').innerHTML = `<div class="window center-text"><p class="card-desc" style="color: #ff3b30;">System Error: Unable to sync project database.</p></div>`;
+                document.getElementById('sec-projects').innerHTML = `<div class="window center-text"><p class="card-desc">Syncing project database...</p></div>`;
             }
         }
 
