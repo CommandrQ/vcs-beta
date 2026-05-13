@@ -81,13 +81,22 @@
             letter-spacing: 3px;
         }
 
-        /* --- CENTERED SWIPE BAR WITH HINT --- */
+        /* Update: Account settings text is now full white */
+        header a {
+            color: var(--white); 
+            font-size: 0.6rem; 
+            text-decoration: none; 
+            margin-top: 10px; 
+            display: inline-block; 
+            opacity: 1; /* Removed transparency */
+            letter-spacing: 1px;
+        }
+
+        /* --- CENTERED SWIPE BAR --- */
         #category-bar {
             display: flex;
-            /* "center" keeps them middle if they fit, "flex-start" allows scrolling */
             justify-content: center; 
             gap: 12px;
-            /* Side padding creates the "peek-a-boo" effect for the next item */
             padding: 20px 40px; 
             width: 100%;
             overflow-x: auto;
@@ -98,7 +107,6 @@
 
         #category-bar::-webkit-scrollbar { display: none; }
 
-        /* Ensuring that if categories overflow, they align to the left so scrolling works */
         @media (max-width: 600px) {
             #category-bar {
                 justify-content: flex-start;
@@ -106,7 +114,7 @@
         }
 
         .cat-btn {
-            flex-shrink: 0; /* Prevents buttons from squishing */
+            flex-shrink: 0;
             background: transparent;
             border: 1px solid var(--white);
             color: var(--white);
@@ -139,13 +147,13 @@
             background: var(--glass);
             backdrop-filter: blur(10px);
             border: 1px solid var(--border);
-            padding: 40px 20px;
+            padding: 25px 20px; /* Update: Shortened height by reducing padding */
             margin-bottom: 20px;
             border-radius: 4px;
         }
 
         .card-title { color: var(--gold); font-size: 1.2rem; font-weight: 900; text-transform: uppercase; margin-bottom: 10px; }
-        .card-desc { font-size: 0.9rem; margin-bottom: 25px; line-height: 1.6; }
+        .card-desc { font-size: 0.9rem; margin-bottom: 20px; line-height: 1.5; }
         
         .action-link {
             display: inline-block;
@@ -158,6 +166,14 @@
             transition: 0.3s;
         }
         .action-link:hover { background: var(--gold); color: #000; }
+
+        /* --- DESKTOP SPECIFIC UPDATES --- */
+        @media (min-width: 1024px) {
+            .action-link {
+                padding: 15px 60px; /* Wider buttons */
+                font-size: 1rem;    /* Slightly larger font */
+            }
+        }
 
         footer {
             width: 100%;
@@ -177,7 +193,7 @@
     <main id="app-wrapper">
         <header>
             <h1 id="user-greeting">Welcome, Citizen</h1>
-            <a href="settings.html" style="color: var(--white); font-size: 0.6rem; text-decoration: none; margin-top: 10px; display: inline-block; opacity: 0.5;">⚙️ ACCOUNT SETTINGS</a>
+            <a href="settings.html">⚙️ ACCOUNT SETTINGS</a>
         </header>
 
         <nav id="category-bar"></nav>
