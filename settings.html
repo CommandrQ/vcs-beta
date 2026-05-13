@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Vanguard | Settings</title>
     
-    <!-- Supabase for Login -->
+    <!-- Supabase Connection -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
@@ -14,6 +14,7 @@
             --white: #ffffff;
             --glass: rgba(0, 0, 0, 0.85);
             --glass-border: rgba(255, 255, 255, 0.2);
+            --v-curve: cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         /* --- BASIC SETUP --- */
@@ -32,7 +33,7 @@
             overflow: hidden;
         }
 
-        /* --- THE GOLDEN STARS --- */
+        /* --- ANIMATED STARFIELD --- */
         #vanguard-universe {
             position: fixed;
             inset: 0;
@@ -59,7 +60,7 @@
             to { transform: rotate(360deg); }
         }
 
-        /* --- THE MAIN VIEW --- */
+        /* --- MAIN WRAPPER --- */
         #app-wrapper {
             position: relative;
             z-index: 10;
@@ -76,7 +77,7 @@
 
         #app-wrapper::-webkit-scrollbar { display: none; }
 
-        /* --- THE TOP HEADER --- */
+        /* --- CENTERED IDENTITY HEADER --- */
         header {
             width: 90%;
             max-width: 500px;
@@ -87,31 +88,34 @@
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
             border-bottom: 2px solid var(--gold);
-            animation: glow 4s infinite ease-in-out;
+            animation: gold-pulse 4s infinite ease-in-out;
         }
 
-        .header-label {
+        .profile-label {
             font-size: 0.7rem;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             margin-bottom: 8px;
+            color: var(--white);
         }
 
-        .citizen-name {
+        .user-name {
             font-size: 1.3rem;
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 2px;
             margin-bottom: 5px;
+            color: var(--white);
         }
 
-        .citizen-id {
+        .id-number {
             color: var(--gold);
-            font-size: 0.85rem;
-            letter-spacing: 1px;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            font-weight: bold;
         }
 
-        /* --- GLASS WINDOWS --- */
+        /* --- DARK GLASS WINDOWS --- */
         .window {
             width: 90%;
             max-width: 500px;
@@ -119,40 +123,41 @@
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             border: 1px solid var(--glass-border);
-            padding: 35px 25px;
+            padding: 40px 30px;
             margin: 20px 0;
             border-radius: 4px;
         }
 
         h2 {
             color: var(--gold);
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             font-weight: 900;
         }
 
         p {
-            font-size: 0.9rem;
-            line-height: 1.6;
+            font-size: 0.95rem;
+            line-height: 1.7;
             margin-bottom: 25px;
+            color: var(--white);
         }
 
-        /* --- BUTTONS & BOXES --- */
-        .input-box {
+        /* --- INPUTS & BUTTONS --- */
+        .vanguard-input {
             width: 100%;
-            background: rgba(0,0,0,0.6);
+            background: rgba(0, 0, 0, 0.7);
             border: 1px solid var(--glass-border);
             color: var(--white);
-            padding: 15px;
+            padding: 16px;
             margin-bottom: 15px;
-            font-size: 0.9rem;
-            border-radius: 4px;
+            font-size: 0.95rem;
+            border-radius: 2px;
             text-align: center;
         }
 
-        .input-box:focus {
+        .vanguard-input:focus {
             outline: none;
             border-color: var(--gold);
         }
@@ -177,29 +182,31 @@
             color: #000;
         }
 
-        .simple-link {
+        .toggle-link {
             margin-top: 15px;
             font-size: 0.8rem;
+            color: var(--white);
             cursor: pointer;
             text-decoration: underline;
             display: block;
         }
 
         /* --- ANIMATIONS --- */
-        @keyframes glow {
+        @keyframes gold-pulse {
             0%, 100% { border-bottom-color: var(--gold); box-shadow: 0 10px 20px rgba(212, 175, 55, 0.1); }
             50% { border-bottom-color: var(--white); box-shadow: 0 10px 40px rgba(212, 175, 55, 0.3); }
         }
 
         footer {
             width: 100%;
-            padding: 25px;
+            padding: 30px;
             margin-top: auto;
             font-size: 0.7rem;
-            letter-spacing: 2px;
+            letter-spacing: 4px;
             text-transform: uppercase;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0, 0, 0, 0.9);
             border-top: 1px solid var(--glass-border);
+            color: var(--white);
         }
     </style>
 </head>
@@ -211,49 +218,49 @@
 
     <main id="app-wrapper">
         
-        <!-- HEADER -->
+        <!-- CENTERED PROFILE HEADER -->
         <header>
-            <div class="header-label">Your Account</div>
-            <div class="citizen-name" id="user-name">Guest User</div>
-            <div class="citizen-id" id="user-id">Not Signed In</div>
+            <div class="profile-label">Your Profile</div>
+            <div class="user-name" id="user-name">Guest</div>
+            <div class="id-number" id="user-id">VCS-OFFLINE</div>
         </header>
 
-        <!-- LOGIN / REGISTER -->
-        <div class="window" id="auth-box">
+        <!-- ACCOUNT SECTION -->
+        <div class="window" id="account-window">
             
-            <div id="login-view">
+            <div id="login-section">
                 <h2>Sign In</h2>
-                <input type="email" id="login-email" class="input-box" placeholder="YOUR EMAIL">
-                <input type="password" id="login-pass" class="input-box" placeholder="YOUR PASSWORD">
-                <button class="main-btn" onclick="handleLogin()">Sign In</button>
-                <span class="simple-link" onclick="swapView()">Need to create an account?</span>
+                <input type="email" id="login-email" class="vanguard-input" placeholder="EMAIL ADDRESS">
+                <input type="password" id="login-pass" class="vanguard-input" placeholder="PASSWORD">
+                <button class="main-btn" onclick="signIn()">Sign In</button>
+                <span class="toggle-link" onclick="toggleView()">Don't have an account? Sign up</span>
             </div>
 
-            <div id="register-view" style="display: none;">
+            <div id="register-section" style="display: none;">
                 <h2>Create Account</h2>
-                <input type="text" id="reg-name" class="input-box" placeholder="YOUR FULL NAME">
-                <input type="email" id="reg-email" class="input-box" placeholder="YOUR EMAIL">
-                <input type="password" id="reg-pass" class="input-box" placeholder="CHOOSE A PASSWORD">
-                <button class="main-btn" onclick="handleRegister()">Create Account</button>
-                <span class="simple-link" onclick="swapView()">Already have an account?</span>
+                <input type="text" id="reg-name" class="vanguard-input" placeholder="YOUR FULL NAME">
+                <input type="email" id="reg-email" class="vanguard-input" placeholder="EMAIL ADDRESS">
+                <input type="password" id="reg-pass" class="vanguard-input" placeholder="CHOOSE A PASSWORD">
+                <button class="main-btn" onclick="signUp()">Create Account</button>
+                <span class="toggle-link" onclick="toggleView()">Already have an account? Sign in</span>
             </div>
             
-            <div id="signed-in-view" style="display: none;">
-                <h2>Welcome Back</h2>
-                <p>You are successfully signed in to the network.</p>
-                <button class="main-btn" onclick="handleLogout()">Sign Out</button>
+            <div id="signed-in-section" style="display: none;">
+                <h2>Status: Active</h2>
+                <p>You are currently signed in to the network.</p>
+                <button class="main-btn" onclick="signOut()">Sign Out</button>
             </div>
         </div>
 
-        <!-- HELP / SUPPORT -->
+        <!-- HELP SECTION -->
         <div class="window">
-            <h2>Help Center</h2>
-            <p>Need help with your account or have a technical question? Reach out to us directly.</p>
-            <a href="support.html" class="main-btn" style="border-color: #fff; color: #fff;">Get Help</a>
+            <h2>Need Help?</h2>
+            <p>If you have questions or technical trouble, reach out to our team for help.</p>
+            <a href="support.html" class="main-btn" style="border-color: #fff; color: #fff;">Contact Support</a>
         </div>
 
         <div style="margin-bottom: 60px; width: 90%; max-width: 500px;">
-            <a href="hub.html" class="main-btn" style="border-color: #fff; color: #fff;">Go Back to Hub</a>
+            <a href="hub.html" class="main-btn" style="border-color: #fff; color: #fff;">Return to Hub</a>
         </div>
 
         <footer>
@@ -262,15 +269,15 @@
     </main>
 
     <script>
-        /* --- DATABASE CONFIG --- */
+        /* --- CONFIG --- */
         const supabaseUrl = 'https://dvyjupytbwbrcoyouxpf.supabase.co';
         const supabaseKey = 'sb_publishable_wjgbPekKmodd5mSDXIeUeg_Wq73GzOk';
         const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
-        /* --- UI ACTIONS --- */
-        function swapView() {
-            const login = document.getElementById('login-view');
-            const register = document.getElementById('register-view');
+        /* --- UI LOGIC --- */
+        function toggleView() {
+            const login = document.getElementById('login-section');
+            const register = document.getElementById('register-section');
             if(login.style.display === 'none') {
                 login.style.display = 'block';
                 register.style.display = 'none';
@@ -280,20 +287,50 @@
             }
         }
 
-        async function handleRegister() {
+        async function signUp() {
             const name = document.getElementById('reg-name').value;
             const email = document.getElementById('reg-email').value;
             const pass = document.getElementById('reg-pass').value;
 
-            const { data, error } = await supabaseClient.auth.signUp({
-                email, password: pass, options: { data: { full_name: name } }
+            if(!name || !email || !pass) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            // 1. Sign up the user
+            const { data: authData, error: authError } = await supabaseClient.auth.signUp({
+                email, 
+                password: pass, 
+                options: { data: { full_name: name } }
             });
 
-            if (error) alert("Error: " + error.message);
-            else alert("Account created! Please check your email to confirm.");
+            if (authError) {
+                alert("Error: " + authError.message);
+                return;
+            }
+
+            // 2. Add them to your existing 'citizens' table
+            if (authData.user) {
+                const randomNum = Math.floor(1000 + Math.random() * 9000);
+                const newCitizenID = "VCS-" + randomNum;
+
+                const { error: dbError } = await supabaseClient
+                    .from('citizens')
+                    .insert([
+                        { 
+                            id: authData.user.id, 
+                            full_name: name, 
+                            citizen_number: newCitizenID 
+                        }
+                    ]);
+
+                if (dbError) console.error("Database Save Error:", dbError.message);
+            }
+
+            alert("Account created! Please check your email to confirm.");
         }
 
-        async function handleLogin() {
+        async function signIn() {
             const email = document.getElementById('login-email').value;
             const pass = document.getElementById('login-pass').value;
             const { error } = await supabaseClient.auth.signInWithPassword({ email, password: pass });
@@ -301,40 +338,46 @@
             else window.location.reload();
         }
 
-        async function handleLogout() {
+        async function signOut() {
             await supabaseClient.auth.signOut();
             window.location.reload();
         }
 
-        async function checkUser() {
+        /* --- DATA FETCH --- */
+        async function loadProfile() {
             const { data: { user } } = await supabaseClient.auth.getUser();
-            const loginView = document.getElementById('login-view');
-            const registerView = document.getElementById('register-view');
-            const signedInView = document.getElementById('signed-in-view');
+            const loginSection = document.getElementById('login-section');
+            const registerSection = document.getElementById('register-section');
+            const signedInSection = document.getElementById('signed-in-section');
             
-            const nameEl = document.getElementById('user-name');
-            const idEl = document.getElementById('user-id');
+            const nameDisplay = document.getElementById('user-name');
+            const idDisplay = document.getElementById('user-id');
 
             if (user) {
-                loginView.style.display = 'none';
-                registerView.style.display = 'none';
-                signedInView.style.display = 'block';
+                loginSection.style.display = 'none';
+                registerSection.style.display = 'none';
+                signedInSection.style.display = 'block';
 
-                // Look for the user's name and ID in the database
-                const { data: profile } = await supabaseClient
+                // Fetch citizen_number from your 'citizens' table
+                const { data: profile, error } = await supabaseClient
                     .from('citizens')
                     .select('full_name, citizen_number')
                     .eq('id', user.id)
                     .single();
 
-                nameEl.innerText = profile?.full_name || "Citizen";
-                idEl.innerText = "ID: " + (profile?.citizen_number || "Pending...");
+                if (profile) {
+                    nameDisplay.innerText = profile.full_name;
+                    idDisplay.innerText = profile.citizen_number || "VCS-PENDING";
+                } else {
+                    nameDisplay.innerText = user.user_metadata?.full_name || "Citizen";
+                    idDisplay.innerText = "VCS-PENDING";
+                }
             }
         }
 
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('year').innerText = new Date().getFullYear();
-            checkUser();
+            loadProfile();
         });
     </script>
 </body>
