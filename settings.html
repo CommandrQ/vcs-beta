@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Vanguard | Settings</title>
+    <title>Vanguard | My Settings</title>
     
+    <!-- Supabase Connection Tool -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
@@ -15,7 +16,8 @@
             --glass-border: rgba(255, 255, 255, 0.2);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        /* --- BASIC SETUP --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body, html {
             height: 100%;
@@ -25,12 +27,13 @@
             overflow: hidden;
         }
 
-        /* --- GOLDEN STARFIELD --- */
+        /* --- THE GOLDEN STARS --- */
         #vanguard-universe {
             position: fixed;
             inset: 0;
             z-index: 0;
             background: #000;
+            overflow: hidden;
         }
 
         .star-layer {
@@ -39,15 +42,15 @@
             width: 200%;
             height: 200%;
             background-image: 
-                radial-gradient(2px 2px at 40px 60px, var(--gold), transparent),
-                radial-gradient(1.5px 1.5px at 150px 200px, #fff, transparent);
-            background-size: 400px 400px;
-            animation: rotate 220s linear infinite;
+                radial-gradient(2px 2px at 50px 80px, var(--gold), transparent),
+                radial-gradient(1px 1px at 150px 250px, #fff, transparent);
+            background-size: 500px 500px;
+            animation: move-stars 200s linear infinite;
         }
 
-        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes move-stars { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        /* --- UI WRAPPER --- */
+        /* --- MAIN CONTAINER --- */
         #app-wrapper {
             position: relative;
             z-index: 10;
@@ -56,47 +59,88 @@
             align-items: center;
             height: 100vh;
             width: 100%;
+            background: transparent;
             overflow-y: auto;
             text-align: center;
             scrollbar-width: none;
         }
 
+        #app-wrapper::-webkit-scrollbar { display: none; }
+
+        /* --- HEADER WINDOW --- */
         header {
             width: 90%;
             max-width: 500px;
             margin-top: 30px;
-            padding: 25px;
+            padding: 30px;
             background: var(--glass);
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
             border-bottom: 2px solid var(--gold);
         }
 
-        .user-name { font-size: 1.3rem; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; }
-        .id-number { color: var(--gold); font-size: 0.9rem; letter-spacing: 2px; font-weight: bold; margin-top: 5px; }
+        .name-text {
+            font-size: 1.4rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
 
+        .number-text {
+            color: var(--gold);
+            font-size: 1rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        /* --- CONTENT WINDOWS --- */
         .window {
             width: 90%;
             max-width: 500px;
             background: var(--glass);
             backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             border: 1px solid var(--glass-border);
             padding: 40px 30px;
             margin: 20px 0;
             border-radius: 4px;
         }
 
-        h2 { color: var(--gold); font-size: 1.2rem; text-transform: uppercase; margin-bottom: 25px; }
+        h2 {
+            color: var(--gold);
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            margin-bottom: 25px;
+            letter-spacing: 2px;
+        }
 
+        .detail-row {
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .detail-label {
+            display: block;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            opacity: 0.6;
+            margin-bottom: 4px;
+            letter-spacing: 1px;
+        }
+
+        /* --- BUTTONS & INPUTS --- */
         .input-box {
             width: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0,0,0,0.7);
             border: 1px solid var(--glass-border);
             color: var(--white);
             padding: 16px;
             margin-bottom: 15px;
-            border-radius: 2px;
             text-align: center;
+            font-size: 1rem;
         }
 
         .btn {
@@ -111,58 +155,86 @@
             transition: 0.3s;
             text-decoration: none;
             display: inline-block;
+            letter-spacing: 1px;
         }
 
         .btn:hover { background: var(--gold); color: #000; }
 
-        .link { margin-top: 15px; font-size: 0.8rem; cursor: pointer; text-decoration: underline; display: block; }
+        .link-text {
+            margin-top: 15px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            text-decoration: underline;
+            display: block;
+        }
 
         footer {
             width: 100%;
             padding: 30px;
             margin-top: auto;
             font-size: 0.7rem;
-            letter-spacing: 4px;
-            background: rgba(0, 0, 0, 0.9);
+            letter-spacing: 3px;
+            background: rgba(0,0,0,0.9);
             border-top: 1px solid var(--glass-border);
         }
     </style>
 </head>
 <body>
 
-    <div id="vanguard-universe"><div class="star-layer"></div></div>
+    <div id="vanguard-universe">
+        <div class="star-layer"></div>
+    </div>
 
     <main id="app-wrapper">
         
+        <!-- TOP IDENTITY DISPLAY -->
         <header>
-            <div style="font-size: 0.7rem; letter-spacing: 3px; margin-bottom: 8px;">IDENTITY CARD</div>
-            <div class="user-name" id="user-name">Guest</div>
-            <div class="id-number" id="user-id">VCS-OFFLINE</div>
+            <div class="name-text" id="header-name">GUEST</div>
+            <div class="number-text" id="header-id">VCS-OFFLINE</div>
         </header>
 
+        <!-- MAIN ACCOUNT WINDOW -->
         <div class="window">
-            <div id="login-view">
-                <h2>Sign In</h2>
-                <input type="email" id="login-email" class="input-box" placeholder="EMAIL">
-                <input type="password" id="login-pass" class="input-box" placeholder="PASSWORD">
-                <button class="btn" onclick="signIn()">Sign In</button>
-                <span class="link" onclick="toggle()">Need an account?</span>
+            
+            <!-- VIEW FOR SIGNED-IN USERS -->
+            <div id="signed-in-area" style="display: none;">
+                <h2>My Information</h2>
+                <div class="detail-row">
+                    <span class="detail-label">Verified Email</span>
+                    <span id="display-email">...</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Account Status</span>
+                    <span>Active Member</span>
+                </div>
+                <button class="btn" onclick="logOut()">Sign Out</button>
             </div>
 
-            <div id="reg-view" style="display: none;">
-                <h2>Register</h2>
+            <!-- VIEW FOR GUESTS (LOGIN) -->
+            <div id="login-area">
+                <h2>Sign In</h2>
+                <input type="email" id="in-email" class="input-box" placeholder="EMAIL ADDRESS">
+                <input type="password" id="in-pass" class="input-box" placeholder="PASSWORD">
+                <button class="btn" onclick="logIn()">Sign In</button>
+                <span class="link-text" onclick="toggleViews()">Need to create an account?</span>
+            </div>
+
+            <!-- VIEW FOR GUESTS (REGISTER) -->
+            <div id="register-area" style="display: none;">
+                <h2>Create Account</h2>
                 <input type="text" id="reg-name" class="input-box" placeholder="FULL NAME">
-                <input type="email" id="reg-email" class="input-box" placeholder="EMAIL">
+                <input type="email" id="reg-email" class="input-box" placeholder="EMAIL ADDRESS">
                 <input type="password" id="reg-pass" class="input-box" placeholder="PASSWORD">
-                <button class="btn" onclick="signUp()">Create Profile</button>
-                <span class="link" onclick="toggle()">Already have an account?</span>
+                <button class="btn" onclick="registerUser()">Join Vanguard</button>
+                <span class="link-text" onclick="toggleViews()">Already have an account?</span>
             </div>
-            
-            <div id="signed-in-view" style="display: none;">
-                <h2>Welcome</h2>
-                <p style="margin-bottom: 20px;">You are currently signed in.</p>
-                <button class="btn" onclick="signOut()">Sign Out</button>
-            </div>
+
+        </div>
+
+        <div class="window">
+            <h2>Support</h2>
+            <p>If you have questions about your information, reach out to our team.</p>
+            <a href="support.html" class="btn" style="border-color: #fff; color: #fff;">Contact Help</a>
         </div>
 
         <div style="margin-bottom: 60px; width: 90%; max-width: 500px;">
@@ -175,60 +247,76 @@
     <script>
         const supabaseUrl = 'https://dvyjupytbwbrcoyouxpf.supabase.co';
         const supabaseKey = 'sb_publishable_wjgbPekKmodd5mSDXIeUeg_Wq73GzOk';
-        const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-        function toggle() {
-            const l = document.getElementById('login-view'), r = document.getElementById('reg-view');
-            l.style.display = l.style.display === 'none' ? 'block' : 'none';
-            r.style.display = r.style.display === 'none' ? 'block' : 'none';
+        function toggleViews() {
+            const login = document.getElementById('login-area');
+            const register = document.getElementById('register-area');
+            login.style.display = login.style.display === 'none' ? 'block' : 'none';
+            register.style.display = register.style.display === 'none' ? 'block' : 'none';
         }
 
-        async function signUp() {
+        async function registerUser() {
             const name = document.getElementById('reg-name').value;
             const email = document.getElementById('reg-email').value;
             const pass = document.getElementById('reg-pass').value;
 
-            const { data, error } = await supabaseClient.auth.signUp({
+            const { data, error } = await supabase.auth.signUp({
                 email, password: pass, options: { data: { full_name: name } }
             });
 
             if (error) alert(error.message);
             else if (data.user) {
-                // Attach details to the 'citizens' table
-                const newID = "VCS-" + Math.floor(1000 + Math.random() * 9000);
-                await supabaseClient.from('citizens').insert([{ id: data.user.id, full_name: name, citizen_number: newID }]);
-                alert("Profile created! Check your email to confirm.");
+                // Creates a new entry in your 'citizens' table
+                const newNum = "VCS-" + Math.floor(1000 + Math.random() * 9000);
+                await supabase.from('citizens').insert([{ 
+                    id: data.user.id, 
+                    full_name: name, 
+                    email: email,
+                    citizen_number: newNum 
+                }]);
+                alert("Welcome! Check your email to confirm your account.");
             }
         }
 
-        async function signIn() {
-            const email = document.getElementById('login-email').value, pass = document.getElementById('login-pass').value;
-            const { error } = await supabaseClient.auth.signInWithPassword({ email, password: pass });
-            if (error) alert(error.message); else window.location.reload();
+        async function logIn() {
+            const email = document.getElementById('in-email').value;
+            const pass = document.getElementById('in-pass').value;
+            const { error } = await supabase.auth.signInWithPassword({ email, password: pass });
+            if (error) alert("Error: " + error.message); 
+            else window.location.reload();
         }
 
-        async function signOut() { await supabaseClient.auth.signOut(); window.location.reload(); }
+        async function logOut() {
+            await supabase.auth.signOut();
+            window.location.reload();
+        }
 
-        async function load() {
-            const { data: { user } } = await supabaseClient.auth.getUser();
+        async function fetchUserDetails() {
+            const { data: { user } } = await supabase.auth.getUser();
+            
             if (user) {
-                document.getElementById('login-view').style.display = 'none';
-                document.getElementById('signed-in-view').style.display = 'block';
+                document.getElementById('login-area').style.display = 'none';
+                document.getElementById('signed-in-area').style.display = 'block';
+                document.getElementById('display-email').innerText = user.email;
 
-                // Look up the citizen_number in the table using the user's ID
-                const { data: profile } = await supabaseClient
-                    .from('citizens').select('full_name, citizen_number').eq('id', user.id).single();
+                // Pull the fields from your 'citizens' table
+                const { data: profile } = await supabase
+                    .from('citizens')
+                    .select('full_name, citizen_number')
+                    .eq('id', user.id)
+                    .single();
 
                 if (profile) {
-                    document.getElementById('user-name').innerText = profile.full_name;
-                    document.getElementById('user-id').innerText = profile.citizen_number;
+                    document.getElementById('header-name').innerText = profile.full_name;
+                    document.getElementById('header-id').innerText = profile.citizen_number;
                 }
             }
         }
 
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('year').innerText = new Date().getFullYear();
-            load();
+            fetchUserDetails();
         });
     </script>
 </body>
