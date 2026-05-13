@@ -24,13 +24,12 @@
             height: 100%;
             background: #000;
             color: var(--white);
-            /* Native Apple System Font Stack */
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
             -webkit-font-smoothing: antialiased;
             overflow: hidden;
         }
 
-        /* --- THE GOLDEN STARS (Background) --- */
+        /* --- THE GOLDEN STARS --- */
         #vanguard-stars {
             position: fixed;
             inset: 0;
@@ -69,7 +68,7 @@
 
         #app-wrapper::-webkit-scrollbar { display: none; }
 
-        /* --- APPLE STYLE HEADER --- */
+        /* --- HEADER --- */
         header {
             width: 90%;
             max-width: 600px;
@@ -80,13 +79,13 @@
         h1 {
             font-size: 1.7rem;
             font-weight: 700;
-            letter-spacing: -0.5px; /* Apple tight tracking for headers */
+            letter-spacing: -0.5px; 
         }
 
         /* --- APPLE SEGMENTED CONTROL (TABS) --- */
         #tab-nav {
             display: flex;
-            background: rgba(118, 118, 128, 0.24); /* iOS Segmented Control background */
+            background: rgba(118, 118, 128, 0.24); 
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-radius: 100px;
@@ -110,7 +109,7 @@
         }
 
         .tab-btn.active {
-            background: rgba(255, 255, 255, 0.15); /* Selected pill */
+            background: rgba(255, 255, 255, 0.15); 
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
@@ -131,7 +130,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- APPLE STYLE CARDS (VIBRANCY) --- */
+        /* --- APPLE STYLE CARDS --- */
         .window {
             width: 90%;
             max-width: 550px;
@@ -141,7 +140,7 @@
             border: 1px solid var(--apple-border);
             padding: 32px 28px;
             margin-bottom: 20px;
-            border-radius: 24px; /* Apple "Squircle" Corner */
+            border-radius: 24px; 
             text-align: left;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         }
@@ -169,11 +168,11 @@
             background: var(--white);
             color: #000;
             padding: 14px 0;
-            width: 100%; /* Full width inside card */
+            width: 100%; 
             text-decoration: none;
             font-weight: 600;
             font-size: 1rem;
-            border-radius: 14px; /* Native Apple Button Radius */
+            border-radius: 14px; 
             transition: transform 0.2s, background 0.2s;
             text-align: center;
         }
@@ -213,7 +212,7 @@
             font-weight: 600;
         }
 
-        /* --- DESKTOP SPECIFIC IMPROVEMENTS --- */
+        /* --- DESKTOP SCALING --- */
         @media (min-width: 1024px) {
             h1 { font-size: 2.2rem; }
             #tab-nav { max-width: 600px; padding: 6px; }
@@ -239,7 +238,8 @@
 
     <main id="app-wrapper">
         <header>
-            <h1 id="user-greeting">Welcome</h1>
+            <!-- STATIC HEADER -->
+            <h1>Welcome Citizen</h1>
         </header>
 
         <!-- APPLE SEGMENTED CONTROL -->
@@ -297,12 +297,20 @@
     </main>
 
     <script>
+        // CONFIGURING FOR PERSISTENT LOGINS
         const vanguardHub = supabase.createClient(
             'https://dvyjupytbwbrcoyouxpf.supabase.co', 
-            'sb_publishable_wjgbPekKmodd5mSDXIeUeg_Wq73GzOk'
+            'sb_publishable_wjgbPekKmodd5mSDXIeUeg_Wq73GzOk',
+            {
+                auth: {
+                    persistSession: true,       // Acts like a persistent cookie
+                    autoRefreshToken: true,     // Keeps the user logged in seamlessly
+                    detectSessionInUrl: true
+                }
+            }
         );
 
-        // --- NATIVE-FEELING TAB SWITCHING ---
+        // --- TAB SWITCHING ---
         function switchTab(tabName) {
             document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -311,7 +319,7 @@
             document.getElementById(`btn-${tabName}`).classList.add('active');
         }
 
-        // --- JSON PROJECT LOADING WITH APPLE CARD STYLING ---
+        // --- JSON PROJECT LOADING ---
         async function loadProjects() {
             try {
                 const response = await fetch('projects.json');
@@ -337,26 +345,9 @@
             }
         }
 
-        // --- IDENTITY FETCHING ---
-        async function fetchName() {
-            const { data: { user } } = await vanguardHub.auth.getUser();
-            if (user) {
-                const { data: profile } = await vanguardHub
-                    .from('citizens')
-                    .select('full_name')
-                    .ilike('email', user.email)
-                    .single();
-
-                if (profile) {
-                    document.getElementById('user-greeting').innerText = `Welcome, ${profile.full_name}`;
-                }
-            }
-        }
-
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('year').innerText = new Date().getFullYear();
             loadProjects();
-            fetchName();
         });
     </script>
 </body>
