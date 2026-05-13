@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Vanguard | My Settings</title>
     
-    <!-- Supabase Library -->
+    <!-- This is the tool that lets us talk to your database -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
@@ -13,10 +13,11 @@
             --gold: #D4AF37;
             --white: #ffffff;
             --glass: rgba(0, 0, 0, 0.85);
-            --glass-border: rgba(255, 255, 255, 0.2);
+            --border: rgba(255, 255, 255, 0.2);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        /* --- BASIC SETUP --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body, html {
             height: 100%;
@@ -26,136 +27,212 @@
             overflow: hidden;
         }
 
-        #vanguard-universe { position: fixed; inset: 0; z-index: 0; background: #000; }
-        .star-layer {
-            position: absolute; inset: -50%; width: 200%; height: 200%;
-            background-image: radial-gradient(2px 2px at 50px 80px, var(--gold), transparent), 
-                              radial-gradient(1px 1px at 150px 250px, #fff, transparent);
-            background-size: 500px 500px; animation: orbit 240s linear infinite;
+        /* --- THE GOLDEN STARS --- */
+        #vanguard-stars {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background: #000;
         }
-        @keyframes orbit { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        #app-wrapper {
-            position: relative; z-index: 10; display: flex; flex-direction: column; align-items: center;
-            height: 100vh; width: 100%; overflow-y: auto; text-align: center; scrollbar-width: none;
+        .star-layer {
+            position: absolute;
+            inset: -50%;
+            width: 200%;
+            height: 200%;
+            background-image: 
+                radial-gradient(2px 2px at 50px 80px, var(--gold), transparent), 
+                radial-gradient(1px 1px at 150px 250px, #fff, transparent);
+            background-size: 500px 500px;
+            animation: rotate-stars 240s linear infinite;
         }
+
+        @keyframes rotate-stars { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* --- CENTERED BOXES --- */
+        #app-wrapper {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            width: 100%;
+            overflow-y: auto;
+            text-align: center;
+            scrollbar-width: none;
+        }
+
+        #app-wrapper::-webkit-scrollbar { display: none; }
 
         header {
-            width: 90%; max-width: 500px; margin-top: 30px; padding: 30px;
-            background: var(--glass); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-bottom: 2px solid var(--gold);
+            width: 90%;
+            max-width: 500px;
+            margin-top: 30px;
+            padding: 30px;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-bottom: 2px solid var(--gold);
         }
+
+        .user-name { font-size: 1.4rem; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; }
+        .user-id { color: var(--gold); font-weight: bold; margin-top: 5px; letter-spacing: 1px; }
 
         .window {
-            width: 90%; max-width: 500px; background: var(--glass); backdrop-filter: blur(15px);
-            border: 1px solid var(--glass-border); padding: 40px 30px; margin: 20px 0;
+            width: 90%;
+            max-width: 500px;
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--border);
+            padding: 40px 30px;
+            margin: 20px 0;
+            border-radius: 4px;
         }
 
-        .status-light { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; opacity: 0.7; }
-        .name-display { font-size: 1.4rem; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; }
-        .id-display { color: var(--gold); font-weight: bold; margin-top: 5px; letter-spacing: 1px; }
+        .input-box {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--border);
+            color: var(--white);
+            padding: 16px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 1rem;
+        }
 
-        .box { width: 100%; background: rgba(0,0,0,0.7); border: 1px solid var(--glass-border); color: var(--white); padding: 16px; margin-bottom: 15px; text-align: center; border-radius: 4px; }
-        .btn { width: 100%; padding: 16px; background: transparent; border: 1px solid var(--gold); color: var(--gold); text-transform: uppercase; font-weight: 900; cursor: pointer; border-radius: 4px; transition: 0.3s; }
+        .btn {
+            width: 100%;
+            padding: 16px;
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            text-transform: uppercase;
+            font-weight: 900;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
         .btn:hover { background: var(--gold); color: #000; }
+
+        footer {
+            width: 100%;
+            padding: 30px;
+            margin-top: auto;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            background: rgba(0, 0, 0, 0.9);
+            border-top: 1px solid var(--border);
+        }
     </style>
 </head>
 <body>
 
-    <div id="vanguard-universe"><div class="star-layer"></div></div>
+    <div id="vanguard-stars"><div class="star-layer"></div></div>
 
     <main id="app-wrapper">
+        
         <header>
-            <div id="check-status" class="status-light">System: Ready</div>
-            <div class="name-display" id="top-name">GUEST</div>
-            <div class="id-display" id="top-id">VCS-OFFLINE</div>
+            <div style="font-size: 0.6rem; margin-bottom: 10px; opacity: 0.6;" id="load-status">System: Ready</div>
+            <div class="user-name" id="name-field">GUEST</div>
+            <div class="user-id" id="id-field">OFFLINE</div>
         </header>
 
         <div class="window">
-            <div id="login-form">
-                <h2>Sign In</h2>
-                <input type="email" id="email-in" class="box" placeholder="EMAIL ADDRESS">
-                <input type="password" id="pass-in" class="box" placeholder="PASSWORD">
-                <button class="btn" onclick="handleSignIn()">Sign In</button>
+            
+            <!-- This shows up if you need to log in -->
+            <div id="login-view">
+                <h2 style="color: var(--gold); margin-bottom: 20px;">Sign In</h2>
+                <input type="email" id="email-input" class="input-box" placeholder="EMAIL">
+                <input type="password" id="pass-input" class="input-box" placeholder="PASSWORD">
+                <button class="btn" onclick="runLogin()">Sign In</button>
             </div>
 
+            <!-- This shows up once you are logged in -->
             <div id="profile-view" style="display: none;">
-                <h2>Account Active</h2>
-                <p id="user-email-label" style="margin-bottom: 20px; opacity: 0.8;"></p>
-                <button class="btn" onclick="handleSignOut()">Sign Out</button>
+                <h2 style="color: var(--gold); margin-bottom: 10px;">My Account</h2>
+                <p id="email-label" style="margin-bottom: 25px; opacity: 0.8;"></p>
+                <button class="btn" onclick="runLogout()">Sign Out</button>
             </div>
+
         </div>
 
-        <a href="hub.html" class="btn" style="max-width: 500px; border-color: #fff; color: #fff; text-decoration: none; display: inline-block;">Back to Hub</a>
+        <div style="margin-bottom: 60px; width: 90%; max-width: 500px;">
+            <a href="hub.html" class="btn" style="border-color: #fff; color: #fff;">Return to Hub</a>
+        </div>
+
+        <footer>Vanguard &copy; <span id="year"></span></footer>
     </main>
 
     <script>
-        // PROJECT CREDENTIALS
-        const supabase = supabase.createClient(
+        // Use a unique name for the connection to avoid syntax errors
+        const vanguardData = supabase.createClient(
             'https://dvyjupytbwbrcoyouxpf.supabase.co', 
             'sb_publishable_wjgbPekKmodd5mSDXIeUeg_Wq73GzOk'
         );
 
-        // Helper to update the top status
-        function updateUIStatus(msg, color = "#fff") {
-            const el = document.getElementById('check-status');
-            el.innerText = `System: ${msg}`;
-            el.style.color = color;
+        function setLabel(text) {
+            document.getElementById('load-status').innerText = "System: " + text;
         }
 
-        async function handleSignIn() {
-            const email = document.getElementById('email-in').value;
-            const pass = document.getElementById('pass-in').value;
-            updateUIStatus("Verifying...");
+        async function runLogin() {
+            const e = document.getElementById('email-input').value;
+            const p = document.getElementById('pass-input').value;
+            setLabel("Checking Credentials...");
             
-            const { error } = await supabase.auth.signInWithPassword({ email, password: pass });
+            const { error } = await vanguardData.auth.signInWithPassword({ email: e, password: p });
             if (error) {
-                alert("Login failed: " + error.message);
-                updateUIStatus("Login Failed", "#ff4d4d");
+                alert(error.message);
+                setLabel("Error");
             } else {
                 window.location.reload();
             }
         }
 
-        async function handleSignOut() {
-            await supabase.auth.signOut();
+        async function runLogout() {
+            await vanguardData.auth.signOut();
             window.location.reload();
         }
 
-        // THE CORE LOOKUP LOGIC
-        async function loadCitizenProfile() {
-            const { data: { user } } = await supabase.auth.getUser();
+        async function checkIdentity() {
+            // Get the current user session
+            const { data: { user } } = await vanguardData.auth.getUser();
 
             if (user) {
-                // Switch views
-                document.getElementById('login-form').style.display = 'none';
+                // Adjust the UI
+                document.getElementById('login-view').style.display = 'none';
                 document.getElementById('profile-view').style.display = 'block';
-                document.getElementById('user-email-label').innerText = user.email;
+                document.getElementById('email-label').innerText = user.email;
 
-                updateUIStatus("Searching Table...");
+                setLabel("Searching Table...");
 
-                // Look up by email (handling potential case sensitivity)
-                const searchEmail = user.email.toLowerCase();
-
-                const { data, error } = await supabase
+                // Look for the user's email in your citizens table
+                // We use .ilike to ignore capital letters
+                const { data, error } = await vanguardData
                     .from('citizens')
                     .select('full_name, citizen_number')
-                    .ilike('email', searchEmail) // 'ilike' ignores upper/lower case
+                    .ilike('email', user.email)
                     .single();
 
                 if (error) {
-                    console.error("Database Error:", error);
-                    updateUIStatus("No Match Found", "#ffaa00");
-                    document.getElementById('top-name').innerText = "Not Found";
-                    document.getElementById('top-id').innerText = "VCS-PENDING";
+                    console.log("Database says:", error.message);
+                    setLabel("No Match Found");
+                    document.getElementById('name-field').innerText = "Unregistered";
                 } else if (data) {
-                    updateUIStatus("Citizen Verified", "#D4AF37");
-                    document.getElementById('top-name').innerText = data.full_name;
-                    document.getElementById('top-id').innerText = data.citizen_number;
+                    setLabel("Verified");
+                    document.getElementById('name-field').innerText = data.full_name;
+                    document.getElementById('id-field').innerText = data.citizen_number;
                 }
             }
         }
 
-        document.addEventListener('DOMContentLoaded', loadCitizenProfile);
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('year').innerText = new Date().getFullYear();
+            checkIdentity();
+        });
     </script>
 </body>
 </html>
