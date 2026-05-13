@@ -14,7 +14,7 @@
             --gold-glow: rgba(212, 175, 55, 0.4);
             --white: #ffffff;
             --apple-glass: rgba(28, 28, 30, 0.75);
-            --apple-border: rgba(255, 255, 255, 0.1);
+            --apple-border: rgba(255, 255, 255, 0.12);
         }
 
         /* --- BASIC SETUP --- */
@@ -26,7 +26,7 @@
             color: var(--white);
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
             -webkit-font-smoothing: antialiased;
-            overflow: hidden;
+            overflow: hidden; /* Keeps the outer body still */
         }
 
         /* --- BACKGROUND --- */
@@ -51,6 +51,7 @@
 
         @keyframes rotate-stars { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
+        /* --- SCROLLABLE WRAPPER --- */
         #app-wrapper {
             position: relative;
             z-index: 10;
@@ -61,35 +62,36 @@
             width: 100%;
             text-align: center;
             background: transparent;
-            overflow-y: auto;
+            overflow-y: auto; /* This allows scrolling within the app */
             scrollbar-width: none;
+            padding-bottom: 100px; /* Crucial: Space for footer visibility */
         }
 
         #app-wrapper::-webkit-scrollbar { display: none; }
 
+        /* --- HEADER --- */
         header {
             width: 90%;
             max-width: 600px;
-            padding: 40px 20px 20px 20px;
+            padding: 60px 20px 20px 20px;
         }
 
         h1 {
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: 700;
             letter-spacing: -0.5px;
-            /* Subtle text glow */
             text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
         }
 
-        /* --- TABS WITH GLOW ACCENT --- */
+        /* --- NAVIGATION --- */
         #tab-nav {
             display: flex;
             background: rgba(118, 118, 128, 0.24); 
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
             border-radius: 100px;
-            padding: 4px;
-            margin: 10px 0 35px 0;
+            padding: 5px;
+            margin: 15px 0 40px 0;
             width: 90%;
             max-width: 500px;
             border: 1px solid var(--apple-border);
@@ -100,8 +102,8 @@
             background: transparent;
             border: none;
             color: var(--white);
-            padding: 10px 12px;
-            font-size: 0.85rem;
+            padding: 12px;
+            font-size: 0.9rem;
             font-weight: 500;
             cursor: pointer;
             border-radius: 100px;
@@ -109,78 +111,72 @@
         }
 
         .tab-btn.active {
-            background: rgba(255, 255, 255, 0.12); 
+            background: rgba(255, 255, 255, 0.15); 
             color: var(--gold);
-            /* Glowing Tab Accent */
-            box-shadow: 0 0 15px var(--gold-glow);
+            box-shadow: 0 0 20px var(--gold-glow);
         }
 
-        /* --- CARDS WITH SUBTLE ACCENTS --- */
+        /* --- WINDOWS / CARDS --- */
         .window {
             width: 90%;
-            max-width: 550px;
+            max-width: 550px; /* Mobile width */
             background: var(--apple-glass);
-            backdrop-filter: saturate(180%) blur(35px);
-            -webkit-backdrop-filter: saturate(180%) blur(35px);
+            backdrop-filter: saturate(180%) blur(40px);
+            -webkit-backdrop-filter: saturate(180%) blur(40px);
             border: 1px solid var(--apple-border);
-            padding: 32px 28px;
-            margin-bottom: 25px;
+            padding: 35px 30px;
+            margin-bottom: 30px;
             border-radius: 28px; 
             text-align: left;
-            transition: transform 0.3s ease;
-            /* Subtle outer card glow */
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4), 0 0 1px var(--gold-glow);
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.5), 0 0 1px var(--gold-glow);
         }
 
-        .window:hover {
-            transform: translateY(-2px);
-        }
+        .center-text { text-align: center; }
 
         .card-title { 
             color: var(--white); 
-            font-size: 1.35rem; 
-            font-weight: 600; 
-            margin-bottom: 8px; 
+            font-size: 1.4rem; 
+            font-weight: 700; 
+            margin-bottom: 10px; 
         }
         
         .card-desc { 
-            font-size: 0.95rem; 
-            margin-bottom: 24px; 
+            font-size: 1rem; 
+            margin-bottom: 25px; 
             line-height: 1.6; 
             color: var(--white); 
         }
         
-        /* --- BUTTONS --- */
+        /* --- ACTION BUTTONS --- */
         .action-link {
             display: inline-block;
             background: var(--white);
             color: #000;
-            padding: 15px 0;
+            padding: 18px 0;
             width: 100%; 
             text-decoration: none;
             font-weight: 600;
-            border-radius: 16px; 
-            transition: 0.2s;
+            font-size: 1rem;
+            border-radius: 18px; 
+            transition: 0.3s;
             text-align: center;
         }
-        
-        .action-link:active { transform: scale(0.97); }
 
         .action-link.gold-btn {
             background: var(--gold);
-            box-shadow: 0 4px 15px var(--gold-glow);
+            box-shadow: 0 5px 20px var(--gold-glow);
         }
+        
+        .action-link:hover { transform: scale(0.985); filter: brightness(1.1); }
 
-        /* --- ACCENT HEADERS --- */
         .mission-header {
-            font-size: 0.75rem; 
-            color: var(--gold); /* Gold color for subheaders */
+            font-size: 0.8rem; 
+            color: var(--gold); 
             text-transform: uppercase; 
             letter-spacing: 2px; 
-            margin-bottom: 14px;
-            font-weight: 700;
-            /* Subtle header glow */
-            text-shadow: 0 0 8px var(--gold-glow);
+            margin-bottom: 15px;
+            font-weight: 800;
+            text-shadow: 0 0 10px var(--gold-glow);
         }
 
         .content-section {
@@ -188,22 +184,34 @@
             flex-direction: column;
             align-items: center;
             width: 100%;
-            padding-bottom: 80px;
-            animation: fadeIn 0.5s ease;
+            animation: slideUp 0.6s ease;
         }
 
         .content-section.active { display: flex; }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* --- DESKTOP SCALING --- */
+        @media (min-width: 1024px) {
+            header { max-width: 800px; padding-top: 80px; }
+            h1 { font-size: 2.8rem; }
+            #tab-nav { max-width: 600px; }
+            .tab-btn { font-size: 1.1rem; }
+            .window { max-width: 800px; padding: 50px; border-radius: 40px; }
+            .card-title { font-size: 2rem; }
+            .card-desc { font-size: 1.2rem; }
+            .action-link { font-size: 1.2rem; padding: 22px 0; }
+        }
+
+        /* --- FOOTER --- */
         footer {
             width: 100%;
-            padding: 40px 20px;
-            font-size: 0.8rem;
+            padding: 60px 20px;
+            font-size: 0.9rem;
             color: var(--white);
-            margin-top: auto;
             letter-spacing: 1.5px;
-            font-weight: 300;
+            font-weight: 400;
+            text-transform: uppercase;
         }
     </style>
 </head>
@@ -222,11 +230,11 @@
             <button class="tab-btn" id="btn-knights" onclick="switchTab('knights')">Knights</button>
         </nav>
 
-        <!-- VISION SECTION -->
+        <!-- VISION -->
         <section id="sec-vision" class="content-section active">
             <div class="window center-text">
                 <div class="mission-header">The Mission</div>
-                <p style="font-size: 1.1rem; line-height: 1.6;">
+                <p style="font-size: 1.2rem; line-height: 1.7; font-weight: 500;">
                     "To bridge the gap between digital accessibility and community resources, creating a hub where every citizen has the tools to succeed."
                 </p>
             </div>
@@ -248,12 +256,12 @@
             </div>
         </section>
 
-        <!-- PROJECTS SECTION -->
+        <!-- PROJECTS -->
         <section id="sec-projects" class="content-section">
             <!-- Project cards injected by JS -->
         </section>
 
-        <!-- KNIGHTS SECTION -->
+        <!-- KNIGHTS -->
         <section id="sec-knights" class="content-section">
             <div class="window">
                 <h2 class="card-title">The Community Engine</h2>
@@ -263,11 +271,12 @@
                 <p class="card-desc">
                     From refining digital tools to leading local initiatives, the Knights turn our vision into reality. Every contribution fuels the engine of Vanguard Citizen Services.
                 </p>
-                <div style="height: 1px; background: var(--apple-border); margin: 20px 0;"></div>
+                <div style="height: 1px; background: var(--apple-border); margin: 25px 0;"></div>
                 <p class="mission-header" style="text-align: center; margin-bottom: 0;">Status: Recruiting Citizens</p>
             </div>
         </section>
 
+        <!-- FOOTER (Inside wrapper to ensure scroll visibility) -->
         <footer>Vanguard Citizen Services &copy; <span id="year"></span></footer>
     </main>
 
@@ -283,6 +292,8 @@
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById(`sec-${tabName}`).classList.add('active');
             document.getElementById(`btn-${tabName}`).classList.add('active');
+            // Scroll to top of content when tab switches
+            document.getElementById('app-wrapper').scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         async function loadProjects() {
