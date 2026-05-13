@@ -15,7 +15,7 @@
             --glass-border: rgba(255, 255, 255, 0.2);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body, html {
             height: 100%;
@@ -25,112 +25,37 @@
             overflow: hidden;
         }
 
-        /* --- BACKGROUND STARS --- */
-        #vanguard-universe {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            background: #000;
-        }
-
+        #vanguard-universe { position: fixed; inset: 0; z-index: 0; background: #000; }
         .star-layer {
-            position: absolute;
-            inset: -50%;
-            width: 200%;
-            height: 200%;
-            background-image: 
-                radial-gradient(2px 2px at 50px 80px, var(--gold), transparent),
-                radial-gradient(1.5px 1.5px at 150px 250px, #fff, transparent);
-            background-size: 500px 500px;
-            animation: move-stars 220s linear infinite;
+            position: absolute; inset: -50%; width: 200%; height: 200%;
+            background-image: radial-gradient(2px 2px at 50px 80px, var(--gold), transparent), radial-gradient(1px 1px at 150px 250px, #fff, transparent);
+            background-size: 500px 500px; animation: move 200s linear infinite;
         }
+        @keyframes move { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        @keyframes move-stars { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-        /* --- MAIN LAYOUT --- */
         #app-wrapper {
-            position: relative;
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 100vh;
-            width: 100%;
-            overflow-y: auto;
-            text-align: center;
-            scrollbar-width: none;
+            position: relative; z-index: 10; display: flex; flex-direction: column; align-items: center;
+            height: 100vh; width: 100%; overflow-y: auto; text-align: center; scrollbar-width: none;
         }
 
-        #app-wrapper::-webkit-scrollbar { display: none; }
-
-        /* --- TOP IDENTITY PANEL --- */
         header {
-            width: 90%;
-            max-width: 500px;
-            margin-top: 30px;
-            padding: 30px;
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-bottom: 2px solid var(--gold);
+            width: 90%; max-width: 500px; margin-top: 30px; padding: 30px;
+            background: var(--glass); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-bottom: 2px solid var(--gold);
         }
 
-        .name-label { font-size: 1.4rem; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; }
-        .id-label { color: var(--gold); font-size: 1rem; font-weight: bold; letter-spacing: 2px; margin-top: 5px; }
-
-        /* --- WINDOWS --- */
         .window {
-            width: 90%;
-            max-width: 500px;
-            background: var(--glass);
-            backdrop-filter: blur(15px);
-            border: 1px solid var(--glass-border);
-            padding: 40px 30px;
-            margin: 20px 0;
+            width: 90%; max-width: 500px; background: var(--glass); backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border); padding: 40px 30px; margin: 20px 0;
         }
 
-        h2 { color: var(--gold); font-size: 1.2rem; text-transform: uppercase; margin-bottom: 25px; letter-spacing: 2px; }
-
-        .info-group { margin-bottom: 20px; }
-        .info-tag { display: block; font-size: 0.7rem; opacity: 0.6; text-transform: uppercase; margin-bottom: 4px; }
-
-        /* --- FORM ELEMENTS --- */
-        .box {
-            width: 100%;
-            background: rgba(0,0,0,0.7);
-            border: 1px solid var(--glass-border);
-            color: var(--white);
-            padding: 16px;
-            margin-bottom: 15px;
-            text-align: center;
-            font-size: 1rem;
+        .status-pill {
+            display: inline-block; padding: 5px 15px; border-radius: 20px; font-size: 0.6rem;
+            text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; border: 1px solid #fff;
         }
 
-        .btn {
-            width: 100%;
-            padding: 16px;
-            background: transparent;
-            border: 1px solid var(--gold);
-            color: var(--gold);
-            text-transform: uppercase;
-            font-weight: 900;
-            cursor: pointer;
-            transition: 0.3s;
-            text-decoration: none;
-            display: inline-block;
-        }
-
+        .box { width: 100%; background: rgba(0,0,0,0.7); border: 1px solid var(--glass-border); color: var(--white); padding: 16px; margin-bottom: 15px; text-align: center; }
+        .btn { width: 100%; padding: 16px; background: transparent; border: 1px solid var(--gold); color: var(--gold); text-transform: uppercase; font-weight: 900; cursor: pointer; }
         .btn:hover { background: var(--gold); color: #000; }
-
-        footer {
-            width: 100%;
-            padding: 30px;
-            margin-top: auto;
-            font-size: 0.7rem;
-            letter-spacing: 3px;
-            background: rgba(0,0,0,0.9);
-            border-top: 1px solid var(--glass-border);
-        }
     </style>
 </head>
 <body>
@@ -139,53 +64,54 @@
 
     <main id="app-wrapper">
         
-        <!-- CENTERED HEADER -->
         <header>
-            <div class="name-label" id="top-name">GUEST</div>
-            <div class="id-label" id="top-number">OFFLINE</div>
+            <div id="status-indicator" class="status-pill">System: Waiting</div>
+            <div style="font-size: 1.4rem; font-weight: 900;" id="top-name">GUEST</div>
+            <div style="color: var(--gold); font-weight: bold;" id="top-id">VCS-OFFLINE</div>
         </header>
 
-        <!-- MAIN VIEW -->
         <div class="window">
-            
-            <!-- SECTION SEEN WHEN LOGGED IN -->
-            <div id="user-info" style="display: none;">
-                <h2>My Account</h2>
-                <div class="info-group">
-                    <span class="info-tag">Registered Email</span>
-                    <span id="user-email">Loading...</span>
-                </div>
-                <button class="btn" onclick="signOut()">Sign Out</button>
-            </div>
-
-            <!-- LOGIN SECTION -->
-            <div id="login-view">
-                <h2>Sign In</h2>
-                <input type="email" id="email-in" class="box" placeholder="EMAIL ADDRESS">
+            <div id="login-form">
+                <input type="email" id="email-in" class="box" placeholder="EMAIL">
                 <input type="password" id="pass-in" class="box" placeholder="PASSWORD">
                 <button class="btn" onclick="signIn()">Sign In</button>
             </div>
 
+            <div id="user-profile" style="display: none;">
+                <p id="profile-email">...</p>
+                <button class="btn" onclick="signOut()" style="margin-top: 20px;">Sign Out</button>
+            </div>
         </div>
 
-        <div style="margin-bottom: 60px; width: 90%; max-width: 500px;">
-            <a href="hub.html" class="btn" style="border-color: #fff; color: #fff;">Back to Hub</a>
-        </div>
+        <a href="hub.html" class="btn" style="max-width: 500px; border-color: #fff; color: #fff;">Back to Hub</a>
 
-        <footer>Vanguard &copy; <span id="year"></span></footer>
     </main>
 
     <script>
-        const supabaseUrl = 'https://dvyjupytbwbrcoyouxpf.supabase.co';
-        const supabaseKey = 'sb_publishable_wjgbPekKmodd5mSDXIeUeg_Wq73GzOk';
-        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+        // Using your exact URL and Key
+        const supabase = supabase.createClient(
+            'https://dvyjupytbwbrcoyouxpf.supabase.co', 
+            'sb_publishable_wjgbPekKmodd5mSDXIeUeg_Wq73GzOk'
+        );
+
+        function setStatus(msg, color = "#fff") {
+            const el = document.getElementById('status-indicator');
+            el.innerText = `System: ${msg}`;
+            el.style.borderColor = color;
+            el.style.color = color;
+        }
 
         async function signIn() {
             const email = document.getElementById('email-in').value;
             const pass = document.getElementById('pass-in').value;
+            setStatus("Authenticating...");
             const { error } = await supabase.auth.signInWithPassword({ email, password: pass });
-            if (error) alert("Error: " + error.message); 
-            else window.location.reload();
+            if (error) {
+                setStatus("Auth Failed", "#ff4d4d");
+                alert(error.message);
+            } else {
+                window.location.reload();
+            }
         }
 
         async function signOut() {
@@ -193,40 +119,37 @@
             window.location.reload();
         }
 
-        /* --- THE LOOKUP ENGINE --- */
-        async function runIdentityCheck() {
-            // 1. Get the current logged-in user's email
+        async function verifyIdentity() {
             const { data: { user } } = await supabase.auth.getUser();
             
             if (user) {
-                // UI Swapping
-                document.getElementById('login-view').style.display = 'none';
-                document.getElementById('user-info').style.display = 'block';
-                document.getElementById('user-email').innerText = user.email;
+                document.getElementById('login-form').style.display = 'none';
+                document.getElementById('user-profile').style.display = 'block';
+                document.getElementById('profile-email').innerText = user.email;
+                
+                setStatus("Checking Table...");
 
-                // 2. EXPLICIT LOOKUP: Search the citizens table for this specific email
-                const { data: citizenRow, error } = await supabase
+                // EXPLICIT LOOKUP using the 'email' field
+                const { data, error } = await supabase
                     .from('citizens')
                     .select('full_name, citizen_number')
-                    .eq('email', user.email) // This is the lookup you requested
+                    .eq('email', user.email)
                     .single();
 
-                if (citizenRow) {
-                    // 3. Update the Page with the found data
-                    document.getElementById('top-name').innerText = citizenRow.full_name;
-                    document.getElementById('top-number').innerText = citizenRow.citizen_number;
-                } else {
-                    // Fallback if the email isn't in your citizens list yet
-                    document.getElementById('top-name').innerText = "Unregistered";
-                    document.getElementById('top-number').innerText = "VCS-PENDING";
+                if (error) {
+                    console.error("Lookup Error:", error);
+                    setStatus("No Table Match", "#ffaa00");
+                    document.getElementById('top-name').innerText = "Not Found";
+                    document.getElementById('top-id').innerText = "VCS-PENDING";
+                } else if (data) {
+                    setStatus("Match Found", "#D4AF37");
+                    document.getElementById('top-name').innerText = data.full_name;
+                    document.getElementById('top-id').innerText = data.citizen_number;
                 }
             }
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('year').innerText = new Date().getFullYear();
-            runIdentityCheck();
-        });
+        document.addEventListener('DOMContentLoaded', verifyIdentity);
     </script>
 </body>
 </html>
