@@ -169,7 +169,7 @@
             <!-- Login & Sign Up Form -->
             <div id="auth-form" class="hidden">
                 <h2 id="auth-title">Create Your Profile</h2>
-                <p class="subtitle" id="auth-subtitle">Join the community and get involved</p>
+                <p class="subtitle" id="auth-subtitle">Join the community and get involved.</p>
                 
                 <div class="name-row" id="signup-name-row">
                     <input type="text" id="signup-first" placeholder="First Name">
@@ -181,7 +181,7 @@
                 
                 <button id="auth-submit-btn" class="action-btn" onclick="handleAuthAction()">Sign Up</button>
                 
-                <span id="auth-toggle-btn" class="toggle-link" onclick="toggleAuthMode()">Already a member? Sign in here</span>
+                <span id="auth-toggle-btn" class="toggle-link" onclick="toggleAuthMode()">Already a member? Sign in here.</span>
             </div>
 
             <!-- Logged In User View -->
@@ -208,8 +208,8 @@
 
         </main>
 
-        <!-- Dynamic Hub Navigation Action Interface Link -->
-        <a href="index.html" class="action-btn btn-outline" style="border: none; background: rgba(0,0,0,0.3); backdrop-filter: blur(10px);">Return to Hub</a>
+        <!-- Links back to index.html -->
+        <a href="index.html" class="action-btn btn-outline" style="border: none; background: rgba(0,0,0,0.3); backdrop-filter: blur(10px);">Back to Home</a>
     </div>
 
     <footer>Powered by Vanguard Citizen Services</footer>
@@ -237,24 +237,30 @@
 
         /* --- 3. CHECK USER STATUS --- */
         async function checkSession() {
+            const authForm = document.getElementById('auth-form');
+            const userProfile = document.getElementById('user-profile');
+
             try {
-                const { data: { user } } = await supabaseClient.auth.getUser();
+                // getSession() checks local storage instantly without waiting on a slow server response
+                const { data, error } = await supabaseClient.auth.getSession();
                 
-                if (user) {
-                    document.getElementById('user-profile').classList.remove('hidden');
-                    document.getElementById('auth-form').classList.add('hidden');
+                if (data.session && data.session.user) {
+                    const user = data.session.user;
+                    
+                    userProfile.classList.remove('hidden');
+                    authForm.classList.add('hidden');
                     document.getElementById('display-email').innerText = user.email;
                     
-                    const { data, error } = await supabaseClient
+                    const { data: profileData } = await supabaseClient
                         .from('master_roster')
                         .select('first_name, last_name, citizenship_number')
                         .eq('id', user.id) 
-                        .maybeSingle();
+                        .single();
 
-                    if (data) {
-                        const fullName = `${data.first_name} ${data.last_name}`;
+                    if (profileData) {
+                        const fullName = `${profileData.first_name} ${profileData.last_name}`;
                         document.getElementById('display-greeting').innerHTML = `Hello, <strong>${fullName}</strong>`;
-                        document.getElementById('display-id').innerText = data.citizenship_number || "Pending Setup";
+                        document.getElementById('display-id').innerText = profileData.citizenship_number || "Pending Setup";
                         
                         localStorage.setItem('vanguard_session_status', 'active');
                         localStorage.setItem('vanguard_citizen_name', fullName);
@@ -263,13 +269,14 @@
                         document.getElementById('display-id').innerText = "Processing";
                     }
                 } else {
-                    document.getElementById('auth-form').classList.remove('hidden');
-                    document.getElementById('user-profile').classList.add('hidden');
+                    // No session found, immediately display the auth form
+                    authForm.classList.remove('hidden');
+                    userProfile.classList.add('hidden');
                 }
             } catch (err) {
-                console.log("Could not find an active login session");
-                document.getElementById('auth-form').classList.remove('hidden');
-                document.getElementById('user-profile').classList.add('hidden');
+                console.error("Session check failed. Displaying sign-in form.", err);
+                authForm.classList.remove('hidden');
+                userProfile.classList.add('hidden');
             }
         }
 
@@ -285,16 +292,16 @@
 
             if (isSignUpMode) {
                 title.innerText = "Create Your Profile";
-                subtitle.innerText = "Join the community and get involved";
+                subtitle.innerText = "Join the community and get involved.";
                 nameRow.classList.remove('hidden');
                 submitBtn.innerText = "Sign Up";
-                toggleLink.innerText = "Already a member? Sign in here";
+                toggleLink.innerText = "Already a member? Sign in here.";
             } else {
                 title.innerText = "Welcome Back";
-                subtitle.innerText = "Sign in to access your community account";
-                nameRow.classList.add('hidden'); 
+                subtitle.innerText = "Sign in to access your community account.";
+                nameRow.classList.add('hidden'); // Hide names for standard login
                 submitBtn.innerText = "Sign In";
-                toggleLink.innerText = "Need an account? Register here";
+                toggleLink.innerText = "Need an account? Register here.";
             }
         }
 
@@ -312,14 +319,14 @@
             const pass = document.getElementById('signup-pass').value.trim();
 
             if (!email || !pass) {
-                alert("Please fill in both your email and password");
+                alert("Please fill in both your email and password.");
                 return;
             }
 
             const { error } = await supabaseClient.auth.signInWithPassword({ email, password: pass });
             
             if (error) {
-                alert("We could not sign you in because " + error.message);
+                alert("We couldn't sign you in: " + error.message);
             } else {
                 localStorage.setItem('vanguard_session_status', 'active');
                 location.reload();
@@ -333,7 +340,7 @@
             const pass = document.getElementById('signup-pass').value.trim();
 
             if (!first || !last || !email || pass.length < 6) {
-                alert("Please fill in all details. Make sure your password is at least 6 characters long");
+                alert("Please fill in all details. Make sure your password is at least 6 characters long!");
                 return;
             }
 
@@ -350,7 +357,7 @@
             });
             
             if (error) {
-                alert("There was an issue creating your account because " + error.message);
+                alert("There was an issue creating your account: " + error.message);
             } else {
                 localStorage.setItem('vanguard_session_status', 'active');
                 localStorage.setItem('vanguard_citizen_name', `${first} ${last}`);
@@ -367,15 +374,16 @@
         }
 
         function wipeCache() {
-            if (confirm("This will clear your local website data and sign you out. Are you sure")) {
+            if (confirm("This will clear your local website data and sign you out. Are you sure?")) {
                 localStorage.clear();
                 sessionStorage.clear();
-                alert("Data cleared successfully");
+                alert("Data cleared successfully.");
                 location.reload();
             }
         }
 
-        window.onload = checkSession;
+        // Start the check exactly when the document elements are ready
+        document.addEventListener('DOMContentLoaded', checkSession);
     </script>
 </body>
 </html>
