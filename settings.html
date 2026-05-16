@@ -208,8 +208,8 @@
 
         </main>
 
-        <!-- Links back to index.html -->
-        <a href="index.html" class="action-btn btn-outline" style="border: none; background: rgba(0,0,0,0.3); backdrop-filter: blur(10px);">Back to Home</a>
+        <!-- Dynamic Hub Navigation Action Interface Link -->
+        <a href="index.html" class="action-btn btn-outline" style="border: none; background: rgba(0,0,0,0.3); backdrop-filter: blur(10px);">Return to Hub</a>
     </div>
 
     <footer>Powered by Vanguard Citizen Services</footer>
@@ -245,7 +245,6 @@
                     document.getElementById('auth-form').classList.add('hidden');
                     document.getElementById('display-email').innerText = user.email;
                     
-                    // CRITICAL LOGIC ALIGNMENT: Swap single query strategy to match maybeSingle mechanics
                     const { data, error } = await supabaseClient
                         .from('master_roster')
                         .select('first_name, last_name, citizenship_number')
