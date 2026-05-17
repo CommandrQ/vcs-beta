@@ -3,218 +3,200 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Vanguard | Our Story</title>
-    
+    <title>About Us | Vanguard Citizen Services</title>
     <style>
+        /* --- BRANDING & VARIABLES --- */
         :root {
             --gold: #D4AF37;
+            --gold-glow: rgba(212, 175, 55, 0.4);
+            --bg-dark: #05040a;
             --white: #ffffff;
-            --glass: rgba(0, 0, 0, 0.85);
-            --border: rgba(255, 255, 255, 0.15);
+            --text-muted: rgba(255, 255, 255, 0.7);
+            --glass-bg: rgba(15, 15, 20, 0.5);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* --- FOUNDATION --- */
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
         body, html {
-            height: 100%;
-            background: #000;
+            width: 100%;
+            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
             color: var(--white);
-            font-family: 'Inter', sans-serif;
-            overflow: hidden;
-        }
-
-        /* --- THE GOLDEN STARS --- */
-        #vanguard-stars {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            background: #000;
-        }
-
-        .star-layer {
-            position: absolute;
-            inset: -50%;
-            width: 200%;
-            height: 200%;
-            background-image: 
-                radial-gradient(2px 2px at 40px 60px, var(--gold), transparent),
-                radial-gradient(1.5px 1.5px at 150px 200px, var(--white), transparent);
-            background-size: 400px 400px;
-            animation: rotate-stars 240s linear infinite;
-        }
-
-        @keyframes rotate-stars { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-        /* --- UI WRAPPER --- */
-        #app-wrapper {
-            position: relative;
-            z-index: 10;
+            background: linear-gradient(180deg, #020108 0%, #0a0815 40%, #1a1005 75%, #D4AF37 120%);
+            -webkit-font-smoothing: antialiased;
             display: flex;
             flex-direction: column;
             align-items: center;
-            height: 100vh;
-            width: 100%;
-            text-align: center;
-            background: transparent;
-            overflow-y: auto;
-            scrollbar-width: none;
+            overflow-x: hidden;
         }
-        #app-wrapper::-webkit-scrollbar { display: none; }
 
-        header {
+        /* --- BACKGROUND ENVIRONMENT --- */
+        #environment { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+        .starfield {
+            position: absolute; width: 200vw; height: 200vh; top: -50%; left: -50%;
+            background-image: 
+                radial-gradient(1.5px 1.5px at 10% 10%, #fff, transparent),
+                radial-gradient(2px 2px at 30% 40%, var(--gold), transparent),
+                radial-gradient(1px 1px at 80% 20%, #fff, transparent),
+                radial-gradient(2.5px 2.5px at 50% 80%, var(--gold), transparent);
+            background-size: 350px 350px;
+            animation: stellar-drift 400s linear infinite;
+            opacity: 0.5;
+        }
+        @keyframes stellar-drift { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        .comet {
+            position: absolute; width: 120px; height: 2px;
+            background: linear-gradient(90deg, #fff 0%, var(--gold) 20%, transparent 100%);
+            border-radius: 50%; box-shadow: 0 0 15px var(--gold-glow);
+            animation: comet-strike 2s var(--ease-smooth) forwards; opacity: 0;
+        }
+        @keyframes comet-strike {
+            0% { transform: translate(0, 0) rotate(-35deg); opacity: 1; }
+            100% { transform: translate(-1000px, 600px) rotate(-35deg); opacity: 0; }
+        }
+
+        /* --- CONTAINERS & LAYOUT --- */
+        .about-container {
             width: 90%;
-            max-width: 600px;
-            padding: 30px;
-            margin-top: 20px;
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--border);
-            border-bottom: 2px solid var(--gold);
-        }
-
-        h1 {
-            font-size: 1.4rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-        }
-
-        /* --- CONTENT BOXES --- */
-        .window {
-            width: 90%;
-            max-width: 550px;
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--border);
-            padding: 30px 25px;
-            margin: 20px 0;
-            border-radius: 4px;
-        }
-
-        .mission-text {
-            font-size: 0.95rem;
-            line-height: 1.7;
-            margin-bottom: 10px;
-            font-style: italic;
-            color: #ddd;
-        }
-
-        .founder-grid {
+            max-width: 700px;
+            z-index: 10;
+            padding: 40px 0 60px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            width: 90%;
-            max-width: 550px;
-            margin-bottom: 40px;
+            align-items: center;
         }
 
-        .profile-card {
-            background: var(--glass);
-            border: 1px solid var(--border);
-            padding: 30px 20px;
-            border-radius: 4px;
+        .back-link {
+            align-self: center;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            margin-bottom: 30px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 100px;
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s var(--ease-smooth);
+            font-weight: 500;
+        }
+        .back-link:hover { color: var(--gold); background: rgba(212, 175, 55, 0.15); border-color: var(--gold-glow); }
+
+        .page-header { text-align: center; margin-bottom: 35px; }
+        .page-title { 
+            font-size: clamp(2rem, 5vw, 2.8rem); font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
+            background: linear-gradient(180deg, #fff 0%, var(--gold) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.3));
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(30px) saturate(150%);
+            -webkit-backdrop-filter: blur(30px) saturate(150%);
+            border: 1px solid var(--glass-border);
+            border-radius: 28px;
+            padding: 40px 30px; 
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 0 0 1px var(--glass-border);
+            width: 100%;
+            margin-bottom: 25px;
             text-align: left;
         }
 
-        .founder-name {
-            color: var(--gold);
-            font-size: 1.2rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            margin-bottom: 5px;
-            letter-spacing: 1px;
+        /* --- TYPOGRAPHY --- */
+        h2 { color: var(--gold); font-size: 1.4rem; font-weight: 700; margin-bottom: 15px; margin-top: 35px; text-transform: uppercase; letter-spacing: 1px; }
+        h2:first-of-type { margin-top: 0; }
+        p { color: rgba(255, 255, 255, 0.9); font-size: 1.05rem; line-height: 1.6; margin-bottom: 20px; }
+        
+        .team-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 24px;
+            border-radius: 18px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--gold);
         }
+        .team-box strong { color: var(--white); font-size: 1.15rem; display: block; margin-bottom: 4px; }
+        .team-box em { color: var(--gold); font-style: normal; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 12px; }
+        .team-box p { margin-bottom: 0; font-size: 1rem; color: var(--text-muted); }
 
-        .founder-role {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 15px;
-            color: #aaa;
-        }
-
-        .founder-bio {
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-
-        .action-link {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 12px 40px;
-            border: 1px solid var(--gold);
-            color: var(--gold);
-            text-decoration: none;
-            font-weight: 900;
-            text-transform: uppercase;
-            transition: 0.3s;
-        }
-        .action-link:hover { background: var(--gold); color: #000; }
-
-        /* --- DESKTOP SCALING --- */
-        @media (min-width: 1024px) {
-            h1 { font-size: 1.8rem; }
-            .window, .founder-grid { max-width: 700px; }
-            .mission-text { font-size: 1.1rem; }
-            .founder-name { font-size: 1.5rem; }
-            .founder-bio { font-size: 1.05rem; }
-        }
-
-        footer {
-            width: 100%;
-            padding: 25px;
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            background: rgba(0,0,0,0.9);
-            border-top: 1px solid var(--border);
+        /* --- FOOTER --- */
+        footer { 
+            text-align: center; color: var(--white); font-size: 0.75rem; 
+            letter-spacing: 2px; text-transform: uppercase; width: 100%; 
+            padding: 20px 0 40px; opacity: 0.7; z-index: 10;
         }
     </style>
 </head>
 <body>
 
-    <div id="vanguard-stars"><div class="star-layer"></div></div>
+    <!-- Space Environment Background -->
+    <div id="environment"><div class="starfield"></div></div>
 
-    <main id="app-wrapper">
-        <header>
-            <h1>Vanguard Founders</h1>
+    <div class="about-container">
+        
+        <header class="page-header">
+            <h1 class="page-title">Our Story</h1>
         </header>
 
-        <div class="window">
-            <h2 style="color: var(--gold); margin-bottom: 15px; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px;">The Mission</h2>
-            <p class="mission-text">
-                "To bridge the gap between digital accessibility and community resources, creating a hub where every citizen has the tools to succeed."
-            </p>
-        </div>
+        <a href="index.html" class="back-link">← Return to Hub</a>
 
-        <div class="founder-grid">
-            <!-- KONA PROFILE -->
-            <div class="profile-card">
-                <div class="founder-name">Kona Agpalza</div>
-                <div class="founder-role">Lead Developer & Strategist</div>
-                <p class="founder-bio">
-                    The architect behind the Vanguard infrastructure. Kona focuses on building secure, fast, and community-driven digital tools that empower citizens to navigate the modern internet with ease.
-                </p>
+        <main class="glass-card">
+            
+            <h2>The VCS Mission</h2>
+            <p>At Vanguard Citizen Services, we believe technology should feel less like a complicated puzzle and more like a helpful neighbor. Our mission is to build simple, friendly, digital spaces that support local needs, close the gaps between citizens and leaders, and help communities grow stronger together by listening first.</p>
+
+            <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.08); margin: 30px 0;">
+
+            <h2>Leadership Team</h2>
+            <p>Our work is shaped by a deep care for people and a lot of hands-on experience solving real-world problems. We bring together diverse technical skills and service backgrounds to ensure our tools work beautifully for you.</p>
+            
+            <!-- QUINCY JONES -->
+            <div class="team-box">
+                <strong>Quincy Jones</strong>
+                <!-- Shared backgrounds at US Army, Best Buy, and custom Apple experience -->
+                <h3>Chief Vision Officer</h3>
+                <p>Quincy guides the heart and creative direction of the studio. With a background shaped by service in the US Army and tech care at Best Buy and Apple, he focuses on ensuring everything we create connects deeply with everyday neighbors and businesses alike.</p>
             </div>
 
-            <!-- QUINCY PROFILE -->
-            <div class="profile-card">
-                <div class="founder-name">Quincy Jones</div>
-                <div class="founder-role">Creative Director & Community Lead</div>
-                <p class="founder-bio">
-                    The vision behind the Vanguard experience. Quincy ensures that every interaction within the network is intuitive, accessible, and aligned with our mission to serve the people.
-                </p>
+            <!-- KONA AGPALZA -->
+            <div class="team-box">
+                <strong>Kona Agpalza</strong>
+                <!-- Shared backgrounds at US Army and Best Buy -->
+                <h3>Lead Developer</h3>
+                <p>Kona handles the gears behind the curtain. Drawing on his practical problem-solving experience in the US Army and tech expertise from Best Buy, he dedicates his time to building safe, secure, and rock-solid systems that anyone can use with absolute confidence.</p>
             </div>
-        </div>
 
-        <div style="margin-bottom: 60px;">
-            <a href="hub.html" class="action-link">Return to Hub</a>
-        </div>
+            <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.08); margin: 35px 0 30px;">
 
-        <footer>Vanguard &copy; 2026</footer>
-    </main>
+            <h2>The Vanguard Knights</h2>
+            <p>Every great mission grows and changes as it learns how to serve better. The Vanguard Knights originally began as a separate, smaller group with a much narrower focus. As we realized how much more we could do together, we combined our strengths and expanded our horizons.</p>
+            
+            <p>Today, the Vanguard Knights act as the creative heartbeat of our studio. They are the team responsible for creating our media entertainment, designing engaging visuals, and crafting the friendly internal content that keeps our digital community informed, connected, and entertained.</p>
 
+        </main>
+
+        <footer>Powered by Vanguard Citizen Services &copy; <span id="current-year"></span></footer>
+    </div>
+
+    <script>
+        /* --- COMET GENERATOR --- */
+        function spawnComet() {
+            const container = document.getElementById('environment');
+            const comet = document.createElement('div');
+            comet.classList.add('comet');
+            comet.style.top = `${Math.random() * 40}vh`;
+            comet.style.left = `${50 + (Math.random() * 50)}vw`;
+            container.appendChild(comet);
+            setTimeout(() => comet.remove(), 2000);
+        }
+        setInterval(spawnComet, 3500);
+        spawnComet();
+
+        /* --- SET CURRENT YEAR --- */
+        document.getElementById('current-year').innerText = new Date().getFullYear();
+    </script>
 </body>
 </html>
