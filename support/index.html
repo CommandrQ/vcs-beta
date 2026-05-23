@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Vanguard | Support Terminal</title>
+    
+    <!-- Supabase Core for Auto-Fill -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        :root {
+            --gold: #f5c518;
+            --white: #ffffff;
+            --glass-panel: rgba(10, 10, 12, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --v-curve: cubic-bezier(0.25, 1, 0.5, 1);
+            --success: #4ade80;
+        }
+
+        /* --- FOUNDATION --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body, html {
+            height: 100dvh;
+            background: #000000;
+            color: var(--white);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            overflow: hidden;
+            font-size: 16px;
+            position: fixed;
+            width: 100vw;
+        }
+
+        /* --- DESKTOP SCALING --- */
+        @media (min-width: 1024px) {
+            body, html { font-size: 17px; }
+            .glass-window { max-width: 750px !important; padding: 48px 40px !important; }
+            h1 { font-size: 1.8rem !important; }
+        }
+
+        /* --- THE STARFIELD --- */
+        #vanguard-universe { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+        .star-layer {
+            position: absolute; inset: -50%; width: 200%; height: 200%;
+            background-image: 
+                radial-gradient(1px 1px at 40px 60px, rgba(245, 197, 24, 0.4), transparent),
+                radial-gradient(0.8px 0.8px at 150px 200px, rgba(255, 255, 255, 0.5), transparent);
+            background-size: 300px 300px;
+            animation: orbital-rotation 240s linear infinite;
+        }
+        @keyframes orbital-rotation { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* --- UI WRAPPER --- */
+        #app-wrapper {
+            position: relative; z-index: 10; height: 100dvh; width: 100%;
+            display: flex; flex-direction: column; align-items: center;
+            overflow-y: auto; -webkit-overflow-scrolling: touch;
+        }
+        #app-wrapper::-webkit-scrollbar { width: 4px; }
+        #app-wrapper::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 4px; }
+
+        /* --- MAIN GLASS WINDOW --- */
+        .glass-window {
+            width: calc(100% - 24px); max-width: 480px; margin: auto 0;
+            background: var(--glass-panel);
+            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border); border-radius: 24px;
+            padding: 32px 20px; text-align: center;
+            animation: fadeIn 0.6s var(--v-curve) forwards, gold-pulse-window 8s infinite ease-in-out;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.8);
+        }
+
+        /* --- FORM STYLING --- */
+        .support-form { display: flex; flex-direction: column; gap: 16px; margin-top: 24px; text-align: left; }
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        .form-group label { font-size: 0.68rem; color: var(--gold); font-weight: 800; letter-spacing: 2px; text-transform: uppercase; }
+        
+        .support-input {
+            background: rgba(255, 255, 255, 0.04); border: 1px solid var(--glass-border);
+            border-radius: 12px; padding: 14px; color: white; font-family: inherit; font-size: 0.92rem;
+            transition: border-color 0.25s ease;
+        }
+        .support-input:focus { border-color: var(--gold); outline: none; background: rgba(255, 255, 255, 0.06); }
+
+        /* --- BUTTONS --- */
+        .transmit-btn {
+            display: inline-block; width: 100%; margin-top: 8px;
+            padding: 16px; background: transparent; border: 1px solid var(--gold);
+            color: var(--gold); text-decoration: none; font-weight: 900;
+            text-transform: uppercase; letter-spacing: 3px; border-radius: 12px; cursor: pointer; transition: 0.25s ease;
+        }
+        .transmit-btn:hover { background: var(--white); color: #000000; border-color: var(--white); box-shadow: 0 0 16px rgba(255, 255, 255, 0.15); }
+
+        .back-btn {
+            color: var(--white); text-decoration: none; font-size: 0.72rem; font-weight: 800;
+            letter-spacing: 2px; border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 10px 16px; border-radius: 12px; transition: 0.25s ease;
+            text-transform: uppercase;
+        }
+        .back-btn:hover { border-color: var(--white); background: rgba(255, 255, 255, 0.05); }
+
+        /* --- STATUS CARD --- */
+        .status-box {
+            margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--glass-border);
+            text-align: center;
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes fadeIn { from { opacity: 0; transform: translate3d(0, 15px, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
+        @keyframes gold-pulse-window { 0%, 100% { border-color: rgba(245, 197, 24, 0.1); } 50% { border-color: rgba(245, 197, 24, 0.35); } }
+
+        footer { width: 100%; padding: 20px 0 12px 0; text-align: center; font-size: 0.65rem; color: var(--white); letter-spacing: 3px; text-transform: uppercase; flex-shrink: 0; }
+    </style>
+</head>
+<body>
+
+    <div id="vanguard-universe"><div class="star-layer"></div></div>
+
+    <main id="app-wrapper">
+        <article class="glass-window">
+            <header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h1 style="letter-spacing: 4px; text-transform: uppercase; font-weight: 300; font-size: 1.4rem;">Support</h1>
+                <a href="../index.html" class="back-btn">HUB →</a>
+            </header>
+
+            <h2 style="color: var(--gold); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; font-weight: 600;">Direct Uplink</h2>
+            <p style="opacity: 0.8; font-size: 0.88rem; line-height: 1.5; max-width: 500px; margin: 0 auto;">Submit a secure request to the Vanguard Support Core. We respond to all neighbors via registered email.</p>
+
+            <div class="support-form">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="support-name" class="support-input" placeholder="Identify yourself...">
+                </div>
+
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="support-email" class="support-input" placeholder="Where should we reply?">
+                </div>
+
+                <div class="form-group">
+                    <label>Your Message</label>
+                    <textarea id="support-msg" class="support-input" rows="5" style="resize: none;" placeholder="Describe the issue, ask a question, or request assistance..."></textarea>
+                </div>
+
+                <button onclick="transmitRequest()" class="transmit-btn">Transmit Message</button>
+            </div>
+
+            <!-- System Status -->
+            <div class="status-box">
+                <p style="font-size: 0.72rem; letter-spacing: 1px; text-transform: uppercase; color: var(--success); font-weight: 800;">
+                    <span>●</span> System Status: Operational
+                </p>
+            </div>
+        </article>
+
+        <footer>Vanguard Citizen Services &copy; <span id="year"></span></footer>
+    </main>
+
+    <script>
+        // --- AUTO-FILL LOGIC ---
+        document.addEventListener('DOMContentLoaded', async () => {
+            document.getElementById('year').innerText = new Date().getFullYear();
+
+            // Check local storage for profile cache values
+            const cached = JSON.parse(localStorage.getItem('vanguard_profile')) || {};
+            if (cached.name) {
+                document.getElementById('support-name').value = cached.name;
+            }
+
+            // Check Supabase for verified email
+            if (typeof supabaseClient !== 'undefined') {
+                try {
+                    const { data: { user } } = await supabaseClient.auth.getUser();
+                    if (user && user.email) {
+                        document.getElementById('support-email').value = user.email;
+                    }
+                } catch (e) {
+                    // Fail silently to safeguard application flow
+                }
+            }
+        });
+
+        // --- TRANSMISSION LOGIC ---
+        function transmitRequest() {
+            const name = document.getElementById('support-name').value.trim();
+            const email = document.getElementById('support-email').value.trim();
+            const msg = document.getElementById('support-msg').value.trim();
+            
+            if (!name || !email || !msg) {
+                return alert("Identification (Name and Email) and a message are required before transmitting.");
+            }
+            
+            const subject = `[Vanguard Support] Uplink from ${name}`;
+            const body = `CITIZEN LOG: ${name}\nRETURN COMM: ${email}\n\nTRANSMISSION:\n${msg}`;
+            
+            window.location.href = `mailto:commandrq@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            
+            // Clear message box (Leave name/email for convenience)
+            document.getElementById('support-msg').value = '';
+        }
+    </script>
+</body>
+</html>
