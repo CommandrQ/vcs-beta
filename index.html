@@ -1,31 +1,42 @@
-<!-- 
-  VANGUARD SITE STRUCTURE & TIMED INTRO OVERLAY
-  Modifications to: index.html
--->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vanguard Citizen Services</title>
+  <!-- Standard style location link -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-<!-- Old TV Intro Shield -->
-<div id="intro-stage" class="intro-overlay">
-  <img src="images/vanguardorglogo.png" alt="Vanguard Citizen Services Logo" class="intro-logo">
-  
-  <div class="loading-track">
-    <div id="loading-progress" class="loading-bar"></div>
+  <!-- Background Space Canvas -->
+  <canvas id="atmosphere-canvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1; pointer-events: none;"></canvas>
+
+  <!-- Old TV Intro Shield -->
+  <div id="intro-stage" class="intro-overlay">
+    <img src="images/vanguardorglogo.png" alt="Vanguard Citizen Services Logo" class="intro-logo">
+    <div class="loading-track">
+      <div id="loading-progress" class="loading-bar"></div>
+    </div>
+    <p class="intro-motto">Empower. Educate. Elevate.</p>
   </div>
-  
-  <p class="intro-motto">Empower. Educate. Elevate.</p>
-</div>
 
-<!-- Main Application Workspace (Hidden until load triggers) -->
-<main id="main-content" class="app-container" style="opacity: 0; transition: opacity 0.8s ease;">
-  
-  <section class="vanguard-panel">
-    <!-- Home Content Mounts Directly Here -->
-    <h1 style="font-weight: 300; letter-spacing: 0.05em; color: var(--vanguard-yellow);">Welcome Home</h1>
-  </section>
+  <!-- Primary Workspace Layout -->
+  <main id="main-content" class="app-container" style="opacity: 0; transition: opacity 0.8s ease;">
+    
+    <section class="vanguard-panel">
+      <h1 style="font-weight: 300; letter-spacing: 0.05em; color: var(--vanguard-yellow);">Welcome Home</h1>
+    </section>
 
-  <!-- Permanent Site-Wide Footer Component -->
-  <footer class="vanguard-footer">
-    <p class="footer-text">
-      &copy; <span id="current-year"></span> vanguard citizen services
-    </p>
-  </footer>
-</main>
+    <footer class="vanguard-footer">
+      <p class="footer-text">
+        &copy; <span id="current-year"></span> vanguard citizen services
+      </p>
+    </footer>
+    
+  </main>
+
+  <!-- Standard script location link -->
+  <script src="script.js"></script>
+</body>
+</html>
