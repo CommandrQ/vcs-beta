@@ -4,12 +4,12 @@
  */
 
 :root {
-  --deep-abyss: #020205;
+  --deep-abyss: #030307;
   --stark-white: #ffffff;
-  --dim-gold: #cfa83c;
-  --grid-blue: rgba(24, 110, 245, 0.28);
-  --glass-fill: rgba(255, 255, 255, 0.04);
-  --glass-border: rgba(255, 255, 255, 0.1);
+  --light-purple: #b39ddb;
+  --light-blue: #81d4fa;
+  --glass-fill: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.08);
   --cinema-speed: cubic-bezier(0.25, 1, 0.5, 1);
 }
 
@@ -26,26 +26,14 @@ body, html {
   position: fixed;
 }
 
-/* --- PULSING COMPOSITED BLUE GRID BACKGROUND --- */
-.grid-background-overlay {
+/* --- CANVAS BACKGROUND ANCHOR --- */
+#starfield-wallpaper {
   position: fixed;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100vw;
   height: 100dvh;
   z-index: 1;
   pointer-events: none;
-  background-size: 40px 40px;
-  background-image: 
-    linear-gradient(to right, var(--grid-blue) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--grid-blue) 1px, transparent 1px);
-  background-position: center top;
-  animation: backgroundGridPulse 4s infinite ease-in-out;
-}
-
-@keyframes backgroundGridPulse {
-  0%, 100% { opacity: 0.3; transform: scale(1); }
-  50% { opacity: 0.85; transform: scale(1.02); }
 }
 
 /* Scroll Layer Hooks */
@@ -54,7 +42,7 @@ body, html {
   -webkit-overflow-scrolling: touch;
 }
 .scrollable-interior::-webkit-scrollbar { width: 3px; }
-.scrollable-interior::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.3); border-radius: 2px; }
+.scrollable-interior::-webkit-scrollbar-thumb { background: rgba(179, 157, 219, 0.3); border-radius: 2px; }
 
 /* --- THE CINEMATIC VEIL (Letterboxing) --- */
 .cinema-bar {
@@ -65,8 +53,8 @@ body, html {
   background: #000000;
   z-index: 10000;
 }
-.cinema-bar.top { top: 0; border-bottom: 1px solid rgba(255,255,255,0.02); }
-.cinema-bar.bottom { bottom: 0; border-top: 1px solid rgba(255,255,255,0.02); }
+.cinema-bar.top { top: 0; border-bottom: 1px solid rgba(179, 157, 219, 0.05); }
+.cinema-bar.bottom { bottom: 0; border-top: 1px solid rgba(129, 212, 250, 0.05); }
 
 /* --- SOLID DECK DEPLOYMENT INTERFACE --- */
 .core-interface {
@@ -90,8 +78,8 @@ body, html {
 
 /* Typography Block Formatting */
 .portal-header { text-align: center; margin-bottom: 24px; flex: 0 0 auto; }
-.portal-header h1 { font-size: 1.8rem; font-weight: 300; letter-spacing: 0.05em; text-transform: uppercase; color: var(--dim-gold); }
-.subtitle { font-size: 0.95rem; color: var(--stark-white); font-weight: 500; line-height: 1.35; margin-top: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+.portal-header h1 { font-size: 1.8rem; font-weight: 300; letter-spacing: 0.05em; text-transform: uppercase; color: var(--light-purple); text-shadow: 0 0 15px rgba(179, 157, 219, 0.2); }
+.subtitle { font-size: 0.95rem; color: var(--light-blue); font-weight: 500; line-height: 1.35; margin-top: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
 .blurb-text { font-size: 0.9rem; line-height: 1.5; color: var(--stark-white); margin-top: 12px; padding: 0 4px; }
 
 /* Link Deck Track Layout */
@@ -110,8 +98,8 @@ body, html {
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .bio-link-card:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(129, 212, 250, 0.4);
   transform: translateY(-1px);
 }
 
@@ -119,21 +107,25 @@ body, html {
 .card-title { font-size: 1.05rem; font-weight: 600; color: var(--stark-white); }
 .card-desc { font-size: 0.85rem; color: var(--stark-white); line-height: 1.3; font-weight: 400; }
 .action-arrow { color: var(--stark-white); font-size: 1.1rem; transition: all 0.2s ease; }
-.bio-link-card:hover .action-arrow { color: var(--dim-gold); transform: translateX(2px); }
+.bio-link-card:hover .action-arrow { color: var(--light-blue); transform: translateX(2px); }
 
 /* --- COMMUNITY VOICE STYLING (STATIC HIGHLIGHT) --- */
 .action-pulse-btn {
-  background: rgba(207, 168, 60, 0.04);
-  border-color: rgba(207, 168, 60, 0.5);
-  box-shadow: 0 0 12px rgba(207, 168, 60, 0.05);
+  background: rgba(179, 157, 219, 0.03);
+  border-color: rgba(179, 157, 219, 0.4);
+  box-shadow: 0 0 12px rgba(179, 157, 219, 0.05);
 }
-.action-pulse-btn .card-title { color: var(--dim-gold); }
-.action-pulse-btn:hover { background: rgba(207, 168, 60, 0.1); border-color: var(--dim-gold); }
+.action-pulse-btn .card-title { color: var(--light-purple); }
+.action-pulse-btn:hover { background: rgba(179, 157, 219, 0.08); border-color: var(--light-purple); }
+
+/* About Page Custom Timeline Elements Map Overrides */
+.timeline-node { border-left: 2px solid var(--light-purple) !important; }
+.node-era { color: var(--light-blue) !important; }
 
 /* Navigation Return Track */
 .portal-footer { text-align: center; padding-top: 16px; flex: 0 0 auto; }
 .hub-return-link { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--stark-white); text-decoration: none; font-weight: 600; transition: color 0.2s ease; }
-.hub-return-link:hover { color: var(--dim-gold); }
+.hub-return-link:hover { color: var(--light-blue); }
 
 @keyframes trackOut {
   0% { letter-spacing: 0.15em; opacity: 0; filter: blur(4px); }
