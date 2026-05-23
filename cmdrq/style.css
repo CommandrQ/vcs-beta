@@ -26,7 +26,7 @@ body, html {
   position: fixed;
 }
 
-/* --- PHYSICAL PULSING COMPOSITED BLUE GRID BACKGROUND --- */
+/* --- PULSING COMPOSITED BLUE GRID BACKGROUND --- */
 .grid-background-overlay {
   position: fixed;
   top: 0;
@@ -88,7 +88,7 @@ body, html {
 
 .core-interface.reveal-ready { opacity: 1; transform: translate3d(0, 0, 0); }
 
-/* Typography Block Formatting (Solid High-Contrast Tones Only) */
+/* Typography Block Formatting */
 .portal-header { text-align: center; margin-bottom: 24px; flex: 0 0 auto; }
 .portal-header h1 { font-size: 1.8rem; font-weight: 300; letter-spacing: 0.05em; text-transform: uppercase; color: var(--dim-gold); }
 .subtitle { font-size: 0.95rem; color: var(--stark-white); font-weight: 500; line-height: 1.35; margin-top: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
@@ -121,34 +121,14 @@ body, html {
 .action-arrow { color: var(--stark-white); font-size: 1.1rem; transition: all 0.2s ease; }
 .bio-link-card:hover .action-arrow { color: var(--dim-gold); transform: translateX(2px); }
 
-/* --- STATIC TEXT INTERFACE WITH ANISOTROPIC BORDER GLOW --- */
+/* --- COMMUNITY VOICE STYLING (STATIC HIGHLIGHT) --- */
 .action-pulse-btn {
-  background: rgba(207, 168, 60, 0.03);
-  border-color: rgba(207, 168, 60, 0.4);
-  animation: borderBeaconGlow 2.5s infinite ease-in-out;
+  background: rgba(207, 168, 60, 0.04);
+  border-color: rgba(207, 168, 60, 0.5);
+  box-shadow: 0 0 12px rgba(207, 168, 60, 0.05);
 }
 .action-pulse-btn .card-title { color: var(--dim-gold); }
-.action-pulse-btn:hover { background: rgba(207, 168, 60, 0.08); }
-
-/* Enforce absolute structural text lock directly to prevent browser opacity sharing */
-.action-pulse-btn .card-title,
-.action-pulse-btn .card-desc,
-.action-pulse-btn .action-arrow {
-  animation: none !important;
-  opacity: 1.0 !important;
-  transform: none !important;
-}
-
-@keyframes borderBeaconGlow {
-  0%, 100% { 
-    box-shadow: 0 0 0 0 rgba(207, 168, 60, 0); 
-    border-color: rgba(207, 168, 60, 0.3); 
-  }
-  50% { 
-    box-shadow: 0 0 12px 0 rgba(207, 168, 60, 0.18); 
-    border-color: rgba(207, 168, 60, 0.85); 
-  }
-}
+.action-pulse-btn:hover { background: rgba(207, 168, 60, 0.1); border-color: var(--dim-gold); }
 
 /* Navigation Return Track */
 .portal-footer { text-align: center; padding-top: 16px; flex: 0 0 auto; }
