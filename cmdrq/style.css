@@ -108,7 +108,7 @@ body::before {
 /* --- SOLID DECK DEPLOYMENT INTERFACE --- */
 .core-interface {
   position: relative;
-  z-index: 10; /* Lifts content above the animated background grid */
+  z-index: 10;
   opacity: 0;
   transform: translate3d(0, 12px, 0);
   transition: opacity 0.8s var(--cinema-speed), transform 0.8s var(--cinema-speed);
@@ -119,8 +119,8 @@ body::before {
   padding: calc(14dvh + env(safe-area-inset-top)) 20px calc(14dvh + env(safe-area-inset-bottom)) 20px;
   display: flex;
   flex-direction: column;
-  background-color: #000000; /* SOLID PURE BLACK CONTAINER WALLS */
-  box-shadow: 0 0 60px 30px #000000; /* Protects edges from visual grid bleeding */
+  background-color: #000000;
+  box-shadow: 0 0 60px 30px #000000;
 }
 
 .core-interface.reveal-ready { opacity: 1; transform: translate3d(0, 0, 0); }
