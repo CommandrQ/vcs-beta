@@ -1,5 +1,5 @@
 /**
- * VANGUARD CITIZEN SERVICES — LCK-BOUND VIEWPORT INTERFACE
+ * VANGUARD CITIZEN SERVICES — VIEWPORT COMPRESSION & FADE STYLES
  * Path: style.css
  */
 
@@ -19,7 +19,7 @@
   padding: 0;
 }
 
-/* Master Viewport Lock: The screen itself never scrolls */
+/* Master Viewport Lock: Frozen to prevent viewport overscroll overflow */
 body, html {
   background-color: var(--onyx);
   color: var(--pure-white);
@@ -30,7 +30,7 @@ body, html {
   position: fixed;
 }
 
-/* High-Scannability Interior Scrolling Rules */
+/* Interior Scroll Containers */
 .scrollable-interior {
   overflow-y: auto !important;
   -webkit-overflow-scrolling: touch;
@@ -43,25 +43,27 @@ body, html {
   border-radius: 4px;
 }
 
-/* App Layout Framework: Tight, minimal edge margins */
+/* App Container: Compressed layout margins to guarantee footer visibility */
 .app-container {
   width: 100%;
   max-width: 480px;
   margin: 0 auto;
   height: 100vh;
-  padding: calc(10px + env(safe-area-inset-top)) calc(12px + env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom)) calc(12px + env(safe-area-inset-left));
+  padding: calc(8px + env(safe-area-inset-top)) calc(12px + env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom)) calc(12px + env(safe-area-inset-left));
   position: relative;
   z-index: 2;
   display: flex;
   flex-direction: column;
+  opacity: 0;
+  transition: opacity 0.8s ease-out;
 }
 
-/* --- LARGE SCREEN INTERFACE ADAPTATIONS (Tablets & Desktops) --- */
+/* --- LARGE SCREEN BREAKPOINTS (Keeps workspace perfectly centralized) --- */
 @media (min-width: 768px) {
   .app-container {
     max-width: 740px;
-    height: calc(100vh - 24px);
-    margin: 12px auto;
+    height: calc(100vh - 32px);
+    margin: 16px auto;
     padding: 16px;
   }
 }
@@ -69,37 +71,38 @@ body, html {
 @media (min-width: 1024px) {
   .app-container {
     max-width: 880px;
-    height: calc(100vh - 40px);
-    margin: 20px auto;
+    height: calc(100vh - 48px);
+    margin: 24px auto;
   }
 }
 
-/* Glass Presentation Panels */
+/* Glass Presentation Layout Panels */
 .vanguard-panel {
   background: var(--glass-bg);
   backdrop-filter: blur(25px);
   -webkit-backdrop-filter: blur(25px);
   border: 1px solid var(--glass-border);
   border-radius: 24px;
-  padding: 16px; /* Pulled closer to edges internally */
-  margin-bottom: 12px;
+  padding: 16px;
+  margin-bottom: 10px; /* Reduced to pull elements up */
   position: relative;
   animation: goldPulse 8s infinite ease-in-out;
 }
 
-/* Proportional flex allocation to contain components perfectly without screen spill */
+/* Strict proportional scaling to keep elements on screen */
 .announcements-panel-wrapper {
-  flex: 0 1 180px;
+  flex: 0 1 150px;
   display: flex;
   flex-direction: column;
-  min-height: 120px;
+  min-height: 100px;
 }
 
 .operations-hub {
-  flex: 1 1 auto;
+  flex: 1 1 320px; /* Expands to occupy remaining free screen territory */
   display: flex;
   flex-direction: column;
-  min-height: 240px;
+  min-height: 200px;
+  max-height: 48vh; /* Binds height to block content overflow on mobile views */
 }
 
 @keyframes goldPulse {
@@ -108,16 +111,16 @@ body, html {
 }
 
 .panel-label {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--vanguard-yellow);
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   font-weight: 600;
   flex: 0 0 auto;
 }
 
-/* Fluid Flash/Blackout Step Engine */
+/* Blackout Transitional Mask Plane */
 #transition-mask {
   position: fixed;
   top: 0;
@@ -127,8 +130,7 @@ body, html {
   background: var(--onyx);
   z-index: 9000;
   pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.5s ease;
+  transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 /* Splash Overlay Framework */
@@ -182,22 +184,22 @@ body, html {
   font-weight: 300;
 }
 
-/* Centralized Branding Elements */
+/* Header Presentation Profile */
 .vanguard-hero {
   text-align: center;
-  padding: 10px 0 12px 0;
+  padding: 6px 0 10px 0;
   flex: 0 0 auto;
 }
 
 .hero-logo-small {
-  width: 52px;
+  width: 48px;
   height: auto;
-  margin: 0 auto 8px auto;
+  margin: 0 auto 6px auto;
   display: block;
 }
 
 .hero-title {
-  font-size: 1.3rem;
+  font-size: 1.25rem;
   font-weight: 300;
   letter-spacing: 0.1em;
   color: var(--pure-white);
@@ -208,7 +210,7 @@ body, html {
 .announcements-container {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
   flex: 1 1 auto;
 }
 
@@ -238,20 +240,20 @@ body, html {
   font-style: italic;
 }
 
-/* Split System Controls Architecture */
+/* Split System Matrix Engine */
 .split-layout-engine {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
   width: 100%;
   flex: 1 1 auto;
-  min-height: 0; /* Important for flex-child interior scrolls */
+  min-height: 0;
 }
 
 .tabs-stacked-track {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
   width: 100%;
   flex: 0 0 auto;
 }
@@ -259,10 +261,10 @@ body, html {
 .action-tab-btn {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.15);
-  padding: 14px 16px;
-  border-radius: 14px;
+  padding: 12px 14px;
+  border-radius: 12px;
   color: var(--pure-white);
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   cursor: pointer;
@@ -283,18 +285,18 @@ body, html {
   display: none;
   background: rgba(0, 0, 0, 0.3);
   border-radius: 14px;
-  padding: 16px;
+  padding: 14px;
   border: 1px solid var(--glass-border);
-  font-size: 0.9rem;
-  line-height: 1.5;
+  font-size: 0.88rem;
+  line-height: 1.45;
   color: var(--pure-white);
   position: relative;
 }
 
 .narrative-pane h3 {
-  font-size: 1rem;
+  font-size: 0.95rem;
   color: var(--vanguard-yellow);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -309,7 +311,7 @@ body, html {
   transform: translate(-50%, -50%);
   width: calc(100% - 24px);
   max-width: 440px;
-  max-height: 70vh;
+  max-height: 65vh;
   z-index: 9900;
   background: var(--glass-bg);
   backdrop-filter: blur(30px);
@@ -328,27 +330,27 @@ body, html {
   z-index: 9800;
 }
 
-/* Legal Presentation Styling */
+/* Legal Content Presentation Styling */
 .legal-date-stamp {
   text-align: center;
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   letter-spacing: 0.12em;
   color: var(--vanguard-yellow);
   font-weight: 600;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .legal-subheading {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 600;
   letter-spacing: 0.05em;
   color: var(--pure-white);
-  margin-top: 14px;
+  margin-top: 12px;
   margin-bottom: 4px;
   text-transform: uppercase;
 }
 
-/* Large Interactive Exit Element */
+/* Mobile Overlay Cross close button */
 .mobile-close-overlay-btn {
   display: block;
   background: none;
@@ -357,8 +359,8 @@ body, html {
   font-size: 2.2rem;
   line-height: 1;
   position: absolute;
-  top: 10px;
-  right: 14px;
+  top: 8px;
+  right: 12px;
   cursor: pointer;
   z-index: 10;
 }
@@ -394,13 +396,13 @@ body, html {
 /* Persistent Site Footer Structure */
 .vanguard-footer {
   margin-top: auto;
-  padding: 16px 0 4px 0;
+  padding: 10px 0 2px 0;
   text-align: center;
   flex: 0 0 auto;
 }
 
 .footer-text {
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   text-transform: uppercase;
   letter-spacing: 0.15em;
   color: var(--pure-white);
