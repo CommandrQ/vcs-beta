@@ -11,8 +11,8 @@
   <!-- Background Space Canvas -->
   <canvas id="atmosphere-canvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1; pointer-events: none;"></canvas>
 
-  <!-- Transitions Mask (Fades to pure black, then lifts) -->
-  <div id="transition-mask"></div>
+  <!-- Transitions Mask (Handles initial fade-in from black) -->
+  <div id="transition-mask" style="opacity: 1;"></div>
 
   <!-- Old TV Intro Shield -->
   <div id="intro-stage" class="intro-overlay">
