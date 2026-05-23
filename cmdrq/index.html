@@ -4,124 +4,51 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>CMDR Q // Gateway</title>
-  <style>
-    /* --- MASTER SYSTEM RESET --- */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body, html {
-      background-color: #000000;
-      height: 100dvh;
-      width: 100vw;
-      overflow: hidden;
-      position: fixed;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    /* --- INITIAL BLACKOUT SHIELD --- */
-    #splash-theater {
-      opacity: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 24px;
-      text-align: center;
-      padding: 0 32px;
-      transform: scale(0.98);
-      transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1), transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
-    }
-
-    #splash-theater.fade-in {
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    #splash-theater.fade-out {
-      opacity: 0;
-      transform: scale(1.02);
-      transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
-    }
-
-    /* --- THE PORTRAIT GRAPHIC CORE --- */
-    .hero-headshot {
-      width: 130px;
-      height: 130px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid rgba(255, 255, 255, 0.15);
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.05);
-    }
-
-    /* --- METALLIC SHIMMER TEXT ENGINE --- */
-    .shimmer-identity {
-      font-size: 1.6rem;
-      font-weight: 300;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: #cfa83c;
-      
-      /* Linear gradient mirror mapping for gold shimmer tracking lines */
-      background: linear-gradient(
-        to right, 
-        #9c7a23 20%, 
-        #fdf5e6 40%, 
-        #f5c518 60%, 
-        #9c7a23 80%
-      );
-      background-size: 200% auto;
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      
-      animation: goldShimmerEffect 2.8s linear infinite;
-    }
-
-    @keyframes goldShimmerEffect {
-      to { background-position: 200% center; }
-    }
-
-    /* Tablet and Widescreen Layout Enhancements */
-    @media (min-width: 768px) {
-      .hero-headshot { width: 160px; height: 160px; }
-      .shimmer-identity { font-size: 2.1rem; }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="cinematic-lock">
 
-  <!-- Hidden stage that fades in smoothly via lifecycle tracking -->
-  <main id="splash-theater">
+  <!-- Cinematic Letterbox Bars (Top and Bottom) -->
+  <div class="cinema-bar top"></div>
+  <div class="cinema-bar bottom"></div>
+
+  <!-- Intro Stage Container -->
+  <div id="intro-viewport" class="intro-canvas">
     
-    <!-- Your Personal Portrait Asset -->
-    <img src="images/headshot.jpg" alt="Commander Q Portrait" class="hero-headshot">
-    
-    <!-- Shimmering Identity Headline -->
-    <h1 class="shimmer-identity">Commander Q</h1>
-    
-  </main>
+    <!-- Scene 1: The Philosophy Title -->
+    <div id="scene-1" class="cinematic-scene active">
+      <h2 class="cinematic-text tracking-out">Unfiltered Narratives.</h2>
+    </div>
+
+    <!-- Scene 2: The Identity Reveal -->
+    <div id="scene-2" class="cinematic-scene">
+      <h2 class="cinematic-text glow-text">COMMANDER Q // PLATFORM</h2>
+    </div>
+
+  </div>
 
   <script>
+    // Cinematic Timeline Sequencer
     document.addEventListener('DOMContentLoaded', () => {
-      const stage = document.getElementById('splash-theater');
+      const scene1 = document.getElementById('scene-1');
+      const scene2 = document.getElementById('scene-2');
+      const introViewport = document.getElementById('intro-viewport');
 
-      // Trigger structural fade-in from pure black instantly on paint load
-      requestAnimationFrame(() => {
-        stage.classList.add('fade-in');
-      });
-
-      // Maintain display state for exactly 2 seconds, then transition cleanly
+      // Phase 1: Cut to Scene 2 after 3 seconds
       setTimeout(() => {
-        stage.classList.remove('fade-in');
-        stage.classList.add('fade-out');
+        scene1.classList.remove('active');
+        scene2.classList.add('active');
+      }, 3000);
 
-        // Allow the opacity layer animation to clear before changing URL lines
+      // Phase 2: Dissolve out and physically navigate away after 6.5 seconds
+      setTimeout(() => {
+        introViewport.classList.add('dissolve-out');
+        
+        // Let the fade transition finish, then change pages
         setTimeout(() => {
           window.location.href = 'home.html';
         }, 800);
-
-      }, 2000);
+      }, 6500);
     });
   </script>
 </body>
