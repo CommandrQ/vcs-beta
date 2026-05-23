@@ -1,0 +1,131 @@
+/* ==========================================
+   1. CORE RESETS & NATIVE SYSTEM TYPOGRAPHY
+   ========================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #000000;
+  color: #ffffff;
+  overflow-x: hidden;
+}
+
+/* ==========================================
+   2. THEME BACKGROUNDS & ANIMATIONS
+   ========================================== */
+/* Golden Sky & Cinematic Gradients */
+.theme-golden-sky {
+  background: linear-gradient(180deg, #1a120b 0%, #120c06 50%, #000000 100%);
+  min-height: 100vh;
+}
+
+/* Animated Starfield Container */
+.starfield-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* ==========================================
+   3. APPLE STANDARD UI COMPONENTS (GLASS & SQUIRCLE)
+   ========================================== */
+/* Translucent Glassmorphism / Backdrop Blur */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  /* Smooth Squircle Corner Simulation */
+  border-radius: 22px; 
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.glass-panel:hover {
+  background: rgba(255, 255, 255, 0.09);
+}
+
+/* Interactive Elements / Buttons */
+.btn-primary {
+  font-family: inherit;
+  font-weight: 500;
+  background-color: #ffffff;
+  color: #000000;
+  border: none;
+  border-radius: 12px; /* Apple-style standard button corner */
+  padding: 12px 24px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+}
+
+/* ==========================================
+   4. NAVIGATION & HUB TAB STRUCTURE
+   ========================================== */
+.hub-nav-tabs {
+  display: flex;
+  gap: 8px;
+  padding: 6px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 14px;
+  width: max-content;
+  margin: 0 auto;
+}
+
+.nav-tab {
+  padding: 8px 16px;
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.nav-tab.active {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+}
+
+/* ==========================================
+   5. RESPONSIVE LAYOUT & DESKTOP OPTIMIZATION
+   ========================================== */
+/* Main wrapper ensuring content looks natural on huge monitors */
+.app-container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Grid system for layout scaling */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  margin-top: 32px;
+}
+
+/* High-res scaling limits to keep typography crisp and un-stretched */
+@media (min-width: 1440px) {
+  .app-container {
+    max-width: 1400px;
+    padding: 40px 0;
+  }
+}
