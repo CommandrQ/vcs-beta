@@ -1,371 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Vanguard Citizen Services | Dashboard</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        /* --- BRANDING SYSTEM & GLASS PATTERNS --- */
-        :root {
-            --gold: #D4AF37;
-            --gold-glow: rgba(212, 175, 55, 0.3);
-            --bg-dark: #06050c;
-            --white: #ffffff;
-            --text-muted: rgba(255, 255, 255, 0.65);
-            --glass: rgba(20, 20, 28, 0.45);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --glass-active: rgba(255, 255, 255, 0.12);
-            --ease: cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-
-        body, html {
-            width: 100%;
-            min-height: 100vh;
-            background-color: var(--bg-dark);
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
-            color: var(--white);
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        /* --- IMMERSIVE ATMOSPHERE BACKGROUND --- */
-        #environment { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
-        .starfield {
-            position: absolute; width: 200vw; height: 200vh; top: -50%; left: -50%;
-            background-image: 
-                radial-gradient(1.5px 1.5px at 15% 20%, #fff, transparent),
-                radial-gradient(2px 2px at 40% 60%, var(--gold), transparent),
-                radial-gradient(1px 1px at 85% 35%, #fff, transparent);
-            background-size: 300px 300px;
-            opacity: 0.4;
-        }
-        .comet {
-            position: absolute; width: 100px; height: 1.5px;
-            background: linear-gradient(90deg, #fff 0%, var(--gold) 30%, transparent 100%);
-            animation: shoot 2s var(--ease) forwards; opacity: 0;
-        }
-        @keyframes shoot {
-            0% { transform: translate(0, 0) rotate(-30deg); opacity: 1; }
-            100% { transform: translate(-800px, 400px) rotate(-30deg); opacity: 0; }
-        }
-
-        /* --- FADE IN FROM BLACK MASK OVERLAY --- */
-        #entrance-fade-mask {
-            position: fixed;
-            inset: 0;
-            background-color: #000000;
-            z-index: 9999;
-            opacity: 1;
-            visibility: visible;
-            transition: opacity 0.6s ease-out, visibility 0.6s ease-out;
-            pointer-events: none;
-        }
-        #entrance-fade-mask.loaded {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        /* --- MAIN MOBILE-FIRST APP LAYOUT --- */
-        .app-layout {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            min-height: 100vh;
-            z-index: 10;
-            position: relative;
-            padding-bottom: 90px;
-        }
-
-        /* Top Bar Branding (Mobile View Main Header) */
-        .top-navbar {
-            width: 100%;
-            padding: 20px 24px;
-            background: linear-gradient(180deg, rgba(6,5,12,0.8) 0%, transparent 100%);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--glass-border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .brand-logo { font-size: 1.1rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: #fff; }
-        .brand-tag { font-size: 0.75rem; color: var(--gold); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
-
-        /* Main Screen Scroll Area */
-        .screen-container {
-            width: 100%;
-            max-width: 680px;
-            margin: 0 auto;
-            padding: 24px;
-        }
-
-        /* Welcome Banner Card */
-        .welcome-card {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 24px;
-            margin-bottom: 24px;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-        }
-        .welcome-card h1 { font-size: 1.6rem; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.5px; }
-        .welcome-card p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.5; }
-
-        /* --- THE VIEWS / TAB SHEETS --- */
-        .view-panel {
-            display: none;
-            animation: viewSlideIn 0.4s var(--ease) forwards;
-        }
-        .view-panel.active { display: block; }
-
-        @keyframes viewSlideIn {
-            from { opacity: 0; transform: translateY(12px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .view-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px; color: var(--gold); }
-
-        /* Modern Grid Action Cards */
-        .feature-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .action-card {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 20px;
-            text-decoration: none;
-            color: #fff;
-            transition: all 0.3s var(--ease);
-            display: flex;
-            flex-direction: column;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-        }
-        .action-card:hover { border-color: rgba(255,255,255,0.15); background: var(--glass-active); }
-        .action-card:active { transform: scale(0.98); }
-        .action-card strong { font-size: 1.1rem; font-weight: 700; margin-bottom: 6px; color: #fff; }
-        .action-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 14px; }
-        .card-arrow { font-size: 0.85rem; font-weight: 700; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; margin-top: auto; display: flex; align-items: center; gap: 4px; }
-
-        /* --- APP-STYLE BOTTOM NAVIGATION --- */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 76px;
-            background: rgba(10, 8, 18, 0.8);
-            backdrop-filter: blur(30px) saturate(150%);
-            -webkit-backdrop-filter: blur(30px) saturate(150%);
-            border-top: 1px solid var(--glass-border);
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding: 0 12px;
-            z-index: 100;
-        }
-
-        .nav-tab-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            cursor: pointer;
-            width: 64px;
-            height: 100%;
-            transition: all 0.3s var(--ease);
-            gap: 4px;
-        }
-        .nav-icon { font-size: 1.3rem; transition: transform 0.3s var(--ease); }
-        .nav-label { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.5px; }
-
-        .nav-tab-item.active { color: var(--gold); }
-        .nav-tab-item.active .nav-icon { transform: translateY(-2px); filter: drop-shadow(0 0 8px var(--gold-glow)); }
-
-        /* Hide desktop side-panel options by default */
-        .desktop-aside { display: none; }
-
-        /* --- DESKTOP LAYOUT SHIFT --- */
-        @media (min-width: 1024px) {
-            .app-layout {
-                flex-direction: row;
-                padding-bottom: 0;
-                max-width: 1200px;
-                margin: 0 auto;
-                padding-top: 40px;
-                gap: 40px;
-            }
-            .top-navbar { display: none; }
-            .bottom-nav { display: none; }
-
-            .desktop-aside {
-                display: flex;
-                flex-direction: column;
-                width: 280px;
-                height: calc(100vh - 80px);
-                position: sticky;
-                top: 40px;
-                padding: 20px 0;
-            }
-            .desktop-brand { margin-bottom: 40px; }
-            .desktop-brand h2 { font-size: 1.4rem; font-weight: 800; letter-spacing: 1px; margin-bottom: 4px; }
-
-            .desktop-menu-list { display: flex; flex-direction: column; gap: 8px; list-style: none; }
-            .desktop-menu-btn {
-                width: 100%; padding: 14px 20px; background: transparent; border: 1px solid transparent;
-                border-radius: 14px; text-align: left; color: var(--text-muted); font-size: 0.95rem;
-                font-weight: 600; cursor: pointer; transition: all 0.25s var(--ease); display: flex; align-items: center; gap: 12px;
-            }
-            .desktop-menu-btn:hover { background: rgba(255,255,255,0.03); color: #fff; }
-            .desktop-menu-btn.active { background: var(--glass); border-color: var(--glass-border); color: var(--gold); box-shadow: inset 0 0 10px rgba(212,175,55,0.05); }
-
-            .screen-container { flex: 1; padding: 0; max-width: 720px; margin: 0; }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vanguard Citizen Services</title>
+  <!-- Link to the root design stylesheet -->
+  <link rel="stylesheet" href="design.css">
 </head>
-<body>
+<body class="theme-golden-sky">
 
-    <!-- Environment Cosmic Canvas -->
-    <div id="environment"><div class="starfield"></div></div>
+  <!-- Fixed background animation layer -->
+  <div class="starfield-container">
+    <!-- Star elements or canvas rendering would target this container -->
+  </div>
 
-    <!-- Entrance Transition Fade Mask -->
-    <div id="entrance-fade-mask"></div>
+  <!-- Main application wrapper for desktop scaling optimization -->
+  <div class="app-container">
+    
+    <!-- Top Header Area -->
+    <header style="margin-bottom: 40px; text-align: center;">
+      <h1 style="font-size: 2.5rem; font-weight: 700; letter-spacing: -0.05em; margin-bottom: 8px;">Vanguard</h1>
+      <p style="color: rgba(255, 255, 255, 0.6); font-size: 1.1rem;">Citizen Services & Infrastructure</p>
+    </header>
 
-    <div class="app-layout">
-        
-        <!-- MOBILE SCREEN HEADER -->
-        <header class="top-navbar">
-            <div class="brand-logo">Vanguard</div>
-            <div class="brand-tag">Studio Hub</div>
-        </header>
+    <!-- Navigation Hub Tabs -->
+    <nav class="hub-nav-tabs">
+      <a href="#" class="nav-tab active">Dashboard</a>
+      <a href="#" class="nav-tab">Submission Box</a>
+      <a href="#" class="nav-tab">Academy</a>
+      <a href="#" class="nav-tab">Settings</a>
+    </nav>
 
-        <!-- DESKTOP SCREEN SIDEBAR -->
-        <aside class="desktop-aside">
-            <div class="desktop-brand">
-                <h2>Vanguard</h2>
-                <div class="brand-tag" style="font-size: 0.8rem;">Citizen Services</div>
-            </div>
-            <nav>
-                <ul class="desktop-menu-list">
-                    <li><button class="desktop-menu-btn active" onclick="switchView('home', this)"><span class="nav-icon">🏠</span> Home</button></li>
-                    <li><button class="desktop-menu-btn" onclick="window.location.href='operations/'"><span class="nav-icon">🛡️</span> Operations</button></li>
-                    <li><button class="desktop-menu-btn" onclick="window.location.href='guides/'"><span class="nav-icon">📖</span> Guides</button></li>
-                    <li><button class="desktop-menu-btn" onclick="switchView('support', this)"><span class="nav-icon">📥</span> Support</button></li>
-                </ul>
-            </nav>
-        </aside>
+    <!-- Main Responsive Dashboard Grid -->
+    <main class="dashboard-grid">
+      
+      <!-- Panel 1: Main Overview -->
+      <section class="glass-panel" style="padding: 30px;">
+        <h2 style="font-size: 1.5rem; margin-bottom: 12px; font-weight: 600;">Welcome, Commander</h2>
+        <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6; margin-bottom: 24px;">
+          The system framework is initialized. All responsive styles, typography definitions, and glass-morphism panels are controlled globally by the root layout.
+        </p>
+        <button class="btn-primary">Launch Console</button>
+      </section>
 
-        <!-- MAIN VIEW WORKSPACE CONSOLE -->
-        <main class="screen-container">
-            
-            <div class="welcome-card">
-                <h1>Vanguard Studio</h1>
-                <p>Welcome back. We partner with the Vanguard Knights to build simple, transparent, and direct software modules right for Hardin County.</p>
-            </div>
+      <!-- Panel 2: Metrics / Quick Status -->
+      <section class="glass-panel" style="padding: 30px; display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <h2 style="font-size: 1.5rem; margin-bottom: 12px; font-weight: 600;">System Status</h2>
+          <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6;">
+            All core functional modules are bound to the centralized container configuration.
+          </p>
+        </div>
+        <div style="margin-top: 24px; display: flex; justify-content: space-between; align-items: center;">
+          <span style="color: rgba(255, 255, 255, 0.5); font-size: 0.9rem;">Repository: Operational</span>
+          <span style="display: inline-block; width: 10px; height: 10px; background-color: #34c759; border-radius: 50%;"></span>
+        </div>
+      </section>
 
-            <!-- VIEW PANEL 1: HOME CONTROLLER PANEL -->
-            <section id="view-home" class="view-panel active">
-                <h3 class="view-title">Active Studio Systems</h3>
-                <div class="feature-grid">
-                    <a href="project-v/" class="action-card">
-                        <strong>Project V Console</strong>
-                        <p>A neighborhood map module closing the tracking loop between citizen inputs and Hardin County officials. Built to process live community metric updates directly.</p>
-                        <span class="card-arrow">Open Guidebook & Tracker →</span>
-                    </a>
-                    
-                    <a href="#" class="action-card">
-                        <strong>Tech Help & Mentorship</strong>
-                        <p>Friendly, straightforward software coaching sessions designed to make launching custom technical ideas clean and confident.</p>
-                        <span class="card-arrow">Schedule Session →</span>
-                    </a>
-                </div>
-            </section>
+      <!-- Panel 3: Recent Activity -->
+      <section class="glass-panel" style="padding: 30px;">
+        <h2 style="font-size: 1.5rem; margin-bottom: 16px; font-weight: 600;">Active Projects</h2>
+        <ul style="list-style: none;">
+          <li style="padding: 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1); display: flex; justify-content: space-between;">
+            <span>Community Submission Box</span>
+            <span style="color: rgba(255, 255, 255, 0.5);">v1.2</span>
+          </li>
+          <li style="padding: 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1); display: flex; justify-content: space-between;">
+            <span>Vanguard Academy Hub</span>
+            <span style="color: rgba(255, 255, 255, 0.5);">Planning</span>
+          </li>
+          <li style="padding: 12px 0; display: flex; justify-content: space-between;">
+            <span>Root CSS Migration</span>
+            <span style="color: #34c759;">Complete</span>
+          </li>
+        </ul>
+      </section>
 
-            <!-- VIEW PANEL 2: SUPPORT CONTROLLER PANEL -->
-            <section id="view-support" class="view-panel">
-                <h3 class="view-title">Studio Assistance Desk</h3>
-                <div class="feature-grid">
-                    <a href="support-ticket/" class="action-card">
-                        <strong>Open Service Request</strong>
-                        <p>Spotted a layout bug, have a server question, or need immediate code support with a tool? Log a ticket directly with our team.</p>
-                        <span class="card-arrow">Launch Ticket Dispatch →</span>
-                    </a>
-                </div>
-            </section>
+    </main>
+  </div>
 
-        </main>
-
-        <!-- APP-STYLE MOBILE NAVIGATION DECK -->
-        <nav class="bottom-nav">
-            <button class="nav-tab-item active" id="m-tab-home" onclick="switchView('home', this)">
-                <span class="nav-icon">🏠</span>
-                <span class="nav-label">Home</span>
-            </button>
-            <button class="nav-tab-item" onclick="window.location.href='operations/'">
-                <span class="nav-icon">🛡️</span>
-                <span class="nav-label">Operations</span>
-            </button>
-            <button class="nav-tab-item" onclick="window.location.href='guides/'">
-                <span class="nav-icon">📖</span>
-                <span class="nav-label">Guides</span>
-            </button>
-            <button class="nav-tab-item" id="m-tab-support" onclick="switchView('support', this)">
-                <span class="nav-icon">📥</span>
-                <span class="nav-label">Support</span>
-            </button>
-        </nav>
-
-    </div>
-
-    <!-- RESPONSIVE NAV CONNECTOR DISPATCHER -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const mask = document.getElementById('entrance-fade-mask');
-            requestAnimationFrame(() => {
-                mask.classList.add('loaded');
-            });
-        });
-
-        function switchView(viewId, triggerElement) {
-            document.querySelectorAll('.view-panel').forEach(panel => panel.classList.remove('active'));
-            document.querySelectorAll('.nav-tab-item, .desktop-menu-btn').forEach(btn => btn.classList.remove('active'));
-
-            document.getElementById(`view-${viewId}`).classList.add('active');
-
-            if (triggerElement.classList.contains('desktop-menu-btn')) {
-                triggerElement.classList.add('active');
-                const syncMobile = document.getElementById(`m-tab-${viewId}`);
-                if (syncMobile) syncMobile.classList.add('active');
-            } else {
-                triggerElement.classList.add('active');
-                const menuButtons = document.querySelectorAll('.desktop-menu-btn');
-                menuButtons.forEach(btn => {
-                    if (btn.innerText.toLowerCase().includes(viewId)) btn.classList.add('active');
-                });
-            }
-        }
-
-        function spawnComet() {
-            const container = document.getElementById('environment');
-            const comet = document.createElement('div');
-            comet.classList.add('comet');
-            comet.style.top = `${Math.random() * 40}vh`;
-            comet.style.left = `${60 + (Math.random() * 40)}vw`;
-            container.appendChild(comet);
-            setTimeout(() => comet.remove(), 2000);
-        }
-        setInterval(spawnComet, 4000);
-    </script>
 </body>
 </html>
