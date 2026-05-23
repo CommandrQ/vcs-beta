@@ -41,10 +41,17 @@
     </section>
 
     <!-- Navigation Hub Section -->
-    <section class="vanguard-panel">
+    <section class="vanguard-panel operations-hub">
       <h2 class="panel-label">Operations Registry</h2>
-      <div class="tabs-scroll-frame">
-        <div id="tabs-mount" class="tabs-track"></div>
+      
+      <div class="split-layout-engine">
+        <!-- Left Hand Selection Column -->
+        <div id="tabs-mount" class="tabs-stacked-track"></div>
+        
+        <!-- Right Hand Narrative Content Window -->
+        <div id="desktop-content-window" class="narrative-pane">
+          <p class="system-message">Select an operation to read details...</p>
+        </div>
       </div>
     </section>
 
@@ -56,17 +63,6 @@
     </footer>
     
   </main>
-
-  <!-- High-Blur Overlay Pane System -->
-  <div id="modal-overlay" class="modal-mask">
-    <div class="modal-panel-wrapper">
-      <button id="modal-close-trigger" class="modal-close-btn" aria-label="Close panel">&times;</button>
-      <div class="vanguard-panel modal-panel">
-        <h2 id="modal-title" class="panel-label" style="margin-bottom: 16px;"></h2>
-        <div id="modal-body" class="modal-scroll-content"></div>
-      </div>
-    </div>
-  </div>
 
   <script src="script.js"></script>
 </body>
