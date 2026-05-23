@@ -7,7 +7,7 @@
   --deep-abyss: #020205;
   --stark-white: #ffffff;
   --dim-gold: #cfa83c;
-  --grid-blue: rgba(24, 110, 245, 0.25);
+  --grid-blue: rgba(24, 110, 245, 0.28);
   --glass-fill: rgba(255, 255, 255, 0.04);
   --glass-border: rgba(255, 255, 255, 0.1);
   --cinema-speed: cubic-bezier(0.25, 1, 0.5, 1);
@@ -26,19 +26,26 @@ body, html {
   position: fixed;
 }
 
-/* --- FIX: DIRECT COMBINED PULSING BLUE GRID SYSTEMS --- */
-body {
+/* --- PHYSICAL PULSING COMPOSITED BLUE GRID BACKGROUND --- */
+.grid-background-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100dvh;
+  z-index: 1;
+  pointer-events: none;
   background-size: 40px 40px;
   background-image: 
     linear-gradient(to right, var(--grid-blue) 1px, transparent 1px),
     linear-gradient(to bottom, var(--grid-blue) 1px, transparent 1px);
   background-position: center top;
-  animation: gridBreathingPulse 4s infinite ease-in-out;
+  animation: backgroundGridPulse 4s infinite ease-in-out;
 }
 
-@keyframes gridBreathingPulse {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 1; }
+@keyframes backgroundGridPulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(1.02); }
 }
 
 /* Scroll Layer Hooks */
@@ -47,7 +54,7 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 .scrollable-interior::-webkit-scrollbar { width: 3px; }
-.scrollable-interior::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 2px; }
+.scrollable-interior::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.3); border-radius: 2px; }
 
 /* --- THE CINEMATIC VEIL (Letterboxing) --- */
 .cinema-bar {
@@ -61,46 +68,7 @@ body {
 .cinema-bar.top { top: 0; border-bottom: 1px solid rgba(255,255,255,0.02); }
 .cinema-bar.bottom { bottom: 0; border-top: 1px solid rgba(255,255,255,0.02); }
 
-.intro-canvas {
-  position: fixed;
-  inset: 0;
-  background: var(--deep-abyss);
-  z-index: 999;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  opacity: 1;
-  transition: opacity 1s ease-in-out;
-}
-
-.cinematic-scene {
-  position: absolute;
-  opacity: 0;
-  transform: scale(0.96);
-  transition: opacity 0.8s ease-in-out, transform 1.2s var(--cinema-speed);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  padding: 0 24px;
-  text-align: center;
-}
-
-.cinematic-scene.active { opacity: 1; transform: scale(1); }
-
-.cinematic-text {
-  font-size: 1.5rem;
-  font-weight: 200;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--stark-white);
-}
-
-.tracking-out { animation: trackOut 3.2s ease-out forwards; }
-.glow-text { text-shadow: 0 0 24px rgba(255, 255, 255, 0.4); }
-.dissolve-out { opacity: 0 !important; pointer-events: none; }
-
-/* --- SOLID CENTRAL INTERFACE DECK PANEL --- */
+/* --- SOLID DECK DEPLOYMENT INTERFACE --- */
 .core-interface {
   position: relative;
   z-index: 10;
@@ -114,17 +82,17 @@ body {
   padding: calc(14dvh + env(safe-area-inset-top)) 20px calc(14dvh + env(safe-area-inset-bottom)) 20px;
   display: flex;
   flex-direction: column;
-  background-color: #000000; /* SOLID BLACK INTERNAL CONTAINER */
-  box-shadow: 0 0 40px 30px #000000; /* Shields text cards from background grid intersection */
+  background-color: #000000;
+  box-shadow: 0 0 60px 30px #000000;
 }
 
 .core-interface.reveal-ready { opacity: 1; transform: translate3d(0, 0, 0); }
 
-/* Typography Block Formatting */
+/* Typography Block Formatting (Pure Solid White Content Only) */
 .portal-header { text-align: center; margin-bottom: 24px; flex: 0 0 auto; }
 .portal-header h1 { font-size: 1.8rem; font-weight: 300; letter-spacing: 0.05em; text-transform: uppercase; color: var(--dim-gold); }
 .subtitle { font-size: 0.95rem; color: var(--stark-white); font-weight: 500; line-height: 1.35; margin-top: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
-.blurb-text { font-size: 0.9rem; line-height: 1.5; color: var(--stark-white); opacity: 0.9; margin-top: 12px; padding: 0 4px; }
+.blurb-text { font-size: 0.9rem; line-height: 1.5; color: var(--stark-white); margin-top: 12px; padding: 0 4px; }
 
 /* Link Deck Track Layout */
 .links-scroll-track { flex: 1 1 auto; display: flex; flex-direction: column; gap: 10px; padding-right: 2px; }
@@ -143,17 +111,17 @@ body {
 }
 .bio-link-card:hover {
   background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.4);
   transform: translateY(-1px);
 }
 
 .card-interior { display: flex; flex-direction: column; text-align: left; gap: 4px; }
 .card-title { font-size: 1.05rem; font-weight: 600; color: var(--stark-white); }
-.card-desc { font-size: 0.85rem; color: var(--stark-white); opacity: 0.95; line-height: 1.3; font-weight: 400; }
-.action-arrow { color: var(--stark-white); opacity: 0.8; font-size: 1.1rem; transition: all 0.2s ease; }
-.bio-link-card:hover .action-arrow { color: var(--dim-gold); opacity: 1; transform: translateX(2px); }
+.card-desc { font-size: 0.85rem; color: var(--stark-white); line-height: 1.3; font-weight: 400; }
+.action-arrow { color: var(--stark-white); font-size: 1.1rem; transition: all 0.2s ease; }
+.bio-link-card:hover .action-arrow { color: var(--dim-gold); transform: translateX(2px); }
 
-/* --- HIGH-ATTENTION PULSE ANIMATION ENTRY --- */
+/* --- HIGH-ATTENTION PULSE INTERFACE (Borders and Glows Only) --- */
 .action-pulse-btn {
   border-color: rgba(207, 168, 60, 0.3);
   background: rgba(207, 168, 60, 0.03);
@@ -162,6 +130,9 @@ body {
 .action-pulse-btn .card-title { color: var(--dim-gold); }
 .action-pulse-btn:hover { border-color: var(--dim-gold); background: rgba(207, 168, 60, 0.08); }
 
+/* Text properties inside the animated container are kept completely solid static white */
+.action-pulse-btn .card-desc { color: var(--stark-white) !important; animation: none !important; }
+
 @keyframes beaconPulse {
   0%, 100% { box-shadow: 0 0 0 0 rgba(207, 168, 60, 0); border-color: rgba(207, 168, 60, 0.25); }
   50% { box-shadow: 0 0 14px 0 rgba(207, 168, 60, 0.15); border-color: rgba(207, 168, 60, 0.6); }
@@ -169,8 +140,8 @@ body {
 
 /* Navigation Return Track */
 .portal-footer { text-align: center; padding-top: 16px; flex: 0 0 auto; }
-.hub-return-link { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--stark-white); opacity: 0.7; text-decoration: none; font-weight: 600; transition: opacity 0.2s ease; }
-.hub-return-link:hover { opacity: 1; }
+.hub-return-link { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--stark-white); text-decoration: none; font-weight: 600; transition: color 0.2s ease; }
+.hub-return-link:hover { color: var(--dim-gold); }
 
 @keyframes trackOut {
   0% { letter-spacing: 0.15em; opacity: 0; filter: blur(4px); }
@@ -180,7 +151,5 @@ body {
 
 /* Tablet / Desktop View Enhancements */
 @media (min-width: 768px) {
-  .cinematic-text { font-size: 2.2rem; }
   .core-interface { max-width: 480px; }
-  .portal-header h1 { font-size: 2.2rem; }
 }
