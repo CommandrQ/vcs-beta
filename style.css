@@ -53,7 +53,7 @@ body, html {
 }
 
 @media (min-width: 1024px) {
-  .app-container { max-width: 600px; }
+  .app-container { max-width: 850px; }
 }
 
 /* Glass Presentation Framework */
@@ -202,112 +202,156 @@ body, html {
   font-style: italic;
 }
 
-/* Horizontal Scrolling Action Tabs Track */
-.tabs-scroll-frame {
+/* Split-Panel Grid Layout Mechanics */
+.split-layout-engine {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   width: 100%;
-  overflow-x: auto;
-  padding-bottom: 6px;
-  -webkit-overflow-scrolling: touch;
 }
 
-/* Standardized hidden track scrollbar layout */
-.tabs-scroll-frame::-webkit-scrollbar { height: 3px; }
-.tabs-scroll-frame::-webkit-scrollbar-track { background: transparent; }
-.tabs-scroll-frame::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 2px; }
-
-.tabs-track {
-  display: inline-flex;
+.tabs-stacked-track {
+  display: flex;
+  flex-direction: column;
   gap: 12px;
-  padding-right: 20px;
+  width: 100%;
 }
 
 .action-tab-btn {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.15);
-  padding: 12px 24px;
-  border-radius: 50px;
+  padding: 16px 20px;
+  border-radius: 14px;
   color: var(--pure-white);
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   cursor: pointer;
-  white-space: nowrap;
-  transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+  text-align: left;
+  width: 100%;
+  transition: all 0.2s ease-in-out;
 }
 
-.action-tab-btn:hover, .action-tab-btn:focus {
+.action-tab-btn:hover, .action-tab-btn.is-active {
   background: var(--pure-white);
   color: var(--onyx);
   border-color: var(--pure-white);
-  box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.15);
   outline: none;
 }
 
-/* Internal Overlay Content Modal Viewports */
-.modal-mask {
+.narrative-pane {
+  display: none;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 14px;
+  padding: 20px;
+  border: 1px solid var(--glass-border);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--pure-white);
+  position: relative;
+}
+
+.narrative-pane h3 {
+  font-size: 1.1rem;
+  color: var(--vanguard-yellow);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Mobile Popover Modifications */
+.narrative-pane.is-open-mobile {
+  display: block;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% - 40px);
+  max-width: 440px;
+  max-height: 75vh;
+  overflow-y: auto;
+  z-index: 9900;
+  background: var(--glass-bg);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+}
+
+.mobile-backdrop-blur {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  z-index: 9500;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 9800;
 }
 
-.modal-mask.is-visible {
-  opacity: 1;
-  pointer-events: auto;
+/* Legal Presentation Tweaks */
+.legal-date-stamp {
+  text-align: center;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  color: var(--vanguard-yellow);
+  font-weight: 600;
+  margin-bottom: 24px;
 }
 
-.modal-panel-wrapper {
-  position: relative;
-  width: 100%;
-  max-width: 440px;
-}
-
-.modal-panel {
-  margin-bottom: 0;
-  max-height: 80vh;
-  display: flex;
-  flex-direction: column;
-}
-
-.modal-scroll-content {
-  overflow-y: auto;
-  padding-right: 8px;
+.legal-subheading {
   font-size: 0.95rem;
-  line-height: 1.5;
+  font-weight: 600;
+  letter-spacing: 0.05em;
   color: var(--pure-white);
+  margin-top: 18px;
+  margin-bottom: 6px;
+  text-transform: uppercase;
 }
 
-.modal-scroll-content::-webkit-scrollbar { width: 4px; }
-.modal-scroll-content::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 4px; }
-
-.modal-close-btn {
-  position: absolute;
-  top: -40px;
-  right: 0;
+/* Large Close UI Anchor */
+.mobile-close-overlay-btn {
+  display: block;
   background: none;
   border: none;
   color: var(--pure-white);
-  font-size: 2rem;
-  cursor: pointer;
+  font-size: 2.2rem;
   line-height: 1;
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  cursor: pointer;
+  z-index: 10;
   transition: transform 0.2s ease;
 }
 
-.modal-close-btn:hover { transform: scale(1.15); }
+.mobile-close-overlay-btn:hover { transform: scale(1.1); }
+.narrative-body-scroll { width: 100%; }
 
-/* Persistent Footer Typography */
+/* --- DESKTOP BREAKPOINTS --- */
+@media (min-width: 1024px) {
+  .split-layout-engine {
+    flex-direction: row;
+    align-items: stretch;
+    min-height: 320px;
+  }
+
+  .tabs-stacked-track { width: 35%; }
+
+  .narrative-pane, .narrative-pane.is-open-mobile {
+    display: block;
+    position: static;
+    transform: none;
+    width: 65%;
+    max-height: 380px;
+    overflow-y: auto;
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .mobile-close-overlay-btn { display: none !important; }
+}
+
+/* Permanent Site Footer */
 .vanguard-footer {
   margin-top: auto;
   padding: 40px 0 20px 0;
