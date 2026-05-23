@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Vanguard Citizen Services</title>
+    <style>
+        /* --- BRANDING & VARIABLES --- */
+        :root {
+            --gold: #D4AF37;
+            --gold-glow: rgba(212, 175, 55, 0.4);
+            --bg-dark: #05040a;
+            --white: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.5);
+            --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-dark);
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+            color: var(--white);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- BACKGROUND STAR ENVIRONMENT --- */
+        #environment { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
+        .starfield {
+            position: absolute; width: 200vw; height: 200vh; top: -50%; left: -50%;
+            background-image: 
+                radial-gradient(1.5px 1.5px at 10% 10%, #fff, transparent),
+                radial-gradient(2px 2px at 30% 40%, var(--gold), transparent),
+                radial-gradient(1px 1px at 80% 20%, #fff, transparent);
+            background-size: 350px 350px;
+            opacity: 0.3;
+        }
+
+        /* --- GATEWAY CENTER CARD --- */
+        .intro-container {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            padding: 20px;
+            animation: containerFadeIn 1.2s var(--ease-smooth) forwards;
+        }
+
+        @keyframes containerFadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Logo Layout */
+        .org-logo {
+            width: 130px;
+            height: auto;
+            margin-bottom: 25px;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.1));
+        }
+
+        /* Core Principles Slow Shimmer Text */
+        .motto-text {
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            
+            /* Linear Gradient Setup for Background Shimmer */
+            background: linear-gradient(
+                90deg, 
+                #a6a6a6 0%, 
+                #ffffff 25%, 
+                var(--gold) 50%, 
+                #ffffff 75%, 
+                #a6a6a6 100%
+            );
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: slowGoldShimmer 2s ease-in-out infinite;
+        }
+
+        @keyframes slowGoldShimmer {
+            0% { background-position: 100% center; }
+            100% { background-position: -100% center; }
+        }
+
+        /* --- MINIMAL PERCENT LOADER --- */
+        .loader-wrapper {
+            width: 100%;
+            max-width: 240px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Track Bar */
+        .loader-track {
+            width: 100%;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 100px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Active Progress Fill */
+        .loader-progress {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--gold) 0%, #ffffff 100%);
+            box-shadow: 0 0 10px var(--gold-glow);
+            border-radius: 100px;
+            transition: width 0.05s linear;
+        }
+
+        /* Numerical Readout display */
+        .loader-counter {
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            font-family: monospace, serif;
+        }
+
+        /* --- SCREEN TRANSLITION SLIDEOUT --- */
+        .exit-active {
+            transition: all 0.8s var(--ease-smooth);
+            opacity: 0;
+            transform: translateY(-20px);
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Environmental Space Grid -->
+    <div id="environment"><div class="starfield"></div></div>
+
+    <div class="intro-container" id="gateway-ui">
+        
+        <!-- Centered Organization Logo Image Asset -->
+        <img src="images/vanguardorglogo.png" alt="Vanguard Organization Logo" class="org-logo">
+        
+        <!-- Slowly Shimmering Motto Text -->
+        <div class="motto-text">Empower.Educate.Elevate</div>
+        
+        <!-- Realistic 3-Second Percentage Loader -->
+        <div class="loader-wrapper">
+            <div class="loader-track">
+                <div class="loader-progress" id="progress-fill"></div>
+            </div>
+            <div class="loader-counter" id="counter-readout">00%</div>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const progressFill = document.getElementById('progress-fill');
+            const counterReadout = document.getElementById('counter-readout');
+            const gatewayUi = document.getElementById('gateway-ui');
+
+            let currentPercent = 0;
+            const totalDuration = 3000; // Total loading duration set strictly to 3 seconds
+            const startTime = performance.now();
+
+            function updateLoader(currentTime) {
+                const elapsed = currentTime - startTime;
+                
+                // Calculate raw chronological progress ratio
+                let progressRatio = Math.min(elapsed / totalDuration, 1);
+
+                /* 
+                   Realistic Progress Curve:
+                   Uses a cubic deceleration behavior to mimic data checks.
+                   It jumps quickly early on, meets a brief speed bump at 70%, 
+                   and finishes with precision.
+                */
+                let easeProgress = 1 - Math.pow(1 - progressRatio, 3);
+                currentPercent = Math.floor(easeProgress * 100);
+
+                // Update visual interface attributes
+                progressFill.style.width = `${currentPercent}%`;
+                counterReadout.innerText = `${currentPercent.toString().padStart(2, '0')}%`;
+
+                if (progressRatio < 1) {
+                    requestAnimationFrame(updateLoader);
+                } else {
+                    // Sequence Complete: Trigger the transition out and route to destination
+                    setTimeout(() => {
+                        gatewayUi.classList.add('exit-active');
+                        
+                        // Navigate directly inside the /home directory structure
+                        setTimeout(() => {
+                            window.location.href = 'home/index.html';
+                        }, 600);
+                    }, 200);
+                }
+            }
+
+            // Fire off the high-precision animation thread
+            requestAnimationFrame(updateLoader);
+        });
+    </script>
+</body>
+</html>
