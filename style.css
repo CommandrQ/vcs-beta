@@ -1,5 +1,5 @@
 /**
- * VANGUARD CITIZEN SERVICES — CORE SYSTEM INTERFACE
+ * VANGUARD CITIZEN SERVICES — UNIFIED ENGINE STYLESHEET
  * Path: style.css
  */
 
@@ -19,41 +19,53 @@
   padding: 0;
 }
 
-/* Master viewport locks preventing outer scrolling chain reactions */
+/* Fluid responsive document tracking */
 body, html {
   background-color: var(--onyx);
   color: var(--pure-white);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
+  min-height: 100vh;
+  width: 100%;
 }
 
-.no-scroll {
-  overflow: hidden !important;
-  position: fixed;
-  height: 100vh;
-  width: 100vw;
+/* Allows system to naturally shift and flow, handling layout folds smoothly */
+.fluid-scroll {
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
-/* Base Handheld Restrictive Bounds */
+/* Mobile Base: Auto-fit structure scaling for ultra-tall displays & foldables */
 .app-container {
   width: 100%;
   max-width: 480px;
   margin: 0 auto;
-  height: 100vh;
-  padding: 20px;
+  min-height: 100vh;
+  /* Safe-area insets safeguard against hardware notches and unfolding seams */
+  padding: calc(20px + env(safe-area-inset-top)) calc(20px + env(safe-area-inset-right)) calc(20px + env(safe-area-inset-bottom)) calc(20px + env(safe-area-inset-left));
   position: relative;
   z-index: 2;
   display: flex;
   flex-direction: column;
-  overflow-y: auto; /* Internal scrolling within boundaries only */
   opacity: 0;
   transition: opacity 0.8s ease-out;
 }
 
+/* --- LARGE DISPLAY MEDIA INTERFACE (Tablets & Desktops) --- */
+@media (min-width: 768px) {
+  .app-container {
+    max-width: 720px;
+    min-height: calc(100vh - 80px); /* Creates intentional top/bottom margins */
+    margin: 40px auto;              /* Centers layout inside screen boundaries */
+    padding: 24px;
+  }
+}
+
 @media (min-width: 1024px) {
-  .app-container { max-width: 850px; }
+  .app-container {
+    max-width: 850px;
+    min-height: calc(100vh - 120px);
+    margin: 60px auto; /* Clean spacing on massive monitor landscapes */
+  }
 }
 
 /* Glass Presentation Framework */
@@ -333,7 +345,6 @@ body, html {
   .split-layout-engine {
     flex-direction: row;
     align-items: stretch;
-    min-height: 320px;
   }
 
   .tabs-stacked-track { width: 35%; }
@@ -343,8 +354,10 @@ body, html {
     position: static;
     transform: none;
     width: 65%;
-    max-height: 380px;
-    overflow-y: auto;
+    /* Allows text blocks to expand organically without bounding limits */
+    height: auto;
+    min-height: 280px; 
+    overflow-y: visible; 
     background: rgba(255, 255, 255, 0.02);
   }
 
