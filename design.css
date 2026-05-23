@@ -8,7 +8,7 @@
 }
 
 :root {
-  --color-bg-dark: #000000;       /* True Black Night Sky */
+  --color-bg-dark: #000000;       /* Onyx Night Sky */
   --color-primary: #ffffff;
   --color-dark: #000000;
   --color-accent-yellow: #ffcc00; 
@@ -22,11 +22,14 @@ body {
   background-color: var(--color-bg-dark);
   color: var(--color-primary);
   min-height: 100vh;
+  /* Ensures everything locks inside the user's visible device screens */
+  height: 100vh;
   overflow: hidden; 
+  position: relative;
 }
 
 /* ==========================================
-   2. BLACK SKY WITH ANIMATED GALAXY & COMETS
+   2. UNIFIED ANIMATED SKY BACKGROUND
    ========================================== */
 .cosmic-atmosphere {
   position: fixed;
@@ -38,7 +41,6 @@ body {
   z-index: -2;
 }
 
-/* Fine-grain star galaxy */
 .starfield-container {
   position: fixed;
   top: 0;
@@ -55,7 +57,6 @@ body {
   opacity: 0.8;
 }
 
-/* Comets streaming every 4 seconds */
 .starfield-container::after {
   content: "";
   position: absolute;
@@ -77,84 +78,122 @@ body {
 }
 
 /* ==========================================
-   3. TV BLINK-IN APPLE PANEL & LOADER
+   3. RESPONSIVE MAIN FILL CONTAINER & TV SNAP
    ========================================== */
 .app-container {
   width: 100%;
-  max-width: 420px;
-  margin: 0 auto;
-  padding: 24px;
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 20px;
 }
 
-/* TV Static / Retro Electronic Blink-In Animation */
+/* Centralized Panel Window: Adapts to both phones and wide monitors */
 .tv-blink-window {
-  width: 100%;
+  width: 90%;
+  max-width: 440px; /* Upper limit lock to keep layout sharp on massive viewports */
   background: rgba(10, 10, 12, 0.75);
   backdrop-filter: blur(25px);
   -webkit-backdrop-filter: blur(25px);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 24px; /* Apple Squircle */
-  padding: 40px 24px;
+  border-radius: 24px; /* Apple Squircle spec */
+  padding: 48px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
+  
+  /* TV Wake-up and continuous ambient pulse */
   opacity: 0;
   transform: scale3d(0, 0.005, 1);
-  animation: tv-wake 0.4s cubic-bezier(0.19, 1, 0.22, 1) 0.3s forwards,
+  animation: tv-wake 0.45s cubic-bezier(0.19, 1, 0.22, 1) 0.2s forwards,
              gold-pulse 5s ease-in-out infinite alternate;
 }
 
 @keyframes tv-wake {
-  0% {
-    opacity: 0.3;
-    transform: scale3d(0, 0.005, 1);
-  }
-  40% {
-    opacity: 0.9;
-    transform: scale3d(1, 0.005, 1);
-  }
-  100% {
-    opacity: 1;
-    transform: scale3d(1, 1, 1);
-  }
+  0% { opacity: 0.3; transform: scale3d(0, 0.005, 1); }
+  40% { opacity: 0.9; transform: scale3d(1, 0.005, 1); }
+  100% { opacity: 1; transform: scale3d(1, 1, 1); }
 }
 
 @keyframes gold-pulse {
-  0% { box-shadow: 0 10px 40px rgba(0,0,0,0.6), 0 0 12px rgba(225,193,88,0.04); }
-  100% { box-shadow: 0 10px 40px rgba(0,0,0,0.7), 0 0 22px rgba(225,193,88,0.14); border-color: rgba(225,193,88,0.25); }
+  0% { box-shadow: 0 10px 40px rgba(0,0,0,0.6), 0 0 12px rgba(225,193,88,0.03); }
+  100% { box-shadow: 0 10px 40px rgba(0,0,0,0.7), 0 0 24px rgba(225,193,88,0.12); border-color: rgba(225,193,88,0.25); }
 }
 
-/* Logo Image Styling */
+/* ==========================================
+   4. SYMMETRIC INTERIOR ELEMENTS
+   ========================================== */
 .org-logo {
-  width: 90px;
-  height: 90px;
+  width: 96px;
+  height: 96px;
   object-fit: contain;
-  margin-bottom: 28px;
+  margin-bottom: 32px;
 }
 
-/* Realistic Numeric Metrics */
+/* Geometric Horizontal Loading Bar Track */
+.loading-bar-track {
+  width: 100%;
+  max-width: 260px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  margin: 16px 0 12px 0;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Filled progress state bar mapped to JavaScript trigger */
+.loading-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--color-accent-purple) 0%, var(--color-accent-gold) 100%);
+  border-radius: 10px;
+  transition: width 0.1s linear;
+}
+
 .counter-output {
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
   color: #ffffff;
-  margin-bottom: 4px;
 }
 
 .counter-percent {
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: var(--color-accent-yellow);
-  font-weight: 500;
+  font-weight: 600;
+  margin-left: 2px;
 }
 
-/* System loading text label */
 .system-status-msg {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 400;
   color: rgba(255, 255, 255, 0.5);
-  letter-spacing: 0.02em;
-  margin-top: 12px;
+  letter-spacing: 0.03em;
+}
+
+/* ==========================================
+   5. UNIFIED PERSISTENT STICKY FOOTER
+   ========================================== */
+.global-sticky-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+  z-index: 10;
+  pointer-events: none; /* Allows clicks to bypass empty footer zones cleanly */
+}
+
+.global-sticky-footer p {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.35);
+  font-weight: 500;
 }
