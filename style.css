@@ -1,29 +1,405 @@
 /**
- * VANGUARD MOBILE TYPOGRAPHY SCALING EXPANSIONS
- * Modifications to: style.css
+ * VANGUARD CITIZEN SERVICES — UNIFIED SITE ENGINE STYLESHEET
+ * Path: style.css
  */
 
-/* Announcements body text scaling */
+:root {
+  --onyx: #000000;
+  --pure-white: #ffffff;
+  --vanguard-yellow: #f5c518;
+  --light-gold: #fdf5e6;
+  --light-purple: #b39ddb;
+  --glass-bg: rgba(10, 10, 10, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Master Viewport Lock: The screen itself never scrolls */
+body, html {
+  background-color: var(--onyx);
+  color: var(--pure-white);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  height: 100dvh;
+  width: 100vw;
+  overflow: hidden;
+  position: fixed;
+}
+
+/* High-Scannability Interior Scrolling Rules */
+.scrollable-interior {
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch;
+}
+.scrollable-interior::-webkit-scrollbar {
+  width: 4px;
+}
+.scrollable-interior::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+/* App Layout Framework: Tightened frame edges to guarantee footer visibility */
+.app-container {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  height: 100dvh;
+  padding: calc(4px + env(safe-area-inset-top)) calc(12px + env(safe-area-inset-right)) calc(4px + env(safe-area-inset-bottom)) calc(12px + env(safe-area-inset-left));
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- LARGE SCREEN INTERFACE ADAPTATIONS (Tablets & Desktops) --- */
+@media (min-width: 768px) {
+  .app-container {
+    max-width: 740px;
+    height: calc(100dvh - 32px);
+    margin: 16px auto;
+    padding: 16px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .app-container {
+    max-width: 880px;
+    height: calc(100dvh - 48px);
+    margin: 24px auto;
+  }
+}
+
+/* Glass Presentation Panels */
+.vanguard-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  position: relative;
+  animation: goldPulse 8s infinite ease-in-out;
+}
+
+/* Flex distribution preventing outer panel breakout boundaries */
+.announcements-panel-wrapper {
+  flex: 0 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  max-height: 22dvh;
+}
+
+.operations-hub {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  max-height: 40dvh;
+}
+
+@keyframes goldPulse {
+  0%, 100% { box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(245, 197, 24, 0.04); }
+  50% { box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4), 0 0 16px 2px rgba(245, 197, 24, 0.12); }
+}
+
+.panel-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--vanguard-yellow);
+  margin-bottom: 6px;
+  font-weight: 600;
+  flex: 0 0 auto;
+}
+
+/* Fluid Flash/Blackout Step Engine */
+#transition-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100dvh;
+  background: var(--onyx);
+  z-index: 9000;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Splash Overlay Framework */
+.intro-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100dvh;
+  background: var(--onyx);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  animation: tvBlinkOn 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes tvBlinkOn {
+  0% { transform: scaleY(0.005) scaleX(0); filter: brightness(3); opacity: 0; }
+  50% { transform: scaleY(0.005) scaleX(1); filter: brightness(3); opacity: 1; }
+  100% { transform: scaleY(1) scaleX(1); filter: brightness(1); opacity: 1; }
+}
+
+.intro-logo { width: 110px; height: auto; margin-bottom: 24px; display: block; }
+
+.loading-track {
+  width: 180px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.loading-bar {
+  width: 0%;
+  height: 100%;
+  background: var(--vanguard-yellow);
+  box-shadow: 0 0 8px var(--vanguard-yellow);
+  transition: width 4s linear;
+}
+
+.intro-motto {
+  font-size: 0.9rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--light-gold);
+  text-align: center;
+  font-weight: 300;
+}
+
+/* Centralized Branding Elements */
+.vanguard-hero {
+  text-align: center;
+  padding: 4px 0 6px 0;
+  flex: 0 0 auto;
+}
+
+.hero-logo-small {
+  width: 44px;
+  height: auto;
+  margin: 0 auto 4px auto;
+  display: block;
+}
+
+.hero-title {
+  font-size: 1.2rem;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  color: var(--pure-white);
+  text-transform: uppercase;
+}
+
+/* Announcement Node Configurations */
+.announcement-node {
+  border-left: 2px solid var(--light-purple);
+  padding-left: 10px;
+}
+
+.announcement-meta {
+  font-size: 0.72rem;
+  color: var(--light-gold);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 4px;
+}
+
 .announcement-txt {
-  font-size: 0.95rem; /* Scaled up from 0.85rem for clean scannability */
-  line-height: 1.45;
+  font-size: 1.05rem;
+  line-height: 1.5;
   color: var(--pure-white);
 }
 
-/* Modal descriptive narrative text scaling */
+.system-message {
+  font-size: 0.8rem;
+  color: var(--pure-white);
+  opacity: 0.7;
+  font-style: italic;
+}
+
+/* Split System Controls Architecture */
+.split-layout-engine {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.tabs-stacked-track {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  flex: 1 1 auto;
+  overflow-y: auto;
+}
+
+/* High-Impact Responsive Tab Targets */
+.action-tab-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 16px 18px;
+  border-radius: 14px;
+  color: var(--pure-white);
+  font-size: 0.98rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  flex: 0 0 auto;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+}
+
+.action-tab-btn:hover, .action-tab-btn.is-active {
+  background: var(--pure-white);
+  color: var(--onyx);
+  border-color: var(--pure-white);
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.2);
+  outline: none;
+}
+
+/* Structural Element Placeholder (Hidden) */
+.narrative-pane {
+  display: none;
+}
+
+/* Absolute Centered Modal Overlay Curtain */
+.mobile-backdrop-blur {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100dvh;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 9800;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Standalone Crystal-Clear Dialogue Window */
+.vanguard-modal-window {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% - 24px);
+  max-width: 460px;
+  max-height: 60dvh;
+  margin-bottom: 0 !important;
+  display: flex;
+  flex-direction: column;
+  background: rgba(15, 15, 15, 0.95) !important;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.95), 0 0 0 1px var(--glass-border) !important;
+  padding: 24px 20px 20px 20px;
+}
+
+.vanguard-modal-window h3 {
+  font-size: 1.05rem;
+  color: var(--vanguard-yellow);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding-right: 24px;
+}
+
 .vanguard-modal-window p {
   color: var(--pure-white) !important;
-  font-size: 1.02rem; /* Scaled up from 0.92rem for effortless mobile reading */
+  font-size: 1.02rem;
   line-height: 1.6;
 }
 
-/* Modal internal content subheading scaling */
+/* Legal Presentation Specifics */
+.legal-date-stamp {
+  text-align: center;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  color: var(--vanguard-yellow);
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
 .legal-subheading {
-  font-size: 0.92rem; /* Scaled up from 0.82rem to maintain a clean text hierarchy */
+  font-size: 0.92rem;
   font-weight: 600;
   letter-spacing: 0.05em;
   color: var(--pure-white);
-  margin-top: 14px;
+  margin-top: 12px;
   margin-bottom: 4px;
   text-transform: uppercase;
+}
+
+/* Universal High-Impact Close Cross */
+.mobile-close-overlay-btn {
+  display: block;
+  background: none;
+  border: none;
+  color: var(--pure-white);
+  font-size: 2.2rem;
+  line-height: 1;
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  cursor: pointer;
+  z-index: 10;
+  transition: transform 0.2s ease;
+}
+
+.mobile-close-overlay-btn:hover {
+  transform: scale(1.15);
+}
+
+.narrative-body-scroll { 
+  width: 100%; 
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* --- ADAPTIVE MID-TO-DESKTOP HUD LAYOUT --- */
+@media (min-width: 1024px) {
+  .split-layout-engine {
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  .tabs-stacked-track { 
+    width: 100%; 
+  }
+}
+
+/* Permanent Site Footer Structure */
+.vanguard-footer {
+  margin-top: auto;
+  padding: 6px 0 2px 0;
+  text-align: center;
+  flex: 0 0 auto;
+}
+
+.footer-text {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--pure-white);
 }
