@@ -119,10 +119,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const hasVisited = localStorage.getItem('vanguard_initialized');
 
   if (hasVisited) {
+    // Returnee Entrance: Instantly remove loading bar overlay
     if (introStage) introStage.remove();
     mainContent.style.opacity = '1';
     initializeCoreFeatures();
+    
+    // Smooth fade-in sequence from black canvas mask
+    if (mask) {
+      requestAnimationFrame(() => {
+        mask.style.opacity = '0';
+      });
+    }
   } else {
+    // Initial Sequence: Run full 4-second loading progress
     if (progressBar) {
       requestAnimationFrame(() => { progressBar.style.width = '100%'; });
     }
@@ -216,7 +225,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (window.innerWidth < 1024) {
       textWindow.classList.add('is-open-mobile');
-      // Append inner scrolling safety class to popovers
       textWindow.classList.add('scrollable-interior');
       
       let backdrop = document.createElement('div');
