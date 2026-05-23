@@ -1,128 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>CMDR Q // Platform</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Commander Q // Platform</title>
+    <!-- Font Awesome for Social Media Glyphs -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="cinematic-lock">
+<body>
 
-  <!-- THE ANIMATED SPACE BACKPLANE CANVAS -->
-  <canvas id="starfield-wallpaper"></canvas>
+    <!-- THE ANIMATED SPACE BACKPLANE CANVAS -->
+    <canvas id="starfield-wallpaper"></canvas>
 
-  <!-- Cinematic Frame Accents -->
-  <div class="cinema-bar top"></div>
-  <div class="cinema-bar bottom"></div>
+    <!-- Cinematic Frame Accents -->
+    <div class="cinema-bar top"></div>
+    <div class="cinema-bar bottom"></div>
 
-  <!-- Primary Link-In-Bio Interface Engine -->
-  <main class="core-interface reveal-ready">
-    
-    <!-- Profile Branding & High-Energy Intro Header -->
-    <header class="portal-header">
-      <h1>Commander Q</h1>
-      <p class="subtitle">Exploring the narratives that power our world</p>
-      <p class="blurb-text">
-        Hey there! Welcome to the control deck. I am incredibly glad you are here! Take a look around and explore the unique narratives, community operations, and creative passion projects I am currently cooking up. Let’s build something meaningful together!
-      </p>
-    </header>
-    
-    <!-- High-Legibility Scrolling Link Matrix Deck -->
-    <section class="links-scroll-track scrollable-interior">
-      
-      <!-- CARD ENTRY 1: ABOUT ME -->
-      <a href="about/" class="bio-link-card">
-        <div class="card-interior">
-          <span class="card-title">About Me</span>
-          <span class="card-desc">Read my personal background and story.</span>
-        </div>
-        <div class="action-arrow">→</div>
-      </a>
+    <div class="hub-container">
+        <h1 class="hub-title">Commander Q</h1>
 
-      <!-- HIGHLIGHTED INTERACTION ENTRY: COMMUNITY VOICE -->
-      <a href="#" class="bio-link-card action-pulse-btn">
-        <div class="card-interior">
-          <span class="card-title">Community Voice</span>
-          <span class="card-desc">An anonymous space for Radcliff and Hardin County residents to voice local issues and frustrations.</span>
-        </div>
-        <div class="action-arrow">→</div>
-      </a>
+        <main class="hub-card core-interface reveal-ready">
+            
+            <!-- Centered Profile Photo Element -->
+            <div class="profile-container">
+                <img src="images/headshot.jpg" alt="Commander Q Profile">
+            </div>
 
-      <!-- CARD ENTRY 3: DREAMSCAPE DRIFT -->
-      <a href="dreamscapedrift/" class="bio-link-card">
-        <div class="card-interior">
-          <span class="card-title">Dreamscape Drift</span>
-          <span class="card-desc">Watch my custom drifting videos and live DJ performance sets.</span>
-        </div>
-        <div class="action-arrow">→</div>
-      </a>
+            <!-- SOCIAL MEDIA GLYPHS PANEL -->
+            <div class="social-matrix">
+                <a href="https://music.apple.com/profile/cmdrq_music" target="_blank" class="social-glyph" title="Apple Music"><i class="fa-brands fa-apple"></i></a>
+                <a href="https://www.tiktok.com/@commandr_q" target="_blank" class="social-glyph" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+            </div>
+            
+            <div id="user-greeting" class="greeting">Welcome back!</div>
+            
+            <p class="blurb-text">
+                Hey there! Welcome to the control deck. I am incredibly glad you are here! Take a look around and explore the unique narratives, community operations, and creative passion projects I am currently cooking up. Let’s build something meaningful together!
+            </p>
 
-      <!-- CARD ENTRY 4: MUSIC PLAYER -->
-      <a href="musicplayer/" class="bio-link-card">
-        <div class="card-interior">
-          <span class="card-title">Music Player</span>
-          <span class="card-desc">Play curated background music loops.</span>
-        </div>
-        <div class="action-arrow">→</div>
-      </a>
+            <h2>Operations Array</h2>
+            <div class="menu-grid" style="margin-bottom: 30px;">
+                <!-- HIGHLIGHTED INTERACTION ENTRY: COMMUNITY VOICE -->
+                <a href="#" class="btn btn-accent">Community Voice</a>
+                <span class="btn-subtext">An anonymous space for Radcliff and Hardin County residents to voice local issues and frustrations.</span>
+            </div>
 
-    </section>
+            <h2>Navigation Deck</h2>
+            <div class="menu-grid">
+                <!-- PRIMARY APPS LINK SCROLL MATRIX -->
+                <a href="about/" class="btn">About Me</a>
+                <span class="btn-subtext">Read my personal background, military service, and narrative history.</span>
 
-    <!-- Global System Return Navigation Footnote -->
-    <footer class="portal-footer">
-      <a href="../index.html" class="hub-return-link">← Return To Hub</a>
-    </footer>
-  </main>
+                <a href="dreamscapedrift/" class="btn">Dreamscape Drift</a>
+                <span class="btn-subtext">Watch my custom drifting videos and live DJ performance sets.</span>
 
-  <script>
-    // --- HARDWARE-ACCELERATED COSMIC ENGINE ---
-    class StarfieldWallpaper {
-      constructor() {
-        this.canvas = document.getElementById('starfield-wallpaper');
-        if (!this.canvas) return;
-        this.ctx = this.canvas.getContext('2d');
-        this.stars = [];
-        this.init();
-        window.addEventListener('resize', () => this.init());
-      }
-      init() {
-        this.canvas.width = window.innerWidth;
-        this.canvas.height = window.innerHeight;
-        this.stars = [];
-        // Math tracking loop to scale stars dynamically relative to viewport sizing
-        const count = Math.floor((this.canvas.width * this.canvas.height) / 4000);
-        for (let i = 0; i < count; i++) {
-          this.stars.push({
-            x: Math.random() * this.canvas.width,
-            y: Math.random() * this.canvas.height,
-            size: Math.random() * 1.5 + 0.3,
-            speed: Math.random() * 0.05 + 0.02,
-            // Splitting colors exactly between light purple and light blue hex nodes
-            color: Math.random() > 0.5 ? 'rgba(179, 157, 219, ' : 'rgba(129, 212, 250, ',
-            phase: Math.random() * Math.PI
-          });
-        }
-      }
-      animate() {
-        this.ctx.fillStyle = '#030307';
-        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-        
-        this.stars.forEach(star => {
-          star.phase += star.speed;
-          let opacity = 0.2 + (Math.sin(star.phase) + 1) * 0.4;
-          this.ctx.fillStyle = `${star.color}${opacity})`;
-          this.ctx.beginPath();
-          this.ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-          this.ctx.fill();
+                <a href="musicplayer/" class="btn">Music Player</a>
+                <span class="btn-subtext">Play curated background music loops and atmospheric themes.</span>
+            </div>
+
+            <!-- Global System Return Navigation Footnote -->
+            <footer class="portal-footer" style="margin-top: 35px; padding: 0;">
+                <a href="../index.html" class="hub-return-link">← Return To Hub</a>
+            </footer>
+
+        </main>
+    </div>
+
+    <footer class="system-footer">Powered by Vanguard Citizen Services</footer>
+
+    <script>
+        /* --- LOAD APPLICATION CORE INITIALIZATION --- */
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check for locally cached user name state details
+            const cachedName = localStorage.getItem('vanguard_citizen_name');
+            const sessionActive = localStorage.getItem('vanguard_session_status') === 'active';
+            
+            if (sessionActive && cachedName) {
+                document.getElementById('user-greeting').innerHTML = `Welcome back, <strong>${cachedName}</strong>.`;
+            } else {
+                document.getElementById('user-greeting').innerText = "Welcome back, Visitor.";
+            }
+            
+            // Launch space background animation loop
+            const spaceBg = new StarfieldWallpaper();
+            if (spaceBg.canvas) spaceBg.animate();
         });
-        requestAnimationFrame(() => this.animate());
-      }
-    }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      const spaceBg = new StarfieldWallpaper();
-      if (spaceBg.canvas) spaceBg.animate();
-    });
-  </script>
+        // --- HARDWARE-ACCELERATED COSMIC CANVAS ENGINE ---
+        class StarfieldWallpaper {
+            constructor() {
+                this.canvas = document.getElementById('starfield-wallpaper');
+                if (!this.canvas) return;
+                this.ctx = this.canvas.getContext('2d');
+                this.stars = [];
+                this.init();
+                window.addEventListener('resize', () => this.init());
+            }
+            init() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+                this.stars = [];
+                const count = Math.floor((this.canvas.width * this.canvas.height) / 4000);
+                for (let i = 0; i < count; i++) {
+                    this.stars.push({
+                        x: Math.random() * this.canvas.width,
+                        y: Math.random() * this.canvas.height,
+                        size: Math.random() * 1.5 + 0.3,
+                        speed: Math.random() * 0.05 + 0.02,
+                        color: Math.random() > 0.5 ? 'rgba(224, 195, 252, ' : 'rgba(142, 202, 230, ',
+                        phase: Math.random() * Math.PI
+                    });
+                }
+            }
+            animate() {
+                this.ctx.fillStyle = '#0a081a';
+                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                this.stars.forEach(star => {
+                    star.phase += star.speed;
+                    let opacity = 0.2 + (Math.sin(star.phase) + 1) * 0.4;
+                    this.ctx.fillStyle = `${star.color}${opacity})`;
+                    this.ctx.beginPath();
+                    this.ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                    this.ctx.fill();
+                });
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+    </script>
 </body>
 </html>
