@@ -1,9 +1,9 @@
 /**
- * VANGUARD CITIZEN SERVICES — MAIN SOFTWARE ENGINE
+ * VANGUARD CITIZEN SERVICES — CORE SYSTEM AUTOMATION
  * Path: script.js
  */
 
-// --- 1. ATMOSPHERIC BACKGROUND SYSTEM ---
+// --- 1. DEEP SPACE BACKDROP BACKGROUND ENGINE ---
 class DeepAtmosphere {
   constructor(canvasId) {
     this.canvas = document.getElementById(canvasId);
@@ -84,7 +84,7 @@ class DeepAtmosphere {
 const REGISTRY_DATA = {
   "about us": {
     title: "Our Story",
-    content: "<p>Vanguard started with two friends. We share a deep background in technology and military service. Moving out of those fields, we realized how much noise and distraction exists in modern culture today.</p><p>We decided to build this business with a clear purpose: to tackle and look closely at the real challenges facing our country, while showcasing the deeply personal human stories that make our communities strong. We work small to ensure our work stays focused, transparent, and meaningful.</p>"
+    content: "<p>Vanguard started with two friends. We share a deep background in technology and military service. Moving out of those fields, we realized how much noise and distraction exists in modern culture today.</p><p style='margin-top: 12px;'>We decided to build this business with a clear purpose: to tackle and look closely at the real challenges facing our country, while showcasing the deeply personal human stories that make our communities strong. We work small to ensure our work stays focused, transparent, and meaningful.</p>"
   },
   "legal": {
     title: "Privacy Policy & Terms of Use",
@@ -92,9 +92,9 @@ const REGISTRY_DATA = {
       <div class="legal-date-stamp" id="legal-date-mount"></div>
       <h4 class="legal-subheading">1. Privacy Commitment</h4>
       <p>We believe your personal details belong to you. We do not track your browsing habits, sell your information to outside data companies, or use hidden analytics software on this space. Any data shared with us stays completely protected and under our strict control.</p>
-      <h4 class="legal-subheading">2. Terms of Use</h4>
+      <h4 class="legal-subheading" style='margin-top: 12px;'>2. Terms of Use</h4>
       <p>By interacting with Vanguard Citizen Services, you agree to engage honestly and transparently with our community tools. We do not tolerate any malicious use, automated scraping, or actions meant to interrupt our services to the public.</p>
-      <h4 class="legal-subheading">3. Security Protocols</h4>
+      <h4 class="legal-subheading" style='margin-top: 12px;'>3. Security Protocols</h4>
       <p>We work to keep our systems secure using simple, clean software architecture. Because we keep our footprint small and skip modern tech bloat, your connection lines stay transparent, fast, and secure.</p>
     `
   },
@@ -187,6 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // --- 5. ISOLATED MODAL INTERFACE GENERATOR ---
   function activateRegistryItem(key) {
     if (key === "support") {
       window.location.href = "support/";
@@ -194,21 +195,33 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const data = REGISTRY_DATA[key];
-    const textWindow = document.getElementById('desktop-content-window');
-    if (!data || !textWindow) return;
+    if (!data) return;
 
+    // Highlight the active menu layout item button
     document.querySelectorAll('.action-tab-btn').forEach(btn => btn.classList.remove('is-active'));
     const targetBtn = document.getElementById(`tab-btn-${key.replace(' ', '-')}`);
     if (targetBtn) targetBtn.classList.add('is-active');
 
-    textWindow.innerHTML = `
-      <button class="mobile-close-overlay-btn" id="close-overlay-trigger" aria-label="Close panel">&times;</button>
-      <h3>${data.title}</h3>
-      <div class="narrative-body-scroll scrollable-interior">${data.content}</div>
+    // Create full isolated curtain element layer to avoid blur propagation bleed
+    const modalWrapper = document.createElement('div');
+    modalWrapper.className = 'mobile-backdrop-blur';
+    modalWrapper.style.opacity = '0';
+    modalWrapper.style.transition = 'opacity 0.25s ease-out';
+
+    // Generate inner crystal-clear glass dialogue card block
+    modalWrapper.innerHTML = `
+      <div class="vanguard-modal-window vanguard-panel">
+        <button class="mobile-close-overlay-btn" id="modal-close-trigger" aria-label="Close panel">&times;</button>
+        <h3>${data.title}</h3>
+        <div class="narrative-body-scroll scrollable-interior">${data.content}</div>
+      </div>
     `;
 
+    document.body.appendChild(modalWrapper);
+
+    // Injected dynamic updated stamp directly inside legal operations sequence 
     if (key === "legal") {
-      const dateMount = document.getElementById('legal-date-mount');
+      const dateMount = modalWrapper.querySelector('#legal-date-mount');
       if (dateMount) {
         const today = new Date();
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -216,24 +229,28 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // Centered Window Initialization
-    textWindow.style.display = 'flex';
-    textWindow.scrollTop = 0;
-    
-    let backdrop = document.createElement('div');
-    backdrop.className = 'mobile-backdrop-blur';
-    document.body.appendChild(backdrop);
-    
-    const closePanelWindow = () => {
-      textWindow.style.display = 'none';
+    // Smooth entry fade
+    requestAnimationFrame(() => {
+      modalWrapper.style.opacity = '1';
+    });
+
+    // Cleanup routine to remove modal window elements from layout thread upon closing
+    const closeOverlay = () => {
+      modalWrapper.style.opacity = '0';
       if (targetBtn) targetBtn.classList.remove('is-active');
-      backdrop.remove();
+      setTimeout(() => {
+        modalWrapper.remove();
+      }, 250);
     };
+
+    // Close mechanics bound cleanly to background tap and cross-trigger buttons
+    modalWrapper.addEventListener('click', (e) => {
+      if (e.target === modalWrapper) closeOverlay();
+    });
     
-    backdrop.addEventListener('click', closePanelWindow);
-    const closeTrigger = document.getElementById('close-overlay-trigger');
+    const closeTrigger = modalWrapper.querySelector('#modal-close-trigger');
     if (closeTrigger) {
-      closeTrigger.addEventListener('click', closePanelWindow);
+      closeTrigger.addEventListener('click', closeOverlay);
     }
   }
 });
