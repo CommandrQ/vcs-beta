@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Vanguard | Operational Roster</title>
+    <style>
+        :root {
+            --gold: #f5c518;
+            --white: #ffffff;
+            --glass-panel: rgba(10, 10, 12, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --v-curve: cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* --- MASTER LAYOUT STRUCTURE --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body, html {
+            height: 100dvh;
+            background: #000000;
+            color: var(--white);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            overflow: hidden;
+            font-size: 16px;
+            position: fixed;
+            width: 100vw;
+        }
+
+        /* --- THE ORBITING STARFIELD --- */
+        #vanguard-universe { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+        .star-layer {
+            position: absolute; inset: -50%; width: 200%; height: 200%;
+            background-image: 
+                radial-gradient(1px 1px at 40px 60px, rgba(245, 197, 24, 0.4), transparent),
+                radial-gradient(0.8px 0.8px at 150px 200px, rgba(255, 255, 255, 0.5), transparent);
+            background-size: 300px 300px;
+            animation: orbital-rotation 240s linear infinite;
+        }
+        @keyframes orbital-rotation { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* --- UI CONTAINER FRAME --- */
+        #app-wrapper {
+            position: relative; z-index: 10; height: 100dvh; width: 100%;
+            display: flex; flex-direction: column; align-items: center;
+        }
+
+        /* --- GLASS DIALOGUE HUB WINDOW --- */
+        .glass-window {
+            width: calc(100% - 24px); max-width: 480px; 
+            margin: auto 0;
+            background: var(--glass-panel);
+            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border); border-radius: 24px;
+            padding: 24px 20px; text-align: center;
+            display: flex; flex-direction: column;
+            max-height: 80dvh; /* Keeps screen bounded safely on short mobile views */
+            box-shadow: 0 25px 50px rgba(0,0,0,0.8);
+            animation: fadeIn 0.6s var(--v-curve) forwards;
+        }
+
+        /* --- HIGH-PERFORMANCE INTERNAL SCROLL TRACK --- */
+        .roster-scroll-track {
+            flex: 1 1 auto;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            margin-top: 16px;
+            padding-right: 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .roster-scroll-track::-webkit-scrollbar { width: 4px; }
+        .roster-scroll-track::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 4px; }
+
+        /* --- ROSTER CARD CHIPS --- */
+        .roster-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            padding: 16px;
+            text-align: left;
+            transition: border-color 0.25s ease;
+        }
+        .roster-card:hover { border-color: rgba(245, 197, 24, 0.4); }
+
+        .roster-identity { font-size: 1.1rem; font-weight: 600; color: var(--white); }
+        .roster-callsign { font-size: 0.72rem; color: var(--gold); font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 2px; }
+        .roster-position { font-size: 0.88rem; color: rgba(255, 255, 255, 0.7); margin-top: 6px; }
+
+        /* --- GLOBAL NAV BUTTONS --- */
+        .back-btn {
+            color: var(--white); text-decoration: none; font-size: 0.72rem; font-weight: 800;
+            letter-spacing: 2px; border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 10px 16px; border-radius: 12px; transition: 0.25s ease;
+            text-transform: uppercase;
+        }
+        .back-btn:hover { border-color: var(--white); background: rgba(255, 255, 255, 0.05); }
+
+        /* --- INTERFACE ANIMATIONS --- */
+        @keyframes fadeIn { from { opacity: 0; transform: translate3d(0, 15px, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
+
+        /* --- TYPOGRAPHY STYLINGS --- */
+        h1 { letter-spacing: 4px; text-transform: uppercase; font-weight: 300; font-size: 1.4rem; }
+        
+        /* --- SITE REVENUE FOOTER --- */
+        footer { width: 100%; padding: 20px 0 12px 0; text-align: center; font-size: 0.65rem; color: var(--white); letter-spacing: 3px; text-transform: uppercase; flex-shrink: 0; }
+
+        /* --- DESKTOP STRETCH BREAKPOINTS --- */
+        @media (min-width: 1024px) {
+            .glass-window { max-width: 500px !important; padding: 32px 24px !important; }
+            h1 { font-size: 1.6rem !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Space Simulation Layer -->
+    <div id="vanguard-universe"><div class="star-layer"></div></div>
+
+    <main id="app-wrapper">
+        <article class="glass-window">
+            
+            <!-- Terminal Header Block -->
+            <header style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 4px;">
+                <h1>Roster</h1>
+                <a href="../index.html" class="back-btn">HUB →</a>
+            </header>
+
+            <!-- Scrolling Content Track -->
+            <div class="roster-scroll-track">
+
+                <!-- =================================================== -->
+                <!-- TO ADD MORE PEOPLE: COPY AND PASTE A CARD BLOCK BELOW -->
+                <!-- =================================================== -->
+                
+                <!-- CARD ENTRY: COMMANDER Q -->
+                <div class="roster-card">
+                    <div class="roster-identity">Commander Q</div>
+                    <div class="roster-callsign">Call Sign // Q</div>
+                    <div class="roster-position">Chief Vision Officer</div>
+                </div>
+
+                <!-- CARD ENTRY: KONA AGPALZA -->
+                <div class="roster-card">
+                    <div class="roster-identity">Kona Agpalza</div>
+                    <div class="roster-callsign">Call Sign // Lancelot</div>
+                    <div class="roster-position">Chief Operation Officer</div>
+                </div>
+
+                <!-- =================================================== -->
+                <!-- END ROSTER ENTRY TRACK -->
+                <!-- =================================================== -->
+
+            </div>
+        </article>
+
+        <!-- Static System Footer -->
+        <footer>Vanguard Citizen Services &copy; <span id="year"></span></footer>
+    </main>
+
+    <script>
+        // Synchronize operational global timing handles safely
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('year').innerText = new Date().getFullYear();
+        });
+    </script>
+</body>
+</html>
