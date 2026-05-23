@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>CMDR Q // Briefing</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    /* Custom inline layout adjustments for narrative readability */
+    .narrative-block {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-top: 16px;
+    }
+    .timeline-node {
+      border-left: 2px solid var(--dim-gold);
+      padding-left: 16px;
+      margin-left: 4px;
+    }
+    .node-era {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--dim-gold);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .node-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--stark-white);
+      margin-bottom: 6px;
+    }
+    .node-text {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--stark-white);
+    }
+  </style>
+</head>
+<body class="cinematic-lock">
+
+  <!-- Blue Grid Backplane Connection -->
+  <div class="grid-background-overlay"></div>
+
+  <!-- Cinematic Frame Accents -->
+  <div class="cinema-bar top"></div>
+  <div class="cinema-bar bottom"></div>
+
+  <!-- Primary Interface Core Box -->
+  <main class="core-interface reveal-ready">
+    
+    <!-- Section Heading -->
+    <header class="portal-header">
+      <h1>About Me</h1>
+      <p class="subtitle">Operational Background & Profile</p>
+    </header>
+
+    <!-- Scrollable Profile Stream -->
+    <section class="links-scroll-track scrollable-interior">
+      <div class="narrative-block">
+
+        <!-- ERA 1: FOUNDATION -->
+        <div class="timeline-node">
+          <div class="node-era">Early Realities</div>
+          <div class="node-title">Eyes Wide Open</div>
+          <p class="node-text">
+            From the time I was a small kid, I’ve been exposed to the raw, unvarnished realities of our world. I grew up understanding early on that things aren't always smooth, and that behind everyday systems lie complex mechanics and untold human struggles. This early awareness shaped my perspective and sparked an enduring drive to seek out the truth.
+          </p>
+        </div>
+
+        <!-- ERA 2: MILITARY -->
+        <div class="timeline-node">
+          <div class="node-era">Armed Forces</div>
+          <div class="node-title">Service & Deployment</div>
+          <p class="node-text">
+            My path led me into the armed forces, a defining chapter that tested and hardened my principles. Deploying overseas opened my eyes completely. Seeing a totally different world firsthand exposed the deep lines running through global landscapes, changing how I viewed humanity, community survival, and the vital power of clear information networks.
+          </p>
+        </div>
+
+        <!-- ERA 3: ENTERPRISE -->
+        <div class="timeline-node">
+          <div class="node-era">Technical Operations</div>
+          <div class="node-title">Best Buy & Apple Enterprise</div>
+          <p class="node-text">
+            Transitioning back into civilian sectors, I focused my energy on technical deployment and system architecture. Spending years working within complex consumer tech spaces at **Best Buy** and **Apple** taught me how people interface with modern tools. I learned how hardware, communication software, and digital infrastructure function under heavy daily stress.
+          </p>
+        </div>
+
+        <!-- ERA 4: PRESENT COMMAND -->
+        <div class="timeline-node" style="border-left-color: var(--stark-white);">
+          <div class="node-era">Active Directive</div>
+          <div class="node-title">Commander of the Vanguard Knights</div>
+          <p class="node-text">
+            Today, all of those threads tie directly into my primary mission. I currently lead the **Vanguard Knights**, directing our efforts to uncover, map, and amplify the completely unique narratives woven right into the fabric of our communities. We are here to listen to the unheard voices and document the real human grit moving our neighborhoods forward.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Return Pipeline back to home.html inside the cmdrq subfolder -->
+    <footer class="portal-footer">
+      <a href="../home.html" class="hub-return-link">← Return to Control Deck</a>
+    </footer>
+  </main>
+
+</body>
+</html>
