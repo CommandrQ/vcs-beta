@@ -1,14 +1,28 @@
-{
-  "announcements": [
+/**
+ * VANGUARD CITIZEN SERVICES — BROADCAST LOG ENGINE
+ * Path: announcements.js
+ */
+
+document.addEventListener('DOMContentLoaded', () => {
+  const mount = document.getElementById('announcements-mount');
+  if (!mount) return;
+
+  const operationalBroadcasts = [
     {
-      "date": "MAY 23, 2026",
-      "tag": "SYSTEMS RESYNC",
-      "message": "Vanguard core client interfaces upgraded to absolute-zero dark states. Internal layouts configured to support lean community pipelines directly."
-    },
-    {
-      "date": "MAY 10, 2026",
-      "tag": "GUILD REPORT",
-      "message": "Operational directives for the third-quarter architecture finalized. Deployed small footprint frameworks into active local testing sites."
+      date: "MAY 23, 2026",
+      tag: "MAINTENANCE INFRASTRUCTURE",
+      message: "The platform workspace is currently undergoing active technical maintenance. System parameters are being reconfigured to lock down fluid dark layouts."
     }
-  ]
-}
+  ];
+
+  mount.innerHTML = '';
+  operationalBroadcasts.forEach(item => {
+    const node = document.createElement('div');
+    node.className = 'announcement-node';
+    node.innerHTML = `
+      <div class="announcement-meta">${item.date} // ${item.tag}</div>
+      <div class="announcement-txt">${item.message}</div>
+    `;
+    mount.appendChild(node);
+  });
+});
