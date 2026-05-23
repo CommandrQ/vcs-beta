@@ -54,7 +54,7 @@
             border: 1px solid var(--glass-border); border-radius: 24px;
             padding: 24px 20px; text-align: center;
             display: flex; flex-direction: column;
-            max-height: 80dvh; /* Keeps screen bounded safely on short mobile views */
+            max-height: 80dvh;
             box-shadow: 0 25px 50px rgba(0,0,0,0.8);
             animation: fadeIn 0.6s var(--v-curve) forwards;
         }
@@ -88,6 +88,22 @@
         .roster-identity { font-size: 1.1rem; font-weight: 600; color: var(--white); }
         .roster-callsign { font-size: 0.72rem; color: var(--gold); font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 2px; }
         .roster-position { font-size: 0.88rem; color: rgba(255, 255, 255, 0.7); margin-top: 6px; }
+        
+        /* --- PROFILE SUB-LINKS --- */
+        .roster-link-action {
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 0.78rem;
+            color: var(--gold);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            transition: color 0.2s ease;
+        }
+        .roster-link-action:hover {
+            color: var(--white);
+        }
 
         /* --- GLOBAL NAV BUTTONS --- */
         .back-btn {
@@ -130,16 +146,14 @@
 
             <!-- Scrolling Content Track -->
             <div class="roster-scroll-track">
-
-                <!-- =================================================== -->
-                <!-- TO ADD MORE PEOPLE: COPY AND PASTE A CARD BLOCK BELOW -->
-                <!-- =================================================== -->
                 
                 <!-- CARD ENTRY: COMMANDER Q -->
                 <div class="roster-card">
                     <div class="roster-identity">Commander Q</div>
                     <div class="roster-callsign">Call Sign // Q</div>
                     <div class="roster-position">Chief Vision Officer</div>
+                    <!-- Replace the "#" below with your link later -->
+                    <a href="#" target="_blank" class="roster-link-action">Website →</a>
                 </div>
 
                 <!-- CARD ENTRY: KONA AGPALZA -->
@@ -149,10 +163,6 @@
                     <div class="roster-position">Chief Operation Officer</div>
                 </div>
 
-                <!-- =================================================== -->
-                <!-- END ROSTER ENTRY TRACK -->
-                <!-- =================================================== -->
-
             </div>
         </article>
 
@@ -161,7 +171,6 @@
     </main>
 
     <script>
-        // Synchronize operational global timing handles safely
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('year').innerText = new Date().getFullYear();
         });
