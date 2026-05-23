@@ -124,26 +124,26 @@
                 <a href="../index.html" class="back-btn">HUB →</a>
             </header>
 
-            <h2 style="color: var(--gold); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; font-weight: 600;">Direct Uplink</h2>
-            <p style="opacity: 0.8; font-size: 0.88rem; line-height: 1.5; max-width: 500px; margin: 0 auto;">Submit a secure request to the Vanguard Support Core. We respond to all neighbors via registered email.</p>
+            <h2 style="color: var(--gold); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; font-weight: 600;">How We Help</h2>
+            <p style="opacity: 0.8; font-size: 0.88rem; line-height: 1.5; max-width: 500px; margin: 0 auto;">This tool connects you directly to our small team. If you have questions about our work, need assistance with our tools, or want to raise an issue in your neighborhood, fill out the form below. We review every message and will reply to you by email.</p>
 
             <div class="support-form">
                 <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" id="support-name" class="support-input" placeholder="Identify yourself...">
+                    <label>Your Name</label>
+                    <input type="text" id="support-name" class="support-input" placeholder="Enter your name...">
                 </div>
 
                 <div class="form-group">
                     <label>Email Address</label>
-                    <input type="email" id="support-email" class="support-input" placeholder="Where should we reply?">
+                    <input type="email" id="support-email" class="support-input" placeholder="Enter your email address...">
                 </div>
 
                 <div class="form-group">
                     <label>Your Message</label>
-                    <textarea id="support-msg" class="support-input" rows="5" style="resize: none;" placeholder="Describe the issue, ask a question, or request assistance..."></textarea>
+                    <textarea id="support-msg" class="support-input" rows="5" style="resize: none;" placeholder="Tell us how we can help you..."></textarea>
                 </div>
 
-                <button onclick="transmitRequest()" class="transmit-btn">Transmit Message</button>
+                <button onclick="transmitRequest()" class="transmit-btn">Send Email</button>
             </div>
 
             <!-- System Status -->
@@ -162,13 +162,11 @@
         document.addEventListener('DOMContentLoaded', async () => {
             document.getElementById('year').innerText = new Date().getFullYear();
 
-            // Check local storage for profile cache values
             const cached = JSON.parse(localStorage.getItem('vanguard_profile')) || {};
             if (cached.name) {
                 document.getElementById('support-name').value = cached.name;
             }
 
-            // Check Supabase for verified email
             if (typeof supabaseClient !== 'undefined') {
                 try {
                     const { data: { user } } = await supabaseClient.auth.getUser();
@@ -176,7 +174,7 @@
                         document.getElementById('support-email').value = user.email;
                     }
                 } catch (e) {
-                    // Fail silently to safeguard application flow
+                    // Fail silently
                 }
             }
         });
@@ -188,15 +186,14 @@
             const msg = document.getElementById('support-msg').value.trim();
             
             if (!name || !email || !msg) {
-                return alert("Identification (Name and Email) and a message are required before transmitting.");
+                return alert("Please enter your name, email address, and a message before sending.");
             }
             
-            const subject = `[Vanguard Support] Uplink from ${name}`;
-            const body = `CITIZEN LOG: ${name}\nRETURN COMM: ${email}\n\nTRANSMISSION:\n${msg}`;
+            const subject = `[Vanguard Support] Message from ${name}`;
+            const body = `Name: ${name}\nReply Email: ${email}\n\nMessage:\n${msg}`;
             
             window.location.href = `mailto:commandrq@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
             
-            // Clear message box (Leave name/email for convenience)
             document.getElementById('support-msg').value = '';
         }
     </script>
