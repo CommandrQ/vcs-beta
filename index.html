@@ -6,7 +6,7 @@
   <title>Vanguard Citizen Services</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="fluid-scroll">
+<body class="viewport-lock">
 
   <!-- Background Space Canvas -->
   <canvas id="atmosphere-canvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1; pointer-events: none;"></canvas>
@@ -32,10 +32,10 @@
       <h1 class="hero-title">Welcome, Citizen</h1>
     </header>
 
-    <!-- Announcements Hook -->
-    <section class="vanguard-panel">
+    <!-- Announcements Panel -->
+    <section class="vanguard-panel announcements-panel-wrapper">
       <h2 class="panel-label">Guild Announcements</h2>
-      <div id="announcements-mount" class="announcements-container">
+      <div id="announcements-mount" class="announcements-container scrollable-interior">
         <p class="system-message">Syncing broadcast lines...</p>
       </div>
     </section>
@@ -49,7 +49,7 @@
         <div id="tabs-mount" class="tabs-stacked-track"></div>
         
         <!-- Right Hand Narrative Content Window -->
-        <div id="desktop-content-window" class="narrative-pane">
+        <div id="desktop-content-window" class="narrative-pane scrollable-interior">
           <p class="system-message">Select an operation to read details...</p>
         </div>
       </div>
