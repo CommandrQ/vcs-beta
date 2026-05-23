@@ -87,8 +87,8 @@ const REGISTRY_DATA = {
     content: "<p>Vanguard started with two friends. We share a deep background in technology and military service. Moving out of those fields, we realized how much noise and distraction exists in modern culture today.</p><p style='margin-top: 12px;'>We decided to build this business with a clear purpose: to tackle and look closely at the real challenges facing our country, while showcasing the deeply personal human stories that make our communities strong. We work small to ensure our work stays focused, transparent, and meaningful.</p>"
   },
   "roster": {
-    title: "The Roster & Mission",
-    content: "<p><strong>Our Mission:</strong> We exist to filter out cultural distractions and provide communities with clear, honest infrastructure and unfiltered human storytelling.</p><p style='margin-top: 12px;'>This mission is brought to life directly by the <strong>Vanguard Knights</strong>. This group is responsible for shaping our organization's narrative through intentional, hands-on community action and independent media production. By combining real-world service with clear creative media, the Knights turn our shared vision into an active, positive presence in the neighborhoods we serve.</p>"
+    title: "Redirecting...",
+    content: "<p>Moving directly to Vanguard Operational Roster...</p>"
   },
   "legal": {
     title: "Privacy Policy & Terms of Use",
@@ -165,8 +165,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- 5. ISOLATED MODAL INTERFACE GENERATOR ---
+  // --- 5. ISOLATED MODAL INTERFACE GENERATOR / LIVE LINKS ---
   function activateRegistryItem(key) {
+    // Roster Folder Redirection Link
+    if (key === "roster") {
+      window.location.href = "roster/";
+      return;
+    }
+
+    // Support Folder Redirection Link
     if (key === "support") {
       window.location.href = "support/";
       return;
