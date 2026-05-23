@@ -1,5 +1,5 @@
 /**
- * VANGUARD CITIZEN SERVICES — VIEWPORT COMPRESSION & FADE STYLES
+ * VANGUARD CITIZEN SERVICES — MOBILE VIEWPORT OPTIMIZATIONS
  * Path: style.css
  */
 
@@ -19,18 +19,18 @@
   padding: 0;
 }
 
-/* Master Viewport Lock: Frozen to prevent viewport overscroll overflow */
+/* Master Viewport Lock: The screen itself never scrolls */
 body, html {
   background-color: var(--onyx);
   color: var(--pure-white);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  height: 100vh;
+  height: 100dvh; /* Swapped to Dynamic Viewport Height for mobile browser safety */
   width: 100vw;
   overflow: hidden;
   position: fixed;
 }
 
-/* Interior Scroll Containers */
+/* High-Scannability Interior Scrolling Rules */
 .scrollable-interior {
   overflow-y: auto !important;
   -webkit-overflow-scrolling: touch;
@@ -43,26 +43,24 @@ body, html {
   border-radius: 4px;
 }
 
-/* App Container: Compressed layout margins to guarantee footer visibility */
+/* App Layout Framework: Tightened top/bottom frame edges to pull contents up */
 .app-container {
   width: 100%;
   max-width: 480px;
   margin: 0 auto;
-  height: 100vh;
-  padding: calc(8px + env(safe-area-inset-top)) calc(12px + env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom)) calc(12px + env(safe-area-inset-left));
+  height: 100dvh; /* Dynamic constraint preventing bottom cutoff overlaps */
+  padding: calc(4px + env(safe-area-inset-top)) calc(12px + env(safe-area-inset-right)) calc(4px + env(safe-area-inset-bottom)) calc(12px + env(safe-area-inset-left));
   position: relative;
   z-index: 2;
   display: flex;
   flex-direction: column;
-  opacity: 0;
-  transition: opacity 0.8s ease-out;
 }
 
-/* --- LARGE SCREEN BREAKPOINTS (Keeps workspace perfectly centralized) --- */
+/* --- LARGE SCREEN INTERFACE ADAPTATIONS (Tablets & Desktops) --- */
 @media (min-width: 768px) {
   .app-container {
     max-width: 740px;
-    height: calc(100vh - 32px);
+    height: calc(100dvh - 32px);
     margin: 16px auto;
     padding: 16px;
   }
@@ -71,38 +69,40 @@ body, html {
 @media (min-width: 1024px) {
   .app-container {
     max-width: 880px;
-    height: calc(100vh - 48px);
+    height: calc(100dvh - 48px);
     margin: 24px auto;
   }
 }
 
-/* Glass Presentation Layout Panels */
+/* Glass Presentation Panels */
 .vanguard-panel {
   background: var(--glass-bg);
   backdrop-filter: blur(25px);
   -webkit-backdrop-filter: blur(25px);
   border: 1px solid var(--glass-border);
   border-radius: 24px;
-  padding: 16px;
-  margin-bottom: 10px; /* Reduced to pull elements up */
+  padding: 14px 16px;
+  margin-bottom: 8px; /* Tightened panel spacing */
   position: relative;
   animation: goldPulse 8s infinite ease-in-out;
 }
 
-/* Strict proportional scaling to keep elements on screen */
+/* Flex distribution preventing outer panel breakout boundaries */
 .announcements-panel-wrapper {
-  flex: 0 1 150px;
+  flex: 0 1 auto;
   display: flex;
   flex-direction: column;
-  min-height: 100px;
+  min-height: 0;
+  max-height: 22dvh; /* Restricts panel real estate on small displays */
 }
 
+/* Compressed to safeguard structural footers beneath layout lines */
 .operations-hub {
-  flex: 1 1 320px; /* Expands to occupy remaining free screen territory */
+  flex: 1 1 auto;
   display: flex;
   flex-direction: column;
-  min-height: 200px;
-  max-height: 48vh; /* Binds height to block content overflow on mobile views */
+  min-height: 0;
+  max-height: 40dvh; /* Limits panel depth to keep lower layers completely clear */
 }
 
 @keyframes goldPulse {
@@ -111,25 +111,26 @@ body, html {
 }
 
 .panel-label {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--vanguard-yellow);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   font-weight: 600;
   flex: 0 0 auto;
 }
 
-/* Blackout Transitional Mask Plane */
+/* Fluid Flash/Blackout Step Engine */
 #transition-mask {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
+  height: 100dvh;
   background: var(--onyx);
   z-index: 9000;
   pointer-events: none;
+  opacity: 0;
   transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
@@ -139,7 +140,7 @@ body, html {
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
+  height: 100dvh;
   background: var(--onyx);
   z-index: 9999;
   display: flex;
@@ -156,15 +157,15 @@ body, html {
   100% { transform: scaleY(1) scaleX(1); filter: brightness(1); opacity: 1; }
 }
 
-.intro-logo { width: 120px; height: auto; margin-bottom: 30px; display: block; }
+.intro-logo { width: 110px; height: auto; margin-bottom: 24px; display: block; }
 
 .loading-track {
-  width: 200px;
+  width: 180px;
   height: 2px;
   background: rgba(255, 255, 255, 0.15);
   border-radius: 2px;
   overflow: hidden;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .loading-bar {
@@ -176,7 +177,7 @@ body, html {
 }
 
 .intro-motto {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   letter-spacing: 0.25em;
   text-transform: uppercase;
   color: var(--light-gold);
@@ -184,22 +185,22 @@ body, html {
   font-weight: 300;
 }
 
-/* Header Presentation Profile */
+/* Centralized Branding Elements */
 .vanguard-hero {
   text-align: center;
-  padding: 6px 0 10px 0;
+  padding: 4px 0 6px 0;
   flex: 0 0 auto;
 }
 
 .hero-logo-small {
-  width: 48px;
+  width: 44px;
   height: auto;
-  margin: 0 auto 6px auto;
+  margin: 0 auto 4px auto;
   display: block;
 }
 
 .hero-title {
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   font-weight: 300;
   letter-spacing: 0.1em;
   color: var(--pure-white);
@@ -240,11 +241,11 @@ body, html {
   font-style: italic;
 }
 
-/* Split System Matrix Engine */
+/* Split System Controls Architecture */
 .split-layout-engine {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
   width: 100%;
   flex: 1 1 auto;
   min-height: 0;
@@ -255,7 +256,8 @@ body, html {
   flex-direction: column;
   gap: 6px;
   width: 100%;
-  flex: 0 0 auto;
+  flex: 1 1 auto;
+  overflow-y: auto; /* Vertically scrolls the selection button deck if layout keys multiply */
 }
 
 .action-tab-btn {
@@ -270,6 +272,7 @@ body, html {
   cursor: pointer;
   text-align: left;
   width: 100%;
+  flex: 0 0 auto;
   transition: all 0.2s ease-in-out;
 }
 
@@ -281,43 +284,37 @@ body, html {
   outline: none;
 }
 
+/* Absolute Centered Popup Window System */
 .narrative-pane {
   display: none;
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: 14px;
-  padding: 14px;
-  border: 1px solid var(--glass-border);
-  font-size: 0.88rem;
-  line-height: 1.45;
-  color: var(--pure-white);
-  position: relative;
-}
-
-.narrative-pane h3 {
-  font-size: 0.95rem;
-  color: var(--vanguard-yellow);
-  margin-bottom: 6px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-/* Mobile Popover Overlay Frame */
-.narrative-pane.is-open-mobile {
-  display: flex;
   flex-direction: column;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: calc(100% - 24px);
-  max-width: 440px;
-  max-height: 65vh;
+  max-width: 500px;
+  max-height: 55dvh; /* Pulled shorter to maintain layered page depth controls safely */
   z-index: 9900;
   background: var(--glass-bg);
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
   border: 1px solid var(--glass-border);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+  border-radius: 24px;
+  padding: 24px 20px 20px 20px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--pure-white);
+}
+
+.narrative-pane h3 {
+  font-size: 1.05rem;
+  color: var(--vanguard-yellow);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding-right: 24px;
 }
 
 .mobile-backdrop-blur {
@@ -325,12 +322,14 @@ body, html {
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.6);
+  height: 100dvh;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   z-index: 9800;
 }
 
-/* Legal Content Presentation Styling */
+/* Legal Presentation Styling */
 .legal-date-stamp {
   text-align: center;
   font-size: 0.68rem;
@@ -350,7 +349,7 @@ body, html {
   text-transform: uppercase;
 }
 
-/* Mobile Overlay Cross close button */
+/* Universal Close Element */
 .mobile-close-overlay-btn {
   display: block;
   background: none;
@@ -359,8 +358,8 @@ body, html {
   font-size: 2.2rem;
   line-height: 1;
   position: absolute;
-  top: 8px;
-  right: 12px;
+  top: 12px;
+  right: 16px;
   cursor: pointer;
   z-index: 10;
 }
@@ -368,6 +367,7 @@ body, html {
 .narrative-body-scroll { 
   width: 100%; 
   flex: 1 1 auto;
+  min-height: 0;
 }
 
 /* --- ADAPTIVE MID-TO-DESKTOP HUD LAYOUT --- */
@@ -378,31 +378,20 @@ body, html {
   }
 
   .tabs-stacked-track { 
-    width: 30%; 
+    width: 100%; 
   }
-
-  .narrative-pane, .narrative-pane.is-open-mobile {
-    display: block;
-    position: static;
-    transform: none;
-    width: 70%;
-    height: auto;
-    background: rgba(255, 255, 255, 0.02);
-  }
-
-  .mobile-close-overlay-btn { display: none !important; }
 }
 
-/* Persistent Site Footer Structure */
+/* Permanent Site Footer Structure: Stays pinned cleanly inside bounds */
 .vanguard-footer {
   margin-top: auto;
-  padding: 10px 0 2px 0;
+  padding: 6px 0 2px 0;
   text-align: center;
   flex: 0 0 auto;
 }
 
 .footer-text {
-  font-size: 0.68rem;
+  font-size: 0.65rem;
   text-transform: uppercase;
   letter-spacing: 0.15em;
   color: var(--pure-white);
