@@ -61,7 +61,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Logo Layout */
+        /* Centered Logo Layout */
         .org-logo {
             width: 130px;
             height: auto;
@@ -77,7 +77,6 @@
             text-transform: uppercase;
             margin-bottom: 40px;
             
-            /* Linear Gradient Setup for Background Shimmer */
             background: linear-gradient(
                 90deg, 
                 #a6a6a6 0%, 
@@ -136,7 +135,7 @@
             font-family: monospace, serif;
         }
 
-        /* --- SCREEN TRANSLITION SLIDEOUT --- */
+        /* --- SCREEN TRANSITION SLIDEOUT --- */
         .exit-active {
             transition: all 0.8s var(--ease-smooth);
             opacity: 0;
@@ -147,18 +146,18 @@
 </head>
 <body>
 
-    <!-- Environmental Space Grid -->
+    <!-- Environmental Space Background -->
     <div id="environment"><div class="starfield"></div></div>
 
     <div class="intro-container" id="gateway-ui">
         
-        <!-- Centered Organization Logo Image Asset -->
-        <img src="images/vanguardorglogo.png" alt="Vanguard Organization Logo" class="org-logo">
+        <!-- FIXED: Pulls directly from your images folder sitting at root -->
+        <img src="./images/vanguardorglogo.png" alt="Vanguard Organization Logo" class="org-logo">
         
-        <!-- Slowly Shimmering Motto Text -->
+        <!-- Motto Text Shimmering Slowly Every Two Seconds -->
         <div class="motto-text">Empower.Educate.Elevate</div>
         
-        <!-- Realistic 3-Second Percentage Loader -->
+        <!-- Percentage Loader Loading Realistically Within Three Seconds -->
         <div class="loader-wrapper">
             <div class="loader-track">
                 <div class="loader-progress" id="progress-fill"></div>
@@ -175,44 +174,37 @@
             const gatewayUi = document.getElementById('gateway-ui');
 
             let currentPercent = 0;
-            const totalDuration = 3000; // Total loading duration set strictly to 3 seconds
+            const totalDuration = 3000; // Strict 3-second runtime
             const startTime = performance.now();
 
             function updateLoader(currentTime) {
                 const elapsed = currentTime - startTime;
-                
-                // Calculate raw chronological progress ratio
                 let progressRatio = Math.min(elapsed / totalDuration, 1);
 
-                /* 
-                   Realistic Progress Curve:
-                   Uses a cubic deceleration behavior to mimic data checks.
-                   It jumps quickly early on, meets a brief speed bump at 70%, 
-                   and finishes with precision.
-                */
+                // Realistic decelerating cubic curve
                 let easeProgress = 1 - Math.pow(1 - progressRatio, 3);
                 currentPercent = Math.floor(easeProgress * 100);
 
-                // Update visual interface attributes
+                // Update UI states
                 progressFill.style.width = `${currentPercent}%`;
                 counterReadout.innerText = `${currentPercent.toString().padStart(2, '0')}%`;
 
                 if (progressRatio < 1) {
                     requestAnimationFrame(updateLoader);
                 } else {
-                    // Sequence Complete: Trigger the transition out and route to destination
+                    // Loader finished: Trigger exit animation
                     setTimeout(() => {
                         gatewayUi.classList.add('exit-active');
                         
-                        // Navigate directly inside the /home directory structure
+                        // Redirects cleanly to the home/ folder directory location
                         setTimeout(() => {
-                            window.location.href = 'home/index.html';
+                            window.location.href = './home/';
                         }, 600);
                     }, 200);
                 }
             }
 
-            // Fire off the high-precision animation thread
+            // Start processing the timeline animation
             requestAnimationFrame(updateLoader);
         });
     </script>
