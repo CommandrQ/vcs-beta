@@ -80,15 +80,11 @@ class DeepAtmosphere {
   }
 }
 
-// --- 2. CONFIGURATION DATA DICTIONARY ---
-const REGISTRY_DATA = {
-  "about us": {
+// --- 2. POPUP WINDOW DATA STORAGE ---
+const POPUP_DATA = {
+  "about-us": {
     title: "Our Story",
     content: "<p>Vanguard started with two friends. We share a deep background in technology and military service. Moving out of those fields, we realized how much noise and distraction exists in modern culture today.</p><p style='margin-top: 12px;'>We decided to build this business with a clear purpose: to tackle and look closely at the real challenges facing our country, while showcasing the deeply personal human stories that make our communities strong. We work small to ensure our work stays focused, transparent, and meaningful.</p>"
-  },
-  "roster": {
-    title: "Redirecting...",
-    content: "<p>Moving directly to Vanguard Operational Roster...</p>"
   },
   "legal": {
     title: "Privacy Policy & Terms of Use",
@@ -101,10 +97,6 @@ const REGISTRY_DATA = {
       <h4 class="legal-subheading" style='margin-top: 12px;'>3. Security Protocols</h4>
       <p>We work to keep our systems secure using simple, clean software architecture. Because we keep our footprint small and skip modern tech bloat, your connection lines stay transparent, fast, and secure.</p>
     `
-  },
-  "support": {
-    title: "Redirecting...",
-    content: "<p>Moving directly to Vanguard Support Operations...</p>"
   }
 };
 
@@ -125,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (hasVisited) {
     if (introStage) introStage.remove();
     mainContent.style.opacity = '1';
-    buildNavigationTabs();
+    setupMenuListeners();
     
     if (mask) {
       requestAnimationFrame(() => {
@@ -144,46 +136,42 @@ document.addEventListener('DOMContentLoaded', () => {
           introStage.remove();
           mainContent.style.opacity = '1';
           mask.style.opacity = '0';
-          buildNavigationTabs();
+          setupMenuListeners();
         }, 500);
       }
     }, 4000);
   }
 
-  // --- 4. CORE REVEAL PROCESSES ---
-  function buildNavigationTabs() {
-    const mount = document.getElementById('tabs-mount');
-    if (!mount) return;
-
-    Object.keys(REGISTRY_DATA).forEach(key => {
-      const button = document.createElement('button');
-      button.className = 'action-tab-btn';
-      button.id = `tab-btn-${key.replace(' ', '-')}`;
-      button.textContent = key;
-      button.addEventListener('click', () => activateRegistryItem(key));
-      mount.appendChild(button);
+  // --- 4. HTML BUTTON ROUTING DRIVER ---
+  function setupMenuListeners() {
+    const buttons = document.querySelectorAll('.action-tab-btn');
+    
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        const type = button.getAttribute('data-type');
+        
+        // Route Type A: Folder / URL Navigation Anchor
+        if (type === 'link') {
+          const url = button.getAttribute('data-url');
+          if (url) window.location.href = url;
+          return;
+        }
+        
+        // Route Type B: On-Screen Window Popup Dialogues
+        if (type === 'popup') {
+          const popupId = button.getAttribute('data-id');
+          openModalWindow(popupId, button);
+        }
+      });
     });
   }
 
-  // --- 5. ISOLATED MODAL INTERFACE GENERATOR / LIVE LINKS ---
-  function activateRegistryItem(key) {
-    // Roster Folder Redirection Link
-    if (key === "roster") {
-      window.location.href = "roster/";
-      return;
-    }
-
-    // Support Folder Redirection Link
-    if (key === "support") {
-      window.location.href = "support/";
-      return;
-    }
-
-    const data = REGISTRY_DATA[key];
+  // --- 5. ISOLATED MODAL INTERFACE GENERATOR ---
+  function openModalWindow(id, targetBtn) {
+    const data = POPUP_DATA[id];
     if (!data) return;
 
     document.querySelectorAll('.action-tab-btn').forEach(btn => btn.classList.remove('is-active'));
-    const targetBtn = document.getElementById(`tab-btn-${key.replace(' ', '-')}`);
     if (targetBtn) targetBtn.classList.add('is-active');
 
     const modalWrapper = document.createElement('div');
@@ -201,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.body.appendChild(modalWrapper);
 
-    if (key === "legal") {
+    if (id === "legal") {
       const dateMount = modalWrapper.querySelector('#legal-date-mount');
       if (dateMount) {
         const today = new Date();
