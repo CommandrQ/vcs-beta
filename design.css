@@ -1,5 +1,5 @@
 /* ==========================================
-   1. CORE RESETS & NATIVE SYSTEM TYPOGRAPHY
+   1. CORE RESET, TYPOGRAPHY & VARIABLES
    ========================================== */
 * {
   box-sizing: border-box;
@@ -7,125 +7,207 @@
   padding: 0;
 }
 
+:root {
+  /* Color Palette */
+  --color-bg-deep: #0b0314;       /* Deep Cosmic Purple */
+  --color-city-glow: #23123a;     /* Horizon City Purple Glow */
+  --color-primary: #ffffff;
+  --color-dark: #000000;
+  --color-accent-yellow: #ffcc00; /* Bold Yellow accent */
+  --color-accent-gold: #e5c158;   /* Light Gold */
+  --color-accent-purple: #c396ff; /* Light Accent Purple */
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: #000000;
-  color: #ffffff;
+  background-color: var(--color-bg-deep);
+  color: var(--color-primary);
+  min-height: 100vh;
   overflow-x: hidden;
 }
 
 /* ==========================================
-   2. THEME BACKGROUNDS & ANIMATIONS
+   2. NARRATIVE COSMIC ENVIRONMENT
    ========================================== */
-/* Golden Sky & Cinematic Gradients */
-.theme-golden-sky {
-  background: linear-gradient(180deg, #1a120b 0%, #120c06 50%, #000000 100%);
-  min-height: 100vh;
+/* Sky & City Glow Horizon Layer */
+.cosmic-atmosphere {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, var(--color-bg-deep) 60%, var(--color-city-glow) 100%);
+  z-index: -2;
 }
 
-/* Animated Starfield Container */
+/* Starfield with Pure CSS Comet Generation */
 .starfield-container {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
+  background-image: 
+    radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+    radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
+    radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px);
+  background-size: 550px 550px, 350px 350px, 250px 250px;
+  background-position: 0 0, 40px 60px, 130px 270px;
+  z-index: -1;
+  opacity: 0.6;
+}
+
+/* Slow comet streaking across the sky every 4 seconds */
+.starfield-container::after {
+  content: "";
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  width: 120px;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
+  transform: rotate(25deg);
+  animation: comet-streak 4s linear infinite;
+  opacity: 0;
+}
+
+@keyframes comet-streak {
+  0% {
+    top: -10%;
+    left: -10%;
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.7;
+  }
+  30% {
+    top: 60%;
+    left: 110%;
+    opacity: 0;
+  }
+  100% {
+    top: 60%;
+    left: 110%;
+    opacity: 0;
+  }
 }
 
 /* ==========================================
-   3. APPLE STANDARD UI COMPONENTS (GLASS & SQUIRCLE)
+   3. APPLE GLASS PANELS & GOLDEN PULSE
    ========================================== */
-/* Translucent Glassmorphism / Backdrop Blur */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  /* Smooth Squircle Corner Simulation */
-  border-radius: 22px; 
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
-  transition: background 0.3s ease, transform 0.2s ease;
+  background: rgba(15, 8, 28, 0.45);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px; /* Squircle aspect */
+  padding: 24px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.3s ease;
+  
+  /* Rhythmic subtle golden glow pulse animation */
+  animation: gold-pulse 6s ease-in-out infinite alternate;
 }
 
-.glass-panel:hover {
-  background: rgba(255, 255, 255, 0.09);
+@keyframes gold-pulse {
+  0% {
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4), 0 0 10px rgba(229, 193, 88, 0.05);
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+  100% {
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5), 0 0 18px rgba(229, 193, 88, 0.15);
+    border-color: rgba(229, 193, 88, 0.2);
+  }
 }
 
-/* Interactive Elements / Buttons */
-.btn-primary {
-  font-family: inherit;
-  font-weight: 500;
-  background-color: #ffffff;
-  color: #000000;
-  border: none;
-  border-radius: 12px; /* Apple-style standard button corner */
-  padding: 12px 24px;
-  cursor: pointer;
-  transition: opacity 0.2s ease;
-}
-
-.btn-primary:hover {
-  opacity: 0.9;
+.glass-panel:active, .glass-panel:hover {
+  transform: scale(0.99);
 }
 
 /* ==========================================
-   4. NAVIGATION & HUB TAB STRUCTURE
+   4. MOBILE-FIRST NARRATIVE INTERFACE SYSTEM
    ========================================== */
-.hub-nav-tabs {
-  display: flex;
-  gap: 8px;
-  padding: 6px;
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: 14px;
-  width: max-content;
-  margin: 0 auto;
-}
-
-.nav-tab {
-  padding: 8px 16px;
-  border-radius: 10px;
-  color: rgba(255, 255, 255, 0.6);
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 500;
-  transition: all 0.2s ease;
-}
-
-.nav-tab.active {
-  background: rgba(255, 255, 255, 0.15);
-  color: #ffffff;
-}
-
-/* ==========================================
-   5. RESPONSIVE LAYOUT & DESKTOP OPTIMIZATION
-   ========================================== */
-/* Main wrapper ensuring content looks natural on huge monitors */
 .app-container {
-  position: relative;
-  z-index: 1;
   width: 100%;
-  max-width: 1200px;
+  max-width: 480px; /* Locked down for an ultra-sleek, handheld mobile profile */
   margin: 0 auto;
-  padding: 20px;
+  padding: 24px 16px;
+  position: relative;
 }
 
-/* Grid system for layout scaling */
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 24px;
-  margin-top: 32px;
+.narrative-header {
+  text-align: left;
+  margin-top: 30px;
+  margin-bottom: 40px;
 }
 
-/* High-res scaling limits to keep typography crisp and un-stretched */
-@media (min-width: 1440px) {
+.narrative-header h1 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--color-primary);
+  text-transform: uppercase;
+}
+
+.narrative-header .vision-tag {
+  color: var(--color-accent-yellow);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.statement-text {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 400;
+}
+
+.accent-text-gold {
+  color: var(--color-accent-gold);
+  font-weight: 600;
+}
+
+.accent-text-purple {
+  color: var(--color-accent-purple);
+}
+
+/* Unified Layout Stack */
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Core Brand Action Button */
+.btn-action {
+  background-color: var(--color-primary);
+  color: var(--color-dark);
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: 14px;
+  padding: 16px;
+  width: 100%;
+  cursor: pointer;
+  transition: opacity 0.15s ease, transform 0.1s ease;
+  text-align: center;
+}
+
+.btn-action:active {
+  transform: scale(0.97);
+  opacity: 0.95;
+}
+
+/* Desktop-scaling fallback layer to keep it framed beautifully on larger windows */
+@media (min-width: 768px) {
   .app-container {
-    max-width: 1400px;
-    padding: 40px 0;
+    max-width: 440px;
+    margin-top: 40px;
   }
 }
