@@ -52,6 +52,22 @@
             100% { transform: translate(-800px, 400px) rotate(-30deg); opacity: 0; }
         }
 
+        /* --- FADE IN FROM BLACK MASK OVERLAY --- */
+        #entrance-fade-mask {
+            position: fixed;
+            inset: 0;
+            background-color: #000000;
+            z-index: 9999;
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.6s ease-out, visibility 0.6s ease-out;
+            pointer-events: none;
+        }
+        #entrance-fade-mask.loaded {
+            opacity: 0;
+            visibility: hidden;
+        }
+
         /* --- MAIN MOBILE-FIRST APP LAYOUT --- */
         .app-layout {
             display: flex;
@@ -60,7 +76,7 @@
             min-height: 100vh;
             z-index: 10;
             position: relative;
-            padding-bottom: 90px; /* Safe padding space for mobile bottom navigation */
+            padding-bottom: 90px;
         }
 
         /* Top Bar Branding (Mobile View Main Header) */
@@ -133,12 +149,13 @@
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
         }
-        .action-card:active { transform: scale(0.98); background: var(--glass-active); }
+        .action-card:hover { border-color: rgba(255,255,255,0.15); background: var(--glass-active); }
+        .action-card:active { transform: scale(0.98); }
         .action-card strong { font-size: 1.1rem; font-weight: 700; margin-bottom: 6px; color: #fff; }
         .action-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 14px; }
         .card-arrow { font-size: 0.85rem; font-weight: 700; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; margin-top: auto; display: flex; align-items: center; gap: 4px; }
 
-        /* --- APP-STYLE BOTTOM NAVIGATION (Mobile Default) --- */
+        /* --- APP-STYLE BOTTOM NAVIGATION --- */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -173,14 +190,13 @@
         .nav-icon { font-size: 1.3rem; transition: transform 0.3s var(--ease); }
         .nav-label { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.5px; }
 
-        /* Active Tab Accent Styling */
         .nav-tab-item.active { color: var(--gold); }
         .nav-tab-item.active .nav-icon { transform: translateY(-2px); filter: drop-shadow(0 0 8px var(--gold-glow)); }
 
-        /* Desktop Optimization Panel Media Query */
+        /* Hide desktop side-panel options by default */
         .desktop-aside { display: none; }
 
-        /* --- DESKTOP LAYOUT SHIFT (1024px and wider monitors) --- */
+        /* --- DESKTOP LAYOUT SHIFT --- */
         @media (min-width: 1024px) {
             .app-layout {
                 flex-direction: row;
@@ -190,10 +206,9 @@
                 padding-top: 40px;
                 gap: 40px;
             }
-            .top-navbar { display: none; } /* Hide mobile header */
-            .bottom-nav { display: none; }  /* Hide mobile floating deck */
+            .top-navbar { display: none; }
+            .bottom-nav { display: none; }
 
-            /* Sidebar Panel for Desktop */
             .desktop-aside {
                 display: flex;
                 flex-direction: column;
@@ -206,7 +221,6 @@
             .desktop-brand { margin-bottom: 40px; }
             .desktop-brand h2 { font-size: 1.4rem; font-weight: 800; letter-spacing: 1px; margin-bottom: 4px; }
 
-            /* Turn tabs into a premium vertical side menu list */
             .desktop-menu-list { display: flex; flex-direction: column; gap: 8px; list-style: none; }
             .desktop-menu-btn {
                 width: 100%; padding: 14px 20px; background: transparent; border: 1px solid transparent;
@@ -217,24 +231,26 @@
             .desktop-menu-btn.active { background: var(--glass); border-color: var(--glass-border); color: var(--gold); box-shadow: inset 0 0 10px rgba(212,175,55,0.05); }
 
             .screen-container { flex: 1; padding: 0; max-width: 720px; margin: 0; }
-            .feature-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Space Canvas Canvas Layer -->
+    <!-- Environment Cosmic Canvas -->
     <div id="environment"><div class="starfield"></div></div>
+
+    <!-- Entrance Transition Fade Mask -->
+    <div id="entrance-fade-mask"></div>
 
     <div class="app-layout">
         
-        <!-- MOBILE HEADER VIEW -->
+        <!-- MOBILE SCREEN HEADER -->
         <header class="top-navbar">
             <div class="brand-logo">Vanguard</div>
             <div class="brand-tag">Studio Hub</div>
         </header>
 
-        <!-- DESKTOP MODE PERSISTENT ASIDE SIDEBAR -->
+        <!-- DESKTOP SCREEN SIDEBAR -->
         <aside class="desktop-aside">
             <div class="desktop-brand">
                 <h2>Vanguard</h2>
@@ -242,31 +258,28 @@
             </div>
             <nav>
                 <ul class="desktop-menu-list">
-                    <li><button class="desktop-menu-btn active" onclick="switchView('projects', this)"><span class="nav-icon">📁</span> Projects</button></li>
-                    <li><button class="desktop-menu-btn" onclick="window.location.href='about/'"><span class="nav-icon">⚔️</span> About Us</button></li>
+                    <li><button class="desktop-menu-btn active" onclick="switchView('home', this)"><span class="nav-icon">🏠</span> Home</button></li>
+                    <li><button class="desktop-menu-btn" onclick="window.location.href='operations/'"><span class="nav-icon">🛡️</span> Operations</button></li>
+                    <li><button class="desktop-menu-btn" onclick="window.location.href='guides/'"><span class="nav-icon">📖</span> Guides</button></li>
                     <li><button class="desktop-menu-btn" onclick="switchView('support', this)"><span class="nav-icon">📥</span> Support</button></li>
-                    <li><button class="desktop-menu-btn" onclick="window.location.href='legal/'"><span class="nav-icon">📜</span> Legal</button></li>
-                    <li><button class="desktop-menu-btn" onclick="window.location.href='settings/'"><span class="nav-icon">👤</span> Account</button></li>
                 </ul>
             </nav>
         </aside>
 
-        <!-- CORE APPLICATION PANEL WORKSPACE -->
+        <!-- MAIN VIEW WORKSPACE CONSOLE -->
         <main class="screen-container">
             
-            <!-- Dashboard Greet Greeting Unit -->
             <div class="welcome-card">
                 <h1>Vanguard Studio</h1>
                 <p>Welcome back. We partner with the Vanguard Knights to build simple, transparent, and direct software modules right for Hardin County.</p>
             </div>
 
-            <!-- TAB SHEET 1: PROJECTS PANEL -->
-            <section id="view-projects" class="view-panel active">
-                <h3 class="view-title">Active Field Tools</h3>
+            <!-- VIEW PANEL 1: HOME CONTROLLER PANEL -->
+            <section id="view-home" class="view-panel active">
+                <h3 class="view-title">Active Studio Systems</h3>
                 <div class="feature-grid">
-                    <!-- Project V Card Link targeting clean local folders -->
                     <a href="project-v/" class="action-card">
-                        <strong>Project V</strong>
+                        <strong>Project V Console</strong>
                         <p>A neighborhood map module closing the tracking loop between citizen inputs and Hardin County officials. Built to process live community metric updates directly.</p>
                         <span class="card-arrow">Open Guidebook & Tracker →</span>
                     </a>
@@ -279,7 +292,7 @@
                 </div>
             </section>
 
-            <!-- TAB SHEET 2: SUPPORT PANEL -->
+            <!-- VIEW PANEL 2: SUPPORT CONTROLLER PANEL -->
             <section id="view-support" class="view-panel">
                 <h3 class="view-title">Studio Assistance Desk</h3>
                 <div class="feature-grid">
@@ -295,51 +308,47 @@
 
         <!-- APP-STYLE MOBILE NAVIGATION DECK -->
         <nav class="bottom-nav">
-            <button class="nav-tab-item active" id="m-tab-projects" onclick="switchView('projects', this)">
-                <span class="nav-icon">📁</span>
-                <span class="nav-label">Projects</span>
+            <button class="nav-tab-item active" id="m-tab-home" onclick="switchView('home', this)">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-label">Home</span>
             </button>
-            <button class="nav-tab-item" onclick="window.location.href='about/'">
-                <span class="nav-icon">⚔️</span>
-                <span class="nav-label">About</span>
+            <button class="nav-tab-item" onclick="window.location.href='operations/'">
+                <span class="nav-icon">🛡️</span>
+                <span class="nav-label">Operations</span>
+            </button>
+            <button class="nav-tab-item" onclick="window.location.href='guides/'">
+                <span class="nav-icon">📖</span>
+                <span class="nav-label">Guides</span>
             </button>
             <button class="nav-tab-item" id="m-tab-support" onclick="switchView('support', this)">
                 <span class="nav-icon">📥</span>
                 <span class="nav-label">Support</span>
             </button>
-            <button class="nav-tab-item" onclick="window.location.href='legal/'">
-                <span class="nav-icon">📜</span>
-                <span class="nav-label">Legal</span>
-            </button>
-            <button class="nav-tab-item" onclick="window.location.href='settings/'">
-                <span class="nav-icon">👤</span>
-                <span class="nav-label">Profile</span>
-            </button>
         </nav>
 
     </div>
 
-    <!-- UI DISPLAY ROUTING CONTROLLER -->
+    <!-- RESPONSIVE NAV CONNECTOR DISPATCHER -->
     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mask = document.getElementById('entrance-fade-mask');
+            requestAnimationFrame(() => {
+                mask.classList.add('loaded');
+            });
+        });
+
         function switchView(viewId, triggerElement) {
-            // 1. Hide all text tab section sheets
             document.querySelectorAll('.view-panel').forEach(panel => panel.classList.remove('active'));
-            
-            // 2. Clear out styling tags across mobile and desktop items
             document.querySelectorAll('.nav-tab-item, .desktop-menu-btn').forEach(btn => btn.classList.remove('active'));
 
-            // 3. Mount current active view selection
             document.getElementById(`view-${viewId}`).classList.add('active');
 
-            // 4. Synchronize styling states for the chosen metric
             if (triggerElement.classList.contains('desktop-menu-btn')) {
                 triggerElement.classList.add('active');
-                // Auto-illuminate matching mobile item deck link
                 const syncMobile = document.getElementById(`m-tab-${viewId}`);
                 if (syncMobile) syncMobile.classList.add('active');
             } else {
                 triggerElement.classList.add('active');
-                // Auto-illuminate matching desktop list menu link
                 const menuButtons = document.querySelectorAll('.desktop-menu-btn');
                 menuButtons.forEach(btn => {
                     if (btn.innerText.toLowerCase().includes(viewId)) btn.classList.add('active');
@@ -347,7 +356,6 @@
             }
         }
 
-        /* --- BACKGROUND COSMIC EFFECT ENGINE --- */
         function spawnComet() {
             const container = document.getElementById('environment');
             const comet = document.createElement('div');
