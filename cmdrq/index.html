@@ -5,6 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>CMDR Q // Gateway</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* Special text gradient coloring mapping to your new colors for the opening text */
+    .glow-text {
+      color: var(--stark-white);
+      text-shadow: 0 0 20px rgba(179, 157, 219, 0.6), 0 0 40px rgba(129, 212, 250, 0.3);
+    }
+  </style>
 </head>
 <body class="cinematic-lock">
 
@@ -28,23 +35,21 @@
   </div>
 
   <script>
-    // Cinematic Timeline Sequencer
     document.addEventListener('DOMContentLoaded', () => {
       const scene1 = document.getElementById('scene-1');
       const scene2 = document.getElementById('scene-2');
       const introViewport = document.getElementById('intro-viewport');
 
-      // Phase 1: Cut to Scene 2 after 3 seconds
+      // Phase 1: Shift focus to identity tag after 3 seconds
       setTimeout(() => {
         scene1.classList.remove('active');
         scene2.classList.add('active');
       }, 3000);
 
-      // Phase 2: Dissolve out and physically navigate away after 6.5 seconds
+      // Phase 2: Fade the intro veil and migrate browser frame after 6.5 seconds
       setTimeout(() => {
         introViewport.classList.add('dissolve-out');
         
-        // Let the fade transition finish, then change pages
         setTimeout(() => {
           window.location.href = 'home.html';
         }, 800);
