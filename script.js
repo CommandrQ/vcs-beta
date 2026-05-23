@@ -1,9 +1,9 @@
 /**
- * VANGUARD CITIZEN SERVICES — CORE SYSTEM AUTOMATION
+ * VANGUARD CITIZEN SERVICES — MAIN SOFTWARE ENGINE
  * Path: script.js
  */
 
-// --- 1. DEEP SPACE BACKDROP BACKGROUND ENGINE ---
+// --- 1. ATMOSPHERIC BACKGROUND SYSTEM ---
 class DeepAtmosphere {
   constructor(canvasId) {
     this.canvas = document.getElementById(canvasId);
@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (hasVisited) {
     if (introStage) introStage.remove();
     mainContent.style.opacity = '1';
-    initializeCoreFeatures();
+    buildNavigationTabs();
     
     if (mask) {
       requestAnimationFrame(() => {
@@ -140,39 +140,13 @@ document.addEventListener('DOMContentLoaded', () => {
           introStage.remove();
           mainContent.style.opacity = '1';
           mask.style.opacity = '0';
-          initializeCoreFeatures();
+          buildNavigationTabs();
         }, 500);
       }
     }, 4000);
   }
 
   // --- 4. CORE REVEAL PROCESSES ---
-  function initializeCoreFeatures() {
-    fetchAnnouncements();
-    buildNavigationTabs();
-  }
-
-  function fetchAnnouncements() {
-    const mount = document.getElementById('announcements-mount');
-    fetch('announcements.json')
-      .then(res => { if (!res.ok) throw new Error(); return res.json(); })
-      .then(data => {
-        mount.innerHTML = '';
-        data.announcements.forEach(item => {
-          const block = document.createElement('div');
-          block.className = 'announcement-node';
-          block.innerHTML = `
-            <div class="announcement-meta">${item.date} // ${item.tag}</div>
-            <div class="announcement-txt">${item.message}</div>
-          `;
-          mount.appendChild(block);
-        });
-      })
-      .catch(() => {
-        mount.innerHTML = '<p class="system-message">Secure connections verified. Local data lines online.</p>';
-      });
-  }
-
   function buildNavigationTabs() {
     const mount = document.getElementById('tabs-mount');
     if (!mount) return;
@@ -197,18 +171,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const data = REGISTRY_DATA[key];
     if (!data) return;
 
-    // Highlight the active menu layout item button
     document.querySelectorAll('.action-tab-btn').forEach(btn => btn.classList.remove('is-active'));
     const targetBtn = document.getElementById(`tab-btn-${key.replace(' ', '-')}`);
     if (targetBtn) targetBtn.classList.add('is-active');
 
-    // Create full isolated curtain element layer to avoid blur propagation bleed
     const modalWrapper = document.createElement('div');
     modalWrapper.className = 'mobile-backdrop-blur';
     modalWrapper.style.opacity = '0';
     modalWrapper.style.transition = 'opacity 0.25s ease-out';
 
-    // Generate inner crystal-clear glass dialogue card block
     modalWrapper.innerHTML = `
       <div class="vanguard-modal-window vanguard-panel">
         <button class="mobile-close-overlay-btn" id="modal-close-trigger" aria-label="Close panel">&times;</button>
@@ -219,7 +190,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.body.appendChild(modalWrapper);
 
-    // Injected dynamic updated stamp directly inside legal operations sequence 
     if (key === "legal") {
       const dateMount = modalWrapper.querySelector('#legal-date-mount');
       if (dateMount) {
@@ -229,12 +199,10 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // Smooth entry fade
     requestAnimationFrame(() => {
       modalWrapper.style.opacity = '1';
     });
 
-    // Cleanup routine to remove modal window elements from layout thread upon closing
     const closeOverlay = () => {
       modalWrapper.style.opacity = '0';
       if (targetBtn) targetBtn.classList.remove('is-active');
@@ -243,7 +211,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 250);
     };
 
-    // Close mechanics bound cleanly to background tap and cross-trigger buttons
     modalWrapper.addEventListener('click', (e) => {
       if (e.target === modalWrapper) closeOverlay();
     });
