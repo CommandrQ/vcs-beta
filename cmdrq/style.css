@@ -1,49 +1,51 @@
 /**
- * CMDR Q PERSONAL PLATFORM — SPECIFIC STYLESHEET
+ * CMDR Q PERSONAL PLATFORM — THE HIDEOUT AESTHETIC
  * Path: cmdrq/style.css
  */
 
 :root {
-  --deep-abyss: #030307;
+  --light-purple: #e0c3fc;
+  --light-blue: #8ecae6;
+  --deep-space: #0f0c29;
+  --glass-bg: rgba(15, 15, 25, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.15);
   --stark-white: #ffffff;
-  --light-purple: #b39ddb;
-  --light-blue: #81d4fa;
-  --glass-fill: rgba(255, 255, 255, 0.04);
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --window-fill: rgba(3, 3, 7, 0.75); /* Translucent window backdrop */
   --cinema-speed: cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 /* Master Viewport Lockdown */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
-body, html {
-  background-color: var(--deep-abyss);
-  color: var(--stark-white);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  height: 100dvh;
-  width: 100vw;
-  overflow: hidden;
-  position: fixed;
-}
-
-/* --- CANVAS BACKGROUND ANCHOR --- */
-#starfield-wallpaper {
-  position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100dvh;
-  z-index: 1;
-  pointer-events: none;
-}
-
-/* Scroll Layer Hooks */
-.scrollable-interior {
-  overflow-y: auto !important;
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
-.scrollable-interior::-webkit-scrollbar { width: 3px; }
-.scrollable-interior::-webkit-scrollbar-thumb { background: rgba(179, 157, 219, 0.3); border-radius: 2px; }
+
+body {
+  background: linear-gradient(180deg, #1a1a2e 0%, #2b1055 70%, #7597de 100%);
+  background-attachment: fixed;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  color: var(--stark-white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100dvh;
+}
+
+/* --- CSS BACKGROUND MATRIX ANIMATION --- */
+#starfield { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+.stars { 
+  position: absolute; 
+  width: 2px; 
+  height: 2px; 
+  background: transparent; 
+  box-shadow: 10vw 20vh #fff, 35vw 45vh #fff, 80vw 10vh #fff, 25vw 90vh #fff, 60vw 80vh #fff, 45vw 15vh #fff;
+  animation: moveStars 150s linear infinite; 
+}
+@keyframes moveStars { from { transform: translateY(0); } to { transform: translateY(-2000px); } }
 
 /* --- THE CINEMATIC VEIL (Letterboxing) --- */
 .cinema-bar {
@@ -53,105 +55,113 @@ body, html {
   height: 12dvh;
   background: #000000;
   z-index: 10000;
+  pointer-events: none;
 }
-.cinema-bar.top { top: 0; border-bottom: 1px solid rgba(179, 157, 219, 0.05); }
-.cinema-bar.bottom { bottom: 0; border-top: 1px solid rgba(129, 212, 250, 0.05); }
+.cinema-bar.top { top: 0; border-bottom: 1px solid rgba(224, 195, 252, 0.05); }
+.cinema-bar.bottom { bottom: 0; border-top: 1px solid rgba(142, 202, 230, 0.05); }
 
-/* --- FLOATING TRANSLUCENT WINDOW MODULE --- */
-.core-interface {
-  position: relative;
+/* --- HUB CONTAINER LAYOUT SYSTEM --- */
+.hub-container {
+  width: 90%;
+  max-width: 500px;
   z-index: 10;
-  opacity: 0;
-  transform: translate3d(0, 12px, 0);
-  transition: opacity 0.8s var(--cinema-speed), transform 0.8s var(--cinema-speed);
-  
-  /* Creates space for the window to float nicely between the cinematic bars */
-  height: calc(100dvh - 24dvh);
-  top: 12dvh;
-  
-  width: calc(100% - 32px);
-  max-width: 420px;
-  margin: 0 auto;
-  padding: 32px 20px;
+  padding: calc(14dvh + 20px) 0 calc(14dvh + 20px) 0;
   display: flex;
   flex-direction: column;
-  
-  /* Glassmorphism Window Styling */
-  background-color: var(--window-fill);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(179, 157, 219, 0.15);
-  border-radius: 24px;
-  
-  /* Cosmic ambient shadow styling */
-  box-shadow: 
-    0 20px 50px rgba(0, 0, 0, 0.5),
-    0 0 30px rgba(179, 157, 219, 0.05);
-}
-
-.core-interface.reveal-ready { opacity: 1; transform: translate3d(0, 0, 0); }
-
-/* Typography Block Formatting */
-.portal-header { text-align: center; margin-bottom: 24px; flex: 0 0 auto; }
-.portal-header h1 { font-size: 1.8rem; font-weight: 300; letter-spacing: 0.05em; text-transform: uppercase; color: var(--light-purple); text-shadow: 0 0 15px rgba(179, 157, 219, 0.2); }
-.subtitle { font-size: 0.95rem; color: var(--light-blue); font-weight: 500; line-height: 1.35; margin-top: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
-.blurb-text { font-size: 0.9rem; line-height: 1.5; color: var(--stark-white); margin-top: 12px; padding: 0 4px; }
-
-/* Link Deck Track Layout */
-.links-scroll-track { flex: 1 1 auto; display: flex; flex-direction: column; gap: 10px; padding-right: 2px; }
-
-/* Standard Bio Link Card Styling */
-.bio-link-card {
-  background: var(--glass-fill);
-  border: 1px solid var(--glass-border);
-  border-radius: 16px;
-  padding: 14px 18px;
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-  text-decoration: none;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.bio-link-card:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(129, 212, 250, 0.4);
-  transform: translateY(-1px);
+  text-align: center;
+  margin: auto 0;
 }
 
-.card-interior { display: flex; flex-direction: column; text-align: left; gap: 4px; }
-.card-title { font-size: 1.05rem; font-weight: 600; color: var(--stark-white); }
-.card-desc { font-size: 0.85rem; color: var(--stark-white); line-height: 1.3; font-weight: 400; }
-.action-arrow { color: var(--stark-white); font-size: 1.1rem; transition: all 0.2s ease; }
-.bio-link-card:hover .action-arrow { color: var(--light-blue); transform: translateX(2px); }
-
-/* --- COMMUNITY VOICE STYLING (STATIC HIGHLIGHT) --- */
-.action-pulse-btn {
-  background: rgba(179, 157, 219, 0.03);
-  border-color: rgba(179, 157, 219, 0.4);
-  box-shadow: 0 0 12px rgba(179, 157, 219, 0.05);
+/* Shimmer Sheen Header Text */
+.hub-title { 
+  font-size: clamp(2.2rem, 7vw, 3rem); 
+  font-weight: bold; 
+  background: linear-gradient(to right, var(--light-blue) 20%, #fff 40%, #fff 60%, var(--light-blue) 80%);
+  background-size: 200% auto; 
+  -webkit-background-clip: text; 
+  -webkit-text-fill-color: transparent;
+  animation: sheen 3s linear infinite;
+  margin-bottom: 5px;
 }
-.action-pulse-btn .card-title { color: var(--light-purple); }
-.action-pulse-btn:hover { background: rgba(179, 157, 219, 0.08); border-color: var(--light-purple); }
+@keyframes sheen { to { background-position: 200% center; } }
 
-/* About Page Custom Timeline Elements Map Overrides */
-.timeline-node { border-left: 2px solid var(--light-purple) !important; }
-.node-era { color: var(--light-blue) !important; }
-
-/* Navigation Return Track */
-.portal-footer { text-align: center; padding-top: 16px; flex: 0 0 auto; }
-.hub-return-link { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--stark-white); text-decoration: none; font-weight: 600; transition: color 0.2s ease; }
-.hub-return-link:hover { color: var(--light-blue); }
-
-@keyframes trackOut {
-  0% { letter-spacing: 0.15em; opacity: 0; filter: blur(4px); }
-  15% { opacity: 1; filter: blur(0); }
-  100% { letter-spacing: 0.35em; opacity: 0.8; }
+/* --- GLASSMORPHISM CORE CARD --- */
+.hub-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 28px;
+  padding: 35px 30px; 
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  width: 100%;
+  margin-bottom: 25px;
+  opacity: 0;
+  transform: translate3d(0, 15px, 0);
+  transition: opacity 0.8s var(--cinema-speed), transform 0.8s var(--cinema-speed);
 }
+.hub-card.reveal-ready { opacity: 1; transform: translate3d(0, 0, 0); }
 
-/* Tablet / Desktop View Enhancements */
-@media (min-width: 768px) {
-  .core-interface { 
-    max-width: 440px; 
-    height: calc(100dvh - 24dvh);
-  }
+/* Centered Avatar Frame */
+.profile-container { display: flex; justify-content: center; align-items: center; width: 100%; margin-bottom: 15px; }
+.profile-container img { width: 110px; height: 110px; border-radius: 50%; object-fit: cover; border: 2px solid var(--glass-border); filter: drop-shadow(0 0 12px rgba(142, 202, 230, 0.3)); }
+
+/* Social Matrix Alignment */
+.social-matrix { display: flex; justify-content: center; align-items: center; gap: 22px; margin-bottom: 25px; width: 100%; }
+.social-glyph { color: var(--light-blue); font-size: 1.4rem; transition: transform 0.3s ease, color 0.3s ease, filter 0.3s ease; text-decoration: none; }
+.social-glyph:hover { color: var(--light-purple); transform: scale(1.15); filter: drop-shadow(0 0 8px var(--light-purple)); }
+
+.greeting { font-size: 1.25rem; color: var(--stark-white); margin-bottom: 15px; }
+.greeting strong { color: var(--stark-white); text-shadow: 0 0 10px rgba(255, 255, 255, 0.2); }
+
+/* Typography Formatting */
+.blurb-text { font-size: 0.95rem; line-height: 1.6; color: rgba(255, 255, 255, 0.75); margin-bottom: 25px; text-align: center; }
+h2 { color: var(--light-blue); margin-top: 25px; margin-bottom: 20px; font-size: 1rem; text-transform: uppercase; letter-spacing: 3px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; text-align: left; }
+
+/* Navigation Track Grid */
+.menu-grid { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+
+/* --- CORE INTERFACE BUTTONS --- */
+.btn {
+  width: 100%; padding: 15px; border-radius: 50px; border: 1px solid var(--light-blue); 
+  background: transparent; color: var(--light-blue); font-weight: bold; 
+  cursor: pointer; transition: 0.3s; text-transform: uppercase; font-size: 0.8rem;
+  text-decoration: none; display: inline-block; letter-spacing: 1px; text-align: center;
 }
+.btn:hover { background: var(--light-blue); color: var(--deep-space); box-shadow: 0 0 15px var(--light-blue); }
+
+/* Accent Highlights for Special Targets */
+.btn-accent { border-color: var(--light-purple); color: var(--light-purple); }
+.btn-accent:hover { background: var(--light-purple); color: var(--deep-space); box-shadow: 0 0 15px var(--light-purple); }
+
+/* Description Strings Below Buttons (Forced Pure Static White) */
+.btn-subtext { font-size: 0.82rem; color: var(--stark-white); text-align: center; padding: 0 16px 8px 16px; line-height: 1.4; display: block; font-weight: 400; opacity: 0.85; }
+
+/* Bottom Action Pipelines */
+.hub-return-link { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--light-blue); opacity: 0.8; text-decoration: none; font-weight: 600; transition: opacity 0.2s ease; }
+.hub-return-link:hover { opacity: 1; }
+
+.system-footer { 
+  z-index: 10; padding: 20px 20px 30px; text-align: center; color: var(--stark-white); 
+  font-size: 0.7rem; letter-spacing: 1.5px; text-transform: uppercase; 
+  animation: pulse 4s ease-in-out infinite; width: 100%; 
+  margin-top: auto; 
+}
+@keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.8; } }
+
+/* Cinematic Transitions Map */
+.intro-canvas { position: fixed; inset: 0; background: #000; z-index: 99999; display: flex; justify-content: center; align-items: center; opacity: 1; transition: opacity 1s ease-in-out; pointer-events: none; }
+.cinematic-scene { position: absolute; opacity: 0; transform: scale(0.96); transition: opacity 0.8s ease-in-out, transform 1.2s var(--cinema-speed); display: flex; flex-direction: column; align-items: center; width: 100%; text-align: center; }
+.cinematic-scene.active { opacity: 1; transform: scale(1); }
+.cinematic-text { font-size: 1.5rem; font-weight: 200; letter-spacing: 0.25em; text-transform: uppercase; color: var(--stark-white); }
+.tracking-out { animation: trackOut 3.2s ease-out forwards; }
+.dissolve-out { opacity: 0 !important; }
+@keyframes trackOut { 0% { letter-spacing: 0.15em; opacity: 0; filter: blur(4px); } 15% { opacity: 1; filter: blur(0); } 100% { letter-spacing: 0.35em; opacity: 0.8; } }
+
+/* About Page Custom Timeline Overrides */
+.narrative-block { display: flex; flex-direction: column; gap: 20px; margin-top: 16px; text-align: left; }
+.timeline-node { border-left: 2px solid var(--light-purple); padding-left: 16px; margin-left: 4px; }
+.node-era { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--light-blue); font-weight: 700; margin-bottom: 4px; }
+.node-title { font-size: 1.1rem; font-weight: 600; color: var(--stark-white); margin-bottom: 6px; }
+.node-text { font-size: 0.9rem; line-height: 1.5; color: rgba(255, 255, 255, 0.85); }
