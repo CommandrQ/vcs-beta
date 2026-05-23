@@ -9,13 +9,14 @@
 
 :root {
   /* Color Palette */
-  --color-bg-deep: #0b0314;       /* Deep Cosmic Purple */
-  --color-city-glow: #23123a;     /* Horizon City Purple Glow */
+  --color-bg-deep: #07020d;       /* Midnight Galaxy Depth */
+  --color-purple-cosmic: #1a0b2e; /* Deep Purple Transition */
+  --color-gold-glow: #ffb700;     /* Intense Golden Base Horizon */
   --color-primary: #ffffff;
   --color-dark: #000000;
-  --color-accent-yellow: #ffcc00; /* Bold Yellow accent */
-  --color-accent-gold: #e5c158;   /* Light Gold */
-  --color-accent-purple: #c396ff; /* Light Accent Purple */
+  --color-accent-yellow: #ffcc00; 
+  --color-accent-gold: #e5c158;   
+  --color-accent-purple: #c396ff; 
 }
 
 body {
@@ -24,24 +25,29 @@ body {
   background-color: var(--color-bg-deep);
   color: var(--color-primary);
   min-height: 100vh;
-  overflow-x: hidden;
+  overflow: hidden; /* Keeps loading sequence tightly contained */
 }
 
 /* ==========================================
-   2. NARRATIVE COSMIC ENVIRONMENT
+   2. REVERSED ENVIRONMENT: GOLDEN BASE TO GALAXY
    ========================================== */
-/* Sky & City Glow Horizon Layer */
+/* Bright golden glow from the bottom blending up into purple/black cosmos */
 .cosmic-atmosphere {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(180deg, var(--color-bg-deep) 60%, var(--color-city-glow) 100%);
+  background: linear-gradient(180deg, 
+    var(--color-bg-deep) 0%, 
+    var(--color-purple-cosmic) 50%, 
+    rgba(26, 11, 46, 0.9) 75%,
+    rgba(255, 183, 0, 0.25) 100%
+  );
   z-index: -2;
 }
 
-/* Starfield with Pure CSS Comet Generation */
+/* Ultra-fine, shrunken galaxy starfield layers */
 .starfield-container {
   position: fixed;
   top: 0;
@@ -49,165 +55,131 @@ body {
   width: 100%;
   height: 100%;
   background-image: 
-    radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
-    radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
-    radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px);
-  background-size: 550px 550px, 350px 350px, 250px 250px;
-  background-position: 0 0, 40px 60px, 130px 270px;
+    radial-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.1) 0.5px, transparent 15px),
+    radial-gradient(rgba(255,255,255,0.6), rgba(255,255,255,0.05) 0.5px, transparent 20px),
+    radial-gradient(rgba(255,255,255,0.4), transparent 1px, transparent 25px);
+  background-size: 300px 300px, 200px 200px, 150px 150px;
+  background-position: 0 0, 30px 40px, 70px 120px;
   z-index: -1;
-  opacity: 0.6;
+  opacity: 0.75;
 }
 
-/* Slow comet streaking across the sky every 4 seconds */
+/* Comet execution cycling perfectly every 4 seconds */
 .starfield-container::after {
   content: "";
   position: absolute;
-  top: -10%;
-  left: -10%;
-  width: 120px;
-  height: 2px;
-  background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%);
-  transform: rotate(25deg);
-  animation: comet-streak 4s linear infinite;
+  top: -5%;
+  left: -5%;
+  width: 100px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0) 100%);
+  transform: rotate(30deg);
+  animation: comet-four-seconds 4s cubic-bezier(0.25, 1, 0.5, 1) infinite;
   opacity: 0;
 }
 
-@keyframes comet-streak {
+@keyframes comet-four-seconds {
   0% {
-    top: -10%;
-    left: -10%;
+    top: -5%;
+    left: -5%;
     opacity: 0;
   }
-  10% {
-    opacity: 0.7;
+  15% {
+    opacity: 0.8;
   }
-  30% {
-    top: 60%;
-    left: 110%;
+  45% {
+    top: 70%;
+    left: 105%;
     opacity: 0;
   }
   100% {
-    top: 60%;
-    left: 110%;
+    top: 70%;
+    left: 105%;
     opacity: 0;
   }
 }
 
 /* ==========================================
-   3. APPLE GLASS PANELS & GOLDEN PULSE
+   3. APPLE SQUIRCLE GRAPHICS & CORE TIMING
    ========================================== */
-.glass-panel {
-  background: rgba(15, 8, 28, 0.45);
-  backdrop-filter: blur(25px);
-  -webkit-backdrop-filter: blur(25px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 24px; /* Squircle aspect */
-  padding: 24px;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
-  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.3s ease;
-  
-  /* Rhythmic subtle golden glow pulse animation */
-  animation: gold-pulse 6s ease-in-out infinite alternate;
-}
-
-@keyframes gold-pulse {
-  0% {
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4), 0 0 10px rgba(229, 193, 88, 0.05);
-    border-color: rgba(255, 255, 255, 0.08);
-  }
-  100% {
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5), 0 0 18px rgba(229, 193, 88, 0.15);
-    border-color: rgba(229, 193, 88, 0.2);
-  }
-}
-
-.glass-panel:active, .glass-panel:hover {
-  transform: scale(0.99);
-}
-
-/* ==========================================
-   4. MOBILE-FIRST NARRATIVE INTERFACE SYSTEM
-   ========================================== */
+/* Screen Container sized for high-end modern mobile profiles */
 .app-container {
   width: 100%;
-  max-width: 480px; /* Locked down for an ultra-sleek, handheld mobile profile */
+  max-width: 440px;
   margin: 0 auto;
-  padding: 24px 16px;
+  padding: 24px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   position: relative;
 }
 
-.narrative-header {
-  text-align: left;
-  margin-top: 30px;
-  margin-bottom: 40px;
+/* Smooth full-screen presentation fadeout logic */
+.loading-viewport {
+  animation: view-fadeout 0.5s ease 3.5s forwards;
 }
 
-.narrative-header h1 {
-  font-size: 2.2rem;
+@keyframes view-fadeout {
+  0% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(0.98); }
+}
+
+/* Pulsing Brand Logo Icon Layout */
+.logo-shield {
+  width: 86px;
+  height: 86px;
+  background: rgba(15, 8, 28, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 22px; /* Smooth Squircle Simulation */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 32px;
+  font-size: 2rem;
   font-weight: 800;
-  letter-spacing: -0.04em;
-  color: var(--color-primary);
-  text-transform: uppercase;
-}
-
-.narrative-header .vision-tag {
   color: var(--color-accent-yellow);
-  font-size: 0.85rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  margin-bottom: 6px;
-  display: block;
+  animation: logo-glow-pulse 3s ease-in-out infinite alternate;
 }
 
-.statement-text {
+@keyframes logo-glow-pulse {
+  0% {
+    box-shadow: 0 0 15px rgba(255, 183, 0, 0.1), inset 0 0 10px rgba(255,255,255,0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+  100% {
+    box-shadow: 0 0 30px rgba(255, 183, 0, 0.3), inset 0 0 15px rgba(255, 183, 0, 0.1);
+    border-color: rgba(255, 183, 0, 0.4);
+  }
+}
+
+/* Narrative Identity Presentation */
+.narrative-identity {
+  text-align: center;
+  max-width: 340px;
+}
+
+.narrative-identity h1 {
+  font-size: 2.4rem;
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  background: linear-gradient(180deg, #ffffff 0%, rgba(255,255,255,0.7) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.narrative-identity p {
   font-size: 1.05rem;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.85);
-  font-weight: 400;
+  color: rgba(255, 255, 255, 0.75);
 }
 
-.accent-text-gold {
+.gold-signature {
   color: var(--color-accent-gold);
   font-weight: 600;
-}
-
-.accent-text-purple {
-  color: var(--color-accent-purple);
-}
-
-/* Unified Layout Stack */
-.stack {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-/* Core Brand Action Button */
-.btn-action {
-  background-color: var(--color-primary);
-  color: var(--color-dark);
-  font-family: inherit;
-  font-weight: 600;
-  font-size: 0.95rem;
-  border: none;
-  border-radius: 14px;
-  padding: 16px;
-  width: 100%;
-  cursor: pointer;
-  transition: opacity 0.15s ease, transform 0.1s ease;
-  text-align: center;
-}
-
-.btn-action:active {
-  transform: scale(0.97);
-  opacity: 0.95;
-}
-
-/* Desktop-scaling fallback layer to keep it framed beautifully on larger windows */
-@media (min-width: 768px) {
-  .app-container {
-    max-width: 440px;
-    margin-top: 40px;
-  }
 }
