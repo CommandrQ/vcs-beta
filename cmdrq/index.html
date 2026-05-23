@@ -1,60 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>CMDR Q // Gateway</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    /* Special text gradient coloring mapping to your new colors for the opening text */
-    .glow-text {
-      color: var(--stark-white);
-      text-shadow: 0 0 20px rgba(179, 157, 219, 0.6), 0 0 40px rgba(129, 212, 250, 0.3);
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CMDR Q // Gateway</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="cinematic-lock">
+<body class="cinematic-body">
 
-  <!-- Cinematic Letterbox Bars (Top and Bottom) -->
-  <div class="cinema-bar top"></div>
-  <div class="cinema-bar bottom"></div>
-
-  <!-- Intro Stage Container -->
-  <div id="intro-viewport" class="intro-canvas">
-    
-    <!-- Scene 1: The Philosophy Title -->
-    <div id="scene-1" class="cinematic-scene active">
-      <h2 class="cinematic-text tracking-out">Unfiltered Narratives.</h2>
-    </div>
-
-    <!-- Scene 2: The Identity Reveal -->
-    <div id="scene-2" class="cinematic-scene">
-      <h2 class="cinematic-text glow-text">COMMANDER Q // PLATFORM</h2>
-    </div>
-
-  </div>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const scene1 = document.getElementById('scene-1');
-      const scene2 = document.getElementById('scene-2');
-      const introViewport = document.getElementById('intro-viewport');
-
-      // Phase 1: Shift focus to identity tag after 3 seconds
-      setTimeout(() => {
-        scene1.classList.remove('active');
-        scene2.classList.add('active');
-      }, 3000);
-
-      // Phase 2: Fade the intro veil and migrate browser frame after 6.5 seconds
-      setTimeout(() => {
-        introViewport.classList.add('dissolve-out');
+    <!-- Intro Stage Container -->
+    <div id="intro-viewport" class="intro-canvas">
         
-        setTimeout(() => {
-          window.location.href = 'home.html';
-        }, 800);
-      }, 6500);
-    });
-  </script>
+        <!-- Scene 1: The Philosophy Title -->
+        <div id="scene-1" class="cinematic-scene active">
+            <h2 class="cinematic-text tracking-out">Unfiltered Narratives.</h2>
+        </div>
+
+        <!-- Scene 2: The Identity Reveal -->
+        <div id="scene-2" class="cinematic-scene">
+            <h2 class="cinematic-text glow-text">COMMANDER Q // PLATFORM</h2>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const scene1 = document.getElementById('scene-1');
+            const scene2 = document.getElementById('scene-2');
+            const introViewport = document.getElementById('intro-viewport');
+
+            setTimeout(() => {
+                scene1.classList.remove('active');
+                scene2.classList.add('active');
+            }, 3000);
+
+            setTimeout(() => {
+                introViewport.classList.add('dissolve-out');
+                setTimeout(() => { window.location.href = 'home.html'; }, 800);
+            }, 6500);
+        });
+    </script>
 </body>
 </html>
