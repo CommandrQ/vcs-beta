@@ -35,55 +35,49 @@
       <h1>Commander Q</h1>
       <p class="subtitle">Exploring the narratives that power our world</p>
       <p class="blurb-text">
-        Welcome to the control deck. Dive in and explore the unique narratives, operations, and independent creative projects I am currently developing.
+        Hey there! Welcome to the control deck. I am incredibly glad you are here! Take a look around and explore the unique narratives, community operations, and creative passion projects I am currently cooking up. Let’s build something meaningful together!
       </p>
     </header>
     
     <!-- High-Impact Scrolling Link Matrix Deck -->
     <section class="links-scroll-track scrollable-interior">
       
-      <!-- ======================================================== -->
-      <!-- TO ADD MORE LINKS AT ANY TIME: COPY AND PASTE A LINK CARD BLOCK -->
-      <!-- ======================================================== -->
-      
+      <!-- LINK CARD 1: ABOUT ME (Always First) -->
+      <a href="about/" class="bio-link-card">
+        <div class="card-interior">
+          <span class="card-title">About Me</span>
+          <span class="card-desc">My background, service history, and clear perspective</span>
+        </div>
+        <div class="action-arrow">→</div>
+      </a>
+
       <!-- HIGHLIGHTED ACTION LINK: COMMUNITY VOICE -->
       <a href="#" class="bio-link-card action-pulse-btn">
         <div class="card-interior">
           <span class="card-title">Community Voice</span>
-          <span class="card-desc">Active independent broadcast array</span>
+          <span class="card-desc">Our active independent live broadcast array</span>
         </div>
         <div class="action-arrow">→</div>
       </a>
 
-      <!-- LINK CARD: ABOUT ME -->
-      <a href="#" class="bio-link-card">
-        <div class="card-interior">
-          <span class="card-title">About Me</span>
-          <span class="card-desc">Background, service history, and perspective</span>
-        </div>
-        <div class="action-arrow">→</div>
-      </a>
-
-      <!-- LINK CARD: DREAMSCAPE DRIFT -->
-      <a href="#" class="bio-link-card">
+      <!-- LINK CARD 3: DREAMSCAPE DRIFT -->
+      <a href="dreamscapedrift/" class="bio-link-card">
         <div class="card-interior">
           <span class="card-title">Dreamscape Drift</span>
-          <span class="card-desc">Project mapping archive entries</span>
+          <span class="card-desc">Project data-mapping and deep creative archives</span>
         </div>
         <div class="action-arrow">→</div>
       </a>
 
-      <!-- LINK CARD: MUSIC PLAYER -->
-      <a href="#" class="bio-link-card">
+      <!-- LINK CARD 4: MUSIC PLAYER -->
+      <a href="musicplayer/" class="bio-link-card">
         <div class="card-interior">
           <span class="card-title">Music Player</span>
-          <span class="card-desc">Curated atmospheric audio loops</span>
+          <span class="card-desc">Curated atmospheric soundtracks and background loops</span>
         </div>
         <div class="action-arrow">→</div>
       </a>
 
-      <!-- ======================================================== -->
-      
     </section>
 
     <!-- Navigation Return Anchor -->
@@ -99,13 +93,11 @@
       const introViewport = document.getElementById('intro-viewport');
       const portalContent = document.getElementById('portal-content');
 
-      // Stage Phase 1: Shift focus from first line to identity tag
       setTimeout(() => {
         scene1.classList.remove('active');
         scene2.classList.add('active');
       }, 3000);
 
-      // Stage Phase 2: Fade the intro veil completely
       setTimeout(() => {
         introViewport.classList.add('dissolve-out');
         
