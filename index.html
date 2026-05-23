@@ -36,14 +36,10 @@
     <section class="vanguard-panel announcements-panel-wrapper">
       <h2 class="panel-label">Guild Announcements</h2>
       <div id="announcements-mount" class="announcements-container scrollable-interior">
-        
-        <!-- START ANNOUNCEMENT ITEM -->
         <div class="announcement-node">
           <div class="announcement-meta">MAY 23, 2026 // SITE UPDATE</div>
           <div class="announcement-txt">We are currently making improvements to our website. We are updating the system layout to make sure it works perfectly on all mobile phones and screens.</div>
         </div>
-        <!-- END ANNOUNCEMENT ITEM -->
-
       </div>
     </section>
 
@@ -52,10 +48,30 @@
       <h2 class="panel-label">Operations Registry</h2>
       
       <div class="split-layout-engine">
-        <!-- Left Hand Selection Column -->
-        <div id="tabs-mount" class="tabs-stacked-track"></div>
+        <!-- Menu Button Deck -->
+        <div id="tabs-mount" class="tabs-stacked-track">
+          
+          <!-- ========================================================================= -->
+          <!-- HOW TO ADD MENU ITEMS:                                                    -->
+          <!-- Type 1 (Popup Window):   use data-type="popup" data-id="about-us"          -->
+          <!-- Type 2 (Links/Folders): use data-type="link"  data-url="roster/"           -->
+          <!-- ========================================================================= -->
+          
+          <button class="action-tab-btn" data-type="popup" data-id="about-us">About Us</button>
+          
+          <button class="action-tab-btn" data-type="link" data-url="roster/">Roster</button>
+          
+          <button class="action-tab-btn" data-type="popup" data-id="legal">Legal</button>
+          
+          <button class="action-tab-btn" data-type="link" data-url="support/">Support</button>
+          
+          <!-- Example of an External Link (Just copy, paste, and change the data-url) -->
+          <!-- <button class="action-tab-btn" data-type="link" data-url="https://google.com">External Link</button> -->
+
+          <!-- ========================================================================= -->
+        </div>
         
-        <!-- Right Hand Narrative Content Window -->
+        <!-- Right Hand Narrative Content Window Placeholder -->
         <div id="desktop-content-window" class="narrative-pane"></div>
       </div>
     </section>
