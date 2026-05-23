@@ -3,64 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Vanguard</title>
+  <title>Vanguard — Initialization</title>
   <!-- Link to global design rules -->
   <link rel="stylesheet" href="design.css">
+  
+  <!-- Automated Narrative Script Routing -->
+  <script>
+    setTimeout(function() {
+      window.location.href = 'home/';
+    }, 4000); // Triggers transit sequence exactly at 4000ms
+  </script>
 </head>
 <body>
 
-  <!-- Layered environment: Purple depth with shifting city glow -->
+  <!-- Layered Environment: Bottom gold aura transitioning up into star systems -->
   <div class="cosmic-atmosphere"></div>
-  
-  <!-- Starfield container handling the 4-second comet cycles -->
   <div class="starfield-container"></div>
 
-  <!-- Handheld optimized UI block -->
-  <div class="app-container">
+  <!-- Main interactive wrapper containing core identity layout animations -->
+  <div class="app-container loading-viewport">
     
-    <!-- Narrative Brand Anchor -->
-    <header class="narrative-header">
-      <span class="vision-tag">A Shared Vision</span>
+    <!-- Apple Standard Squircle Logo Frame -->
+    <div class="logo-shield">
+      V
+    </div>
+
+    <!-- The Voice Message Stack -->
+    <main class="narrative-identity">
       <h1>Vanguard</h1>
-    </header>
-
-    <main class="stack">
-      
-      <!-- Primary Core Manifest Panel -->
-      <section class="glass-panel">
-        <p class="statement-text" style="margin-bottom: 8px;">
-          We are not a business. 
-        </p>
-        <p class="statement-text">
-          We are an organization made of people who share a vision of a world where <span class="accent-text-gold">we coexist</span>. A unified voice cutting through the noise, declaring exactly what we identify with.
-        </p>
-      </section>
-
-      <!-- Tactical Connection Track Panel -->
-      <section class="glass-panel" style="display: flex; flex-direction: column; gap: 14px;">
-        <h2 style="font-size: 1.1rem; font-weight: 600; letter-spacing: -0.02em; color: var(--color-accent-purple);">
-          Active Frameworks
-        </h2>
-        
-        <div style="display: flex; flex-direction: column; gap: 12px; font-size: 0.95rem;">
-          <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.06);">
-            <span style="font-weight: 500;">Community Submission Box</span>
-            <span style="font-size: 0.8rem; background: rgba(229, 193, 88, 0.15); color: var(--color-accent-gold); padding: 2px 8px; border-radius: 20px;">v1.2</span>
-          </div>
-          
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-            <span style="font-weight: 500; color: rgba(255,255,255,0.6);">Vanguard Academy Hub</span>
-            <span style="font-size: 0.8rem; color: rgba(255,255,255,0.4);">Initialization</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- Action Anchor -->
-      <nav style="margin-top: 8px;">
-        <button class="btn-action">Enter Console</button>
-      </nav>
-
+      <p>
+        A unified voice through all of the noise, saying clearly what <span class="gold-signature">we identify with</span>.
+      </p>
     </main>
+
   </div>
 
 </body>
