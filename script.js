@@ -1,9 +1,37 @@
 /**
- * VANGUARD CITIZEN SERVICES — MAIN SOFTWARE ENGINE
+ * VANGUARD CITIZEN SERVICES — SOFTWARE ENGINE
  * Path: script.js
  */
 
-// --- 1. ATMOSPHERIC BACKGROUND SYSTEM ---
+// --- 1. THE MENUS AND LINKS CONFIGURATION (JSON STRUCT) ---
+// Easily add more items here! 
+// Use type: "popup" for text windows, or type: "link" for folders and external sites.
+const MENU_LINKS_JSON = [
+  {
+    "label": "About Us",
+    "type": "popup",
+    "title": "Our Story",
+    "content": "<p>Vanguard started with two friends. We share a deep background in technology and military service. Moving out of those fields, we realized how much noise and distraction exists in modern culture today.</p><p style='margin-top: 12px;'>We decided to build this business with a clear purpose: to tackle and look closely at the real challenges facing our country, while showcasing the deeply personal human stories that make our communities strong. We work small to ensure our work stays focused, transparent, and meaningful.</p>"
+  },
+  {
+    "label": "Roster",
+    "type": "link",
+    "url": "roster/"
+  },
+  {
+    "label": "Legal",
+    "type": "popup",
+    "title": "Privacy Policy & Terms of Use",
+    "content": "<div class='legal-date-stamp' id='legal-date-mount'></div><h4 class='legal-subheading'>1. Privacy Commitment</h4><p>We believe your personal details belong to you. We do not track your browsing habits, sell your information to outside data companies, or use hidden analytics software on this space.</p><h4 class='legal-subheading' style='margin-top: 12px;'>2. Terms of Use</h4><p>By interacting with Vanguard Citizen Services, you agree to engage honestly and transparently with our community tools.</p>"
+  },
+  {
+    "label": "Support",
+    "type": "link",
+    "url": "support/"
+  }
+];
+
+// --- 2. ATMOSPHERIC BACKGROUND SYSTEM ---
 class DeepAtmosphere {
   constructor(canvasId) {
     this.canvas = document.getElementById(canvasId);
@@ -80,27 +108,7 @@ class DeepAtmosphere {
   }
 }
 
-// --- 2. POPUP WINDOW DATA STORAGE ---
-const POPUP_DATA = {
-  "about-us": {
-    title: "Our Story",
-    content: "<p>Vanguard started with two friends. We share a deep background in technology and military service. Moving out of those fields, we realized how much noise and distraction exists in modern culture today.</p><p style='margin-top: 12px;'>We decided to build this business with a clear purpose: to tackle and look closely at the real challenges facing our country, while showcasing the deeply personal human stories that make our communities strong. We work small to ensure our work stays focused, transparent, and meaningful.</p>"
-  },
-  "legal": {
-    title: "Privacy Policy & Terms of Use",
-    content: `
-      <div class="legal-date-stamp" id="legal-date-mount"></div>
-      <h4 class="legal-subheading">1. Privacy Commitment</h4>
-      <p>We believe your personal details belong to you. We do not track your browsing habits, sell your information to outside data companies, or use hidden analytics software on this space. Any data shared with us stays completely protected and under our strict control.</p>
-      <h4 class="legal-subheading" style='margin-top: 12px;'>2. Terms of Use</h4>
-      <p>By interacting with Vanguard Citizen Services, you agree to engage honestly and transparently with our community tools. We do not tolerate any malicious use, automated scraping, or actions meant to interrupt our services to the public.</p>
-      <h4 class="legal-subheading" style='margin-top: 12px;'>3. Security Protocols</h4>
-      <p>We work to keep our systems secure using simple, clean software architecture. Because we keep our footprint small and skip modern tech bloat, your connection lines stay transparent, fast, and secure.</p>
-    `
-  }
-};
-
-// --- 3. LIFECYCLE COORDINATION ---
+// --- 3. LIFECYCLE & RENDER COORDINATION ---
 document.addEventListener('DOMContentLoaded', () => {
   const bg = new DeepAtmosphere('atmosphere-canvas');
   bg.run();
@@ -117,17 +125,10 @@ document.addEventListener('DOMContentLoaded', () => {
   if (hasVisited) {
     if (introStage) introStage.remove();
     mainContent.style.opacity = '1';
-    setupMenuListeners();
-    
-    if (mask) {
-      requestAnimationFrame(() => {
-        mask.style.opacity = '0';
-      });
-    }
+    buildMenuTrack();
+    if (mask) requestAnimationFrame(() => { mask.style.opacity = '0'; });
   } else {
-    if (progressBar) {
-      requestAnimationFrame(() => { progressBar.style.width = '100%'; });
-    }
+    if (progressBar) requestAnimationFrame(() => { progressBar.style.width = '100%'; });
     setTimeout(() => {
       if (introStage && mainContent && mask) {
         mask.style.opacity = '1';
@@ -136,41 +137,38 @@ document.addEventListener('DOMContentLoaded', () => {
           introStage.remove();
           mainContent.style.opacity = '1';
           mask.style.opacity = '0';
-          setupMenuListeners();
+          buildMenuTrack();
         }, 500);
       }
     }, 4000);
   }
 
-  // --- 4. HTML BUTTON ROUTING DRIVER ---
-  function setupMenuListeners() {
-    const buttons = document.querySelectorAll('.action-tab-btn');
-    
-    buttons.forEach(button => {
+  // --- 4. DYNAMIC MENU GENERATOR ---
+  function buildMenuTrack() {
+    const mount = document.getElementById('tabs-mount');
+    if (!mount) return;
+
+    mount.innerHTML = ''; // Clear out any existing elements
+
+    MENU_LINKS_JSON.forEach((item, index) => {
+      const button = document.createElement('button');
+      button.className = 'action-tab-btn';
+      button.textContent = item.label;
+
       button.addEventListener('click', () => {
-        const type = button.getAttribute('data-type');
-        
-        // Route Type A: Folder / URL Navigation Anchor
-        if (type === 'link') {
-          const url = button.getAttribute('data-url');
-          if (url) window.location.href = url;
-          return;
-        }
-        
-        // Route Type B: On-Screen Window Popup Dialogues
-        if (type === 'popup') {
-          const popupId = button.getAttribute('data-id');
-          openModalWindow(popupId, button);
+        if (item.type === 'link') {
+          window.location.href = item.url;
+        } else if (item.type === 'popup') {
+          openModalWindow(item, button);
         }
       });
+
+      mount.appendChild(button);
     });
   }
 
-  // --- 5. ISOLATED MODAL INTERFACE GENERATOR ---
-  function openModalWindow(id, targetBtn) {
-    const data = POPUP_DATA[id];
-    if (!data) return;
-
+  // --- 5. MODAL INTERFACE RENDERER ---
+  function openModalWindow(item, targetBtn) {
     document.querySelectorAll('.action-tab-btn').forEach(btn => btn.classList.remove('is-active'));
     if (targetBtn) targetBtn.classList.add('is-active');
 
@@ -182,14 +180,15 @@ document.addEventListener('DOMContentLoaded', () => {
     modalWrapper.innerHTML = `
       <div class="vanguard-modal-window vanguard-panel">
         <button class="mobile-close-overlay-btn" id="modal-close-trigger" aria-label="Close panel">&times;</button>
-        <h3>${data.title}</h3>
-        <div class="narrative-body-scroll scrollable-interior">${data.content}</div>
+        <h3>${item.title}</h3>
+        <div class="narrative-body-scroll scrollable-interior">${item.content}</div>
       </div>
     `;
 
     document.body.appendChild(modalWrapper);
 
-    if (id === "legal") {
+    // Apply legal update stamp if it matches the Legal menu option
+    if (item.label.toLowerCase() === 'legal') {
       const dateMount = modalWrapper.querySelector('#legal-date-mount');
       if (dateMount) {
         const today = new Date();
@@ -198,16 +197,12 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    requestAnimationFrame(() => {
-      modalWrapper.style.opacity = '1';
-    });
+    requestAnimationFrame(() => { modalWrapper.style.opacity = '1'; });
 
     const closeOverlay = () => {
       modalWrapper.style.opacity = '0';
       if (targetBtn) targetBtn.classList.remove('is-active');
-      setTimeout(() => {
-        modalWrapper.remove();
-      }, 250);
+      setTimeout(() => { modalWrapper.remove(); }, 250);
     };
 
     modalWrapper.addEventListener('click', (e) => {
@@ -215,8 +210,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     const closeTrigger = modalWrapper.querySelector('#modal-close-trigger');
-    if (closeTrigger) {
-      closeTrigger.addEventListener('click', closeOverlay);
-    }
+    if (closeTrigger) closeTrigger.addEventListener('click', closeOverlay);
   }
 });
