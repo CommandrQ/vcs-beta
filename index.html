@@ -61,7 +61,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Centered Logo Layout */
         .org-logo {
             width: 130px;
             height: auto;
@@ -69,14 +68,12 @@
             filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.1));
         }
 
-        /* Core Principles Slow Shimmer Text */
         .motto-text {
             font-size: 1.15rem;
             font-weight: 700;
             letter-spacing: 4px;
             text-transform: uppercase;
             margin-bottom: 40px;
-            
             background: linear-gradient(
                 90deg, 
                 #a6a6a6 0%, 
@@ -106,7 +103,6 @@
             gap: 12px;
         }
 
-        /* Track Bar */
         .loader-track {
             width: 100%;
             height: 3px;
@@ -116,7 +112,6 @@
             position: relative;
         }
 
-        /* Active Progress Fill */
         .loader-progress {
             width: 0%;
             height: 100%;
@@ -126,7 +121,6 @@
             transition: width 0.05s linear;
         }
 
-        /* Numerical Readout display */
         .loader-counter {
             font-size: 0.85rem;
             font-weight: 600;
@@ -135,76 +129,78 @@
             font-family: monospace, serif;
         }
 
-        /* --- SCREEN TRANSITION SLIDEOUT --- */
-        .exit-active {
-            transition: all 0.8s var(--ease-smooth);
+        /* --- BLACK TRANSITION OVERLAY MASK --- */
+        #fade-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: #000000;
+            z-index: 999;
             opacity: 0;
-            transform: translateY(-20px);
+            visibility: hidden;
+            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
             pointer-events: none;
+        }
+        #fade-overlay.active {
+            opacity: 1;
+            visibility: visible;
         }
     </style>
 </head>
 <body>
 
-    <!-- Environmental Space Background -->
+    <!-- Space Background Layer -->
     <div id="environment"><div class="starfield"></div></div>
 
+    <!-- Hidden Cinematic Fade Layer Mask -->
+    <div id="fade-overlay"></div>
+
     <div class="intro-container" id="gateway-ui">
-        
-        <!-- Pulls directly from the root images folder sitting outside home/ -->
         <img src="./images/vanguardorglogo.png" alt="Vanguard Organization Logo" class="org-logo">
-        
-        <!-- Motto Text Shimmering Slowly Every Two Seconds -->
         <div class="motto-text">Empower.Educate.Elevate</div>
         
-        <!-- Percentage Loader Loading Realistically Within Three Seconds -->
         <div class="loader-wrapper">
             <div class="loader-track">
                 <div class="loader-progress" id="progress-fill"></div>
             </div>
             <div class="loader-counter" id="counter-readout">00%</div>
         </div>
-
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const progressFill = document.getElementById('progress-fill');
             const counterReadout = document.getElementById('counter-readout');
-            const gatewayUi = document.getElementById('gateway-ui');
+            const fadeOverlay = document.getElementById('fade-overlay');
 
             let currentPercent = 0;
-            const totalDuration = 3000; // Strict 3-second runtime
+            const totalDuration = 3000; 
             const startTime = performance.now();
 
             function updateLoader(currentTime) {
                 const elapsed = currentTime - startTime;
                 let progressRatio = Math.min(elapsed / totalDuration, 1);
 
-                // Realistic decelerating cubic curve
                 let easeProgress = 1 - Math.pow(1 - progressRatio, 3);
                 currentPercent = Math.floor(easeProgress * 100);
 
-                // Update UI states
                 progressFill.style.width = `${currentPercent}%`;
                 counterReadout.innerText = `${currentPercent.toString().padStart(2, '0')}%`;
 
                 if (progressRatio < 1) {
                     requestAnimationFrame(updateLoader);
                 } else {
-                    // Loader finished: Trigger exit animation
+                    // Counter hit 100%: Drop the black curtain smoothly
                     setTimeout(() => {
-                        gatewayUi.classList.add('exit-active');
+                        fadeOverlay.classList.add('active');
                         
-                        // Transfers clean control straight into your home/ folder subdirectory
+                        // Push to /home/ once the screen goes fully black
                         setTimeout(() => {
                             window.location.href = './home/';
-                        }, 600);
+                        }, 550);
                     }, 200);
                 }
             }
 
-            // Start processing the timeline animation
             requestAnimationFrame(updateLoader);
         });
     </script>
