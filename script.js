@@ -216,6 +216,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (window.innerWidth < 1024) {
       textWindow.classList.add('is-open-mobile');
+      // Append inner scrolling safety class to popovers
+      textWindow.classList.add('scrollable-interior');
       
       let backdrop = document.createElement('div');
       backdrop.className = 'mobile-backdrop-blur';
@@ -223,6 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
       
       const closeMobilePanel = () => {
         textWindow.classList.remove('is-open-mobile');
+        textWindow.classList.remove('scrollable-interior');
         if (targetBtn) targetBtn.classList.remove('is-active');
         backdrop.remove();
       };
