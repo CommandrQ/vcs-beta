@@ -2,82 +2,66 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vanguard Citizen Services</title>
-  <!-- Link to the root design stylesheet -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Vanguard</title>
+  <!-- Link to global design rules -->
   <link rel="stylesheet" href="design.css">
 </head>
-<body class="theme-golden-sky">
+<body>
 
-  <!-- Fixed background animation layer -->
-  <div class="starfield-container">
-    <!-- Target container for future star/ambient canvas particles -->
-  </div>
+  <!-- Layered environment: Purple depth with shifting city glow -->
+  <div class="cosmic-atmosphere"></div>
+  
+  <!-- Starfield container handling the 4-second comet cycles -->
+  <div class="starfield-container"></div>
 
-  <!-- Main application wrapper for desktop scaling optimization -->
+  <!-- Handheld optimized UI block -->
   <div class="app-container">
     
-    <!-- Top Header Area -->
-    <header style="margin-bottom: 40px; text-align: center;">
-      <h1 style="font-size: 2.5rem; font-weight: 700; letter-spacing: -0.05em; margin-bottom: 8px;">Vanguard</h1>
-      <p style="color: rgba(255, 255, 255, 0.6); font-size: 1.1rem;">Citizen Services &amp; Infrastructure</p>
+    <!-- Narrative Brand Anchor -->
+    <header class="narrative-header">
+      <span class="vision-tag">A Shared Vision</span>
+      <h1>Vanguard</h1>
     </header>
 
-    <!-- Navigation Hub Tabs -->
-    <nav class="hub-nav-tabs">
-      <a href="#" class="nav-tab active">Dashboard</a>
-      <a href="#" class="nav-tab">Submission Box</a>
-      <a href="#" class="nav-tab">Academy</a>
-      <a href="#" class="nav-tab">Settings</a>
-    </nav>
-
-    <!-- Main Responsive Dashboard Grid -->
-    <main class="dashboard-grid">
+    <main class="stack">
       
-      <!-- Panel 1: Main Welcome -->
-      <section class="glass-panel" style="padding: 30px;">
-        <h2 style="font-size: 1.5rem; margin-bottom: 12px; font-weight: 600;">Welcome, Commander</h2>
-        <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6; margin-bottom: 24px;">
-          The system framework is initialized. All responsive styles, typography definitions, and glass-morphism panels are controlled globally by the root layout.
+      <!-- Primary Core Manifest Panel -->
+      <section class="glass-panel">
+        <p class="statement-text" style="margin-bottom: 8px;">
+          We are not a business. 
         </p>
-        <button class="btn-primary">Launch Console</button>
+        <p class="statement-text">
+          We are an organization made of people who share a vision of a world where <span class="accent-text-gold">we coexist</span>. A unified voice cutting through the noise, declaring exactly what we identify with.
+        </p>
       </section>
 
-      <!-- Panel 2: System Health -->
-      <section class="glass-panel" style="padding: 30px; display: flex; flex-direction: column; justify-content: space-between;">
-        <div>
-          <h2 style="font-size: 1.5rem; margin-bottom: 12px; font-weight: 600;">System Status</h2>
-          <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6;">
-            All core functional modules are bound to the centralized container configuration.
-          </p>
-        </div>
-        <div style="margin-top: 24px; display: flex; justify-content: space-between; align-items: center;">
-          <span style="color: rgba(255, 255, 255, 0.5); font-size: 0.9rem;">Repository: Operational</span>
-          <span style="display: inline-block; width: 10px; height: 10px; background-color: #34c759; border-radius: 50%;"></span>
+      <!-- Tactical Connection Track Panel -->
+      <section class="glass-panel" style="display: flex; flex-direction: column; gap: 14px;">
+        <h2 style="font-size: 1.1rem; font-weight: 600; letter-spacing: -0.02em; color: var(--color-accent-purple);">
+          Active Frameworks
+        </h2>
+        
+        <div style="display: flex; flex-direction: column; gap: 12px; font-size: 0.95rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.06);">
+            <span style="font-weight: 500;">Community Submission Box</span>
+            <span style="font-size: 0.8rem; background: rgba(229, 193, 88, 0.15); color: var(--color-accent-gold); padding: 2px 8px; border-radius: 20px;">v1.2</span>
+          </div>
+          
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-weight: 500; color: rgba(255,255,255,0.6);">Vanguard Academy Hub</span>
+            <span style="font-size: 0.8rem; color: rgba(255,255,255,0.4);">Initialization</span>
+          </div>
         </div>
       </section>
 
-      <!-- Panel 3: Directory / Active Tracks -->
-      <section class="glass-panel" style="padding: 30px;">
-        <h2 style="font-size: 1.5rem; margin-bottom: 16px; font-weight: 600;">Active Tracks</h2>
-        <ul style="list-style: none;">
-          <li style="padding: 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1); display: flex; justify-content: space-between;">
-            <span>Community Submission Box</span>
-            <span style="color: rgba(255, 255, 255, 0.5);">v1.2</span>
-          </li>
-          <li style="padding: 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1); display: flex; justify-content: space-between;">
-            <span>Vanguard Academy Hub</span>
-            <span style="color: rgba(255, 255, 255, 0.5);">Planning</span>
-          </li>
-          <li style="padding: 12px 0; display: flex; justify-content: space-between;">
-            <span>Root CSS Migration</span>
-            <span style="color: #34c759;">Complete</span>
-          </li>
-        </ul>
-      </section>
+      <!-- Action Anchor -->
+      <nav style="margin-top: 8px;">
+        <button class="btn-action">Enter Console</button>
+      </nav>
 
     </main>
   </div>
 
 </body>
-</html>v
+</html>
