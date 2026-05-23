@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>CMDR Q // Portal</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="cinematic-lock">
+
+  <!-- Cinematic Letterbox Bars (Top and Bottom) -->
+  <div class="cinema-bar top"></div>
+  <div class="cinema-bar bottom"></div>
+
+  <!-- Intro Stage Container -->
+  <div id="intro-viewport" class="intro-canvas">
+    
+    <!-- Scene 1: The Philosophy Title -->
+    <div id="scene-1" class="cinematic-scene active">
+      <h2 class="cinematic-text tracking-out">Unfiltered Narratives.</h2>
+    </div>
+
+    <!-- Scene 2: The Identity Reveal -->
+    <div id="scene-2" class="cinematic-scene">
+      <h2 class="cinematic-text glow-text">COMMANDER Q // PLATFORM</h2>
+    </div>
+
+  </div>
+
+  <!-- Primary Personal Platform Interface (Link-In-Bio Mode) -->
+  <main id="portal-content" class="core-interface">
+    
+    <!-- Branding & Bio Frame Block -->
+    <header class="portal-header">
+      <h1>Commander Q</h1>
+      <p class="subtitle">Exploring the narratives that power our world</p>
+      <p class="blurb-text">
+        Welcome to the control deck. Dive in and explore the unique narratives, operations, and independent creative projects I am currently developing.
+      </p>
+    </header>
+    
+    <!-- High-Impact Scrolling Link Matrix Deck -->
+    <section class="links-scroll-track scrollable-interior">
+      
+      <!-- ======================================================== -->
+      <!-- TO ADD MORE LINKS AT ANY TIME: COPY AND PASTE A LINK CARD BLOCK -->
+      <!-- ======================================================== -->
+      
+      <!-- HIGHLIGHTED ACTION LINK: COMMUNITY VOICE -->
+      <a href="#" class="bio-link-card action-pulse-btn">
+        <div class="card-interior">
+          <span class="card-title">Community Voice</span>
+          <span class="card-desc">Active independent broadcast array</span>
+        </div>
+        <div class="action-arrow">→</div>
+      </a>
+
+      <!-- LINK CARD: ABOUT ME -->
+      <a href="#" class="bio-link-card">
+        <div class="card-interior">
+          <span class="card-title">About Me</span>
+          <span class="card-desc">Background, service history, and perspective</span>
+        </div>
+        <div class="action-arrow">→</div>
+      </a>
+
+      <!-- LINK CARD: DREAMSCAPE DRIFT -->
+      <a href="#" class="bio-link-card">
+        <div class="card-interior">
+          <span class="card-title">Dreamscape Drift</span>
+          <span class="card-desc">Project mapping archive entries</span>
+        </div>
+        <div class="action-arrow">→</div>
+      </a>
+
+      <!-- LINK CARD: MUSIC PLAYER -->
+      <a href="#" class="bio-link-card">
+        <div class="card-interior">
+          <span class="card-title">Music Player</span>
+          <span class="card-desc">Curated atmospheric audio loops</span>
+        </div>
+        <div class="action-arrow">→</div>
+      </a>
+
+      <!-- ======================================================== -->
+      
+    </section>
+
+    <!-- Navigation Return Anchor -->
+    <footer class="portal-footer">
+      <a href="../index.html" class="hub-return-link">← Return To Hub</a>
+    </footer>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const scene1 = document.getElementById('scene-1');
+      const scene2 = document.getElementById('scene-2');
+      const introViewport = document.getElementById('intro-viewport');
+      const portalContent = document.getElementById('portal-content');
+
+      // Stage Phase 1: Shift focus from first line to identity tag
+      setTimeout(() => {
+        scene1.classList.remove('active');
+        scene2.classList.add('active');
+      }, 3000);
+
+      // Stage Phase 2: Fade the intro veil completely
+      setTimeout(() => {
+        introViewport.classList.add('dissolve-out');
+        
+        setTimeout(() => {
+          introViewport.remove();
+          portalContent.classList.add('reveal-ready');
+        }, 1000);
+      }, 6500);
+    });
+  </script>
+</body>
+</html>
