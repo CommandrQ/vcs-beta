@@ -4,164 +4,138 @@
  */
 
 :root {
-  --light-purple: #e0c3fc;
-  --light-blue: #8ecae6;
-  --deep-space: #0f0c29;
-  --glass-bg: rgba(15, 15, 25, 0.85);
-  --glass-border: rgba(255, 255, 255, 0.15);
-  --stark-white: #ffffff;
-  --cinema-speed: cubic-bezier(0.25, 1, 0.5, 1);
+    --light-purple: #e0c3fc;
+    --light-blue: #8ecae6;
+    --deep-space: #0f0c29;
+    --glass-bg: rgba(15, 15, 25, 0.85);
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --stark-white: #ffffff;
 }
 
-/* Master Viewport Lockdown */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body {
-  width: 100%;
-  height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 body {
-  background: linear-gradient(180deg, #1a1a2e 0%, #2b1055 70%, #7597de 100%);
-  background-attachment: fixed;
-  font-family: 'Segoe UI', Tahoma, sans-serif;
-  color: var(--stark-white);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100dvh;
+    background: linear-gradient(180deg, #1a1a2e 0%, #2b1055 70%, #7597de 100%);
+    background-attachment: fixed;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    color: var(--stark-white);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100dvh; 
 }
 
-/* --- CSS BACKGROUND MATRIX ANIMATION --- */
+/* --- CSS Background Matrix Animation --- */
+#boot-screen { position: fixed; inset: 0; background: black; z-index: 9999; pointer-events: none; animation: fadeOut 1.5s forwards; }
+@keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+
 #starfield { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
 .stars { 
-  position: absolute; 
-  width: 2px; 
-  height: 2px; 
-  background: transparent; 
-  box-shadow: 10vw 20vh #fff, 35vw 45vh #fff, 80vw 10vh #fff, 25vw 90vh #fff, 60vw 80vh #fff, 45vw 15vh #fff;
-  animation: moveStars 150s linear infinite; 
+    position: absolute; width: 2px; height: 2px; background: transparent; 
+    box-shadow: 10vw 20vh #fff, 35vw 45vh #fff, 80vw 10vh #fff, 25vw 90vh #fff, 60vw 80vh #fff, 45vw 15vh #fff, 15vw 75vh #fff, 85vw 60vh #fff, 50vw 90vh #fff;
+    animation: moveStars 150s linear infinite; 
 }
 @keyframes moveStars { from { transform: translateY(0); } to { transform: translateY(-2000px); } }
 
-/* --- THE CINEMATIC VEIL (Letterboxing) --- */
-.cinema-bar {
-  position: fixed;
-  left: 0;
-  width: 100vw;
-  height: 12dvh;
-  background: #000000;
-  z-index: 10000;
-  pointer-events: none;
-}
-.cinema-bar.top { top: 0; border-bottom: 1px solid rgba(224, 195, 252, 0.05); }
-.cinema-bar.bottom { bottom: 0; border-top: 1px solid rgba(142, 202, 230, 0.05); }
-
-/* --- HUB CONTAINER LAYOUT SYSTEM --- */
+/* --- Layout Container --- */
 .hub-container {
-  width: 90%;
-  max-width: 500px;
-  z-index: 10;
-  padding: calc(14dvh + 20px) 0 calc(14dvh + 20px) 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  margin: auto 0;
+    width: 90%;
+    max-width: 500px;
+    z-index: 10;
+    padding: 40px 0 20px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: auto 0; 
 }
 
-/* Shimmer Sheen Header Text */
 .hub-title { 
-  font-size: clamp(2.2rem, 7vw, 3rem); 
-  font-weight: bold; 
-  background: linear-gradient(to right, var(--light-blue) 20%, #fff 40%, #fff 60%, var(--light-blue) 80%);
-  background-size: 200% auto; 
-  -webkit-background-clip: text; 
-  -webkit-text-fill-color: transparent;
-  animation: sheen 3s linear infinite;
-  margin-bottom: 5px;
+    font-size: clamp(2.2rem, 7vw, 3rem); font-weight: bold; 
+    background: linear-gradient(to right, var(--light-blue) 20%, #fff 40%, #fff 60%, var(--light-blue) 80%);
+    background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    animation: sheen 3s linear infinite;
+    margin-bottom: 25px;
 }
 @keyframes sheen { to { background-position: 200% center; } }
 
-/* --- GLASSMORPHISM CORE CARD --- */
 .hub-card {
-  background: var(--glass-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--glass-border);
-  border-radius: 28px;
-  padding: 35px 30px; 
-  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-  width: 100%;
-  margin-bottom: 25px;
-  opacity: 0;
-  transform: translate3d(0, 15px, 0);
-  transition: opacity 0.8s var(--cinema-speed), transform 0.8s var(--cinema-speed);
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 28px;
+    padding: 35px 30px; 
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    width: 100%;
+    margin-bottom: 25px; 
 }
-.hub-card.reveal-ready { opacity: 1; transform: translate3d(0, 0, 0); }
 
-/* Centered Avatar Frame */
+/* --- Profile Photo Framework --- */
 .profile-container { display: flex; justify-content: center; align-items: center; width: 100%; margin-bottom: 15px; }
-.profile-container img { width: 110px; height: 110px; border-radius: 50%; object-fit: cover; border: 2px solid var(--glass-border); filter: drop-shadow(0 0 12px rgba(142, 202, 230, 0.3)); }
+.profile-container img {
+    width: 110px; height: 110px; border-radius: 50%; object-fit: cover;
+    border: 2px solid var(--glass-border); filter: drop-shadow(0 0 12px rgba(142, 202, 230, 0.3));
+}
 
-/* Social Matrix Alignment */
+/* --- Social Glyphs --- */
 .social-matrix { display: flex; justify-content: center; align-items: center; gap: 22px; margin-bottom: 25px; width: 100%; }
 .social-glyph { color: var(--light-blue); font-size: 1.4rem; transition: transform 0.3s ease, color 0.3s ease, filter 0.3s ease; text-decoration: none; }
 .social-glyph:hover { color: var(--light-purple); transform: scale(1.15); filter: drop-shadow(0 0 8px var(--light-purple)); }
 
+/* --- Typography --- */
 .greeting { font-size: 1.25rem; color: var(--stark-white); margin-bottom: 15px; }
-.greeting strong { color: var(--stark-white); text-shadow: 0 0 10px rgba(255, 255, 255, 0.2); }
+.greeting strong { color: #ffffff; text-shadow: 0 0 10px rgba(255, 255, 255, 0.2); }
+p { font-size: 0.95rem; line-height: 1.6; color: rgba(255, 255, 255, 0.85); margin-bottom: 25px; }
+h2 { color: var(--light-blue); margin-bottom: 20px; font-size: 1rem; text-transform: uppercase; letter-spacing: 3px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; text-align: left; }
 
-/* Typography Formatting */
-.blurb-text { font-size: 0.95rem; line-height: 1.6; color: rgba(255, 255, 255, 0.75); margin-bottom: 25px; text-align: center; }
-h2 { color: var(--light-blue); margin-top: 25px; margin-bottom: 20px; font-size: 1rem; text-transform: uppercase; letter-spacing: 3px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; text-align: left; }
+/* --- Navigation Buttons Grid --- */
+.menu-grid { display: flex; flex-direction: column; gap: 16px; width: 100%; margin-bottom: 20px; }
+.btn-wrapper { display: flex; flex-direction: column; gap: 8px; }
 
-/* Navigation Track Grid */
-.menu-grid { display: flex; flex-direction: column; gap: 12px; width: 100%; }
-
-/* --- CORE INTERFACE BUTTONS --- */
 .btn {
-  width: 100%; padding: 15px; border-radius: 50px; border: 1px solid var(--light-blue); 
-  background: transparent; color: var(--light-blue); font-weight: bold; 
-  cursor: pointer; transition: 0.3s; text-transform: uppercase; font-size: 0.8rem;
-  text-decoration: none; display: inline-block; letter-spacing: 1px; text-align: center;
+    width: 100%; padding: 15px; border-radius: 50px; border: 1px solid var(--light-blue); 
+    background: transparent; color: var(--light-blue); font-weight: bold; 
+    cursor: pointer; transition: 0.3s; text-transform: uppercase; font-size: 0.8rem;
+    text-decoration: none; display: inline-block; letter-spacing: 1px; text-align: center;
 }
 .btn:hover { background: var(--light-blue); color: var(--deep-space); box-shadow: 0 0 15px var(--light-blue); }
 
-/* Accent Highlights for Special Targets */
 .btn-accent { border-color: var(--light-purple); color: var(--light-purple); }
 .btn-accent:hover { background: var(--light-purple); color: var(--deep-space); box-shadow: 0 0 15px var(--light-purple); }
 
-/* Description Strings Below Buttons (Forced Pure Static White) */
-.btn-subtext { font-size: 0.82rem; color: var(--stark-white); text-align: center; padding: 0 16px 8px 16px; line-height: 1.4; display: block; font-weight: 400; opacity: 0.85; }
+.btn-subtext { font-size: 0.8rem; color: rgba(255, 255, 255, 0.7); line-height: 1.4; padding: 0 10px; }
 
-/* Bottom Action Pipelines */
-.hub-return-link { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--light-blue); opacity: 0.8; text-decoration: none; font-weight: 600; transition: opacity 0.2s ease; }
-.hub-return-link:hover { opacity: 1; }
-
-.system-footer { 
-  z-index: 10; padding: 20px 20px 30px; text-align: center; color: var(--stark-white); 
-  font-size: 0.7rem; letter-spacing: 1.5px; text-transform: uppercase; 
-  animation: pulse 4s ease-in-out infinite; width: 100%; 
-  margin-top: auto; 
-}
-@keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.8; } }
-
-/* Cinematic Transitions Map */
-.intro-canvas { position: fixed; inset: 0; background: #000; z-index: 99999; display: flex; justify-content: center; align-items: center; opacity: 1; transition: opacity 1s ease-in-out; pointer-events: none; }
-.cinematic-scene { position: absolute; opacity: 0; transform: scale(0.96); transition: opacity 0.8s ease-in-out, transform 1.2s var(--cinema-speed); display: flex; flex-direction: column; align-items: center; width: 100%; text-align: center; }
-.cinematic-scene.active { opacity: 1; transform: scale(1); }
-.cinematic-text { font-size: 1.5rem; font-weight: 200; letter-spacing: 0.25em; text-transform: uppercase; color: var(--stark-white); }
-.tracking-out { animation: trackOut 3.2s ease-out forwards; }
-.dissolve-out { opacity: 0 !important; }
-@keyframes trackOut { 0% { letter-spacing: 0.15em; opacity: 0; filter: blur(4px); } 15% { opacity: 1; filter: blur(0); } 100% { letter-spacing: 0.35em; opacity: 0.8; } }
-
-/* About Page Custom Timeline Overrides */
-.narrative-block { display: flex; flex-direction: column; gap: 20px; margin-top: 16px; text-align: left; }
+/* --- About Page Timeline --- */
+.narrative-block { display: flex; flex-direction: column; gap: 20px; text-align: left; }
 .timeline-node { border-left: 2px solid var(--light-purple); padding-left: 16px; margin-left: 4px; }
 .node-era { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--light-blue); font-weight: 700; margin-bottom: 4px; }
 .node-title { font-size: 1.1rem; font-weight: 600; color: var(--stark-white); margin-bottom: 6px; }
-.node-text { font-size: 0.9rem; line-height: 1.5; color: rgba(255, 255, 255, 0.85); }
+
+/* --- Footers --- */
+.hub-return-link { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--light-blue); text-decoration: none; font-weight: bold; }
+.system-footer { 
+    z-index: 10; padding: 20px 20px 30px; text-align: center; color: var(--stark-white); 
+    font-size: 0.7rem; letter-spacing: 1.5px; text-transform: uppercase; 
+    animation: pulse 4s ease-in-out infinite; width: 100%; margin-top: auto; 
+}
+@keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.8; } }
+
+/* --- Cinematic Entry Specifics (index.html only) --- */
+.cinematic-body { background: #000000 !important; }
+.intro-canvas { position: fixed; inset: 0; background: #000000; z-index: 99999; display: flex; justify-content: center; align-items: center; transition: opacity 1s ease-in-out; }
+.cinematic-scene { position: absolute; opacity: 0; transform: scale(0.96); transition: opacity 0.8s ease-in-out, transform 1.2s cubic-bezier(0.25, 1, 0.5, 1); display: flex; flex-direction: column; align-items: center; width: 100%; text-align: center; }
+.cinematic-scene.active { opacity: 1; transform: scale(1); }
+.cinematic-text { font-size: 1.5rem; font-weight: 200; letter-spacing: 0.25em; text-transform: uppercase; color: var(--stark-white); }
+.glow-text { text-shadow: 0 0 20px rgba(224, 195, 252, 0.6), 0 0 40px rgba(142, 202, 230, 0.3); }
+.tracking-out { animation: trackOut 3.2s ease-out forwards; }
+.dissolve-out { opacity: 0 !important; }
+@keyframes trackOut { 0% { letter-spacing: 0.15em; opacity: 0; filter: blur(4px); } 15% { opacity: 1; filter: blur(0); } 100% { letter-spacing: 0.35em; opacity: 0.8; } }
