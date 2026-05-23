@@ -7,11 +7,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const mount = document.getElementById('announcements-mount');
   if (!mount) return;
 
+  // Single announcement using clear, everyday language
   const operationalBroadcasts = [
     {
       date: "MAY 23, 2026",
-      tag: "MAINTENANCE INFRASTRUCTURE",
-      message: "The platform workspace is currently undergoing active technical maintenance. System parameters are being reconfigured to lock down fluid dark layouts."
+      tag: "SITE UPDATE",
+      message: "We are currently making improvements to our website."
     }
   ];
 
