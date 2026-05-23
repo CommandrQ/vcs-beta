@@ -3,40 +3,62 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Vanguard — Initialization</title>
-  <!-- Link to global design rules -->
+  <title>Vanguard — Initializing Environment</title>
   <link rel="stylesheet" href="design.css">
-  
-  <!-- Automated Narrative Script Routing -->
-  <script>
-    setTimeout(function() {
-      window.location.href = 'home/';
-    }, 4000); // Triggers transit sequence exactly at 4000ms
-  </script>
 </head>
 <body>
 
-  <!-- Layered Environment: Bottom gold aura transitioning up into star systems -->
   <div class="cosmic-atmosphere"></div>
   <div class="starfield-container"></div>
 
-  <!-- Main interactive wrapper containing core identity layout animations -->
-  <div class="app-container loading-viewport">
+  <div class="app-container">
     
-    <!-- Apple Standard Squircle Logo Frame -->
-    <div class="logo-shield">
-      V
+    <div class="tv-blink-window">
+      
+      <img src="images/vanguardorglogo.png" alt="Vanguard Logo" class="org-logo">
+      
+      <div>
+        <span id="counter" class="counter-output">0</span>
+        <span class="counter-percent">%</span>
+      </div>
+      
+      <p class="system-status-msg">Loading your Environment, please wait…</p>
+      
     </div>
 
-    <!-- The Voice Message Stack -->
-    <main class="narrative-identity">
-      <h1>Vanguard</h1>
-      <p>
-        A unified voice through all of the noise, saying clearly what <span class="gold-signature">we identify with</span>.
-      </p>
-    </main>
-
   </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var counterElement = document.getElementById("counter");
+      var currentProgress = 0;
+      
+      function runLoader() {
+        // Generates organic variable stepping to make the count feel systemic and real
+        var stepJump = Math.floor(Math.random() * 6) + 2; 
+        currentProgress += stepJump;
+        
+        if (currentProgress >= 100) {
+          currentProgress = 100;
+          counterElement.textContent = currentProgress;
+          
+          // Slight holding delay once 100% hits for a polished handoff feel
+          setTimeout(function() {
+            window.location.href = 'home/';
+          }, 350);
+        } else {
+          counterElement.textContent = currentProgress;
+          
+          // Variable tick intervals to simulate fluctuating environment assets loading
+          var nextTickDelay = Math.floor(Math.random() * 120) + 40;
+          setTimeout(runLoader, nextTickDelay);
+        }
+      }
+      
+      // Delay countdown engine initialization slightly to let the TV snap-open stabilize
+      setTimeout(runLoader, 800);
+    });
+  </script>
 
 </body>
 </html>
