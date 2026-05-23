@@ -1,0 +1,167 @@
+/**
+ * CMDR Q PERSONAL PLATFORM — SPECIFIC STYLESHEET
+ * Path: cmdrq/style.css
+ */
+
+:root {
+  --deep-abyss: #050507;
+  --stark-white: #ffffff;
+  --dim-gold: #cfa83c;
+  --slate-gray: rgba(255, 255, 255, 0.4);
+  --glass-fill: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --cinema-speed: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Master Viewport Lockdown */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body, html {
+  background-color: var(--deep-abyss);
+  color: var(--stark-white);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  height: 100dvh;
+  width: 100vw;
+  overflow: hidden;
+  position: fixed;
+}
+
+/* Scroll Layer Hooks */
+.scrollable-interior {
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch;
+}
+.scrollable-interior::-webkit-scrollbar { width: 3px; }
+.scrollable-interior::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 2px; }
+
+/* --- THE CINEMATIC VEIL (Letterboxing) --- */
+.cinema-bar {
+  position: fixed;
+  left: 0;
+  width: 100vw;
+  height: 12dvh;
+  background: #000000;
+  z-index: 10000;
+}
+.cinema-bar.top { top: 0; border-bottom: 1px solid rgba(255,255,255,0.02); }
+.cinema-bar.bottom { bottom: 0; border-top: 1px solid rgba(255,255,255,0.02); }
+
+.intro-canvas {
+  position: fixed;
+  inset: 0;
+  background: var(--deep-abyss);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
+}
+
+.cinematic-scene {
+  position: absolute;
+  opacity: 0;
+  transform: scale(0.96);
+  transition: opacity 0.8s ease-in-out, transform 1.2s var(--cinema-speed);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 0 24px;
+  text-align: center;
+}
+
+.cinematic-scene.active { opacity: 1; transform: scale(1); }
+
+.cinematic-text {
+  font-size: 1.5rem;
+  font-weight: 200;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--stark-white);
+}
+
+.tracking-out { animation: trackOut 3.2s ease-out forwards; }
+.glow-text { text-shadow: 0 0 24px rgba(255, 255, 255, 0.4); }
+.dissolve-out { opacity: 0 !important; pointer-events: none; }
+
+/* --- CORE PORTAL DISPLAY CONTAINER --- */
+.core-interface {
+  opacity: 0;
+  transform: translate3d(0, 12px, 0);
+  transition: opacity 0.8s var(--cinema-speed), transform 0.8s var(--cinema-speed);
+  height: 100dvh;
+  width: 100%;
+  max-width: 440px;
+  margin: 0 auto;
+  padding: calc(14dvh + env(safe-area-inset-top)) 20px calc(14dvh + env(safe-area-inset-bottom)) 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.core-interface.reveal-ready { opacity: 1; transform: translate3d(0, 0, 0); }
+
+/* Typography Block Formatting */
+.portal-header { text-align: center; margin-bottom: 24px; flex: 0 0 auto; }
+.portal-header h1 { font-size: 1.8rem; font-weight: 300; letter-spacing: 0.05em; text-transform: uppercase; color: var(--dim-gold); }
+.subtitle { font-size: 0.92rem; color: var(--stark-white); font-weight: 400; line-height: 1.35; margin-top: 6px; }
+.blurn-text, .blurb-text { font-size: 0.85rem; line-height: 1.5; color: var(--slate-gray); margin-top: 10px; padding: 0 8px; }
+
+/* Link Deck Track Layout */
+.links-scroll-track { flex: 1 1 auto; display: flex; flex-direction: column; gap: 10px; padding-right: 2px; }
+
+/* Standard Bio Link Card Styling */
+.bio-link-card {
+  background: var(--glass-fill);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 14px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-decoration: none;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.bio-link-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+.card-interior { display: flex; flex-direction: column; text-align: left; gap: 2px; }
+.card-title { font-size: 1.05rem; font-weight: 500; color: var(--stark-white); }
+.card-desc { font-size: 0.8rem; color: var(--slate-gray); }
+.action-arrow { color: var(--slate-gray); font-size: 1.1rem; transition: color 0.2s ease; }
+.bio-link-card:hover .action-arrow { color: var(--dim-gold); }
+
+/* --- HIGH-ATTENTION PULSE ANIMATION ENTRY --- */
+.action-pulse-btn {
+  border-color: rgba(207, 168, 60, 0.3);
+  background: rgba(207, 168, 60, 0.03);
+  animation: beaconPulse 2.5s infinite ease-in-out;
+}
+.action-pulse-btn .card-title { color: var(--dim-gold); }
+.action-pulse-btn:hover { border-color: var(--dim-gold); background: rgba(207, 168, 60, 0.08); }
+
+@keyframes beaconPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(207, 168, 60, 0); border-color: rgba(207, 168, 60, 0.25); }
+  50% { box-shadow: 0 0 14px 0 rgba(207, 168, 60, 0.15); border-color: rgba(207, 168, 60, 0.6); }
+}
+
+/* Navigation Return Track */
+.portal-footer { text-align: center; padding-top: 16px; flex: 0 0 auto; }
+.hub-return-link { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--slate-gray); text-decoration: none; font-weight: 600; transition: color 0.2s ease; }
+.hub-return-link:hover { color: var(--stark-white); }
+
+@keyframes trackOut {
+  0% { letter-spacing: 0.15em; opacity: 0; filter: blur(4px); }
+  15% { opacity: 1; filter: blur(0); }
+  100% { letter-spacing: 0.35em; opacity: 0.8; }
+}
+
+/* Tablet / Desktop View Enhancements */
+@media (min-width: 768px) {
+  .cinematic-text { font-size: 2.2rem; }
+  .core-interface { max-width: 480px; }
+  .portal-header h1 { font-size: 2.2rem; }
+}
