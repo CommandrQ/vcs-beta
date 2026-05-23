@@ -1,5 +1,5 @@
 /**
- * CMDR Q PERSONAL PLATFORM — THE HIDEOUT AESTHETIC
+ * CMDR Q PERSONAL PLATFORM — FLUID AUTO-FIT AESTHETIC
  * Path: cmdrq/style.css
  */
 
@@ -12,12 +12,16 @@
     --stark-white: #ffffff;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+}
 
 html, body {
     width: 100%;
     height: 100%;
-    overflow-x: hidden;
+    overflow-x: hidden; /* Prevents horizontal scrolling */
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
 }
@@ -45,12 +49,12 @@ body {
 }
 @keyframes moveStars { from { transform: translateY(0); } to { transform: translateY(-2000px); } }
 
-/* --- Layout Container --- */
+/* --- Auto-Fit Layout Container --- */
 .hub-container {
-    width: 90%;
+    width: 92%; /* Gives slight breathing room on small phones */
     max-width: 500px;
     z-index: 10;
-    padding: 40px 0 20px; 
+    padding: clamp(20px, 5vh, 40px) 0 clamp(10px, 3vh, 20px); 
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -58,84 +62,145 @@ body {
     margin: auto 0; 
 }
 
+/* Fluid Auto-Scaling Title */
 .hub-title { 
-    font-size: clamp(2.2rem, 7vw, 3rem); font-weight: bold; 
+    font-size: clamp(2rem, 8vw, 3rem); 
+    font-weight: bold; 
     background: linear-gradient(to right, var(--light-blue) 20%, #fff 40%, #fff 60%, var(--light-blue) 80%);
     background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     animation: sheen 3s linear infinite;
-    margin-bottom: 25px;
+    margin-bottom: clamp(15px, 4vw, 25px);
+    line-height: 1.1;
 }
 @keyframes sheen { to { background-position: 200% center; } }
 
+/* Fluid Padding Card */
 .hub-card {
     background: var(--glass-bg);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid var(--glass-border);
-    border-radius: 28px;
-    padding: 35px 30px; 
+    border-radius: clamp(16px, 5vw, 28px);
+    /* Auto-shrinks padding on small screens to fit text */
+    padding: clamp(20px, 6vw, 35px) clamp(15px, 5vw, 30px); 
     box-shadow: 0 20px 50px rgba(0,0,0,0.5);
     width: 100%;
     margin-bottom: 25px; 
 }
 
-/* --- Profile Photo Framework --- */
-.profile-container { display: flex; justify-content: center; align-items: center; width: 100%; margin-bottom: 15px; }
+/* --- Strict Profile Photo Framework --- */
+.profile-container { 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    width: 100%; 
+    margin-bottom: clamp(10px, 3vw, 15px); 
+}
+
 .profile-container img {
-    width: 110px; height: 110px; border-radius: 50%; object-fit: cover;
-    border: 2px solid var(--glass-border); filter: drop-shadow(0 0 12px rgba(142, 202, 230, 0.3));
+    display: block;
+    margin: 0 auto;
+    width: 90px; 
+    height: 90px; 
+    min-width: 90px; 
+    max-width: 90px;
+    min-height: 90px;
+    max-height: 90px;
+    flex-shrink: 0; /* Prevents flexbox from squishing the image */
+    border-radius: 50%; 
+    object-fit: cover;
+    border: 2px solid var(--glass-border); 
+    filter: drop-shadow(0 0 12px rgba(142, 202, 230, 0.3));
 }
 
 /* --- Social Glyphs --- */
-.social-matrix { display: flex; justify-content: center; align-items: center; gap: 22px; margin-bottom: 25px; width: 100%; }
-.social-glyph { color: var(--light-blue); font-size: 1.4rem; transition: transform 0.3s ease, color 0.3s ease, filter 0.3s ease; text-decoration: none; }
+.social-matrix { 
+    display: flex; justify-content: center; align-items: center; 
+    gap: clamp(15px, 4vw, 22px); 
+    margin-bottom: clamp(15px, 4vw, 25px); 
+    width: 100%; 
+}
+.social-glyph { color: var(--light-blue); font-size: clamp(1.2rem, 4vw, 1.4rem); transition: transform 0.3s ease, color 0.3s ease, filter 0.3s ease; text-decoration: none; }
 .social-glyph:hover { color: var(--light-purple); transform: scale(1.15); filter: drop-shadow(0 0 8px var(--light-purple)); }
 
-/* --- Typography --- */
-.greeting { font-size: 1.25rem; color: var(--stark-white); margin-bottom: 15px; }
+/* --- Auto-Fit Typography --- */
+/* overflow-wrap ensures long URLs or unbroken text never push past screen edges */
+.greeting { font-size: clamp(1.1rem, 4vw, 1.25rem); color: var(--stark-white); margin-bottom: 15px; overflow-wrap: break-word; }
 .greeting strong { color: #ffffff; text-shadow: 0 0 10px rgba(255, 255, 255, 0.2); }
-p { font-size: 0.95rem; line-height: 1.6; color: rgba(255, 255, 255, 0.85); margin-bottom: 25px; }
-h2 { color: var(--light-blue); margin-bottom: 20px; font-size: 1rem; text-transform: uppercase; letter-spacing: 3px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; text-align: left; }
 
-/* --- Navigation Buttons Grid --- */
-.menu-grid { display: flex; flex-direction: column; gap: 16px; width: 100%; margin-bottom: 20px; }
-.btn-wrapper { display: flex; flex-direction: column; gap: 8px; }
+p { 
+    font-size: clamp(0.85rem, 3vw, 0.95rem); 
+    line-height: 1.6; 
+    color: rgba(255, 255, 255, 0.85); 
+    margin-bottom: clamp(15px, 5vw, 25px); 
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+h2 { 
+    color: var(--light-blue); 
+    margin-bottom: clamp(15px, 4vw, 20px); 
+    font-size: clamp(0.9rem, 3vw, 1rem); 
+    text-transform: uppercase; 
+    letter-spacing: 2px; 
+    border-bottom: 1px solid rgba(255,255,255,0.1); 
+    padding-bottom: 8px; 
+    text-align: left; 
+    overflow-wrap: break-word;
+}
+
+/* --- Auto-Fit Navigation Grid --- */
+.menu-grid { display: flex; flex-direction: column; gap: clamp(12px, 3vw, 16px); width: 100%; margin-bottom: 20px; }
+.btn-wrapper { display: flex; flex-direction: column; gap: 8px; width: 100%; }
 
 .btn {
-    width: 100%; padding: 15px; border-radius: 50px; border: 1px solid var(--light-blue); 
+    width: 100%; 
+    padding: clamp(12px, 3vw, 15px); 
+    border-radius: 50px; 
+    border: 1px solid var(--light-blue); 
     background: transparent; color: var(--light-blue); font-weight: bold; 
-    cursor: pointer; transition: 0.3s; text-transform: uppercase; font-size: 0.8rem;
-    text-decoration: none; display: inline-block; letter-spacing: 1px; text-align: center;
+    cursor: pointer; transition: 0.3s; text-transform: uppercase; 
+    font-size: clamp(0.75rem, 2.5vw, 0.8rem);
+    text-decoration: none; display: flex; align-items: center; justify-content: center;
+    letter-spacing: 1px; text-align: center;
+    line-height: 1.3;
 }
 .btn:hover { background: var(--light-blue); color: var(--deep-space); box-shadow: 0 0 15px var(--light-blue); }
 
 .btn-accent { border-color: var(--light-purple); color: var(--light-purple); }
 .btn-accent:hover { background: var(--light-purple); color: var(--deep-space); box-shadow: 0 0 15px var(--light-purple); }
 
-.btn-subtext { font-size: 0.8rem; color: rgba(255, 255, 255, 0.7); line-height: 1.4; padding: 0 10px; }
+.btn-subtext { 
+    font-size: clamp(0.75rem, 2.5vw, 0.8rem); 
+    color: rgba(255, 255, 255, 0.7); 
+    line-height: 1.4; 
+    padding: 0 10px; 
+    overflow-wrap: break-word;
+}
 
 /* --- About Page Timeline --- */
-.narrative-block { display: flex; flex-direction: column; gap: 20px; text-align: left; }
-.timeline-node { border-left: 2px solid var(--light-purple); padding-left: 16px; margin-left: 4px; }
-.node-era { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--light-blue); font-weight: 700; margin-bottom: 4px; }
-.node-title { font-size: 1.1rem; font-weight: 600; color: var(--stark-white); margin-bottom: 6px; }
+.narrative-block { display: flex; flex-direction: column; gap: clamp(15px, 4vw, 20px); text-align: left; width: 100%; }
+.timeline-node { border-left: 2px solid var(--light-purple); padding-left: clamp(10px, 3vw, 16px); margin-left: 4px; }
+.node-era { font-size: clamp(0.7rem, 2.5vw, 0.75rem); text-transform: uppercase; letter-spacing: 2px; color: var(--light-blue); font-weight: 700; margin-bottom: 4px; }
+.node-title { font-size: clamp(1rem, 3.5vw, 1.1rem); font-weight: 600; color: var(--stark-white); margin-bottom: 6px; overflow-wrap: break-word; }
 
 /* --- Footers --- */
-.hub-return-link { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--light-blue); text-decoration: none; font-weight: bold; }
+.hub-return-link { font-size: clamp(0.7rem, 2.5vw, 0.75rem); text-transform: uppercase; letter-spacing: 1.5px; color: var(--light-blue); text-decoration: none; font-weight: bold; }
 .system-footer { 
     z-index: 10; padding: 20px 20px 30px; text-align: center; color: var(--stark-white); 
-    font-size: 0.7rem; letter-spacing: 1.5px; text-transform: uppercase; 
+    font-size: clamp(0.65rem, 2vw, 0.7rem); letter-spacing: 1.5px; text-transform: uppercase; 
     animation: pulse 4s ease-in-out infinite; width: 100%; margin-top: auto; 
+    overflow-wrap: break-word;
 }
 @keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.8; } }
 
 /* --- Cinematic Entry Specifics (index.html only) --- */
 .cinematic-body { background: #000000 !important; }
 .intro-canvas { position: fixed; inset: 0; background: #000000; z-index: 99999; display: flex; justify-content: center; align-items: center; transition: opacity 1s ease-in-out; }
-.cinematic-scene { position: absolute; opacity: 0; transform: scale(0.96); transition: opacity 0.8s ease-in-out, transform 1.2s cubic-bezier(0.25, 1, 0.5, 1); display: flex; flex-direction: column; align-items: center; width: 100%; text-align: center; }
+.cinematic-scene { position: absolute; opacity: 0; transform: scale(0.96); transition: opacity 0.8s ease-in-out, transform 1.2s cubic-bezier(0.25, 1, 0.5, 1); display: flex; flex-direction: column; align-items: center; width: 100%; text-align: center; padding: 0 20px; }
 .cinematic-scene.active { opacity: 1; transform: scale(1); }
-.cinematic-text { font-size: 1.5rem; font-weight: 200; letter-spacing: 0.25em; text-transform: uppercase; color: var(--stark-white); }
+.cinematic-text { font-size: clamp(1.2rem, 5vw, 1.5rem); font-weight: 200; letter-spacing: 0.25em; text-transform: uppercase; color: var(--stark-white); overflow-wrap: break-word; }
 .glow-text { text-shadow: 0 0 20px rgba(224, 195, 252, 0.6), 0 0 40px rgba(142, 202, 230, 0.3); }
 .tracking-out { animation: trackOut 3.2s ease-out forwards; }
 .dissolve-out { opacity: 0 !important; }
-@keyframes trackOut { 0% { letter-spacing: 0.15em; opacity: 0; filter: blur(4px); } 15% { opacity: 1; filter: blur(0); } 100% { letter-spacing: 0.35em; opacity: 0.8; } }
+@keyframes trackOut { 0% { letter-spacing: 0.15em; opacity: 0; filter: blur(4px); } 15% { opacity: 1; filter: blur(0); } 100% { letter-spacing: clamp(0.2em, 2vw, 0.35em); opacity: 0.8; } }
