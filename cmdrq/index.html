@@ -3,109 +3,125 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>CMDR Q // Portal</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body class="cinematic-lock">
+  <title>CMDR Q // Gateway</title>
+  <style>
+    /* --- MASTER SYSTEM RESET --- */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  <!-- Cinematic Letterbox Bars (Top and Bottom) -->
-  <div class="cinema-bar top"></div>
-  <div class="cinema-bar bottom"></div>
+    body, html {
+      background-color: #000000;
+      height: 100dvh;
+      width: 100vw;
+      overflow: hidden;
+      position: fixed;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-  <!-- Intro Stage Container -->
-  <div id="intro-viewport" class="intro-canvas">
-    
-    <!-- Scene 1: The Philosophy Title -->
-    <div id="scene-1" class="cinematic-scene active">
-      <h2 class="cinematic-text tracking-out">Unfiltered Narratives.</h2>
-    </div>
+    /* --- INITIAL BLACKOUT SHIELD --- */
+    #splash-theater {
+      opacity: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      text-align: center;
+      padding: 0 32px;
+      transform: scale(0.98);
+      transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1), transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+    }
 
-    <!-- Scene 2: The Identity Reveal -->
-    <div id="scene-2" class="cinematic-scene">
-      <h2 class="cinematic-text glow-text">COMMANDER Q // PLATFORM</h2>
-    </div>
+    #splash-theater.fade-in {
+      opacity: 1;
+      transform: scale(1);
+    }
 
-  </div>
+    #splash-theater.fade-out {
+      opacity: 0;
+      transform: scale(1.02);
+      transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+    }
 
-  <!-- Primary Personal Platform Interface (Link-In-Bio Mode) -->
-  <main id="portal-content" class="core-interface">
-    
-    <!-- Branding & Bio Frame Block -->
-    <header class="portal-header">
-      <h1>Commander Q</h1>
-      <p class="subtitle">Exploring the narratives that power our world</p>
-      <p class="blurb-text">
-        Hey there! Welcome to the control deck. I am incredibly glad you are here! Take a look around and explore the unique narratives, community operations, and creative passion projects I am currently cooking up. Let’s build something meaningful together!
-      </p>
-    </header>
-    
-    <!-- High-Impact Scrolling Link Matrix Deck -->
-    <section class="links-scroll-track scrollable-interior">
+    /* --- THE PORTRAIT GRAPHIC CORE --- */
+    .hero-headshot {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.05);
+    }
+
+    /* --- METALLIC SHIMMER TEXT ENGINE --- */
+    .shimmer-identity {
+      font-size: 1.6rem;
+      font-weight: 300;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #cfa83c;
       
-      <!-- LINK CARD 1: ABOUT ME (Always First) -->
-      <a href="about/" class="bio-link-card">
-        <div class="card-interior">
-          <span class="card-title">About Me</span>
-          <span class="card-desc">My background, service history, and clear perspective</span>
-        </div>
-        <div class="action-arrow">→</div>
-      </a>
+      /* Linear gradient mirror mapping for gold shimmer tracking lines */
+      background: linear-gradient(
+        to right, 
+        #9c7a23 20%, 
+        #fdf5e6 40%, 
+        #f5c518 60%, 
+        #9c7a23 80%
+      );
+      background-size: 200% auto;
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      
+      animation: goldShimmerEffect 2.8s linear infinite;
+    }
 
-      <!-- HIGHLIGHTED ACTION LINK: COMMUNITY VOICE -->
-      <a href="#" class="bio-link-card action-pulse-btn">
-        <div class="card-interior">
-          <span class="card-title">Community Voice</span>
-          <span class="card-desc">Our active independent live broadcast array</span>
-        </div>
-        <div class="action-arrow">→</div>
-      </a>
+    @keyframes goldShimmerEffect {
+      to { background-position: 200% center; }
+    }
 
-      <!-- LINK CARD 3: DREAMSCAPE DRIFT -->
-      <a href="dreamscapedrift/" class="bio-link-card">
-        <div class="card-interior">
-          <span class="card-title">Dreamscape Drift</span>
-          <span class="card-desc">Project data-mapping and deep creative archives</span>
-        </div>
-        <div class="action-arrow">→</div>
-      </a>
+    /* Tablet and Widescreen Layout Enhancements */
+    @media (min-width: 768px) {
+      .hero-headshot { width: 160px; height: 160px; }
+      .shimmer-identity { font-size: 2.1rem; }
+    }
+  </style>
+</head>
+<body>
 
-      <!-- LINK CARD 4: MUSIC PLAYER -->
-      <a href="musicplayer/" class="bio-link-card">
-        <div class="card-interior">
-          <span class="card-title">Music Player</span>
-          <span class="card-desc">Curated atmospheric soundtracks and background loops</span>
-        </div>
-        <div class="action-arrow">→</div>
-      </a>
-
-    </section>
-
-    <!-- Navigation Return Anchor -->
-    <footer class="portal-footer">
-      <a href="../index.html" class="hub-return-link">← Return To Hub</a>
-    </footer>
+  <!-- Hidden stage that fades in smoothly via lifecycle tracking -->
+  <main id="splash-theater">
+    
+    <!-- Your Personal Portrait Asset -->
+    <img src="images/headshot.jpg" alt="Commander Q Portrait" class="hero-headshot">
+    
+    <!-- Shimmering Identity Headline -->
+    <h1 class="shimmer-identity">Commander Q</h1>
+    
   </main>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const scene1 = document.getElementById('scene-1');
-      const scene2 = document.getElementById('scene-2');
-      const introViewport = document.getElementById('intro-viewport');
-      const portalContent = document.getElementById('portal-content');
+      const stage = document.getElementById('splash-theater');
 
-      setTimeout(() => {
-        scene1.classList.remove('active');
-        scene2.classList.add('active');
-      }, 3000);
+      // Trigger structural fade-in from pure black instantly on paint load
+      requestAnimationFrame(() => {
+        stage.classList.add('fade-in');
+      });
 
+      // Maintain display state for exactly 2 seconds, then transition cleanly
       setTimeout(() => {
-        introViewport.classList.add('dissolve-out');
-        
+        stage.classList.remove('fade-in');
+        stage.classList.add('fade-out');
+
+        // Allow the opacity layer animation to clear before changing URL lines
         setTimeout(() => {
-          introViewport.remove();
-          portalContent.classList.add('reveal-ready');
-        }, 1000);
-      }, 6500);
+          window.location.href = 'home.html';
+        }, 800);
+
+      }, 2000);
     });
   </script>
 </body>
