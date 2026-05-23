@@ -119,19 +119,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const hasVisited = localStorage.getItem('vanguard_initialized');
 
   if (hasVisited) {
-    // Returnee Entrance: Instantly remove loading bar overlay
     if (introStage) introStage.remove();
     mainContent.style.opacity = '1';
     initializeCoreFeatures();
     
-    // Smooth fade-in sequence from black canvas mask
     if (mask) {
       requestAnimationFrame(() => {
         mask.style.opacity = '0';
       });
     }
   } else {
-    // Initial Sequence: Run full 4-second loading progress
     if (progressBar) {
       requestAnimationFrame(() => { progressBar.style.width = '100%'; });
     }
@@ -153,10 +150,6 @@ document.addEventListener('DOMContentLoaded', () => {
   function initializeCoreFeatures() {
     fetchAnnouncements();
     buildNavigationTabs();
-    
-    if (window.innerWidth >= 1024) {
-      activateRegistryItem("about us");
-    }
   }
 
   function fetchAnnouncements() {
@@ -211,7 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
     textWindow.innerHTML = `
       <button class="mobile-close-overlay-btn" id="close-overlay-trigger" aria-label="Close panel">&times;</button>
       <h3>${data.title}</h3>
-      <div class="narrative-body-scroll">${data.content}</div>
+      <div class="narrative-body-scroll scrollable-interior">${data.content}</div>
     `;
 
     if (key === "legal") {
@@ -223,28 +216,24 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    if (window.innerWidth < 1024) {
-      textWindow.classList.add('is-open-mobile');
-      textWindow.classList.add('scrollable-interior');
-      
-      let backdrop = document.createElement('div');
-      backdrop.className = 'mobile-backdrop-blur';
-      document.body.appendChild(backdrop);
-      
-      const closeMobilePanel = () => {
-        textWindow.classList.remove('is-open-mobile');
-        textWindow.classList.remove('scrollable-interior');
-        if (targetBtn) targetBtn.classList.remove('is-active');
-        backdrop.remove();
-      };
-      
-      backdrop.addEventListener('click', closeMobilePanel);
-      const closeTrigger = document.getElementById('close-overlay-trigger');
-      if (closeTrigger) {
-        closeTrigger.addEventListener('click', closeMobilePanel);
-      }
-    } else {
-      textWindow.scrollTop = 0;
+    // Centered Window Initialization
+    textWindow.style.display = 'flex';
+    textWindow.scrollTop = 0;
+    
+    let backdrop = document.createElement('div');
+    backdrop.className = 'mobile-backdrop-blur';
+    document.body.appendChild(backdrop);
+    
+    const closePanelWindow = () => {
+      textWindow.style.display = 'none';
+      if (targetBtn) targetBtn.classList.remove('is-active');
+      backdrop.remove();
+    };
+    
+    backdrop.addEventListener('click', closePanelWindow);
+    const closeTrigger = document.getElementById('close-overlay-trigger');
+    if (closeTrigger) {
+      closeTrigger.addEventListener('click', closePanelWindow);
     }
   }
 });
