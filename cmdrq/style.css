@@ -4,12 +4,12 @@
  */
 
 :root {
-  --deep-abyss: #050507;
+  --deep-abyss: #020205;
   --stark-white: #ffffff;
   --dim-gold: #cfa83c;
-  --slate-gray: rgba(255, 255, 255, 0.4);
-  --glass-fill: rgba(255, 255, 255, 0.03);
-  --glass-border: rgba(255, 255, 255, 0.08);
+  --grid-blue: rgba(24, 110, 245, 0.22);
+  --glass-fill: rgba(255, 255, 255, 0.04);
+  --glass-border: rgba(255, 255, 255, 0.1);
   --cinema-speed: cubic-bezier(0.25, 1, 0.5, 1);
 }
 
@@ -24,6 +24,26 @@ body, html {
   width: 100vw;
   overflow: hidden;
   position: fixed;
+}
+
+/* --- PULSING COMPOSITED BLUE GRID BACKGROUND --- */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, var(--grid-blue) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-blue) 1px, transparent 1px);
+  background-position: center top;
+  animation: backgroundPulse 4s infinite ease-in-out;
+}
+
+@keyframes backgroundPulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.01); }
 }
 
 /* Scroll Layer Hooks */
@@ -85,8 +105,10 @@ body, html {
 .glow-text { text-shadow: 0 0 24px rgba(255, 255, 255, 0.4); }
 .dissolve-out { opacity: 0 !important; pointer-events: none; }
 
-/* --- CORE PORTAL DISPLAY CONTAINER --- */
+/* --- SOLID DECK DEPLOYMENT INTERFACE --- */
 .core-interface {
+  position: relative;
+  z-index: 10; /* Lifts content above the animated background grid */
   opacity: 0;
   transform: translate3d(0, 12px, 0);
   transition: opacity 0.8s var(--cinema-speed), transform 0.8s var(--cinema-speed);
@@ -97,6 +119,8 @@ body, html {
   padding: calc(14dvh + env(safe-area-inset-top)) 20px calc(14dvh + env(safe-area-inset-bottom)) 20px;
   display: flex;
   flex-direction: column;
+  background-color: #000000; /* SOLID PURE BLACK CONTAINER WALLS */
+  box-shadow: 0 0 60px 30px #000000; /* Protects edges from visual grid bleeding */
 }
 
 .core-interface.reveal-ready { opacity: 1; transform: translate3d(0, 0, 0); }
@@ -123,15 +147,15 @@ body, html {
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .bio-link-card:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.3);
   transform: translateY(-1px);
 }
 
 .card-interior { display: flex; flex-direction: column; text-align: left; gap: 4px; }
 .card-title { font-size: 1.05rem; font-weight: 600; color: var(--stark-white); }
-.card-desc { font-size: 0.85rem; color: var(--stark-white); opacity: 0.9; line-height: 1.3; }
-.action-arrow { color: var(--stark-white); opacity: 0.6; font-size: 1.1rem; transition: all 0.2s ease; }
+.card-desc { font-size: 0.85rem; color: var(--stark-white); opacity: 0.85; line-height: 1.3; font-weight: 400; }
+.action-arrow { color: var(--stark-white); opacity: 0.5; font-size: 1.1rem; transition: all 0.2s ease; }
 .bio-link-card:hover .action-arrow { color: var(--dim-gold); opacity: 1; transform: translateX(2px); }
 
 /* --- HIGH-ATTENTION PULSE ANIMATION ENTRY --- */
@@ -150,7 +174,7 @@ body, html {
 
 /* Navigation Return Track */
 .portal-footer { text-align: center; padding-top: 16px; flex: 0 0 auto; }
-.hub-return-link { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--slate-gray); text-decoration: none; font-weight: 600; transition: color 0.2s ease; }
+.hub-return-link { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255,255,255,0.5); text-decoration: none; font-weight: 600; transition: color 0.2s ease; }
 .hub-return-link:hover { color: var(--stark-white); }
 
 @keyframes trackOut {
