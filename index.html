@@ -3,60 +3,80 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Vanguard — Initializing Environment</title>
+  <title>Vanguard — System Initialization</title>
   <link rel="stylesheet" href="design.css">
 </head>
 <body>
 
+  <!-- Background Environment Planes -->
   <div class="cosmic-atmosphere"></div>
   <div class="starfield-container"></div>
 
+  <!-- Perfectly Framed Screen Interface -->
   <div class="app-container">
     
+    <!-- Unified Center Window Module -->
     <div class="tv-blink-window">
       
+      <!-- 1. Centered Organization Logo Image -->
       <img src="images/vanguardorglogo.png" alt="Vanguard Logo" class="org-logo">
       
+      <!-- 2. Centered Progress Metrics -->
       <div>
         <span id="counter" class="counter-output">0</span>
         <span class="counter-percent">%</span>
       </div>
       
+      <!-- 3. Centered Progress Bar Line -->
+      <div class="loading-bar-track">
+        <div id="bar-fill" class="loading-bar-fill"></div>
+      </div>
+      
+      <!-- 4. System Status Label -->
       <p class="system-status-msg">Loading your Environment, please wait…</p>
       
     </div>
 
   </div>
 
+  <!-- Absolute Sticky Footer Anchor -->
+  <footer class="global-sticky-footer">
+    <p>&copy; 2026 Vanguard Citizen Services. All Rights Reserved.</p>
+  </footer>
+
+  <!-- Precision Loader Logic Engine -->
   <script>
     document.addEventListener("DOMContentLoaded", function() {
       var counterElement = document.getElementById("counter");
+      var fillElement = document.getElementById("bar-fill");
       var currentProgress = 0;
       
       function runLoader() {
-        // Generates organic variable stepping to make the count feel systemic and real
-        var stepJump = Math.floor(Math.random() * 6) + 2; 
+        // Organic variable step jumps to simulate processing changes naturally
+        var stepJump = Math.floor(Math.random() * 5) + 3; 
         currentProgress += stepJump;
         
         if (currentProgress >= 100) {
           currentProgress = 100;
           counterElement.textContent = currentProgress;
+          fillElement.style.width = currentProgress + "%";
           
-          // Slight holding delay once 100% hits for a polished handoff feel
+          // Clean handoff transit pause once 100% structural verification occurs
           setTimeout(function() {
             window.location.href = 'home/';
           }, 350);
         } else {
           counterElement.textContent = currentProgress;
+          fillElement.style.width = currentProgress + "%";
           
-          // Variable tick intervals to simulate fluctuating environment assets loading
-          var nextTickDelay = Math.floor(Math.random() * 120) + 40;
+          // Shifting tick delays keep the progress bar movement looking authentic
+          var nextTickDelay = Math.floor(Math.random() * 110) + 30;
           setTimeout(runLoader, nextTickDelay);
         }
       }
       
-      // Delay countdown engine initialization slightly to let the TV snap-open stabilize
-      setTimeout(runLoader, 800);
+      // Delays calculation startup slightly to let the TV animation render smoothly first
+      setTimeout(runLoader, 750);
     });
   </script>
 
