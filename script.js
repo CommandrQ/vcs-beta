@@ -1,9 +1,9 @@
 /**
- * VANGUARD CITIZEN SERVICES — CORE SYSTEM AUTOMATION
+ * VANGUARD CITIZEN SERVICES — MAIN SOFTWARE ENGINE
  * Path: script.js
  */
 
-// --- 1. DEEP SPACE BACKDROP BACKGROUND ENGINE ---
+// --- 1. ATMOSPHERIC BACKGROUND SYSTEM ---
 class DeepAtmosphere {
   constructor(canvasId) {
     this.canvas = document.getElementById(canvasId);
@@ -80,23 +80,31 @@ class DeepAtmosphere {
   }
 }
 
-// --- 2. REGISTRY DICTIONARY Configuration (Easy to expand tabs here) ---
+// --- 2. CONFIGURATION DATA DICTIONARY ---
 const REGISTRY_DATA = {
   "about us": {
-    title: "About Our Guild",
-    content: "<p>We bypass modern distractions to construct transparent tools and honest infrastructure for real-world communities. Vanguard operates as a small team with a large reach, ensuring clarity remains at the center of everything we build.</p>"
+    title: "Our Story",
+    content: "<p>Vanguard started with two friends. We share a deep background in technology and military service. Moving out of those fields, we realized how much noise and distraction exists in modern culture today.</p><p>We decided to build this business with a clear purpose: to tackle and look closely at the real challenges facing our country, while showcasing the deeply personal human stories that make our communities strong. We work small to ensure our work stays focused, transparent, and meaningful.</p>"
   },
   "legal": {
-    title: "Legal Framework",
-    content: "<p>All operations under the Vanguard umbrella are designed with absolute clarity in mind. We prioritize community transparency, data sovereignty, and open protocols over hidden terms.</p>"
+    title: "Privacy Policy & Terms of Use",
+    content: `
+      <div class="legal-date-stamp" id="legal-date-mount"></div>
+      <h4 class="legal-subheading">1. Privacy Commitment</h4>
+      <p>We believe your personal details belong to you. We do not track your browsing habits, sell your information to outside data companies, or use hidden analytics software on this space. Any data shared with us stays completely protected and under our strict control.</p>
+      <h4 class="legal-subheading">2. Terms of Use</h4>
+      <p>By interacting with Vanguard Citizen Services, you agree to engage honestly and transparently with our community tools. We do not tolerate any malicious use, automated scraping, or actions meant to interrupt our services to the public.</p>
+      <h4 class="legal-subheading">3. Security Protocols</h4>
+      <p>We work to keep our systems secure using simple, clean software architecture. Because we keep our footprint small and skip modern tech bloat, your connection lines stay transparent, fast, and secure.</p>
+    `
   },
   "support": {
-    title: "Support Operations",
-    content: "<p>Need connection with our crew? Open a communication relay. Our support windows run light to ensure questions are answered directly by an internal builder without automated circular routing panels.</p>"
+    title: "Redirecting...",
+    content: "<p>Moving directly to Vanguard Support Operations...</p>"
   }
 };
 
-// --- 3. RUNTIME COORDINATION ---
+// --- 3. LIFECYCLE COORDINATION ---
 document.addEventListener('DOMContentLoaded', () => {
   const bg = new DeepAtmosphere('atmosphere-canvas');
   bg.run();
@@ -108,55 +116,44 @@ document.addEventListener('DOMContentLoaded', () => {
   
   document.getElementById('current-year').textContent = new Date().getFullYear();
 
-  // Acknowledge the user's return history entry point
   const hasVisited = localStorage.getItem('vanguard_initialized');
 
   if (hasVisited) {
-    // Returnee: Instantly clean up splash DOM nodes to lock in fast paths
     if (introStage) introStage.remove();
     mainContent.style.opacity = '1';
     initializeCoreFeatures();
   } else {
-    // Direct New Arrival Sequence: Run the 4000ms loop sequence
     if (progressBar) {
       requestAnimationFrame(() => { progressBar.style.width = '100%'; });
     }
-
     setTimeout(() => {
       if (introStage && mainContent && mask) {
-        // Step A: Fade completely to black
         mask.style.opacity = '1';
-
         setTimeout(() => {
-          // Step B: Set token state, swap stage frames silently in the dark
           localStorage.setItem('vanguard_initialized', 'true');
           introStage.remove();
           mainContent.style.opacity = '1';
-
-          // Step C: Fade back up cleanly to present the workspace
           mask.style.opacity = '0';
           initializeCoreFeatures();
-        }, 500); // Cross-fade synchronization timing window
+        }, 500);
       }
     }, 4000);
   }
 
-  // --- 4. CORE ENGINE INITIALIZATION FEATURES ---
+  // --- 4. CORE REVEAL PROCESSES ---
   function initializeCoreFeatures() {
     fetchAnnouncements();
     buildNavigationTabs();
-    setupModalHandlers();
+    
+    if (window.innerWidth >= 1024) {
+      activateRegistryItem("about us");
+    }
   }
 
-  // Fetch and display messages from the json endpoint
   function fetchAnnouncements() {
     const mount = document.getElementById('announcements-mount');
-    
     fetch('announcements.json')
-      .then(res => {
-        if (!res.ok) throw new Error();
-        return res.json();
-      })
+      .then(res => { if (!res.ok) throw new Error(); return res.json(); })
       .then(data => {
         mount.innerHTML = '';
         data.announcements.forEach(item => {
@@ -170,12 +167,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       })
       .catch(() => {
-        // Safe programmatic fallback notice if remote data pipeline breaks locally
-        mount.innerHTML = '<p class="system-message">Secure local transmissions encrypted. Registry reading online.</p>';
+        mount.innerHTML = '<p class="system-message">Secure connections verified. Local data lines online.</p>';
       });
   }
 
-  // Generate actionable items from our layout map dictionary
   function buildNavigationTabs() {
     const mount = document.getElementById('tabs-mount');
     if (!mount) return;
@@ -183,35 +178,62 @@ document.addEventListener('DOMContentLoaded', () => {
     Object.keys(REGISTRY_DATA).forEach(key => {
       const button = document.createElement('button');
       button.className = 'action-tab-btn';
+      button.id = `tab-btn-${key.replace(' ', '-')}`;
       button.textContent = key;
-      button.addEventListener('click', () => openModalPane(key));
+      button.addEventListener('click', () => activateRegistryItem(key));
       mount.appendChild(button);
     });
   }
 
-  // Interfacing mechanics managing the glassy overlay structures
-  const modal = document.getElementById('modal-overlay');
-  const mTitle = document.getElementById('modal-title');
-  const mBody = document.getElementById('modal-body');
+  function activateRegistryItem(key) {
+    if (key === "support") {
+      window.location.href = "support/";
+      return;
+    }
 
-  function openModalPane(key) {
-    const records = REGISTRY_DATA[key];
-    if (!records || !modal) return;
+    const data = REGISTRY_DATA[key];
+    const textWindow = document.getElementById('desktop-content-window');
+    if (!data || !textWindow) return;
 
-    mTitle.textContent = records.title;
-    mBody.innerHTML = records.content;
-    modal.classList.add('is-visible');
-  }
+    document.querySelectorAll('.action-tab-btn').forEach(btn => btn.classList.remove('is-active'));
+    const targetBtn = document.getElementById(`tab-btn-${key.replace(' ', '-')}`);
+    if (targetBtn) targetBtn.classList.add('is-active');
 
-  function setupModalHandlers() {
-    const closeBtn = document.getElementById('modal-close-trigger');
-    
-    if (closeBtn && modal) {
-      closeBtn.addEventListener('click', () => modal.classList.remove('is-visible'));
-      // Close overlay window if someone taps out into space shadows
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) modal.classList.remove('is-visible');
-      });
+    textWindow.innerHTML = `
+      <button class="mobile-close-overlay-btn" id="close-overlay-trigger" aria-label="Close panel">&times;</button>
+      <h3>${data.title}</h3>
+      <div class="narrative-body-scroll">${data.content}</div>
+    `;
+
+    if (key === "legal") {
+      const dateMount = document.getElementById('legal-date-mount');
+      if (dateMount) {
+        const today = new Date();
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        dateMount.textContent = `UPDATED: ${today.toLocaleDateString('en-US', options).toUpperCase()}`;
+      }
+    }
+
+    if (window.innerWidth < 1024) {
+      textWindow.classList.add('is-open-mobile');
+      
+      let backdrop = document.createElement('div');
+      backdrop.className = 'mobile-backdrop-blur';
+      document.body.appendChild(backdrop);
+      
+      const closeMobilePanel = () => {
+        textWindow.classList.remove('is-open-mobile');
+        if (targetBtn) targetBtn.classList.remove('is-active');
+        backdrop.remove();
+      };
+      
+      backdrop.addEventListener('click', closeMobilePanel);
+      const closeTrigger = document.getElementById('close-overlay-trigger');
+      if (closeTrigger) {
+        closeTrigger.addEventListener('click', closeMobilePanel);
+      }
+    } else {
+      textWindow.scrollTop = 0;
     }
   }
 });
