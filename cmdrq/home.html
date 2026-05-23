@@ -8,8 +8,8 @@
 </head>
 <body class="cinematic-lock">
 
-  <!-- THE PULSING BLUE GRID BACKPLANE LAYER -->
-  <div class="grid-background-overlay"></div>
+  <!-- THE ANIMATED SPACE BACKPLANE CANVAS -->
+  <canvas id="starfield-wallpaper"></canvas>
 
   <!-- Cinematic Frame Accents -->
   <div class="cinema-bar top"></div>
@@ -74,5 +74,55 @@
     </footer>
   </main>
 
+  <script>
+    // --- HARDWARE-ACCELERATED COSMIC ENGINE ---
+    class StarfieldWallpaper {
+      constructor() {
+        this.canvas = document.getElementById('starfield-wallpaper');
+        if (!this.canvas) return;
+        this.ctx = this.canvas.getContext('2d');
+        this.stars = [];
+        this.init();
+        window.addEventListener('resize', () => this.init());
+      }
+      init() {
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+        this.stars = [];
+        // Math tracking loop to scale stars dynamically relative to viewport sizing
+        const count = Math.floor((this.canvas.width * this.canvas.height) / 4000);
+        for (let i = 0; i < count; i++) {
+          this.stars.push({
+            x: Math.random() * this.canvas.width,
+            y: Math.random() * this.canvas.height,
+            size: Math.random() * 1.5 + 0.3,
+            speed: Math.random() * 0.05 + 0.02,
+            // Splitting colors exactly between light purple and light blue hex nodes
+            color: Math.random() > 0.5 ? 'rgba(179, 157, 219, ' : 'rgba(129, 212, 250, ',
+            phase: Math.random() * Math.PI
+          });
+        }
+      }
+      animate() {
+        this.ctx.fillStyle = '#030307';
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        
+        this.stars.forEach(star => {
+          star.phase += star.speed;
+          let opacity = 0.2 + (Math.sin(star.phase) + 1) * 0.4;
+          this.ctx.fillStyle = `${star.color}${opacity})`;
+          this.ctx.beginPath();
+          this.ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+          this.ctx.fill();
+        });
+        requestAnimationFrame(() => this.animate());
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const spaceBg = new StarfieldWallpaper();
+      if (spaceBg.canvas) spaceBg.animate();
+    });
+  </script>
 </body>
 </html>
