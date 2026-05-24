@@ -1,4 +1,145 @@
-        <!-- TWO WORLDS CONTAINER -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vanguard Citizen Services | Portal Lobby</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ==========================================
+           1. PORTAL ARCHITECTURE
+           ========================================== */
+        body {
+            overflow-y: auto;
+            padding: 2rem 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .glass-window {
+            max-width: 950px;
+            width: 100%;
+            padding: 2.5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ==========================================
+           2. SPLIT DUAL-WORLD STRUCTURE
+           ========================================== */
+        .split-worlds {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .world-sector {
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 280px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .world-sector:hover {
+            border-color: rgba(179, 136, 255, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .world-title {
+            color: #ffeb3b;
+            font-size: 1.3em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .world-description {
+            font-size: 0.9em;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 1.5rem;
+            max-width: 380px;
+        }
+
+        /* ==========================================
+           3. ACTION BUTTONS & INTERACTION
+           ========================================== */
+        .action-btn {
+            display: inline-block;
+            background: linear-gradient(90deg, #ffe082 0%, #ffb300 50%, #ffeb3b 100%);
+            color: #000000;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 0.75rem 1.8rem;
+            border-radius: 6px;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+            transition: box-shadow 0.3s ease;
+            width: fit-content;
+            margin-top: auto;
+        }
+
+        .action-btn:hover {
+            box-shadow: 0 0 25px #ffd700, 0 0 10px rgba(179, 136, 255, 0.4);
+        }
+
+        .action-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+            animation: flashShimmer 2s infinite;
+        }
+
+        /* ==========================================
+           4. RESPONSIVE DESKTOP DESIGNS
+           ========================================== */
+        @media (min-width: 768px) {
+            .split-worlds {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+            .glass-window {
+                padding: 4rem 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- VISUAL ENVIRONMENT -->
+    <div class="space-bg">
+        <div class="starfield"></div>
+    </div>
+
+    <!-- MAIN INTERFACE -->
+    <div class="glass-window">
+
+        <img src="../images/vanguardorglogo.png" alt="Vanguard Citizen Services Logo" class="logo">
+        <div class="tagline">Lobby Portal</div>
+        
+        <!-- TWO WORLDS GRID MODULE -->
         <div class="split-worlds">
             
             <!-- WORLD 1: THE STUDIO -->
@@ -16,12 +157,46 @@
                 <p class="world-description">
                     The creative collective and studio house building the content. A modern guild of storytellers, artists, and digital architects crafting impactful media.
                 </p>
-                <a href="#guild" class="action-btn">Enter Guild</a>
+                <a href="../knights/index.html" class="action-btn">Enter Guild</a>
             </div>
 
-        </div> <!-- Closing split-worlds grid -->
-
-        <!-- NEED HELP UTILITY LINK -->
-        <div style="margin-top: 3rem; text-align: center; width: 100%;">
-            <a href="support/index.html" style="color: #ffffff; text-decoration: none; font-size: 0.8em; text-transform: uppercase; letter-spacing: 2px; border: 1px solid rgba(255,255,255,0.15); padding: 0.5rem 1.2rem; border-radius: 4px; transition: all 0.3s ease;" onmouseover="this.style.borderColor='#ffeb3b'; this.style.color='#ffeb3b';" onmouseout="this.style.borderColor='rgba(255,255,255,0.15)'; this.style.color='#ffffff';">Need Help?</a>
         </div>
+
+        <!-- CENTERED HELP CONSOLE NAVIGATION POINT -->
+        <div style="margin-top: 3.5rem; text-align: center; width: 100%;">
+            <a href="support/index.html" style="color: #ffffff; text-decoration: none; font-size: 0.75em; text-transform: uppercase; letter-spacing: 2px; border: 1px solid rgba(255,255,255,0.15); padding: 0.5rem 1.4rem; border-radius: 4px; transition: all 0.3s ease;" onmouseover="this.style.borderColor='#ffeb3b'; this.style.color='#ffeb3b'; this.style.boxShadow='0 0 10px rgba(255, 235, 59, 0.1)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.15)'; this.style.color='#ffffff'; this.style.boxShadow='none';">Need Help?</a>
+        </div>
+
+        <!-- SITE FOOTER -->
+        <footer class="site-footer">
+            <div class="footer-text">&copy; 2026 Vanguard Citizen Services. All Rights Reserved.</div>
+        </footer>
+
+    </div>
+
+    <!-- LOGIC SYSTEM ENGINES -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const spaceBg = document.querySelector(".space-bg");
+
+            function launchComet() {
+                const comet = document.createElement("div");
+                comet.classList.add("comet");
+                const startTop = Math.random() * 40; 
+                const startLeft = Math.random() * 20;
+                
+                comet.style.top = `${startTop}vh`;
+                comet.style.left = `${startLeft}vw`;
+                comet.style.animation = "streak 3.2s cubic-bezier(0.25, 1, 0.5, 1) forwards";
+                
+                spaceBg.appendChild(comet);
+                setTimeout(() => comet.remove(), 3300);
+            }
+
+            setInterval(launchComet, 4000);
+            setTimeout(launchComet, 500);
+        });
+    </script>
+
+</body>
+</html>
