@@ -7,20 +7,21 @@
     <link rel="stylesheet" href="style.css">
     <style>
         /* ==========================================
-           1. UNIQUE STUDIO ARCHITECTURE
+           1. COMPACT ARCHITECTURE
            ========================================== */
         body {
             overflow-y: auto;
-            padding: 3rem 1rem;
+            padding: 1.5rem 1rem;
             display: flex;
             justify-content: center;
             align-items: center;
+            min-height: 100vh;
         }
 
         .glass-window {
-            max-width: 1000px;
+            max-width: 800px;
             width: 100%;
-            padding: 2.5rem;
+            padding: 2rem;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -28,46 +29,12 @@
         }
 
         /* ==========================================
-           2. MISSION PILLARS (EMPOWER, EDUCATE, ELEVATE)
-           ========================================== */
-        .mission-matrix {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-            width: 100%;
-            margin: 2rem 0;
-            text-align: center;
-        }
-
-        .pillar-card {
-            background: rgba(255, 255, 255, 0.01);
-            border: 1px dashed rgba(179, 136, 255, 0.2);
-            border-radius: 8px;
-            padding: 1.5rem;
-        }
-
-        .pillar-name {
-            color: #ffeb3b;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 0.5rem;
-            font-size: 1.1em;
-        }
-
-        .pillar-text {
-            font-size: 0.9em;
-            line-height: 1.5;
-        }
-
-        /* ==========================================
-           3. NARRATIVE & CONTENT SECTIONS
+           2. STREAMLINED SECTIONS
            ========================================== */
         .studio-section {
             width: 100%;
-            max-width: 750px;
             text-align: center;
-            margin-bottom: 3.5rem;
+            margin-bottom: 2rem;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -75,50 +42,79 @@
 
         .section-title {
             color: #ffeb3b;
-            font-size: 1.5em;
+            font-size: 1.3em;
             font-weight: 700;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             text-transform: uppercase;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             border-bottom: 2px solid rgba(179, 136, 255, 0.3);
-            padding-bottom: 0.5rem;
+            padding-bottom: 0.3rem;
             width: fit-content;
         }
 
         .section-text {
-            line-height: 1.7;
+            line-height: 1.5;
             font-size: 0.95em;
-            margin-bottom: 1.5rem;
+            max-width: 600px;
+            margin-bottom: 1rem;
         }
 
         /* ==========================================
-           4. ROADMAP & UPCOMING ENGINE
+           3. THREE PILLARS ROW
            ========================================== */
-        .roadmap-container {
-            display: flex;
-            flex-direction: column;
+        .mission-row {
+            display: grid;
+            grid-template-columns: 1fr;
             gap: 1rem;
             width: 100%;
-            max-width: 600px;
-            margin-top: 1rem;
+            margin: 1rem 0;
         }
 
-        .roadmap-item {
+        .pillar-card {
             background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 6px;
-            padding: 1.2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 1rem;
+            border: 1px solid rgba(179, 136, 255, 0.2);
+            border-radius: 8px;
+            padding: 1rem;
         }
 
-        .roadmap-info {
-            text-align: left;
+        .pillar-name {
+            color: #ffeb3b;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9em;
+            margin-bottom: 0.25rem;
         }
 
-        .roadmap-tag {
+        .pillar-text {
+            font-size: 0.85em;
+            line-height: 1.4;
+        }
+
+        /* ==========================================
+           4. INTERACTIVE PROJECT SLIDER
+           ========================================== */
+        .slider-box {
+            width: 100%;
+            max-width: 550px;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 0.5rem;
+            position: relative;
+        }
+
+        .slide {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        .project-tag {
             font-size: 0.7em;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -126,26 +122,50 @@
             font-weight: 600;
         }
 
-        .roadmap-name {
-            font-size: 0.95em;
-            font-weight: 600;
-            margin-top: 0.2rem;
+        .project-name {
+            font-size: 1.1em;
+            font-weight: 700;
+            margin: 0.3rem 0;
+            color: #ffffff;
         }
 
-        .status-badge {
-            font-size: 0.7em;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-weight: 700;
+        .project-summary {
+            font-size: 0.85em;
+            line-height: 1.5;
+            margin-bottom: 1.2rem;
+            min-height: 4.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slider-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+
+        .nav-btn {
+            background: transparent;
             border: 1px solid rgba(255, 235, 59, 0.4);
             color: #ffeb3b;
-            white-space: nowrap;
+            font-size: 1.2rem;
+            padding: 0.3rem 1rem;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-btn:hover {
+            background: #ffeb3b;
+            color: #000000;
+            box-shadow: 0 0 10px #ffeb3b;
         }
 
         /* ==========================================
-           5. COMPONENT BUTTONS & UTILITIES
+           5. ACTION BUTTON & NAV LINKS
            ========================================== */
         .action-btn {
             display: inline-block;
@@ -156,7 +176,7 @@
             font-size: 0.8em;
             text-transform: uppercase;
             letter-spacing: 2px;
-            padding: 0.8rem 1.8rem;
+            padding: 0.7rem 1.5rem;
             border-radius: 6px;
             box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
             position: relative;
@@ -186,7 +206,7 @@
             font-size: 0.75em;
             text-transform: uppercase;
             letter-spacing: 2px;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             transition: color 0.3s ease;
         }
 
@@ -194,98 +214,129 @@
             color: #ffeb3b;
         }
 
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
         /* ==========================================
            6. RESPONSIVE DESKTOP EXPANSION
            ========================================== */
-        @media (min-width: 750px) {
-            .mission-matrix {
+        @media (min-width: 700px) {
+            .mission-row {
                 grid-template-columns: repeat(3, 1fr);
-                gap: 1rem;
-            }
-            
-            .glass-window {
-                padding: 4rem;
+                gap: 0.8rem;
             }
         }
     </style>
 </head>
 <body>
 
+    <!-- VISUAL ENVIRONMENT -->
     <div class="space-bg">
         <div class="starfield"></div>
     </div>
 
+    <!-- MAIN INTERFACE -->
     <div class="glass-window">
         
-        <a href="../home/index.html" class="back-nav">← Return Home</a>
+        <a href="../home/index.html" class="back-nav">← Back</a>
 
         <img src="../images/vanguardorglogo.png" alt="Vanguard Citizen Services Logo" class="logo">
-        <div class="tagline">Creative Studio</div>
+        <div class="tagline" style="margin-bottom: 1.5rem;">Creative Studio</div>
         
+        <!-- ORIGINS & PILLARS -->
         <section class="studio-section">
-            <h2 class="section-title">Origins & Vision</h2>
+            <h2 class="section-title">Our Vision</h2>
             <p class="section-text">
-                Vanguard Citizen Services emerged out of a desire to look past the surface noise of modern media and focus back on what tethers us together. We operate as a dedicated creative workshop, deliberately designing experiences and unearthing deep human accounts that provoke internal reflection and foster deeper community bonds.
+                Vanguard Citizen Services is a creative workshop. We share human stories to provoke deep thought and help shape our world toward positive coexistence.
             </p>
             
-            <div class="mission-matrix">
+            <div class="mission-row">
                 <div class="pillar-card">
                     <div class="pillar-name">Empower</div>
-                    <div class="pillar-text">Giving agency to narratives that inspire action and instill confidence in our collective future.</div>
+                    <div class="pillar-text">Giving voice to stories that inspire action.</div>
                 </div>
                 <div class="pillar-card">
                     <div class="pillar-name">Educate</div>
-                    <div class="pillar-text">Unpacking complex social contexts to cultivate cross-cultural insight and baseline understanding.</div>
+                    <div class="pillar-text">Unpacking deep topics for shared insight.</div>
                 </div>
                 <div class="pillar-card">
                     <div class="pillar-name">Elevate</div>
-                    <div class="pillar-text">Lifting up raw expressions of human resilience to push society closer to intentional coexistence.</div>
+                    <div class="pillar-text">Lifting up human spirit and connection.</div>
                 </div>
             </div>
         </section>
 
-        <section class="studio-section">
-            <h2 class="section-title">The Mind Behind</h2>
-            <p class="section-text">
-                As a creative architect, my objective is simple: to build containers for stories that matter. Through creative direction, narrative systems, and purposeful design, I work alongside the Vanguard Knights to translate raw perspectives into immersive digital realities that stick with you long after you close the browser tab.
-            </p>
-        </section>
-
+        <!-- PORTAL INTERACTIVE SHOWCASE -->
         <section class="studio-section" style="margin-bottom: 0;">
-            <h2 class="section-title">Narrative Roadmap</h2>
-            <p class="section-text">
-                Our workshop is constantly tracking new human perspectives. Take a look at the upcoming creative showcases and narrative installations currently being forged.
-            </p>
+            <h2 class="section-title">Our Showcases</h2>
             
-            <div class="roadmap-container">
-                <div class="roadmap-item">
-                    <div class="roadmap-info">
-                        <span class="roadmap-tag">Docu-Series</span>
-                        <div class="roadmap-name">Echoes of Coexistence</div>
-                    </div>
-                    <span class="status-badge">Production</span>
+            <div class="slider-box">
+                <!-- PROJECT 1 -->
+                <div class="slide active">
+                    <span class="project-tag">Docu-Series</span>
+                    <h3 class="project-name">Echoes of Coexistence</h3>
+                    <p class="project-summary">An ongoing look into real communities learning to bridge cultural divides and build shared futures.</p>
+                    <a href="#view1" class="action-btn">View Project</a>
                 </div>
                 
-                <div class="roadmap-item">
-                    <div class="roadmap-info">
-                        <span class="roadmap-tag">Interactive Media</span>
-                        <div class="roadmap-name">The Human Mosaic Project</div>
-                    </div>
-                    <span class="status-badge">Pre-Alpha</span>
+                <!-- PROJECT 2 -->
+                <div class="slide">
+                    <span class="project-tag">Interactive Media</span>
+                    <h3 class="project-name">The Human Mosaic Project</h3>
+                    <p class="project-summary">A digital map of recorded human perspectives, linking global stories across shared life themes.</p>
+                    <a href="#view2" class="action-btn">View Project</a>
+                </div>
+
+                <!-- PROJECT 3 -->
+                <div class="slide">
+                    <span class="project-tag">Narrative Lab</span>
+                    <h3 class="project-name">Citizen Stories</h3>
+                    <p class="project-summary">A direct collection of audio diaries capturing moments of everyday resilience and quiet triumph.</p>
+                    <a href="#view3" class="action-btn">View Project</a>
+                </div>
+
+                <!-- CAROUSEL TRACK CONTROLS -->
+                <div class="slider-controls">
+                    <button class="nav-btn" id="prev-slide">←</button>
+                    <button class="nav-btn" id="next-slide">→</button>
                 </div>
             </div>
         </section>
 
     </div>
 
+    <!-- LOGIC SYSTEM ENGINES -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
+            // 1. CAROUSEL SLIDER ENGINE
+            const slides = document.querySelectorAll(".slide");
+            const prevBtn = document.getElementById("prev-slide");
+            const nextBtn = document.getElementById("next-slide");
+            let currentIndex = 0;
+
+            function updateSlider(index) {
+                slides.forEach(slide => slide.classList.remove("active"));
+                slides[index].classList.add("active");
+            }
+
+            prevBtn.addEventListener("click", () => {
+                currentIndex = (currentIndex === 0) ? slides.length - 1 : currentIndex - 1;
+                updateSlider(currentIndex);
+            });
+
+            nextBtn.addEventListener("click", () => {
+                currentIndex = (currentIndex === slides.length - 1) ? 0 : currentIndex + 1;
+                updateSlider(currentIndex);
+            });
+
+            // 2. COMET SPANWER ENGINE
             const spaceBg = document.querySelector(".space-bg");
 
             function launchComet() {
                 const comet = document.createElement("div");
                 comet.classList.add("comet");
-                
                 const startTop = Math.random() * 40; 
                 const startLeft = Math.random() * 20;
                 
@@ -294,10 +345,7 @@
                 comet.style.animation = "streak 3.2s cubic-bezier(0.25, 1, 0.5, 1) forwards";
                 
                 spaceBg.appendChild(comet);
-                
-                setTimeout(() => {
-                    comet.remove();
-                }, 3300);
+                setTimeout(() => comet.remove(), 3300);
             }
 
             setInterval(launchComet, 4000);
