@@ -1,173 +1,120 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vanguard Citizen Services | Home</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        /* ==========================================
-           1. UNIQUE HOME ARCHITECTURE
-           ========================================== */
-        body {
-            overflow-y: auto;
-            padding: 2rem 1rem;
-        }
+<style>
+    /* ==========================================
+       1. UNIQUE HOME ARCHITECTURE
+       ========================================== */
+    body {
+        overflow-y: auto;
+        padding: 2rem 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
-        .glass-window {
-            max-width: 1200px;
-            width: 100%;
-            padding: 2.5rem;
-        }
+    .glass-window {
+        max-width: 1200px;
+        width: 100%;
+        padding: 2.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
 
-        /* ==========================================
-           2. SPLIT-WORLD GRID SYSTEM
-           ========================================== */
+    /* ==========================================
+       2. SPLIT-WORLD GRID SYSTEM
+       ========================================== */
+    .split-worlds {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        margin-top: 2rem;
+        text-align: center;
+        width: 100%;
+    }
+
+    .world-sector {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        padding: 2rem;
+        transition: transform 0.3s ease, border-color 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .world-sector:hover {
+        border-color: rgba(255, 235, 59, 0.3);
+        transform: translateY(-2px);
+    }
+
+    /* ==========================================
+       3. SECTOR TYPOGRAPHY & BUTTONS
+       ========================================== */
+    .world-title {
+        color: #ffeb3b;
+        font-size: 1.4em;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 1rem;
+        border-bottom: 2px solid rgba(179, 136, 255, 0.3);
+        padding-bottom: 0.5rem;
+        width: fit-content;
+    }
+
+    .world-description {
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        font-size: 0.95em;
+        max-width: 450px;
+    }
+
+    .action-btn {
+        display: inline-block;
+        background: linear-gradient(90deg, #ffe082 0%, #ffb300 50%, #ffeb3b 100%);
+        color: #000000;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 0.8em;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        padding: 0.8rem 1.8rem;
+        border-radius: 6px;
+        box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+        position: relative;
+        overflow: hidden;
+        transition: box-shadow 0.3s ease;
+        margin: 0 auto;
+    }
+
+    .action-btn:hover {
+        box-shadow: 0 0 25px #ffd700, 0 0 10px rgba(179, 136, 255, 0.5);
+    }
+
+    .action-btn::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 50%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+        animation: flashShimmer 2s infinite;
+    }
+
+    /* ==========================================
+       4. RESPONSIVE DESKTOP EXPANSION
+       ========================================== */
+    @media (min-width: 850px) {
         .split-worlds {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2.5rem;
-            margin-top: 2rem;
-            text-align: left;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
         }
-
-        .world-sector {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            padding: 2rem;
-            transition: transform 0.3s ease, border-color 0.3s ease;
-        }
-
-        .world-sector:hover {
-            border-color: rgba(255, 235, 59, 0.3);
-            transform: translateY(-2px);
-        }
-
-        /* ==========================================
-           3. SECTOR TYPOGRAPHY & BUTTONS
-           ========================================== */
-        .world-title {
-            color: #ffeb3b;
-            font-size: 1.4em;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-            border-bottom: 2px solid rgba(179, 136, 255, 0.3);
-            padding-bottom: 0.5rem;
-        }
-
-        .world-description {
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
-            font-size: 0.95em;
-        }
-
-        .action-btn {
-            display: inline-block;
-            background: linear-gradient(90deg, #ffe082 0%, #ffb300 50%, #ffeb3b 100%);
-            color: #000000;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 0.8em;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            padding: 0.8rem 1.8rem;
-            border-radius: 6px;
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
-            position: relative;
-            overflow: hidden;
-            transition: box-shadow 0.3s ease;
-        }
-
-        .action-btn:hover {
-            box-shadow: 0 0 25px #ffd700, 0 0 10px rgba(179, 136, 255, 0.5);
-        }
-
-        .action-btn::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
-            animation: flashShimmer 2s infinite;
-        }
-
-        /* ==========================================
-           4. RESPONSIVE DESKTOP EXPANSION
-           ========================================== */
-        @media (min-width: 850px) {
-            .split-worlds {
-                grid-template-columns: 1fr 1fr;
-                gap: 3rem;
-            }
-            
-            .glass-window {
-                padding: 4rem;
-            }
-        }
-    </style>
-</head>
-<body>
-
-    <div class="space-bg">
-        <div class="starfield"></div>
-    </div>
-
-    <div class="glass-window">
-        <img src="../images/vanguardorglogo.png" alt="Vanguard Citizen Services Logo" class="logo">
-        <div class="tagline">Empower.Educate.Elevate</div>
         
-        <div class="split-worlds">
-            
-            <div class="world-sector">
-                <h2 class="world-title">Creative Studio</h2>
-                <p class="world-description">
-                    Exploring and showcasing raw human narratives designed to provoke deep thought, challenge perspectives, and shape our world toward positive coexistence.
-                </p>
-                <a href="#narratives" class="action-btn">Explore Works</a>
-            </div>
-
-            <div class="world-sector">
-                <h2 class="world-title">Vanguard Knights</h2>
-                <p class="world-description">
-                    The creative collective and studio house building the content. A modern guild of storytellers, artists, and digital architects crafting impactful media.
-                </p>
-                <a href="#guild" class="action-btn">Enter Guild</a>
-            </div>
-
-        </div>
-    </div>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const spaceBg = document.querySelector(".space-bg");
-
-            function launchComet() {
-                const comet = document.createElement("div");
-                comet.classList.add("comet");
-                
-                const startTop = Math.random() * 40; 
-                const startLeft = Math.random() * 20;
-                
-                comet.style.top = `${startTop}vh`;
-                comet.style.left = `${startLeft}vw`;
-                comet.style.animation = "streak 3.2s cubic-bezier(0.25, 1, 0.5, 1) forwards";
-                
-                spaceBg.appendChild(comet);
-                
-                setTimeout(() => {
-                    comet.remove();
-                }, 3300);
-            }
-
-            setInterval(launchComet, 4000);
-            setTimeout(launchComet, 500);
-        });
-    </script>
-
-</body>
-</html>
+        .glass-window {
+            padding: 4rem;
+        }
+    }
+</style>
