@@ -1,15 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vanguard Citizen Services</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Specific Styles for the Intro Page */
+        .intro-container {
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; height: 100vh;
+        }
+        #vanguard-logo { width: 250px; opacity: 0; animation: tv-flicker 0.4s ease forwards; }
+        @keyframes tv-flicker { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } 25% { opacity: 0.9; } }
+        .tagline { margin: 20px 0; color: #f5c518; letter-spacing: 2px; }
+        .progress-bg { width: 300px; height: 4px; background: #000; border: 1px solid #f5c518; }
+        .progress-fill { width: 0%; height: 100%; background: #f5c518; transition: width 2s linear; }
+    </style>
 </head>
 <body>
-    <canvas id="space-layer"></canvas>
-    <div class="intro-ui" id="ui">
+
+    <div class="intro-container" id="ui">
         <img src="images/vanguardorglogo.png" id="vanguard-logo">
         <div class="tagline">Empower. Educate. Elevate</div>
         <div class="progress-bg"><div class="progress-fill" id="bar"></div></div>
     </div>
-    <!-- Include your script.js here -->
+
+    <!-- Background Canvas & Logic -->
+    <script src="canvas.js"></script>
+    
+    <!-- Transition Logic -->
+    <script>
+        window.onload = () => {
+            setTimeout(() => {
+                document.getElementById('bar').style.width = '100%';
+                setTimeout(() => {
+                    document.getElementById('ui').style.opacity = '0';
+                    setTimeout(() => window.location.href = 'home/index.html', 1000);
+                }, 2000);
+            }, 500);
+        };
+    </script>
 </body>
 </html>
