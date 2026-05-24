@@ -32,3 +32,28 @@ body { margin: 0; background: #0a0a0a; color: white; overflow: hidden; font-fami
 /* Loading Bar */
 .progress-bg { width: 300px; height: 4px; background: #333; }
 .progress-fill { width: 0%; height: 100%; background: #f5c518; transition: width 2s linear; }
+/* Fade-in Effect for all pages */
+body { animation: fadeIn 1s ease-in; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* Layout Structure */
+.site-wrapper { display: flex; min-height: 100vh; }
+aside { width: 250px; border-right: 1px solid #f5c518; padding: 20px; background: rgba(0,0,0,0.8); }
+
+/* Menu Button (Mobile) */
+.menu-btn { display: none; position: fixed; top: 20px; right: 20px; z-index: 100; cursor: pointer; color: #f5c518; }
+
+@media (max-width: 768px) {
+    aside { display: none; } /* Hidden by default on mobile */
+    .menu-btn { display: block; }
+}
+
+/* Glass-morphism Panels */
+.glass-panel {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    margin: 20px;
+    border-radius: 8px;
+}
