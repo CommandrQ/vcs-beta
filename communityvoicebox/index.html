@@ -324,6 +324,14 @@
                 </div>
             </div>
 
+            <!-- FUTURE RESOURCE LIBRARY HOLDER -->
+            <div class="module-card" style="border: 1px dashed rgba(212, 175, 55, 0.3); text-align: center; padding: 25px;">
+                <h2 style="font-size: 1.1rem; margin-bottom: 10px; letter-spacing: 1px;">Resource Library</h2>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0; line-height: 1.5;">
+                    Hardin County utility links, public safety maps, and community support networks expanding here soon.
+                </p>
+            </div>
+
             <!-- DESKTOP DONATION MODULE (Only visible on larger screens) -->
             <div class="module-card donation-module desktop-donation">
                 <div class="pulse-text">Support This Tool</div>
@@ -449,7 +457,7 @@
             <!-- ATTACHED DONATION MODULE IN MODAL -->
             <div class="donation-module" style="background: rgba(0,0,0,0.3); margin-top: 30px; border-radius: 16px; border: 1px solid var(--glass-border);">
                 <div class="pulse-text" style="font-size: 1rem;">Support This Tool</div>
-                <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px;">
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 10px;">
                     100% of donations cover server costs. Support us with <strong>as low as $1</strong>.
                 </p>
                 <button class="support-btn" onclick="alert('Donation engine module placeholder integration. Features expanding soon!')" style="padding: 8px 20px; font-size: 0.75rem;">Donate</button>
@@ -587,7 +595,7 @@
 
                     if (error) throw error;
 
-                    banner.classList.add('status-success');
+                    banner.className = "status-banner status-success";
                     banner.innerText = "Success! Your message has been safely submitted to the verified Hardin County log.";
                     form.reset();
                     fetchCommunityLedger();
@@ -596,7 +604,7 @@
 
                 } catch (err) {
                     console.error(err);
-                    banner.classList.add('status-error');
+                    banner.className = "status-banner status-error";
                     banner.innerText = "Failed! We couldn't connect to the log. Please check your network and try again.";
                 } finally {
                     submitBtn.disabled = false;
