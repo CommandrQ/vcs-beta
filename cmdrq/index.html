@@ -6,8 +6,15 @@
     <title>CMDR Q // Gateway</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* --- INTRO SCENE INFRASTRUCTURE LOCKS --- */
-        .gateway-viewport {
+        /* --- INLINE SKIP LOCK REINFORCEMENT --- */
+        /* Forces absolute hidden view state to completely stop any layout flickering during automatic rerouting */
+        body.redirecting {
+            background: #000000 !important;
+            display: none !important;
+        }
+
+        /* --- IMMERSIVE STARFIELD INTEGRATION --- */
+        .cinematic-stage {
             position: fixed;
             inset: 0;
             width: 100%;
@@ -15,57 +22,59 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 10;
             overflow: hidden;
+            z-index: 10;
         }
 
-        .intro-scene-block {
+        /* --- TIMED TIMELINE ANIMATION BLOCKS --- */
+        .intro-scene {
             position: absolute;
-            width: 90%;
-            max-width: 500px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            width: 100%;
             text-align: center;
+            padding: 0 20px;
             opacity: 0;
             transform: scale(0.97);
-            transition: opacity 1s ease-in-out, transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1), transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
             pointer-events: none;
         }
 
-        .intro-scene-block.stage-active {
+        .intro-scene.show-node {
             opacity: 1;
             transform: scale(1);
-            pointer-events: auto;
         }
 
-        /* --- STAGE 3 PROFILE INJECTION LAYOUT --- */
-        .stage-avatar {
+        .intro-scene.fade-node {
+            opacity: 0;
+            transform: scale(1.02);
+            transition: opacity 0.8s ease-in, transform 0.8s ease-in;
+        }
+
+        /* --- HERO INTRO IMAGE AND TEXT --- */
+        .hero-portrait {
+            display: block;
+            margin: 0 auto 20px auto;
             width: 110px;
             height: 110px;
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid var(--glass-border);
             filter: drop-shadow(0 0 15px rgba(142, 202, 230, 0.4));
-            margin-bottom: 20px;
         }
 
-        .shimmer-caption {
+        .shimmer-rank {
             font-size: clamp(1.4rem, 5vw, 1.8rem);
             font-weight: bold;
-            letter-spacing: 2px;
             text-transform: uppercase;
-            background: linear-gradient(to right, var(--light-blue) 20%, #fff 40%, #fff 60%, var(--light-blue) 80%);
+            letter-spacing: 3px;
+            background: linear-gradient(to right, var(--light-blue) 20%, #ffffff 40%, #ffffff 60%, var(--light-blue) 80%);
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             animation: sheen 3s linear infinite;
-            line-height: 1.2;
         }
 
-        /* --- OUTBOUND TRANSITION VEIL --- */
-        #shutdown-curtain {
+        /* --- CINEMATIC VEIL TRANSITION OVERLAY --- */
+        #fade-curtain {
             position: fixed;
             inset: 0;
             background: #000000;
@@ -74,69 +83,95 @@
             pointer-events: none;
             transition: opacity 1s ease-in-out;
         }
-        #shutdown-curtain.drop-veil {
+        #fade-curtain.blackout {
             opacity: 1;
         }
     </style>
+    <script>
+        /* --- SESSION SKIPPED CONTROLLER ENGINE --- */
+        // Runs immediately prior to layout painting to eliminate flashing animations
+        if (localStorage.getItem('cmdrq_intro_played') === 'true') {
+            document.documentElement.classList.add('redirecting');
+            window.location.replace('home.html');
+        }
+    </script>
 </head>
 <body class="cinematic-body">
 
-    <!-- MATCHING DEEP SPACE BACKGROUND SYSTEMS -->
+    <!-- Screen Transition Veil Layer -->
+    <div id="fade-curtain"></div>
+
+    <!-- The exact matching CSS Background Starfield Matrix from menu -->
     <div id="starfield"><div class="stars"></div></div>
 
-    <!-- BLACK ROUTING VEIL LAYER -->
-    <div id="shutdown-curtain"></div>
+    <!-- Cinematic Screen Matrix Stage -->
+    <div class="cinematic-stage">
 
-    <!-- CORE CINEMATIC SEQUENCE STAGE -->
-    <div class="gateway-viewport">
-
-        <!-- SCENE 1: PHILOSOPHY TAG -->
-        <div id="stage-1" class="intro-scene-block stage-active">
+        <!-- NODE 1: UNFILTERED NARRATIVES -->
+        <div id="node-1" class="intro-scene">
             <h2 class="cinematic-text tracking-out">Unfiltered Narratives.</h2>
         </div>
 
-        <!-- SCENE 2: PRESENTATION PRELUDE -->
-        <div id="stage-2" class="intro-scene-block">
+        <!-- NODE 2: VANGUARD KNIGHTS PRESENTS -->
+        <div id="node-2" class="intro-scene">
             <h2 class="cinematic-text glow-text">The Vanguard Knights Presents…</h2>
         </div>
 
-        <!-- SCENE 3: PROFILE REVEAL COMMAND STAGE -->
-        <div id="stage-3" class="intro-scene-block">
-            <img src="images/headshot.jpg" alt="Commander Q Profile" class="stage-avatar">
-            <h1 class="shimmer-caption">Captain Commander Q</h1>
+        <!-- NODE 3: HERO PROFILE REVEAL CARD -->
+        <div id="node-3" class="intro-scene">
+            <img src="images/headshot.jpg" alt="Commander Q Portrait" class="hero-portrait">
+            <h1 class="shimmer-rank">Captain Commander Q</h1>
         </div>
 
     </div>
 
-    <!-- ENGINE SEQUENCE CONTROLLER -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const stage1 = document.getElementById('stage-1');
-            const stage2 = document.getElementById('stage-2');
-            const stage3 = document.getElementById('stage-3');
-            const curtain = document.getElementById('shutdown-curtain');
+            // Safe guard path layout switch step
+            if (localStorage.getItem('cmdrq_intro_played') === 'true') return;
 
-            // Time Marker 3.0s: Fade Scene 1, Deploy Scene 2
-            setTimeout(() => {
-                stage1.classList.remove('stage-active');
-                stage2.classList.add('stage-active');
-            }, 3000);
+            const n1 = document.getElementById('node-1');
+            const n2 = document.getElementById('node-2');
+            const n3 = document.getElementById('node-3');
+            const curtain = document.getElementById('fade-curtain');
 
-            // Time Marker 6.0s: Fade Scene 2, Deploy Scene 3 Profile
+            // PHASE 1: Display "Unfiltered Narratives" immediately
             setTimeout(() => {
-                stage2.classList.remove('stage-active');
-                stage3.classList.add('stage-active');
-            }, 6000);
+                n1.classList.add('show-node');
+            }, 200);
 
-            // Time Marker 8.5s: Hold Profile for 2.5 seconds, then drop black curtain veil
+            // PHASE 2: Clear Node 1 away
             setTimeout(() => {
-                curtain.classList.add('drop-veil');
-                
-                // Time Marker 9.5s: Complete blackout transition and migrate frame to home
-                setTimeout(() => {
-                    window.location.href = 'home.html';
-                }, 1000);
-            }, 8500);
+                n1.classList.remove('show-node');
+                n1.classList.add('fade-node');
+            }, 2800);
+
+            // PHASE 3: Fire up "The Vanguard Knights Presents..."
+            setTimeout(() => {
+                n2.classList.add('show-node');
+            }, 3800);
+
+            // PHASE 4: Clear Node 2 away
+            setTimeout(() => {
+                n2.classList.remove('show-node');
+                n2.classList.add('fade-node');
+            }, 6400);
+
+            // PHASE 5: Reveal Captain Commander Q and Headshot Portrait Matrix
+            setTimeout(() => {
+                n3.classList.add('show-node');
+            }, 7400);
+
+            // PHASE 6: Bring down the black cinematic curtain after a 2-second delay window
+            setTimeout(() => {
+                curtain.classList.add('blackout');
+            }, 9400);
+
+            // PHASE 7: Set tracking lock token parameters and load home plate deck
+            setTimeout(() => {
+                localStorage.setItem('cmdrq_intro_played', 'true');
+                window.location.href = 'home.html';
+            }, 10400);
         });
     </script>
 </body>
