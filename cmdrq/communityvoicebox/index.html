@@ -19,13 +19,10 @@
             --text-muted: rgba(255, 255, 255, 0.7);
             --glass-bg: rgba(15, 15, 20, 0.65);
             --glass-border: rgba(255, 255, 255, 0.08);
-            --glass-highlight: rgba(255, 255, 255, 0.15);
             --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; }
 
         body {
             background: linear-gradient(180deg, #020108 0%, #0a0815 40%, #1a1005 75%, #D4AF37 120%);
@@ -65,108 +62,116 @@
         /* --- LAYOUT CONFIGURATION --- */
         .guide-container {
             width: 90%;
-            max-width: 650px;
+            max-width: 800px; /* Widened for better desktop breathing room */
             z-index: 10;
-            padding: 40px 0 20px;
+            padding: 50px 0 30px;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            gap: 35px; /* Creates consistent spacing between all cards */
         }
 
-        .glass-card {
+        /* Modular Cards (Replaces the single massive card) */
+        .module-card {
             background: var(--glass-bg);
-            backdrop-filter: blur(30px) saturate(150%);
-            -webkit-backdrop-filter: blur(30px) saturate(150%);
+            backdrop-filter: blur(25px) saturate(150%);
+            -webkit-backdrop-filter: blur(25px) saturate(150%);
             border: 1px solid var(--glass-border);
-            border-radius: 28px;
+            border-radius: 24px;
             padding: 35px 25px; 
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 0 0 1px var(--glass-border);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(255,255,255,0.05);
             width: 100%;
-            margin-bottom: 30px;
-            text-align: left;
+        }
+
+        @media (min-width: 768px) {
+            .module-card { padding: 45px 50px; } /* Vastly more internal padding on desktop */
         }
 
         /* --- TYPOGRAPHY --- */
-        .page-header { text-align: center; margin-bottom: 30px; }
+        .page-header { text-align: center; margin-bottom: 10px; }
         .page-title { 
-            font-size: clamp(2rem, 5vw, 2.8rem); font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
+            font-size: clamp(2.2rem, 6vw, 3.5rem); font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
             background: linear-gradient(180deg, #fff 0%, var(--gold) 100%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.3));
+            margin-bottom: 5px;
         }
-        .page-subtitle { color: var(--gold); font-size: 1rem; letter-spacing: 3px; text-transform: uppercase; margin-top: 8px; font-weight: 600; }
+        .page-subtitle { color: var(--gold); font-size: 1rem; letter-spacing: 4px; text-transform: uppercase; font-weight: 600; }
 
-        h2 { color: var(--gold); font-size: 1.3rem; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 6px; }
-        p { color: rgba(255, 255, 255, 0.9); font-size: 1rem; line-height: 1.6; margin-bottom: 20px; }
-        p.highlight { font-size: 1.1rem; color: var(--white); font-weight: 500; border-left: 3px solid var(--gold); padding-left: 12px; line-height: 1.5; }
+        h2 { color: var(--gold); font-size: 1.4rem; font-weight: 700; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; }
+        p { color: rgba(255, 255, 255, 0.9); font-size: 1.05rem; line-height: 1.7; margin-bottom: 20px; }
+        
+        .highlight-text {
+            font-size: 1.15rem; color: var(--white); font-weight: 500; 
+            line-height: 1.6; text-align: center; margin-bottom: 0;
+        }
 
         /* --- AUDIENCE GRID ITEMS --- */
-        .split-grid {
+        .audience-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        @media(min-width: 768px) { .audience-grid { grid-template-columns: repeat(3, 1fr); } }
+
+        .audience-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 25px 20px;
+            border-radius: 16px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .audience-card:hover { transform: translateY(-3px); background: rgba(255, 255, 255, 0.05); }
+        .audience-card h3 { font-size: 1rem; color: var(--gold); margin-bottom: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        .audience-card p { font-size: 0.9rem; margin-bottom: 0; color: var(--text-muted); line-height: 1.5; }
+
+        /* --- FORM MECHANICS --- */
+        .instruction-grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: 12px;
-            margin-bottom: 20px;
-        }
-        @media(min-width: 600px) { .split-grid { grid-template-columns: repeat(3, 1fr); } }
-
-        .grid-item {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 15px;
-            border-radius: 12px;
-        }
-        .grid-item h3 { font-size: 0.9rem; color: var(--gold); margin-bottom: 6px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-        .grid-item p { font-size: 0.85rem; margin-bottom: 0; color: var(--text-muted); line-height: 1.4; }
-
-        /* --- INLINE SUBMISSION BOX --- */
-        .inline-tracker-box {
-            background: rgba(0, 0, 0, 0.35);
-            border: 1px solid rgba(212, 175, 55, 0.2);
+            background: rgba(0,0,0,0.25);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 20px;
             border-radius: 16px;
-            padding: 25px 20px;
-            margin-top: 25px;
-            box-shadow: inset 0 0 15px rgba(0,0,0,0.4);
+            margin-bottom: 25px;
         }
+        @media (min-width: 600px) { .instruction-grid { grid-template-columns: 1fr 1fr; } }
+        
+        .instruction-step { font-size: 0.9rem; color: var(--text-muted); line-height: 1.4; }
+        .instruction-step strong { color: var(--gold); display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2px; }
 
-        .instruction-step { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px; line-height: 1.4; }
-        .instruction-step strong { color: var(--gold); }
-
-        label { display: block; margin-bottom: 4px; margin-top: 12px; font-weight: 600; font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+        label { display: block; margin-bottom: 6px; margin-top: 15px; font-weight: 600; font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
         select, input, textarea { 
-            width: 100%; padding: 12px; border-radius: 10px; 
-            border: 1px solid rgba(255, 255, 255, 0.12); background: rgba(0, 0, 0, 0.5); color: white; 
-            font-family: inherit; font-size: 0.9rem; transition: all 0.3s ease; margin-bottom: 4px;
+            width: 100%; padding: 14px; border-radius: 12px; 
+            border: 1px solid rgba(255, 255, 255, 0.15); background: rgba(0, 0, 0, 0.4); color: white; 
+            font-family: inherit; font-size: 0.95rem; transition: all 0.3s ease;
         }
-        select:focus, input:focus, textarea:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 10px var(--gold-glow); background: rgba(0, 0, 0, 0.7); }
-        input::placeholder, textarea::placeholder { color: rgba(255, 255, 255, 0.25); }
-        textarea { resize: none; }
+        select:focus, input:focus, textarea:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 12px var(--gold-glow); background: rgba(0, 0, 0, 0.6); }
+        input::placeholder, textarea::placeholder { color: rgba(255, 255, 255, 0.3); }
 
         /* --- LIVE DATA RETRIEVAL MATRIX LIST --- */
-        .ledger-wrapper {
-            margin-top: 30px;
-            width: 100%;
-        }
-        
         .ledger-scroll-area {
             width: 100%;
             overflow-x: auto;
             border: 1px solid var(--glass-border);
-            border-radius: 14px;
-            background: rgba(0, 0, 0, 0.2);
+            border-radius: 16px;
+            background: rgba(0, 0, 0, 0.3);
+            margin-top: 20px;
         }
 
         .citizen-table {
             width: 100%;
             border-collapse: collapse;
             text-align: left;
-            font-size: 0.85rem;
-            min-width: 550px;
+            font-size: 0.9rem;
+            min-width: 600px;
         }
 
         .citizen-table th {
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255, 255, 255, 0.05);
             color: var(--gold);
-            padding: 12px 14px;
+            padding: 15px;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -174,209 +179,202 @@
         }
 
         .citizen-table td {
-            padding: 12px 14px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             color: rgba(255, 255, 255, 0.85);
             vertical-align: top;
-            line-height: 1.4;
-        }
-
-        .citizen-table tr:last-child td {
-            border-bottom: none;
+            line-height: 1.5;
         }
 
         .badge-status {
             display: inline-block;
-            padding: 4px 8px;
+            padding: 6px 10px;
             border-radius: 20px;
             font-size: 0.75rem;
             font-weight: bold;
             text-transform: uppercase;
+            white-space: nowrap;
         }
         .status-pending { background: rgba(243, 156, 18, 0.15); color: #f39c12; border: 1px solid #f39c12; }
         .status-verified { background: rgba(52, 152, 219, 0.15); color: #3498db; border: 1px solid #3498db; }
         .status-completed { background: rgba(46, 204, 113, 0.15); color: #2ecc71; border: 1px solid #2ecc71; }
 
-        /* --- BUTTONS & PULSING EFFECTS --- */
+        /* --- BUTTONS & ALERTS --- */
         .action-btn {
-            width: 100%; padding: 14px; border-radius: 12px; border: none; 
-            background: var(--white); color: #05040a; font-weight: 700; font-size: 0.95rem;
-            cursor: pointer; transition: all 0.3s var(--ease-smooth); text-decoration: none; 
-            display: block; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            width: 100%; padding: 16px; border-radius: 12px; border: none; 
+            background: var(--white); color: #05040a; font-weight: 800; font-size: 1rem;
+            text-transform: uppercase; letter-spacing: 1px;
+            cursor: pointer; transition: all 0.3s var(--ease-smooth);
+            margin-top: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
-        .action-btn:hover { background: var(--gold); box-shadow: 0 0 25px var(--gold-glow); transform: translateY(-1px); }
-        .action-btn:disabled { background: rgba(255,255,255,0.3); color: rgba(255,255,255,0.5); cursor: not-allowed; transform: none; box-shadow: none; }
+        .action-btn:hover { background: var(--gold); box-shadow: 0 0 25px var(--gold-glow); transform: translateY(-2px); }
+        .action-btn:disabled { background: rgba(255,255,255,0.2); color: rgba(255,255,255,0.4); cursor: not-allowed; box-shadow: none; transform: none; }
 
-        /* --- SERVER SUPPORT DONATION MODULE --- */
-        .donation-module {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            padding: 24px;
-            margin-top: 30px;
-            text-align: center;
-        }
+        .status-banner { margin-top: 15px; padding: 15px; border-radius: 10px; text-align: center; font-size: 0.95rem; display: none; font-weight: 500; }
+        .status-success { display: block; background: rgba(46, 204, 113, 0.15); border: 1px solid #2ecc71; color: #2ecc71; }
+        .status-error { display: block; background: rgba(231, 76, 60, 0.15); border: 1px solid #e74c3c; color: #e74c3c; }
+
+        /* --- DONATION MODULE --- */
+        .donation-module { text-align: center; }
         
-        .donation-module p { 
-            font-size: 0.85rem; 
-            color: var(--text-muted); 
-            margin-bottom: 15px; 
-            line-height: 1.5;
-        }
-
         .pulse-text {
             color: var(--gold);
-            font-weight: 700;
+            font-size: 1.2rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
             animation: textBrightPulse 3s infinite ease-in-out;
         }
 
         @keyframes textBrightPulse {
             0%, 100% { text-shadow: 0 0 2px transparent; opacity: 0.85; }
-            50% { text-shadow: 0 0 12px var(--gold-glow), 0 0 20px var(--gold); color: #ffffff; opacity: 1; }
+            50% { text-shadow: 0 0 15px var(--gold-glow), 0 0 25px var(--gold); color: #ffffff; opacity: 1; }
         }
 
         .support-btn {
-            background: transparent; border: 1px solid var(--gold); color: var(--gold); width: auto; display: inline-block; padding: 10px 25px; border-radius: 20px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; font-weight: bold;
+            background: transparent; border: 2px solid var(--gold); color: var(--gold); 
+            width: auto; display: inline-block; padding: 12px 35px; border-radius: 30px; 
+            margin-top: 10px;
         }
-        .support-btn:hover { background: var(--gold); color: #05040a; box-shadow: 0 0 20px rgba(212, 175, 55, 0.3); }
+        .support-btn:hover { background: var(--gold); color: #05040a; }
 
-        .status-banner { margin-top: 14px; padding: 12px; border-radius: 10px; text-align: center; font-size: 0.9rem; display: none; }
-        .status-success { display: block; background: rgba(46, 204, 113, 0.15); border: 1px solid #2ecc71; color: #2ecc71; }
-        .status-error { display: block; background: rgba(231, 76, 60, 0.15); border: 1px solid #e74c3c; color: #e74c3c; }
     </style>
 </head>
 <body>
 
-    <!-- Environmental Space Background Matrix -->
     <div id="environment"><div class="starfield"></div></div>
-
     <div id="boot-screen"></div>
 
     <div class="guide-container">
         
+        <!-- HEADER -->
         <header class="page-header">
             <h1 class="page-title">Community Voice Box</h1>
             <div class="page-subtitle">Project V // Hardin County</div>
         </header>
 
-        <main class="glass-card">
-            
-            <p class="highlight">
+        <!-- MODULE 1: THE VISION -->
+        <section class="module-card">
+            <p class="highlight-text">
                 Whether dealing with local or nationwide hurdles, it can be tough for neighbors in Radcliff and across Hardin County to get their voices heard by local leaders. We are building a bridge to fix that.
             </p>
-            
-            <h2>The Vision</h2>
-            <p>
-                This tool is completely **anonymous** because the issue itself is more important than who reports it. When one person steps up to share a problem, they become the voice that hundreds of our neighbors need to hear.
+            <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.08); margin: 25px 0;">
+            <p style="text-align: center; margin-bottom: 0;">
+                This tool is completely <strong>anonymous</strong> because the issue itself is more important than who reports it. When one person steps up to share a problem, they become the voice that hundreds of our neighbors need to hear.
             </p>
+        </section>
 
-            <!-- Three Pillar Stakeholder Alignment Matrix -->
-            <div class="split-grid">
-                <div class="grid-item">
-                    <h3>Citizens</h3>
-                    <p>Share everyday local issues safely, directly, and without any red tape.</p>
-                </div>
-                <div class="grid-item">
-                    <h3>Businesses</h3>
-                    <p>Point out road, utility, or school updates that impact your daily work.</p>
-                </div>
-                <div class="grid-item">
-                    <h3>Elected Leaders</h3>
-                    <p>See a real-time map of actual needs straight from the citizens you serve.</p>
-                </div>
+        <!-- MODULE 2: THE AUDIENCES (Detached Grid) -->
+        <section class="audience-grid">
+            <div class="audience-card">
+                <h3>Citizens</h3>
+                <p>Share everyday local issues safely, directly, and without any red tape.</p>
+            </div>
+            <div class="audience-card">
+                <h3>Businesses</h3>
+                <p>Point out road, utility, or school updates that impact your daily work.</p>
+            </div>
+            <div class="audience-card">
+                <h3>Elected Leaders</h3>
+                <p>See a real-time map of actual needs straight from the citizens you serve.</p>
+            </div>
+        </section>
+
+        <!-- MODULE 3: THE SUBMISSION FORM -->
+        <section class="module-card">
+            <h2>Submit Anonymously</h2>
+            <p style="font-size: 0.95rem;">Skip the bureaucracy. Log your issue directly into the public tracker below.</p>
+            
+            <div class="instruction-grid">
+                <div class="instruction-step"><strong>1. Topic</strong> Choose the category.</div>
+                <div class="instruction-step"><strong>2. Area</strong> Pick the closest city footprint.</div>
+                <div class="instruction-step"><strong>3. Location</strong> Name a street or public space.</div>
+                <div class="instruction-step"><strong>4. Detail</strong> Briefly explain the issue.</div>
             </div>
 
-            <!-- BAKED-IN SUBMISSION TOOL WORKSPACE -->
-            <div class="inline-tracker-box">
-                <h2 style="margin-top: 0; font-size: 1.1rem; border: none; padding-bottom: 0; color: var(--white);">Submit Anonymously</h2>
+            <form id="submission-form">
+                <label for="category">Topic Category</label>
+                <select id="category">
+                    <option value="School Transparency">School Transparency</option>
+                    <option value="Resource Access">Resource Access</option>
+                    <option value="Budget/Infrastructure">Budget / Infrastructure</option>
+                </select>
+
+                <label for="municipality">Your General Area</label>
+                <select id="municipality">
+                    <option value="Radcliff">Radcliff</option>
+                    <option value="Elizabethtown">Elizabethtown</option>
+                    <option value="Vine Grove">Vine Grove</option>
+                    <option value="Other Hardin County">Other Hardin County</option>
+                </select>
+
+                <label for="location">Nearest Street, School, or Neighborhood</label>
+                <input type="text" id="location" placeholder="e.g., Dixie Highway or North Hardin High" required>
+
+                <label for="description">What issue needs attention?</label>
+                <textarea id="description" rows="4" placeholder="Describe the area of improvement safely and constructively here..." required></textarea>
+
+                <button type="submit" id="submit-button" class="action-btn">Submit</button>
                 
-                <div style="margin: 12px 0 15px;">
-                    <div class="instruction-step"><strong>1. Topic:</strong> Choose the area that fits your note best.</div>
-                    <div class="instruction-step"><strong>2. General Area:</strong> Pick the closest city footprint.</div>
-                    <div class="instruction-step"><strong>3. Location:</strong> Name a street, school, or public neighborhood.</div>
-                    <div class="instruction-step"><strong>4. Description:</strong> Briefly explain the issue so we can log it.</div>
-                </div>
+                <div id="response-banner" class="status-banner"></div>
+            </form>
+        </section>
 
-                <form id="submission-form">
-                    <label for="category">Topic Category</label>
-                    <select id="category">
-                        <option value="School Transparency">School Transparency</option>
-                        <option value="Resource Access">Resource Access</option>
-                        <option value="Budget/Infrastructure">Budget / Infrastructure</option>
-                    </select>
-
-                    <label for="municipality">Your General Area</label>
-                    <select id="municipality">
-                        <option value="Radcliff">Radcliff</option>
-                        <option value="Elizabethtown">Elizabethtown</option>
-                        <option value="Vine Grove">Vine Grove</option>
-                        <option value="Other Hardin County">Other Hardin County</option>
-                    </select>
-
-                    <label for="location">Nearest Street, School, or Neighborhood</label>
-                    <input type="text" id="location" placeholder="e.g., Dixie Highway, Woodland Drive, or North Hardin High" required>
-
-                    <label for="description">What issue needs attention?</label>
-                    <textarea id="description" rows="4" placeholder="Describe the area of improvement safely and constructively here..." required></textarea>
-
-                    <button type="submit" id="submit-button" class="action-btn" style="margin-top: 15px;">Submit</button>
-                    
-                    <div id="response-banner" class="status-banner"></div>
-                </form>
+        <!-- MODULE 4: THE LEDGER -->
+        <section class="module-card">
+            <h2>Verified Community Ledger</h2>
+            <p style="font-size: 0.95rem; margin-bottom: 0;">
+                Issues received from neighbors that have been verified and made visible for public tracking.
+            </p>
+            
+            <div class="ledger-scroll-area">
+                <table class="citizen-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 15%;">Logged</th>
+                            <th style="width: 20%;">Category</th>
+                            <th style="width: 20%;">Municipality</th>
+                            <th style="width: 30%;">Description</th>
+                            <th style="width: 15%;">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="live-ledger-hook">
+                        <tr>
+                            <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 30px;">
+                                Syncing with cloud tracking entries...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
+        </section>
 
-            <!-- VERIFIED TRACKER DATA TABLE SECTION -->
-            <div class="ledger-wrapper">
-                <h2>Verified Community Ledger</h2>
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">
-                    This log lists the issues received from neighbors that are currently undergoing validation or tracking for completion.
-                </p>
-                <div class="ledger-scroll-area">
-                    <table class="citizen-table">
-                        <thead>
-                            <tr>
-                                <th style="width: 15%;">Logged</th>
-                                <th style="width: 20%;">Category</th>
-                                <th style="width: 20%;">Municipality</th>
-                                <th style="width: 30%;">Description</th>
-                                <th style="width: 15%;">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody id="live-ledger-hook">
-                            <tr>
-                                <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 20px;">
-                                    Syncing with cloud tracking entries...
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+        <!-- MODULE 5: DONATION / SUPPORT -->
+        <section class="module-card donation-module">
+            <div class="pulse-text">Support This Tool</div>
+            <p>
+                This platform runs entirely independent of local government. 100% of donations go directly toward cloud hosting costs and building new features for our community. 
+            </p>
+            <p style="color: var(--white); font-weight: 500;">
+                Every bit helps keep this running—support us with <strong>as low as $1</strong>.
+            </p>
+            <button class="action-btn support-btn" onclick="alert('Donation engine module placeholder integration. Features expanding soon!')">Support The Server</button>
+        </section>
 
-            <!-- SERVER EXPANSION DONATION MODULE -->
-            <div class="donation-module">
-                <h2 class="pulse-text" style="font-size: 1rem; border: none; padding-bottom: 0; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px;">Support This Tool</h2>
-                <p>
-                    This tool runs independently. 100% of donations go directly toward cloud hosting costs and building new features for our community. Every bit helps—feel free to support with **as low as $1**.
-                </p>
-                <button class="action-btn support-btn" onclick="alert('Donation engine module placeholder integration. Features expanding soon!')">Support This Tool</button>
-            </div>
+        <!-- RETURN LINK -->
+        <div style="text-align: center;">
+            <a href="../home.html" class="hub-return-link">← Return to Control Deck</a>
+        </div>
 
-            <!-- Return path to Control Deck -->
-            <div style="text-align: center; margin-top: 35px;">
-                <a href="../home.html" class="hub-return-link">← Return to Control Deck</a>
-            </div>
-
-        </main>
     </div>
 
-    <!-- SYNCHRONIZED SYSTEM FOOTER FROM HOME.HTML -->
     <footer class="system-footer">
         &copy; <span id="current-year"></span> Vanguard Citizen Services
     </footer>
 
     <script>
-        /* --- 1. COMET GENERATOR ENGINE --- */
+        /* --- COMET GENERATOR --- */
         function spawnComet() {
             const container = document.getElementById('environment');
             if (!container) return;
@@ -390,33 +388,31 @@
         setInterval(spawnComet, 3500);
         spawnComet();
 
-        /* --- 2. SET CURRENT DYNAMIC YEAR --- */
+        /* --- DYNAMIC YEAR --- */
         const yearSpan = document.getElementById('current-year');
-        if (yearSpan) {
-            yearSpan.innerText = new Date().getFullYear();
-        }
+        if (yearSpan) yearSpan.innerText = new Date().getFullYear();
 
-        /* --- 3. SUPABASE LIVE ACCOUNT CONNECTION --- */
+        /* --- SUPABASE CONNECTION --- */
         const sbUrl = 'https://dvyjupytbwbrcoyouxpf.supabase.co';
         const sbKey = 'sb_publishable_wjgbPekKmodd5mSDXIeUeg_Wq73GzOk';
         const supabaseClient = supabase.createClient(sbUrl, sbKey);
 
-        /* --- 4. DATA RETRIEVAL LOG INJECTION ENGINE --- */
+        /* --- FETCH LEDGER --- */
         async function fetchCommunityLedger() {
             const ledgerHook = document.getElementById('live-ledger-hook');
             if (!ledgerHook) return;
 
             try {
-                // Request rows sorted down from newest entries
                 const { data, error } = await supabaseClient
                     .from('suggestionbox')
-                    .select('created_at, category, municipality, description, status')
+                    .select('created_at, category, municipality, description, status, visible')
+                    .eq('visible', true)
                     .order('created_at', { ascending: false });
 
                 if (error) throw error;
 
                 if (!data || data.length === 0) {
-                    ledgerHook.innerHTML = `<tr><td colspan="5" style="text-align:center; color:rgba(255,255,255,0.4);">No records currently logged on the public ledger.</td></tr>`;
+                    ledgerHook.innerHTML = `<tr><td colspan="5" style="text-align:center; color:rgba(255,255,255,0.4); padding: 30px;">No records currently approved for the public ledger.</td></tr>`;
                     return;
                 }
 
@@ -424,17 +420,10 @@
 
                 data.forEach(item => {
                     const row = document.createElement('tr');
-
-                    // Parse timestamp to readable ISO format date
-                    let simpleDate = "Pending";
-                    if (item.created_at) {
-                        simpleDate = item.created_at.split('T')[0];
-                    }
-
-                    // Compute responsive status badges matching class hooks
+                    let simpleDate = item.created_at ? item.created_at.split('T')[0] : "Pending";
+                    
                     let statusClass = "status-pending";
                     let matchedStatus = item.status || "Pending Verification";
-                    
                     if (matchedStatus.toLowerCase().includes('verified')) statusClass = "status-verified";
                     if (matchedStatus.toLowerCase().includes('complete')) statusClass = "status-completed";
 
@@ -442,7 +431,7 @@
                         <td style="font-family: monospace; color: var(--gold);">${simpleDate}</td>
                         <td style="font-weight: 600;">${item.category || ''}</td>
                         <td>${item.municipality || ''}</td>
-                        <td style="font-size:0.8rem; color:rgba(255,255,255,0.7); max-width: 240px; word-wrap: break-word; white-space: normal;">${item.description || ''}</td>
+                        <td style="font-size:0.85rem; color:rgba(255,255,255,0.8);">${item.description || ''}</td>
                         <td><span class="badge-status ${statusClass}">${matchedStatus}</span></td>
                     `;
                     ledgerHook.appendChild(row);
@@ -450,14 +439,13 @@
 
             } catch (err) {
                 console.error("Ledger rendering error:", err);
-                ledgerHook.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#e74c3c;">Failed to sync with active database log stream.</td></tr>`;
+                ledgerHook.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#e74c3c; padding: 30px;">Failed to sync with active database log stream.</td></tr>`;
             }
         }
 
-        // Initialize ledger query loop immediately upon layout boot
         document.addEventListener('DOMContentLoaded', fetchCommunityLedger);
 
-        /* --- 5. DATA SUBMISSION DISPATCHER --- */
+        /* --- SUBMIT FORM --- */
         const form = document.getElementById('submission-form');
         const submitBtn = document.getElementById('submit-button');
         const banner = document.getElementById('response-banner');
@@ -487,7 +475,8 @@
                                 description: description,
                                 status: 'Pending Verification',
                                 is_public: false,
-                                trust_score_flag: false
+                                trust_score_flag: false,
+                                visible: false
                             }
                         ]);
 
@@ -496,8 +485,6 @@
                     banner.classList.add('status-success');
                     banner.innerText = "Success! Your message has been safely submitted to the verified Hardin County log.";
                     form.reset();
-                    
-                    // Instantly refresh tracking rows down into the visual display matrix
                     fetchCommunityLedger();
 
                 } catch (err) {
