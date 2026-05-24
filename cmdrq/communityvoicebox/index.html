@@ -240,15 +240,9 @@
         .status-verified { background: rgba(52, 152, 219, 0.15); color: #3498db; border: 1px solid #3498db; }
         .status-completed { background: rgba(46, 204, 113, 0.15); color: #2ecc71; border: 1px solid #2ecc71; }
 
-        /* --- DONATION MODULE (ATTACHED TO BOTTOM OF MODAL) --- */
-        .modal-donation-module {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            padding: 20px;
-            margin-top: 30px;
-            text-align: center;
-        }
+        /* --- DONATION MODULE STYLING & RESPONSIVE TOGGLE --- */
+        .donation-module { text-align: center; padding: 25px; }
+        
         .pulse-text {
             color: var(--gold); font-size: 1.1rem; font-weight: 800; text-transform: uppercase;
             letter-spacing: 2px; margin-bottom: 10px; animation: textBrightPulse 3s infinite ease-in-out;
@@ -263,6 +257,15 @@
             margin-top: 5px; font-weight: bold; font-size: 0.8rem; text-transform: uppercase; cursor: pointer; transition: 0.3s;
         }
         .support-btn:hover { background: var(--gold); color: #05040a; }
+
+        /* Toggle Display Logic for Desktop vs Mobile */
+        .desktop-donation { display: none; }
+        .mobile-donation { display: block; }
+        
+        @media (min-width: 860px) {
+            .desktop-donation { display: block; }
+            .mobile-donation { display: none; }
+        }
 
         .status-banner { margin-top: 15px; padding: 15px; border-radius: 10px; text-align: center; font-size: 0.95rem; display: none; font-weight: 500; }
         .status-success { display: block; background: rgba(46, 204, 113, 0.15); border: 1px solid #2ecc71; color: #2ecc71; }
@@ -294,6 +297,15 @@
                 <div style="margin-top: 25px;">
                     <a href="../home.html" class="hub-return-link" style="font-size: 0.9rem;">← Return to Control Deck</a>
                 </div>
+            </div>
+
+            <!-- DESKTOP DONATION MODULE (Only visible on larger screens) -->
+            <div class="module-card donation-module desktop-donation">
+                <div class="pulse-text">Support This Tool</div>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 10px; line-height: 1.5;">
+                    This platform runs independently. 100% of donations cover cloud hosting and feature development. Support the server with <strong>as low as $1</strong>.
+                </p>
+                <button class="support-btn" onclick="alert('Donation engine module placeholder integration. Features expanding soon!')">Donate</button>
             </div>
         </aside>
 
@@ -355,11 +367,20 @@
                     </table>
                 </div>
             </section>
+
+            <!-- MOBILE DONATION MODULE (Only visible on small screens at bottom of page flow) -->
+            <div class="module-card donation-module mobile-donation">
+                <div class="pulse-text">Support This Tool</div>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 10px; line-height: 1.5;">
+                    This platform runs independently. 100% of donations cover cloud hosting and feature development. Support the server with <strong>as low as $1</strong>.
+                </p>
+                <button class="support-btn" onclick="alert('Donation engine module placeholder integration. Features expanding soon!')">Donate</button>
+            </div>
             
         </main>
     </div>
 
-    <!-- MODAL OVERLAY (FORM + DONATION) -->
+    <!-- MODAL OVERLAY FOR FORM -->
     <div id="report-modal" class="modal-overlay" onclick="if(event.target === this) toggleModal(false)">
         <div class="modal-window">
             <button class="btn-close" onclick="toggleModal(false)">✕</button>
@@ -400,13 +421,13 @@
                 <div id="response-banner" class="status-banner"></div>
             </form>
 
-            <!-- ATTACHED DONATION MODULE -->
-            <div class="modal-donation-module">
-                <div class="pulse-text">Support This Tool</div>
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 10px; line-height: 1.5;">
-                    This platform runs independently. 100% of donations cover cloud hosting and feature development. Support the server with <strong>as low as $1</strong>.
+            <!-- ATTACHED DONATION MODULE IN MODAL (Per your earlier request) -->
+            <div class="donation-module" style="background: rgba(0,0,0,0.3); margin-top: 30px; border-radius: 16px; border: 1px solid var(--glass-border);">
+                <div class="pulse-text" style="font-size: 1rem;">Support This Tool</div>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px;">
+                    100% of donations cover server costs. Support us with <strong>as low as $1</strong>.
                 </p>
-                <button class="support-btn" onclick="alert('Donation engine module placeholder integration. Features expanding soon!')">Donate</button>
+                <button class="support-btn" onclick="alert('Donation engine module placeholder integration. Features expanding soon!')" style="padding: 8px 20px; font-size: 0.75rem;">Donate</button>
             </div>
         </div>
     </div>
@@ -442,11 +463,10 @@
             const modal = document.getElementById('report-modal');
             if (open) {
                 modal.classList.add('active');
-                document.body.style.overflow = 'hidden'; // Stop background scrolling
+                document.body.style.overflow = 'hidden'; 
             } else {
                 modal.classList.remove('active');
-                document.body.style.overflow = ''; // Restore scrolling
-                // Reset form alert banner on close
+                document.body.style.overflow = ''; 
                 const banner = document.getElementById('response-banner');
                 if (banner) banner.className = "status-banner";
             }
@@ -547,7 +567,6 @@
                     form.reset();
                     fetchCommunityLedger();
                     
-                    // Auto-close modal after brief delay so user sees success message
                     setTimeout(() => { toggleModal(false); }, 3000);
 
                 } catch (err) {
