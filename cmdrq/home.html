@@ -30,30 +30,40 @@
                 <a href="https://www.tiktok.com/@commandr_q" target="_blank" class="social-glyph" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
             </div>
             
+            <div id="user-greeting" class="greeting">Welcome back!</div>
+            
             <p>
-                Welcome! I'm incredibly glad you are here! Take a look around and explore the unique narratives and creative passion projects I am currently cooking up. Let’s build something meaningful together!
+                Welcome to the control deck. I am incredibly glad you are here! Take a look around and explore the unique narratives, community operations, and creative passion projects I am currently cooking up. Let’s build something meaningful together!
             </p>
 
-            <h2>Operations Array</h2>
+            <h2 style="text-align: center;">Navigation Menu</h2>
             <div class="menu-grid">
+                
+                <!-- ENTRY 1: COMMUNITY VOICE -->
                 <div class="btn-wrapper">
                     <a href="#" class="btn btn-accent">Community Voice</a>
                     <span class="btn-subtext">An anonymous space for Radcliff and Hardin County residents to voice local issues and frustrations.</span>
                 </div>
-            </div>
 
-            <h2>Navigation Deck</h2>
-            <div class="menu-grid">
+                <!-- ENTRY 2: ABOUT ME -->
                 <div class="btn-wrapper">
                     <a href="about/index.html" class="btn">About Me</a>
                     <span class="btn-subtext">Read my personal background, military service, and narrative history.</span>
                 </div>
 
+                <!-- ENTRY 3: ACTIVE ROSTER -->
+                <div class="btn-wrapper">
+                    <a href="roster/index.html" class="btn">Active Roster</a>
+                    <span class="btn-subtext">The official record of active personnel, units, and operational command layouts.</span>
+                </div>
+
+                <!-- ENTRY 4: DREAMSCAPE DRIFT -->
                 <div class="btn-wrapper">
                     <a href="dreamscapedrift/" class="btn">Dreamscape Drift</a>
                     <span class="btn-subtext">Watch my custom drifting videos and live DJ performance sets.</span>
                 </div>
 
+                <!-- ENTRY 5: MUSIC PLAYER -->
                 <div class="btn-wrapper">
                     <a href="musicplayer/" class="btn">Music Player</a>
                     <span class="btn-subtext">Play curated background music loops and atmospheric themes.</span>
@@ -68,5 +78,17 @@
 
     <footer class="system-footer">Powered by Vanguard Citizen Services</footer>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cachedName = localStorage.getItem('vanguard_citizen_name');
+            const sessionActive = localStorage.getItem('vanguard_session_status') === 'active';
+            
+            if (sessionActive && cachedName) {
+                document.getElementById('user-greeting').innerHTML = `Welcome back, <strong>${cachedName}</strong>.`;
+            } else {
+                document.getElementById('user-greeting').innerText = "Welcome back, Visitor.";
+            }
+        });
+    </script>
 </body>
 </html>
