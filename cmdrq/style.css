@@ -1,5 +1,5 @@
 /**
- * CMDR Q PERSONAL PLATFORM — FLUID AUTO-FIT AESTHETIC
+ * CMDR Q PERSONAL PLATFORM — COMPLETE FLUID AUTO-FIT AESTHETIC
  * Path: cmdrq/style.css
  */
 
@@ -52,7 +52,7 @@ body {
 /* --- Auto-Fit Layout Container --- */
 .hub-container {
     width: 92%; 
-    max-width: 500px; /* Base width for mobile/tablets */
+    max-width: 500px; /* Base mobile width */
     z-index: 10;
     padding: clamp(20px, 5vh, 40px) 0 clamp(10px, 3vh, 20px); 
     display: flex;
@@ -74,7 +74,7 @@ body {
 }
 @keyframes sheen { to { background-position: 200% center; } }
 
-/* Fluid Padding Card */
+/* Fluid Glass Backdrop Card Window */
 .hub-card {
     background: var(--glass-bg);
     backdrop-filter: blur(20px);
@@ -87,7 +87,7 @@ body {
     margin-bottom: 25px; 
 }
 
-/* --- Strict Profile Photo Framework --- */
+/* --- Profile Photo Framework --- */
 .profile-container { 
     display: flex; 
     justify-content: center; 
@@ -113,9 +113,11 @@ body {
     transition: all 0.3s ease;
 }
 
-/* --- Social Glyphs --- */
+/* --- Social Glyphs Matrix --- */
 .social-matrix { 
-    display: flex; justify-content: center; align-items: center; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
     gap: clamp(15px, 4vw, 22px); 
     margin-bottom: clamp(15px, 4vw, 25px); 
     width: 100%; 
@@ -123,8 +125,8 @@ body {
 .social-glyph { color: var(--light-blue); font-size: clamp(1.2rem, 4vw, 1.4rem); transition: transform 0.3s ease, color 0.3s ease, filter 0.3s ease; text-decoration: none; }
 .social-glyph:hover { color: var(--light-purple); transform: scale(1.15); filter: drop-shadow(0 0 8px var(--light-purple)); }
 
-/* --- Auto-Fit Typography --- */
-.greeting { font-size: clamp(1.1rem, 4vw, 1.25rem); color: var(--stark-white); margin-bottom: 15px; overflow-wrap: break-word; }
+/* --- Fluid Centered Typography --- */
+.greeting { font-size: clamp(1.1rem, 4vw, 1.25rem); color: var(--stark-white); margin-bottom: 15px; overflow-wrap: break-word; text-align: center; }
 .greeting strong { color: #ffffff; text-shadow: 0 0 10px rgba(255, 255, 255, 0.2); }
 
 p { 
@@ -134,6 +136,7 @@ p {
     margin-bottom: clamp(15px, 5vw, 25px); 
     overflow-wrap: break-word;
     word-break: break-word;
+    text-align: center;
 }
 
 h2 { 
@@ -144,11 +147,11 @@ h2 {
     letter-spacing: 2px; 
     border-bottom: 1px solid rgba(255,255,255,0.1); 
     padding-bottom: 8px; 
-    text-align: left; 
+    text-align: center; /* Explicitly centered */
     overflow-wrap: break-word;
 }
 
-/* --- Auto-Fit Navigation Grid --- */
+/* --- Navigation Deck Array Layout --- */
 .menu-grid { display: flex; flex-direction: column; gap: clamp(12px, 3vw, 16px); width: 100%; margin-bottom: 20px; }
 .btn-wrapper { display: flex; flex-direction: column; gap: 8px; width: 100%; }
 
@@ -175,15 +178,16 @@ h2 {
     line-height: 1.4; 
     padding: 0 10px; 
     overflow-wrap: break-word;
+    text-align: center; /* Explicitly centered descriptive lines */
 }
 
-/* --- About Page Timeline --- */
+/* --- About Page Narrative Tracks --- */
 .narrative-block { display: flex; flex-direction: column; gap: clamp(15px, 4vw, 20px); text-align: left; width: 100%; }
 .timeline-node { border-left: 2px solid var(--light-purple); padding-left: clamp(10px, 3vw, 16px); margin-left: 4px; }
 .node-era { font-size: clamp(0.7rem, 2.5vw, 0.75rem); text-transform: uppercase; letter-spacing: 2px; color: var(--light-blue); font-weight: 700; margin-bottom: 4px; }
 .node-title { font-size: clamp(1rem, 3.5vw, 1.1rem); font-weight: 600; color: var(--stark-white); margin-bottom: 6px; overflow-wrap: break-word; }
 
-/* --- Footers --- */
+/* --- Return Systems & Infrastructure Footers --- */
 .hub-return-link { font-size: clamp(0.7rem, 2.5vw, 0.75rem); text-transform: uppercase; letter-spacing: 1.5px; color: var(--light-blue); text-decoration: none; font-weight: bold; }
 .system-footer { 
     z-index: 10; padding: 20px 20px 30px; text-align: center; color: var(--stark-white); 
@@ -193,7 +197,7 @@ h2 {
 }
 @keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.8; } }
 
-/* --- Cinematic Entry Specifics (index.html only) --- */
+/* --- Cinematic Structural Overlays (index.html only) --- */
 .cinematic-body { background: #000000 !important; }
 .intro-canvas { position: fixed; inset: 0; background: #000000; z-index: 99999; display: flex; justify-content: center; align-items: center; transition: opacity 1s ease-in-out; }
 .cinematic-scene { position: absolute; opacity: 0; transform: scale(0.96); transition: opacity 0.8s ease-in-out, transform 1.2s cubic-bezier(0.25, 1, 0.5, 1); display: flex; flex-direction: column; align-items: center; width: 100%; text-align: center; padding: 0 20px; }
@@ -205,20 +209,20 @@ h2 {
 @keyframes trackOut { 0% { letter-spacing: 0.15em; opacity: 0; filter: blur(4px); } 15% { opacity: 1; filter: blur(0); } 100% { letter-spacing: clamp(0.2em, 2vw, 0.35em); opacity: 0.8; } }
 
 /* =========================================
-   DESKTOP ENHANCEMENTS (Bigger Window)
+   DESKTOP VIEWPORT ENHANCEMENTS (650px Core)
    ========================================= */
 @media (min-width: 768px) {
     .hub-container {
-        max-width: 650px; /* Widens the pop-up window on desktop */
+        max-width: 650px; /* Expands popup width seamlessly on desktop layers */
         padding-top: 6vh;
     }
     
     .hub-card {
-        padding: 45px 50px; /* Expands inner breathing room */
+        padding: 45px 50px; 
     }
 
     .profile-container img {
-        width: 105px; /* Slightly enlarges avatar for the bigger card */
+        width: 105px; 
         height: 105px;
         min-width: 105px;
         max-width: 105px;
