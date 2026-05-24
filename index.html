@@ -60,7 +60,7 @@
 
         .loading-bar {
             width: 0%; height: 100%; background: #D4AF37;
-            box-shadow: 0 0 12px var(--gold-glow, rgba(212, 175, 55, 0.4));
+            box-shadow: 0 0 12px rgba(212, 175, 55, 0.4);
         }
 
         .percent-counter {
@@ -116,7 +116,7 @@
                 container.classList.add('tv-turn-on');
             }
 
-            // 2. Continuous increments engine to feed calculation readouts organically
+            // 2. Continuous increments engine running at 25ms intervals to complete in exactly 2.5 seconds
             let currentPercentage = 0;
             
             const linearCounter = setInterval(() => {
@@ -128,7 +128,7 @@
                     if (progressBar) progressBar.style.width = currentPercentage + '%';
                     if (percentText) percentText.innerText = currentPercentage + '%';
                 }
-            }, 35); // Balances an organic 3.5 second runtime execution tracking experience
+            }, 25); 
         });
 
         function executeBlackoutFade() {
