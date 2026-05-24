@@ -18,13 +18,21 @@
         .hub-container {
             height: 100dvh;
             max-height: 100dvh;
-            padding: 15px 0;
+            padding: 20px 0;
             display: flex;
             flex-direction: column;
             justify-content: center;
             width: 92%; 
-            max-width: 500px !important; /* Unified mobile & desktop width */
+            max-width: 500px;
             margin: 0 auto;
+            transition: max-width 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* --- DESKTOP SCALE ADJUSTMENTS --- */
+        @media (min-width: 768px) {
+            .hub-container { 
+                max-width: 700px !important; 
+            }
         }
 
         /* --- PULSING EDGE FRAME --- */
@@ -32,7 +40,7 @@
             display: flex;
             flex-direction: column;
             height: auto;
-            max-height: 85dvh;
+            max-height: 90dvh;
             padding: 20px;
             margin-bottom: 0;
             overflow: hidden;
@@ -144,24 +152,17 @@
                 <div id="video-menu-hook" class="video-selection-grid" style="margin-top: 10px;"></div>
             </div>
 
-            <div style="text-align: center; margin-top: 15px; flex-shrink: 0;">
+            <div style="text-align: center; margin-top: 5px; flex-shrink: 0;">
                 <a href="../home.html" class="hub-return-link">← Return to Control Deck</a>
             </div>
         </main>
     </div>
-
-    <footer class="system-footer" style="padding: 10px 0 5px;">
-        &copy; <span id="current-year"></span> Vanguard Citizen Services
-    </footer>
 
     <!-- INTERACTION AND URL EXTRACTION ENGINE -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const menuContainer = document.getElementById('video-menu-hook');
             const mainPlayer = document.getElementById('main-drift-player');
-
-            const yearSpan = document.getElementById('current-year');
-            if (yearSpan) yearSpan.innerText = new Date().getFullYear();
 
             /**
              * CONVERTER ENGINE
