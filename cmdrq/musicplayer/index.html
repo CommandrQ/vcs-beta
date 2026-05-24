@@ -51,7 +51,7 @@
             width: 90%;
             max-width: 450px;
             z-index: 10;
-            padding: 40px 0 10px; 
+            padding: 40px 0; 
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -206,14 +206,6 @@
             background: var(--light-purple);
             box-shadow: 0 0 15px var(--light-purple);
         }
-
-        footer { 
-            z-index: 10; padding: 20px 20px 30px; text-align: center; color: white; 
-            font-size: 0.7rem; letter-spacing: 1.5px; text-transform: uppercase; 
-            animation: pulse 4s ease-in-out infinite; width: 100%; 
-            margin-top: auto; 
-        }
-        @keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.8; } }
     </style>
 </head>
 <body>
@@ -258,10 +250,9 @@
 
         </main>
 
-        <a href="cmdrq/home.html" class="btn" style="width: auto; padding: 12px 40px; margin-bottom: 0;">Return to Hub</a>
+        <!-- Corrected navigation target path to go back to home layout -->
+        <a href="../home.html" class="btn" style="width: auto; padding: 12px 40px; margin-bottom: 0;">Return to Hub</a>
     </div>
-
-    <footer>Mixes and Mashups by Commander Q</footer>
 
     <script>
         /* --- 1. LOAD EXTERNAL ASYNCHRONOUS YOUTUBE API ASSETS --- */
