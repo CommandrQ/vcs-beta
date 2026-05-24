@@ -32,15 +32,11 @@
             <div class="menu-grid">
                 
                 <div class="btn-wrapper">
-                    <a href="#" class="btn btn-accent">Community Voice</a>
+                    <a href="#" class="btn">Community Voice Box</a>
                 </div>
 
                 <div class="btn-wrapper">
                     <a href="about/index.html" class="btn">About Me</a>
-                </div>
-
-                <div class="btn-wrapper">
-                    <a href="roster/index.html" class="btn">Active Roster</a>
                 </div>
 
                 <div class="btn-wrapper">
@@ -58,7 +54,9 @@
         </main>
     </div>
 
-    <footer class="system-footer">Powered by Vanguard Citizen Services</footer>
+    <footer class="system-footer">
+        &copy; <span id="current-year"></span> Vanguard Citizen Services
+    </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -69,6 +67,12 @@
                 document.getElementById('user-greeting').innerHTML = `Welcome back, <strong>${cachedName}</strong>.`;
             } else {
                 document.getElementById('user-greeting').innerText = "Welcome back, Visitor.";
+            }
+
+            // Synced dynamic year handler
+            const yearSpan = document.getElementById('current-year');
+            if (yearSpan) {
+                yearSpan.innerText = new Date().getFullYear();
             }
         });
     </script>
