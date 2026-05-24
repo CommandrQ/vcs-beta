@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vanguard Knights | Creator Guild</title>
-    <link rel="stylesheet" href="../vcs/style.css">
+    <link rel="stylesheet" href="style.css">
     <style>
         /* ==========================================
            1. COMPACT ARCHITECTURE
@@ -80,20 +80,55 @@
             font-size: 0.95em;
             max-width: 650px;
             margin-bottom: 1rem;
+            color: #ffffff;
         }
 
         /* ==========================================
-           3. UTILITY ENGINE LAUNCH CARD
+           3. INTERACTIVE SLIDER BOX
            ========================================== */
-        .utility-box {
+        .slider-box {
             width: 100%;
             max-width: 600px;
-            background: rgba(179, 136, 255, 0.03);
-            border: 1px solid rgba(179, 136, 255, 0.2);
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 12px;
             padding: 1.8rem;
-            text-align: center;
-            box-shadow: 0 0 20px rgba(179, 136, 255, 0.05);
+            margin-top: 0.5rem;
+            position: relative;
+        }
+
+        .slide {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        .slider-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 235, 59, 0.4);
+            color: #ffeb3b;
+            font-size: 1.2rem;
+            padding: 0.3rem 1rem;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-btn:hover {
+            background: #ffeb3b;
+            color: #000000;
+            box-shadow: 0 0 10px #ffeb3b;
         }
 
         /* ==========================================
@@ -145,7 +180,7 @@
         .knight-specialty {
             font-size: 0.85em;
             line-height: 1.5;
-            color: rgba(255, 255, 255, 0.8);
+            color: #ffffff;
             margin-top: 0.5rem;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
             padding-top: 0.5rem;
@@ -187,6 +222,11 @@
             animation: flashShimmer 2s infinite;
         }
 
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
         @media (min-width: 700px) {
             .roster-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -208,24 +248,32 @@
         </div>
 
         <img src="../images/vanguardorglogo.png" alt="Vanguard Citizen Services Logo" class="logo">
-        <div class="tagline" style="margin-bottom: 1.5rem;">The Guild House</div>
+        <div class="tagline" style="margin-bottom: 1.5rem; color: #ffeb3b;">The Guild House</div>
         
         <section class="guild-section">
             <h2 class="section-title">The Collective</h2>
             <p class="section-text">
-                The Vanguard Knights are the architects, designers, and artisans behind our studio's output. Operating as a unified forge, this guild turns raw human perspectives into immersive digital narratives and community assets.
+                The Vanguard Knights are the people who create our different narratives and experiences. We work as a team to turn real human stories into digital tools and media.
             </p>
         </section>
 
         <section id="voicebox" class="guild-section">
-            <h2 class="section-title">Active Machinery</h2>
-            <div class="utility-box">
-                <span style="font-size: 0.7em; text-transform: uppercase; letter-spacing: 1px; color: #b388ff; font-weight: 700;">Community Asset Deployment</span>
-                <h3 style="font-size: 1.15em; font-weight: 700; margin: 0.3rem 0; color: #ffffff;">Hardin County Community Voice Box</h3>
-                <p style="font-size: 0.85rem; line-height: 1.5; color: rgba(255, 255, 255, 0.85); margin-bottom: 0;">
-                    Our primary regional interface developed to let neighbors bypass baseline bureaucracy and anonymously map local community infrastructure needs.
-                </p>
-                <a href="voicebox/index.html" class="action-btn">Launch Utility Console</a>
+            <h2 class="section-title">Active Projects</h2>
+            
+            <div class="slider-box">
+                <div class="slide active">
+                    <span style="font-size: 0.7em; text-transform: uppercase; letter-spacing: 1px; color: #b388ff; font-weight: 700;">Community Tool</span>
+                    <h3 style="font-size: 1.15em; font-weight: 700; margin: 0.3rem 0; color: #ffffff;">Hardin County Community Voice Box</h3>
+                    <p style="font-size: 0.85rem; line-height: 1.5; color: #ffffff; margin-bottom: 0;">
+                        Our primary local page built for neighbors to easily submit community issues and safely track updates down the line.
+                    </p>
+                    <a href="voicebox/index.html" class="action-btn">Launch Tool</a>
+                </div>
+
+                <div class="slider-controls">
+                    <button class="nav-btn" id="prev-slide">←</button>
+                    <button class="nav-btn" id="next-slide">→</button>
+                </div>
             </div>
         </section>
 
@@ -238,7 +286,7 @@
                     <div class="knight-rank">Captain Commander</div>
                     <div class="knight-division">Chief Vision Officer // VCS</div>
                     <p class="knight-specialty">
-                        Steers the core narrative systems, guiding design architecture and shaping strategic storytelling to move communities toward intentional coexistence.
+                        Steers our core creative direction and ideas to help push our local spaces closer to working well together.
                     </p>
                 </div>
                 
@@ -247,20 +295,48 @@
                     <div class="knight-rank">Grandmaster</div>
                     <div class="knight-division">Chief Operational Officer // VCS</div>
                     <p class="knight-specialty">
-                        Commands execution across internal operations, translating high-level concepts into active digital systems and orchestrating workflow deployment.
+                        Handles running our internal work operations and shifts high-level visions into active systems for deployment.
                     </p>
                 </div>
             </div>
         </section>
 
         <footer class="site-footer">
-            <div class="footer-text">&copy; 2026 Vanguard Citizen Services. All Rights Reserved.</div>
+            <div class="footer-text" style="color: #ffffff;">&copy; 2026 Vanguard Citizen Services. All Rights Reserved.</div>
         </footer>
 
     </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
+            // 1. AUTO-SCALING SLIDER ENGINE
+            const slides = document.querySelectorAll(".slide");
+            const prevBtn = document.getElementById("prev-slide");
+            const nextBtn = document.getElementById("next-slide");
+            const controls = document.querySelector(".slider-controls");
+            let currentIndex = 0;
+
+            // Automatically hides directional arrows if you only have 1 active project slide loaded
+            if (slides.length <= 1) {
+                controls.style.display = "none";
+            }
+
+            function updateSlider(index) {
+                slides.forEach(slide => slide.classList.remove("active"));
+                slides[index].classList.add("active");
+            }
+
+            prevBtn.addEventListener("click", () => {
+                currentIndex = (currentIndex === 0) ? slides.length - 1 : currentIndex - 1;
+                updateSlider(currentIndex);
+            });
+
+            nextBtn.addEventListener("click", () => {
+                currentIndex = (currentIndex === slides.length - 1) ? 0 : currentIndex + 1;
+                updateSlider(currentIndex);
+            });
+
+            // 2. COMET GENERATOR ENGINE
             const spaceBg = document.querySelector(".space-bg");
 
             function launchComet() {
