@@ -4,75 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vanguard Citizen Services</title>
-    <style>
-        /* BASE STYLES */
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #0b0c10;
-            color: #ffffff;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
-            transition: background-color 0.8s ease;
-        }
-
-        /* INTRO CONTAINER */
-        .intro-container {
-            text-align: center;
-            transition: opacity 0.8s ease;
-        }
-
-        /* LOGO & TEXT */
-        .logo {
-            max-width: 150px;
-            height: auto;
-            margin-bottom: 20px;
-        }
-
-        .tagline {
-            font-size: 1.2rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-bottom: 30px;
-            color: #c5c6c7;
-        }
-
-        /* LOADING BAR */
-        .progress-container {
-            width: 250px;
-            height: 4px;
-            background-color: #1f2833;
-            border-radius: 2px;
-            margin: 0 auto;
-            overflow: hidden;
-        }
-
-        .progress-bar {
-            width: 0%;
-            height: 100%;
-            background-color: #66fcf1;
-            box-shadow: 0 0 8px #66fcf1;
-        }
-
-        /* TRANSITION STATE */
-        body.fade-out {
-            background-color: #000000;
-        }
-
-        body.fade-out .intro-container {
-            opacity: 0;
-        }
-    </style>
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
 
-    <div class="intro-container">
-        <img src="images/vanguardorglogo.png" alt="Vanguard Citizen Services Logo" class="logo">
-        
+    <div class="space-bg">
+        <div class="starfield"></div>
+    </div>
+
+    <div class="glass-window">
+        <img src="../images/vanguardorglogo.png" alt="Vanguard Citizen Services Logo" class="logo">
         <div class="tagline">Empower.Educate.Elevate</div>
         
         <div class="progress-container">
@@ -81,14 +22,13 @@
     </div>
 
     <script>
-        // INTERACTIVE ENGINE
         document.addEventListener("DOMContentLoaded", () => {
             const progressBar = document.getElementById("loading-bar");
+            const spaceBg = document.querySelector(".space-bg");
             let currentProgress = 0;
 
             const simulation = setInterval(() => {
-                // Mimics human download behavior with variable speed steps
-                let step = Math.floor(Math.random() * 8) + 1; 
+                let step = Math.floor(Math.random() * 6) + 1; 
                 currentProgress += step;
 
                 if (currentProgress >= 100) {
@@ -98,17 +38,37 @@
                 }
 
                 progressBar.style.width = `${currentProgress}%`;
-            }, 150); 
+            }, 120); 
 
             function triggerExitSequence() {
                 setTimeout(() => {
                     document.body.classList.add("fade-out");
-                    
                     setTimeout(() => {
                         window.location.href = "home/index.html";
                     }, 800); 
                 }, 400); 
             }
+
+            function launchComet() {
+                const comet = document.createElement("div");
+                comet.classList.add("comet");
+                
+                const startTop = Math.random() * 40; 
+                const startLeft = Math.random() * 20;
+                
+                comet.style.top = `${startTop}vh`;
+                comet.style.left = `${startLeft}vw`;
+                comet.style.animation = "streak 3.2s cubic-bezier(0.25, 1, 0.5, 1) forwards";
+                
+                spaceBg.appendChild(comet);
+                
+                setTimeout(() => {
+                    comet.remove();
+                }, 3300);
+            }
+
+            setInterval(launchComet, 4000);
+            setTimeout(launchComet, 500);
         });
     </script>
 
