@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Community Voice Box | Project V</title>
-    <!-- Core Platform Styling Tracker -->
     <link rel="stylesheet" href="../style.css">
-    <!-- Supabase JS Library -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <style>
@@ -29,8 +27,9 @@
             background-attachment: fixed;
             display: flex;
             flex-direction: column;
-            align-items: center;
             min-height: 100dvh;
+            margin: 0;
+            padding: 0;
         }
 
         /* --- BACKGROUND ENVIRONMENT --- */
@@ -59,46 +58,82 @@
             100% { transform: translate(-1000px, 600px) rotate(-35deg); opacity: 0; }
         }
 
-        /* --- LAYOUT CONFIGURATION --- */
-        .guide-container {
-            width: 90%;
-            max-width: 800px; /* Widened for better desktop breathing room */
-            z-index: 10;
-            padding: 50px 0 30px;
+        /* --- MASTER LAYOUT (SIDEBAR + MAIN) --- */
+        .app-container {
+            width: 92%;
+            max-width: 1100px;
+            margin: 40px auto 20px;
             display: flex;
             flex-direction: column;
-            gap: 35px; /* Creates consistent spacing between all cards */
+            gap: 30px;
+            flex-grow: 1;
+            z-index: 10;
         }
 
-        /* Modular Cards (Replaces the single massive card) */
+        @media (min-width: 860px) {
+            .app-container {
+                flex-direction: row;
+                align-items: flex-start;
+                gap: 40px;
+            }
+        }
+
+        /* --- SIDEBAR --- */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+        }
+
+        @media (min-width: 860px) {
+            .sidebar {
+                width: 320px;
+                position: sticky;
+                top: 40px; /* Locks sidebar on scroll */
+                flex-shrink: 0;
+            }
+        }
+
+        /* --- MAIN CONTENT --- */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            flex-grow: 1;
+            min-width: 0;
+        }
+
+        /* --- MODULAR CARDS --- */
         .module-card {
             background: var(--glass-bg);
             backdrop-filter: blur(25px) saturate(150%);
             -webkit-backdrop-filter: blur(25px) saturate(150%);
             border: 1px solid var(--glass-border);
             border-radius: 24px;
-            padding: 35px 25px; 
+            padding: 30px 25px; 
             box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(255,255,255,0.05);
-            width: 100%;
+            text-align: left;
         }
 
         @media (min-width: 768px) {
-            .module-card { padding: 45px 50px; } /* Vastly more internal padding on desktop */
+            .module-card { padding: 40px; }
         }
 
         /* --- TYPOGRAPHY --- */
         .page-header { text-align: center; margin-bottom: 10px; }
         .page-title { 
-            font-size: clamp(2.2rem, 6vw, 3.5rem); font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
+            font-size: clamp(2rem, 6vw, 2.5rem); font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
             background: linear-gradient(180deg, #fff 0%, var(--gold) 100%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.3));
             margin-bottom: 5px;
+            line-height: 1.1;
         }
-        .page-subtitle { color: var(--gold); font-size: 1rem; letter-spacing: 4px; text-transform: uppercase; font-weight: 600; }
+        .page-subtitle { color: var(--gold); font-size: 0.95rem; letter-spacing: 3px; text-transform: uppercase; font-weight: 600; }
 
-        h2 { color: var(--gold); font-size: 1.4rem; font-weight: 700; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; }
-        p { color: rgba(255, 255, 255, 0.9); font-size: 1.05rem; line-height: 1.7; margin-bottom: 20px; }
+        h2 { color: var(--gold); font-size: 1.3rem; font-weight: 700; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; }
+        p { color: rgba(255, 255, 255, 0.9); font-size: 1rem; line-height: 1.7; margin-bottom: 20px; }
         
         .highlight-text {
             font-size: 1.15rem; color: var(--white); font-weight: 500; 
@@ -106,40 +141,68 @@
         }
 
         /* --- AUDIENCE GRID ITEMS --- */
-        .audience-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-        }
-        @media(min-width: 768px) { .audience-grid { grid-template-columns: repeat(3, 1fr); } }
+        .audience-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
+        @media(min-width: 600px) { .audience-grid { grid-template-columns: repeat(3, 1fr); } }
 
         .audience-card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 25px 20px;
-            border-radius: 16px;
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
-        .audience-card:hover { transform: translateY(-3px); background: rgba(255, 255, 255, 0.05); }
-        .audience-card h3 { font-size: 1rem; color: var(--gold); margin-bottom: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
-        .audience-card p { font-size: 0.9rem; margin-bottom: 0; color: var(--text-muted); line-height: 1.5; }
-
-        /* --- FORM MECHANICS --- */
-        .instruction-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
-            background: rgba(0,0,0,0.25);
-            border: 1px solid rgba(255,255,255,0.05);
             padding: 20px;
             border-radius: 16px;
-            margin-bottom: 25px;
+            text-align: center;
         }
-        @media (min-width: 600px) { .instruction-grid { grid-template-columns: 1fr 1fr; } }
-        
-        .instruction-step { font-size: 0.9rem; color: var(--text-muted); line-height: 1.4; }
-        .instruction-step strong { color: var(--gold); display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2px; }
+        .audience-card h3 { font-size: 0.95rem; color: var(--gold); margin-bottom: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        .audience-card p { font-size: 0.85rem; margin-bottom: 0; color: var(--text-muted); line-height: 1.5; }
+
+        /* --- BUTTONS --- */
+        .action-btn {
+            width: 100%; padding: 18px; border-radius: 14px; border: none; 
+            background: var(--white); color: #05040a; font-weight: 800; font-size: 1rem;
+            text-transform: uppercase; letter-spacing: 1px;
+            cursor: pointer; transition: all 0.3s var(--ease-smooth);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: flex; justify-content: center; align-items: center; gap: 10px;
+        }
+        .action-btn:hover { background: var(--gold); box-shadow: 0 0 25px var(--gold-glow); transform: translateY(-2px); }
+        .action-btn:disabled { background: rgba(255,255,255,0.2); color: rgba(255,255,255,0.4); cursor: not-allowed; box-shadow: none; transform: none; }
+
+        /* --- MODAL POP-UP (OVERLAY & WINDOW) --- */
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            z-index: 999; display: flex; justify-content: center; align-items: center;
+            opacity: 0; visibility: hidden; transition: all 0.4s var(--ease-smooth);
+            padding: 20px;
+        }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+
+        .modal-window {
+            background: rgba(15, 15, 20, 0.95);
+            border: 1px solid var(--gold);
+            border-radius: 24px;
+            padding: 35px 25px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6), inset 0 0 20px rgba(212,175,55,0.1);
+            transform: scale(0.95);
+            transition: transform 0.4s var(--ease-smooth);
+            position: relative;
+        }
+        .modal-overlay.active .modal-window { transform: scale(1); }
+
+        .btn-close {
+            position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.05);
+            border: none; color: var(--text-muted); width: 36px; height: 36px; border-radius: 50%;
+            font-size: 1.2rem; cursor: pointer; display: flex; justify-content: center; align-items: center;
+            transition: all 0.2s ease;
+        }
+        .btn-close:hover { background: rgba(255,255,255,0.15); color: var(--gold); }
+
+        /* --- FORM ELEMENTS IN MODAL --- */
+        .instruction-step { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px; line-height: 1.4; }
+        .instruction-step strong { color: var(--gold); }
 
         label { display: block; margin-bottom: 6px; margin-top: 15px; font-weight: 600; font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
         select, input, textarea { 
@@ -152,93 +215,60 @@
 
         /* --- LIVE DATA RETRIEVAL MATRIX LIST --- */
         .ledger-scroll-area {
-            width: 100%;
-            overflow-x: auto;
+            width: 100%; overflow-x: auto;
             border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            background: rgba(0, 0, 0, 0.3);
+            border-radius: 16px; background: rgba(0, 0, 0, 0.3);
             margin-top: 20px;
         }
 
-        .citizen-table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-            font-size: 0.9rem;
-            min-width: 600px;
-        }
-
+        .citizen-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; min-width: 600px; text-align: center; } /* Text centered */
         .citizen-table th {
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--gold);
-            padding: 15px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            border-bottom: 1px solid var(--glass-border);
+            background: rgba(255, 255, 255, 0.05); color: var(--gold);
+            padding: 15px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--glass-border); text-align: center;
         }
-
         .citizen-table td {
-            padding: 15px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            color: rgba(255, 255, 255, 0.85);
-            vertical-align: top;
-            line-height: 1.5;
+            padding: 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.85); vertical-align: middle; line-height: 1.5; text-align: center;
         }
 
         .badge-status {
-            display: inline-block;
-            padding: 6px 10px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            white-space: nowrap;
+            display: inline-block; padding: 6px 10px; border-radius: 20px;
+            font-size: 0.75rem; font-weight: bold; text-transform: uppercase; white-space: nowrap;
         }
         .status-pending { background: rgba(243, 156, 18, 0.15); color: #f39c12; border: 1px solid #f39c12; }
         .status-verified { background: rgba(52, 152, 219, 0.15); color: #3498db; border: 1px solid #3498db; }
         .status-completed { background: rgba(46, 204, 113, 0.15); color: #2ecc71; border: 1px solid #2ecc71; }
 
-        /* --- BUTTONS & ALERTS --- */
-        .action-btn {
-            width: 100%; padding: 16px; border-radius: 12px; border: none; 
-            background: var(--white); color: #05040a; font-weight: 800; font-size: 1rem;
-            text-transform: uppercase; letter-spacing: 1px;
-            cursor: pointer; transition: all 0.3s var(--ease-smooth);
-            margin-top: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        /* --- DONATION MODULE (ATTACHED TO BOTTOM OF MODAL) --- */
+        .modal-donation-module {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 30px;
+            text-align: center;
         }
-        .action-btn:hover { background: var(--gold); box-shadow: 0 0 25px var(--gold-glow); transform: translateY(-2px); }
-        .action-btn:disabled { background: rgba(255,255,255,0.2); color: rgba(255,255,255,0.4); cursor: not-allowed; box-shadow: none; transform: none; }
-
-        .status-banner { margin-top: 15px; padding: 15px; border-radius: 10px; text-align: center; font-size: 0.95rem; display: none; font-weight: 500; }
-        .status-success { display: block; background: rgba(46, 204, 113, 0.15); border: 1px solid #2ecc71; color: #2ecc71; }
-        .status-error { display: block; background: rgba(231, 76, 60, 0.15); border: 1px solid #e74c3c; color: #e74c3c; }
-
-        /* --- DONATION MODULE --- */
-        .donation-module { text-align: center; }
-        
         .pulse-text {
-            color: var(--gold);
-            font-size: 1.2rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 15px;
-            animation: textBrightPulse 3s infinite ease-in-out;
+            color: var(--gold); font-size: 1.1rem; font-weight: 800; text-transform: uppercase;
+            letter-spacing: 2px; margin-bottom: 10px; animation: textBrightPulse 3s infinite ease-in-out;
         }
-
         @keyframes textBrightPulse {
             0%, 100% { text-shadow: 0 0 2px transparent; opacity: 0.85; }
             50% { text-shadow: 0 0 15px var(--gold-glow), 0 0 25px var(--gold); color: #ffffff; opacity: 1; }
         }
-
         .support-btn {
             background: transparent; border: 2px solid var(--gold); color: var(--gold); 
-            width: auto; display: inline-block; padding: 12px 35px; border-radius: 30px; 
-            margin-top: 10px;
+            width: auto; display: inline-block; padding: 10px 25px; border-radius: 30px; 
+            margin-top: 5px; font-weight: bold; font-size: 0.8rem; text-transform: uppercase; cursor: pointer; transition: 0.3s;
         }
         .support-btn:hover { background: var(--gold); color: #05040a; }
 
+        .status-banner { margin-top: 15px; padding: 15px; border-radius: 10px; text-align: center; font-size: 0.95rem; display: none; font-weight: 500; }
+        .status-success { display: block; background: rgba(46, 204, 113, 0.15); border: 1px solid #2ecc71; color: #2ecc71; }
+        .status-error { display: block; background: rgba(231, 76, 60, 0.15); border: 1px solid #e74c3c; color: #e74c3c; }
+        
+        .footer-pad { margin-top: auto; width: 100%; }
     </style>
 </head>
 <body>
@@ -246,51 +276,102 @@
     <div id="environment"><div class="starfield"></div></div>
     <div id="boot-screen"></div>
 
-    <div class="guide-container">
+    <div class="app-container">
         
-        <!-- HEADER -->
-        <header class="page-header">
-            <h1 class="page-title">Community Voice Box</h1>
-            <div class="page-subtitle">Project V // Hardin County</div>
-        </header>
-
-        <!-- MODULE 1: THE VISION -->
-        <section class="module-card">
-            <p class="highlight-text">
-                Whether dealing with local or nationwide hurdles, it can be tough for neighbors in Radcliff and across Hardin County to get their voices heard by local leaders. We are building a bridge to fix that.
-            </p>
-            <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.08); margin: 25px 0;">
-            <p style="text-align: center; margin-bottom: 0;">
-                This tool is completely <strong>anonymous</strong> because the issue itself is more important than who reports it. When one person steps up to share a problem, they become the voice that hundreds of our neighbors need to hear.
-            </p>
-        </section>
-
-        <!-- MODULE 2: THE AUDIENCES (Detached Grid) -->
-        <section class="audience-grid">
-            <div class="audience-card">
-                <h3>Citizens</h3>
-                <p>Share everyday local issues safely, directly, and without any red tape.</p>
+        <!-- SIDEBAR / MOBILE HEADER -->
+        <aside class="sidebar">
+            <div class="module-card" style="padding: 30px 20px; text-align: center;">
+                <header class="page-header" style="margin-bottom: 25px;">
+                    <h1 class="page-title">Community Voice Box</h1>
+                    <div class="page-subtitle">Project V // Hardin County</div>
+                </header>
+                
+                <!-- Primary Action Button -->
+                <button class="action-btn" onclick="toggleModal(true)">
+                    Submit A Report
+                </button>
+                
+                <div style="margin-top: 25px;">
+                    <a href="../home.html" class="hub-return-link" style="font-size: 0.9rem;">← Return to Control Deck</a>
+                </div>
             </div>
-            <div class="audience-card">
-                <h3>Businesses</h3>
-                <p>Point out road, utility, or school updates that impact your daily work.</p>
-            </div>
-            <div class="audience-card">
-                <h3>Elected Leaders</h3>
-                <p>See a real-time map of actual needs straight from the citizens you serve.</p>
-            </div>
-        </section>
+        </aside>
 
-        <!-- MODULE 3: THE SUBMISSION FORM -->
-        <section class="module-card">
-            <h2>Submit Anonymously</h2>
-            <p style="font-size: 0.95rem;">Skip the bureaucracy. Log your issue directly into the public tracker below.</p>
+        <!-- MAIN CONTENT AREA -->
+        <main class="main-content">
             
-            <div class="instruction-grid">
-                <div class="instruction-step"><strong>1. Topic</strong> Choose the category.</div>
-                <div class="instruction-step"><strong>2. Area</strong> Pick the closest city footprint.</div>
-                <div class="instruction-step"><strong>3. Location</strong> Name a street or public space.</div>
-                <div class="instruction-step"><strong>4. Detail</strong> Briefly explain the issue.</div>
+            <!-- MODULE 1: THE VISION -->
+            <section class="module-card">
+                <p class="highlight-text">
+                    Whether dealing with local or nationwide hurdles, it can be tough for neighbors in Radcliff and across Hardin County to get their voices heard by local leaders. We are building a bridge to fix that.
+                </p>
+                <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.08); margin: 25px 0;">
+                <p style="text-align: center; margin-bottom: 0;">
+                    This tool is completely <strong>anonymous</strong> because the issue itself is more important than who reports it. When one person steps up to share a problem, they become the voice that hundreds of our neighbors need to hear.
+                </p>
+            </section>
+
+            <!-- MODULE 2: THE AUDIENCES -->
+            <section class="audience-grid">
+                <div class="audience-card">
+                    <h3>Citizens</h3>
+                    <p>Share everyday local issues safely, directly, and without any red tape.</p>
+                </div>
+                <div class="audience-card">
+                    <h3>Businesses</h3>
+                    <p>Point out road, utility, or school updates that impact your daily work.</p>
+                </div>
+                <div class="audience-card">
+                    <h3>Elected Leaders</h3>
+                    <p>See a real-time map of actual needs straight from the citizens you serve.</p>
+                </div>
+            </section>
+
+            <!-- MODULE 3: THE LEDGER -->
+            <section class="module-card">
+                <h2 style="text-align: center;">Verified Community Ledger</h2>
+                <p style="font-size: 0.95rem; margin-bottom: 0; text-align: center;">
+                    Issues received from neighbors that have been verified and made visible for public tracking.
+                </p>
+                
+                <div class="ledger-scroll-area">
+                    <table class="citizen-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 15%;">Logged</th>
+                                <th style="width: 20%;">Category</th>
+                                <th style="width: 20%;">Municipality</th>
+                                <th style="width: 30%;">Description</th>
+                                <th style="width: 15%;">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="live-ledger-hook">
+                            <tr>
+                                <td colspan="5" style="color: var(--text-muted); padding: 30px;">
+                                    Syncing with cloud tracking entries...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            
+        </main>
+    </div>
+
+    <!-- MODAL OVERLAY (FORM + DONATION) -->
+    <div id="report-modal" class="modal-overlay" onclick="if(event.target === this) toggleModal(false)">
+        <div class="modal-window">
+            <button class="btn-close" onclick="toggleModal(false)">✕</button>
+            
+            <h2 style="margin-top: 0;">Submit Anonymously</h2>
+            <p style="font-size: 0.9rem; margin-bottom: 15px;">Skip the bureaucracy. Log your issue directly to the public tracker securely.</p>
+            
+            <div style="margin-bottom: 20px; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
+                <div class="instruction-step"><strong>1. Topic:</strong> Choose the category.</div>
+                <div class="instruction-step"><strong>2. Area:</strong> Pick the closest city footprint.</div>
+                <div class="instruction-step"><strong>3. Location:</strong> Name a street or public space.</div>
+                <div class="instruction-step"><strong>4. Detail:</strong> Briefly explain the issue.</div>
             </div>
 
             <form id="submission-form">
@@ -313,65 +394,29 @@
                 <input type="text" id="location" placeholder="e.g., Dixie Highway or North Hardin High" required>
 
                 <label for="description">What issue needs attention?</label>
-                <textarea id="description" rows="4" placeholder="Describe the area of improvement safely and constructively here..." required></textarea>
+                <textarea id="description" rows="3" placeholder="Describe the area of improvement safely and constructively here..." required></textarea>
 
-                <button type="submit" id="submit-button" class="action-btn">Submit</button>
-                
+                <button type="submit" id="submit-button" class="action-btn" style="margin-top: 20px;">Submit</button>
                 <div id="response-banner" class="status-banner"></div>
             </form>
-        </section>
 
-        <!-- MODULE 4: THE LEDGER -->
-        <section class="module-card">
-            <h2>Verified Community Ledger</h2>
-            <p style="font-size: 0.95rem; margin-bottom: 0;">
-                Issues received from neighbors that have been verified and made visible for public tracking.
-            </p>
-            
-            <div class="ledger-scroll-area">
-                <table class="citizen-table">
-                    <thead>
-                        <tr>
-                            <th style="width: 15%;">Logged</th>
-                            <th style="width: 20%;">Category</th>
-                            <th style="width: 20%;">Municipality</th>
-                            <th style="width: 30%;">Description</th>
-                            <th style="width: 15%;">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody id="live-ledger-hook">
-                        <tr>
-                            <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 30px;">
-                                Syncing with cloud tracking entries...
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <!-- ATTACHED DONATION MODULE -->
+            <div class="modal-donation-module">
+                <div class="pulse-text">Support This Tool</div>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 10px; line-height: 1.5;">
+                    This platform runs independently. 100% of donations cover cloud hosting and feature development. Support the server with <strong>as low as $1</strong>.
+                </p>
+                <button class="support-btn" onclick="alert('Donation engine module placeholder integration. Features expanding soon!')">Donate</button>
             </div>
-        </section>
-
-        <!-- MODULE 5: DONATION / SUPPORT -->
-        <section class="module-card donation-module">
-            <div class="pulse-text">Support This Tool</div>
-            <p>
-                This platform runs entirely independent of local government. 100% of donations go directly toward cloud hosting costs and building new features for our community. 
-            </p>
-            <p style="color: var(--white); font-weight: 500;">
-                Every bit helps keep this running—support us with <strong>as low as $1</strong>.
-            </p>
-            <button class="action-btn support-btn" onclick="alert('Donation engine module placeholder integration. Features expanding soon!')">Support The Server</button>
-        </section>
-
-        <!-- RETURN LINK -->
-        <div style="text-align: center;">
-            <a href="../home.html" class="hub-return-link">← Return to Control Deck</a>
         </div>
-
     </div>
 
-    <footer class="system-footer">
-        &copy; <span id="current-year"></span> Vanguard Citizen Services
-    </footer>
+    <!-- FOOTER -->
+    <div class="footer-pad">
+        <footer class="system-footer">
+            &copy; <span id="current-year"></span> Vanguard Citizen Services
+        </footer>
+    </div>
 
     <script>
         /* --- COMET GENERATOR --- */
@@ -391,6 +436,21 @@
         /* --- DYNAMIC YEAR --- */
         const yearSpan = document.getElementById('current-year');
         if (yearSpan) yearSpan.innerText = new Date().getFullYear();
+
+        /* --- MODAL TOGGLE LOGIC --- */
+        function toggleModal(open) {
+            const modal = document.getElementById('report-modal');
+            if (open) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Stop background scrolling
+            } else {
+                modal.classList.remove('active');
+                document.body.style.overflow = ''; // Restore scrolling
+                // Reset form alert banner on close
+                const banner = document.getElementById('response-banner');
+                if (banner) banner.className = "status-banner";
+            }
+        }
 
         /* --- SUPABASE CONNECTION --- */
         const sbUrl = 'https://dvyjupytbwbrcoyouxpf.supabase.co';
@@ -412,7 +472,7 @@
                 if (error) throw error;
 
                 if (!data || data.length === 0) {
-                    ledgerHook.innerHTML = `<tr><td colspan="5" style="text-align:center; color:rgba(255,255,255,0.4); padding: 30px;">No records currently approved for the public ledger.</td></tr>`;
+                    ledgerHook.innerHTML = `<tr><td colspan="5" style="color:rgba(255,255,255,0.4); padding: 30px;">No records currently approved for the public ledger.</td></tr>`;
                     return;
                 }
 
@@ -439,7 +499,7 @@
 
             } catch (err) {
                 console.error("Ledger rendering error:", err);
-                ledgerHook.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#e74c3c; padding: 30px;">Failed to sync with active database log stream.</td></tr>`;
+                ledgerHook.innerHTML = `<tr><td colspan="5" style="color:#e74c3c; padding: 30px;">Failed to sync with active database log stream.</td></tr>`;
             }
         }
 
@@ -486,6 +546,9 @@
                     banner.innerText = "Success! Your message has been safely submitted to the verified Hardin County log.";
                     form.reset();
                     fetchCommunityLedger();
+                    
+                    // Auto-close modal after brief delay so user sees success message
+                    setTimeout(() => { toggleModal(false); }, 3000);
 
                 } catch (err) {
                     console.error(err);
