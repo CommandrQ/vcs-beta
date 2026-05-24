@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vanguard Citizen Services | Creative Studio</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ==========================================
+           1. UNIQUE STUDIO ARCHITECTURE
+           ========================================== */
+        body {
+            overflow-y: auto;
+            padding: 3rem 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .glass-window {
+            max-width: 1000px;
+            width: 100%;
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ==========================================
+           2. MISSION PILLARS (EMPOWER, EDUCATE, ELEVATE)
+           ========================================== */
+        .mission-matrix {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            width: 100%;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .pillar-card {
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px dashed rgba(179, 136, 255, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .pillar-name {
+            color: #ffeb3b;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+            font-size: 1.1em;
+        }
+
+        .pillar-text {
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        /* ==========================================
+           3. NARRATIVE & CONTENT SECTIONS
+           ========================================== */
+        .studio-section {
+            width: 100%;
+            max-width: 750px;
+            text-align: center;
+            margin-bottom: 3.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .section-title {
+            color: #ffeb3b;
+            font-size: 1.5em;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid rgba(179, 136, 255, 0.3);
+            padding-bottom: 0.5rem;
+            width: fit-content;
+        }
+
+        .section-text {
+            line-height: 1.7;
+            font-size: 0.95em;
+            margin-bottom: 1.5rem;
+        }
+
+        /* ==========================================
+           4. ROADMAP & UPCOMING ENGINE
+           ========================================== */
+        .roadmap-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            width: 100%;
+            max-width: 600px;
+            margin-top: 1rem;
+        }
+
+        .roadmap-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            padding: 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .roadmap-info {
+            text-align: left;
+        }
+
+        .roadmap-tag {
+            font-size: 0.7em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #b388ff;
+            font-weight: 600;
+        }
+
+        .roadmap-name {
+            font-size: 0.95em;
+            font-weight: 600;
+            margin-top: 0.2rem;
+        }
+
+        .status-badge {
+            font-size: 0.7em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-weight: 700;
+            border: 1px solid rgba(255, 235, 59, 0.4);
+            color: #ffeb3b;
+            white-space: nowrap;
+        }
+
+        /* ==========================================
+           5. COMPONENT BUTTONS & UTILITIES
+           ========================================== */
+        .action-btn {
+            display: inline-block;
+            background: linear-gradient(90deg, #ffe082 0%, #ffb300 50%, #ffeb3b 100%);
+            color: #000000;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 0.8rem 1.8rem;
+            border-radius: 6px;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .action-btn:hover {
+            box-shadow: 0 0 25px #ffd700, 0 0 10px rgba(179, 136, 255, 0.5);
+        }
+
+        .action-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+            animation: flashShimmer 2s infinite;
+        }
+
+        .back-nav {
+            align-self: flex-start;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.75em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 2rem;
+            transition: color 0.3s ease;
+        }
+
+        .back-nav:hover {
+            color: #ffeb3b;
+        }
+
+        /* ==========================================
+           6. RESPONSIVE DESKTOP EXPANSION
+           ========================================== */
+        @media (min-width: 750px) {
+            .mission-matrix {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1rem;
+            }
+            
+            .glass-window {
+                padding: 4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="space-bg">
+        <div class="starfield"></div>
+    </div>
+
+    <div class="glass-window">
+        
+        <a href="../home/index.html" class="back-nav">← Return Home</a>
+
+        <img src="../images/vanguardorglogo.png" alt="Vanguard Citizen Services Logo" class="logo">
+        <div class="tagline">Creative Studio</div>
+        
+        <section class="studio-section">
+            <h2 class="section-title">Origins & Vision</h2>
+            <p class="section-text">
+                Vanguard Citizen Services emerged out of a desire to look past the surface noise of modern media and focus back on what tethers us together. We operate as a dedicated creative workshop, deliberately designing experiences and unearthing deep human accounts that provoke internal reflection and foster deeper community bonds.
+            </p>
+            
+            <div class="mission-matrix">
+                <div class="pillar-card">
+                    <div class="pillar-name">Empower</div>
+                    <div class="pillar-text">Giving agency to narratives that inspire action and instill confidence in our collective future.</div>
+                </div>
+                <div class="pillar-card">
+                    <div class="pillar-name">Educate</div>
+                    <div class="pillar-text">Unpacking complex social contexts to cultivate cross-cultural insight and baseline understanding.</div>
+                </div>
+                <div class="pillar-card">
+                    <div class="pillar-name">Elevate</div>
+                    <div class="pillar-text">Lifting up raw expressions of human resilience to push society closer to intentional coexistence.</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="studio-section">
+            <h2 class="section-title">The Mind Behind</h2>
+            <p class="section-text">
+                As a creative architect, my objective is simple: to build containers for stories that matter. Through creative direction, narrative systems, and purposeful design, I work alongside the Vanguard Knights to translate raw perspectives into immersive digital realities that stick with you long after you close the browser tab.
+            </p>
+        </section>
+
+        <section class="studio-section" style="margin-bottom: 0;">
+            <h2 class="section-title">Narrative Roadmap</h2>
+            <p class="section-text">
+                Our workshop is constantly tracking new human perspectives. Take a look at the upcoming creative showcases and narrative installations currently being forged.
+            </p>
+            
+            <div class="roadmap-container">
+                <div class="roadmap-item">
+                    <div class="roadmap-info">
+                        <span class="roadmap-tag">Docu-Series</span>
+                        <div class="roadmap-name">Echoes of Coexistence</div>
+                    </div>
+                    <span class="status-badge">Production</span>
+                </div>
+                
+                <div class="roadmap-item">
+                    <div class="roadmap-info">
+                        <span class="roadmap-tag">Interactive Media</span>
+                        <div class="roadmap-name">The Human Mosaic Project</div>
+                    </div>
+                    <span class="status-badge">Pre-Alpha</span>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const spaceBg = document.querySelector(".space-bg");
+
+            function launchComet() {
+                const comet = document.createElement("div");
+                comet.classList.add("comet");
+                
+                const startTop = Math.random() * 40; 
+                const startLeft = Math.random() * 20;
+                
+                comet.style.top = `${startTop}vh`;
+                comet.style.left = `${startLeft}vw`;
+                comet.style.animation = "streak 3.2s cubic-bezier(0.25, 1, 0.5, 1) forwards";
+                
+                spaceBg.appendChild(comet);
+                
+                setTimeout(() => {
+                    comet.remove();
+                }, 3300);
+            }
+
+            setInterval(launchComet, 4000);
+            setTimeout(launchComet, 500);
+        });
+    </script>
+
+</body>
+</html>
