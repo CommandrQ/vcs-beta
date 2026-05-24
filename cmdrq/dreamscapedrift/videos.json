@@ -1,17 +1,14 @@
 [
-    {
-        "id": "XLGRev3cmKI",
-        "title": "Dreamscape Drift 01//",
-        "duration": "06:19"
-    },
-    {
-        "id": "cQ5ViM_2CDU",
-        "title": "Dreamscape Drift 02//",
-        "duration": "02:40"
-    },
-    {
-        "id": "zYBpw7W-6og",
-        "title": "Dreamscape Drift 03//",
-        "duration": "04:03"
-    }
+  {
+    "title": "Drift Video One",
+    "src": "https://youtu.be/XLGRev3cmKI"
+  },
+  {
+    "title": "Drift Video Two",
+    "src": "https://youtu.be/cQ5ViM_2CDU"
+  },
+  {
+    "title": "Drift Video Three",
+    "src": "https://youtu.be/zYBpw7W-6og"
+  }
 ]
