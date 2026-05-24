@@ -1,1 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="site-wrapper">
+        <!-- Sidebar Navigation -->
+        <aside>
+            <nav>
+                <img src="../images/vanguardorglogo.png" width="100">
+                <ul>
+                    <li><a href="index.html">Dashboard</a></li>
+                    <li><a href="#announcements">Announcements</a></li>
+                    <li><a href="#about">About Vanguard</a></li>
+                </ul>
+            </nav>
+        </aside>
 
+        <div class="menu-btn" onclick="toggleMenu()">MENU</div>
+
+        <main>
+            <!-- Announcements Section -->
+            <section id="announcements" class="glass-panel">
+                <h2>Community Announcements</h2>
+                <div id="announcement-list">
+                    <p>Welcome to the platform. Check back here for updates.</p>
+                </div>
+            </section>
+
+            <!-- About Section -->
+            <section id="about" class="glass-panel">
+                <h2>Vanguard Citizen Services</h2>
+                <p>A creative studio exploring the different narratives and stories in our community while unifying the community through action and advocacy.</p>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            // Logic to show/hide mobile navigation
+            alert("Mobile menu dropdown logic here.");
+        }
+    </script>
+</body>
+</html>
