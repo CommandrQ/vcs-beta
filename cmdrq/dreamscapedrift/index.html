@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Commander Q // Dreamscape Drift</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+    
+    <style>
+        /* --- VIDEODECK LAYER OVERRIDES --- */
+        @media (min-width: 768px) {
+            .hub-container { 
+                max-width: 750px !important; 
+            }
+        }
+
+        /* 16:9 Aspect Ratio Video Frame Box */
+        .video-deck {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio Matrix */
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 25px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+        }
+
+        .video-deck iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: none;
+            z-index: 2;
+        }
+
+        .placeholder-content {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+            padding: 20px;
+        }
+
+        .placeholder-content h3 {
+            color: var(--light-blue);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: clamp(1rem, 3.5vw, 1.3rem);
+            margin-bottom: 8px;
+        }
+
+        /* Responsive Grid Layout for Video Buttons */
+        .tape-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            width: 100%;
+            margin-bottom: 30px;
+        }
+
+        @media (min-width: 500px) {
+            .tape-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Video Select Option Row Item styling to match platform tabs */
+        .tape-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            padding: 14px 20px;
+            color: var(--stark-white);
+            font-size: clamp(0.8rem, 2.5vw, 0.85rem);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .tape-btn:hover, .tape-btn.active {
+            background: var(--light-blue);
+            color: var(--deep-space);
+            border-color: var(--light-blue);
+            box-shadow: 0 0 15px rgba(142, 202, 230, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .tape-duration {
+            font-family: monospace;
+            font-size: 0.75rem;
+            opacity: 0.7;
+        }
+        .tape-btn:hover .tape-duration, .tape-btn.active .tape-duration {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="boot-screen"></div>
+    <div id="starfield"><div class="stars"></div></div>
+
+    <div class="hub-container">
+        <h1 class="hub-title">Dreamscape Drift</h1>
+
+        <main class="hub-card">
+            
+            <h2>Viewing Deck</h2>
+            
+            <!-- Video Display Node Window Container -->
+            <div class="video-deck" id="mainDeck">
+                <div class="placeholder-content" id="placeholder">
+                    <h3>Awaiting Signal...</h3>
+                    <p style="margin-bottom: 0; font-size: 0.85rem;">Select a track below</p>
+                </div>
+                <iframe id="videoPlayer" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+
+            <h2>Tracks</h2>
+            <!-- Target Node Grid for JavaScript population loop hook -->
+            <div class="tape-grid" id="tapeGrid"></div>
+
+            <div style="text-align: center; margin-top: 35px;">
+                <a href="../home.html" class="hub-return-link">← Return to Control Deck</a>
+            </div>
+        </main>
+    </div>
+
+    <footer class="system-footer">
+        &copy; <span id="current-year"></span> Vanguard Citizen Services
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
