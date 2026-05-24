@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vanguard Citizen Services | Home</title>
     <link rel="stylesheet" href="../style.css">
 </head>
 <body>
+
+    <!-- Mobile Menu Button -->
+    <div class="menu-btn" onclick="toggleMenu()">MENU</div>
+
     <div class="site-wrapper">
         <!-- Sidebar Navigation -->
-        <aside>
+        <aside id="sidebar">
             <nav>
-                <img src="../images/vanguardorglogo.png" width="100">
+                <img src="../images/vanguardorglogo.png" alt="Vanguard Logo" style="width: 100%; margin-bottom: 20px;">
                 <ul>
                     <li><a href="index.html">Dashboard</a></li>
                     <li><a href="#announcements">Announcements</a></li>
@@ -17,30 +24,61 @@
             </nav>
         </aside>
 
-        <div class="menu-btn" onclick="toggleMenu()">MENU</div>
-
+        <!-- Main Content Area -->
         <main>
-            <!-- Announcements Section -->
-            <section id="announcements" class="glass-panel">
-                <h2>Community Announcements</h2>
-                <div id="announcement-list">
-                    <p>Welcome to the platform. Check back here for updates.</p>
-                </div>
-            </section>
+            <div class="content-window glass-panel">
+                
+                <!-- Announcements Section -->
+                <section id="announcements">
+                    <h2>Announcements</h2>
+                    <div id="announcement-list">
+                        <!-- Announcements populated by script -->
+                        <p>Loading updates...</p>
+                    </div>
+                </section>
 
-            <!-- About Section -->
-            <section id="about" class="glass-panel">
-                <h2>Vanguard Citizen Services</h2>
-                <p>A creative studio exploring the different narratives and stories in our community while unifying the community through action and advocacy.</p>
-            </section>
+                <hr style="border: 0; border-top: 1px solid #f5c518; margin: 30px 0;">
+
+                <!-- About Section -->
+                <section id="about">
+                    <h2>Vanguard Citizen Services</h2>
+                    <p>
+                        Vanguard Citizen Services is a creative studio exploring the different 
+                        narratives and stories in our community while unifying the community 
+                        through action and advocacy.
+                    </p>
+                </section>
+
+            </div>
         </main>
     </div>
 
     <script>
+        // Toggle mobile menu visibility
         function toggleMenu() {
-            // Logic to show/hide mobile navigation
-            alert("Mobile menu dropdown logic here.");
+            const sidebar = document.getElementById('sidebar');
+            sidebar.style.display = (sidebar.style.display === 'block') ? 'none' : 'block';
+            sidebar.style.position = 'absolute';
+            sidebar.style.background = '#000';
+            sidebar.style.zIndex = '1000';
+            sidebar.style.width = '100%';
         }
+
+        // Simple Announcement Loader
+        const announcements = [
+            "New advocacy workshop sign-ups are now open.",
+            "Community Town Hall scheduled for Friday at 6PM.",
+            "Featured story: Local Heroes of the District."
+        ];
+
+        const list = document.getElementById('announcement-list');
+        list.innerHTML = ''; // Clear loading text
+        announcements.forEach(text => {
+            const p = document.createElement('p');
+            p.style.marginBottom = '10px';
+            p.textContent = `• ${text}`;
+            list.appendChild(p);
+        });
     </script>
 </body>
 </html>
