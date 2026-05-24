@@ -65,7 +65,7 @@
         /* --- LAYOUT CONFIGURATION --- */
         .guide-container {
             width: 90%;
-            max-width: 750px;
+            max-width: 650px;
             z-index: 10;
             padding: 40px 0 20px;
             display: flex;
@@ -79,7 +79,7 @@
             -webkit-backdrop-filter: blur(30px) saturate(150%);
             border: 1px solid var(--glass-border);
             border-radius: 28px;
-            padding: 45px 35px; 
+            padding: 35px 25px; 
             box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 0 0 1px var(--glass-border);
             width: 100%;
             margin-bottom: 30px;
@@ -87,64 +87,64 @@
         }
 
         /* --- TYPOGRAPHY --- */
-        .page-header { text-align: center; margin-bottom: 40px; }
+        .page-header { text-align: center; margin-bottom: 30px; }
         .page-title { 
-            font-size: clamp(2.2rem, 5vw, 3.2rem); font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
+            font-size: clamp(2rem, 5vw, 2.8rem); font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
             background: linear-gradient(180deg, #fff 0%, var(--gold) 100%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.3));
         }
-        .page-subtitle { color: var(--gold); font-size: 1.1rem; letter-spacing: 3px; text-transform: uppercase; margin-top: 10px; font-weight: 600; }
+        .page-subtitle { color: var(--gold); font-size: 1rem; letter-spacing: 3px; text-transform: uppercase; margin-top: 8px; font-weight: 600; }
 
-        h2 { color: var(--gold); font-size: 1.5rem; font-weight: 700; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px; }
-        p { color: rgba(255, 255, 255, 0.9); font-size: 1.05rem; line-height: 1.7; margin-bottom: 25px; }
-        p.highlight { font-size: 1.2rem; color: var(--white); font-weight: 500; border-left: 3px solid var(--gold); padding-left: 15px; line-height: 1.6; }
+        h2 { color: var(--gold); font-size: 1.3rem; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 6px; }
+        p { color: rgba(255, 255, 255, 0.9); font-size: 1rem; line-height: 1.6; margin-bottom: 20px; }
+        p.highlight { font-size: 1.1rem; color: var(--white); font-weight: 500; border-left: 3px solid var(--gold); padding-left: 12px; line-height: 1.5; }
 
         /* --- AUDIENCE GRID ITEMS --- */
         .split-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 16px;
-            margin-bottom: 25px;
+            gap: 12px;
+            margin-bottom: 20px;
         }
         @media(min-width: 600px) { .split-grid { grid-template-columns: repeat(3, 1fr); } }
 
         .grid-item {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 20px;
-            border-radius: 16px;
+            padding: 15px;
+            border-radius: 12px;
         }
-        .grid-item h3 { font-size: 1rem; color: var(--gold); margin-bottom: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-        .grid-item p { font-size: 0.9rem; margin-bottom: 0; color: var(--text-muted); line-height: 1.5; }
+        .grid-item h3 { font-size: 0.9rem; color: var(--gold); margin-bottom: 6px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        .grid-item p { font-size: 0.85rem; margin-bottom: 0; color: var(--text-muted); line-height: 1.4; }
 
-        /* --- FIXED SUBMISSION FORM WORKSPACE --- */
+        /* --- INLINE SUBMISSION BOX --- */
         .inline-tracker-box {
             background: rgba(0, 0, 0, 0.35);
             border: 1px solid rgba(212, 175, 55, 0.2);
-            border-radius: 20px;
-            padding: 30px 25px;
-            margin-top: 30px;
+            border-radius: 16px;
+            padding: 25px 20px;
+            margin-top: 25px;
             box-shadow: inset 0 0 15px rgba(0,0,0,0.4);
         }
 
-        .instruction-step { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 6px; line-height: 1.4; }
+        .instruction-step { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px; line-height: 1.4; }
         .instruction-step strong { color: var(--gold); }
 
-        label { display: block; margin-bottom: 6px; margin-top: 16px; font-weight: 600; font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+        label { display: block; margin-bottom: 4px; margin-top: 12px; font-weight: 600; font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
         select, input, textarea { 
-            width: 100%; padding: 14px; border-radius: 12px; 
+            width: 100%; padding: 12px; border-radius: 10px; 
             border: 1px solid rgba(255, 255, 255, 0.12); background: rgba(0, 0, 0, 0.5); color: white; 
-            font-family: inherit; font-size: 0.95rem; transition: all 0.3s ease; margin-bottom: 5px;
+            font-family: inherit; font-size: 0.9rem; transition: all 0.3s ease; margin-bottom: 4px;
         }
         select:focus, input:focus, textarea:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 10px var(--gold-glow); background: rgba(0, 0, 0, 0.7); }
         input::placeholder, textarea::placeholder { color: rgba(255, 255, 255, 0.25); }
         textarea { resize: none; }
 
-        /* --- ACTION MECHANICS --- */
+        /* --- BUTTONS --- */
         .action-btn {
-            width: 100%; padding: 16px; border-radius: 14px; border: none; 
-            background: var(--white); color: #05040a; font-weight: 700; font-size: 1rem;
+            width: 100%; padding: 14px; border-radius: 12px; border: none; 
+            background: var(--white); color: #05040a; font-weight: 700; font-size: 0.95rem;
             cursor: pointer; transition: all 0.3s var(--ease-smooth); text-decoration: none; 
             display: block; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
@@ -155,18 +155,18 @@
         .donation-module {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 25px;
-            margin-top: 35px;
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 25px;
             text-align: center;
         }
-        .donation-module p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px; line-height: 1.6; }
+        .donation-module p { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px; line-height: 1.5; }
         .support-btn {
-            background: transparent; border: 1px solid var(--gold); color: var(--gold); width: auto; display: inline-block; padding: 12px 35px; border-radius: 30px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; font-weight: bold;
+            background: transparent; border: 1px solid var(--gold); color: var(--gold); width: auto; display: inline-block; padding: 10px 25px; border-radius: 20px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; font-weight: bold;
         }
         .support-btn:hover { background: var(--gold); color: #05040a; box-shadow: 0 0 20px rgba(212, 175, 55, 0.3); }
 
-        .status-banner { margin-top: 18px; padding: 14px; border-radius: 12px; text-align: center; font-size: 0.95rem; display: none; }
+        .status-banner { margin-top: 14px; padding: 12px; border-radius: 10px; text-align: center; font-size: 0.9rem; display: none; }
         .status-success { display: block; background: rgba(46, 204, 113, 0.15); border: 1px solid #2ecc71; color: #2ecc71; }
         .status-error { display: block; background: rgba(231, 76, 60, 0.15); border: 1px solid #e74c3c; color: #e74c3c; }
     </style>
@@ -188,43 +188,39 @@
         <main class="glass-card">
             
             <p class="highlight">
-                Living in Radcliff and across Hardin County, we all navigate a complex world where massive national conversations and immediate, daily local realities collide. Often, the gaps between everyday citizens and our elected decision-makers can leave communities feeling disconnected. We want to completely change that.
+                Whether dealing with local or nationwide hurdles, it can be tough for neighbors in Radcliff and across Hardin County to get their voices heard by local leaders. We are building a bridge to fix that.
             </p>
             
-            <h2>Our Collective Vision</h2>
+            <h2>The Vision</h2>
             <p>
-                Through tracking patterns and listening carefully to our neighbors, we have gathered a clear truth: our community doesn't need more political division—it needs an honest, direct path to be heard. We intentionally built this tool to be completely **anonymous**. We believe that the real, raw issue itself is infinitely more important than who said it or why they said it. When a single neighbor gathers the courage to speak up about a local friction point, they might just be acting as the exact voice that hundreds of others needed to hear.
+                This tool is completely **anonymous** because the issue itself is more important than who reports it. When one person steps up to share a problem, they become the voice that hundreds of our neighbors need to hear.
             </p>
 
             <!-- Three Pillar Stakeholder Alignment Matrix -->
             <div class="split-grid">
                 <div class="grid-item">
-                    <h3>For Citizens</h3>
-                    <p>Share raw friction points safely without red tape, judgment, or fear of exposure.</p>
+                    <h3>Citizens</h3>
+                    <p>Share everyday local issues safely, directly, and without any red tape.</p>
                 </div>
                 <div class="grid-item">
-                    <h3>For Small Businesses</h3>
-                    <p>Highlight local infrastructural blockades directly impacting your daily commerce and staff.</p>
+                    <h3>Businesses</h3>
+                    <p>Point out road, utility, or school updates that impact your daily work.</p>
                 </div>
                 <div class="grid-item">
-                    <h3>For Elected Leaders</h3>
-                    <p>Access unvarnished, authentic real-time needs maps straight from the neighborhoods you serve.</p>
+                    <h3>Elected Leaders</h3>
+                    <p>See a real-time map of actual needs straight from the citizens you serve.</p>
                 </div>
             </div>
 
-            <p>
-                By building this bridge, we remove the static from community progress. Whether it is clarifying a question regarding local school board transparency, identifying resource access constraints, or calling out an infrastructure bottleneck along Dixie Highway, this log turns quiet frustrations into visible data points. Together, we can help our leaders serve us with absolute clarity.
-            </p>
-
             <!-- BAKED-IN SUBMISSION TOOL WORKSPACE -->
             <div class="inline-tracker-box">
-                <h2 style="margin-top: 0; font-size: 1.3rem; border: none; padding-bottom: 0; color: var(--white);">Launch Your Note Anonymously</h2>
+                <h2 style="margin-top: 0; font-size: 1.1rem; border: none; padding-bottom: 0; color: var(--white);">Submit Anonymously</h2>
                 
-                <div style="margin: 15px 0 20px;">
-                    <div class="instruction-step"><strong>1. Select Topic:</strong> Categorize where the community friction lies.</div>
-                    <div class="instruction-step"><strong>2. Pick Area:</strong> Identify the nearest municipal footprint inside Hardin County.</div>
-                    <div class="instruction-step"><strong>3. Map Location:</strong> Mention a street boundary, public school, or neighborhood layout.</div>
-                    <div class="instruction-step"><strong>4. Describe:</strong> Briefly explain the issue so it can be verified for the public ledger.</div>
+                <div style="margin: 12px 0 15px;">
+                    <div class="instruction-step"><strong>1. Topic:</strong> Choose the area that fits your note best.</div>
+                    <div class="instruction-step"><strong>2. General Area:</strong> Pick the closest city footprint.</div>
+                    <div class="instruction-step"><strong>3. Location:</strong> Name a street, school, or public neighborhood.</div>
+                    <div class="instruction-step"><strong>4. Description:</strong> Briefly explain the issue so we can log it.</div>
                 </div>
 
                 <form id="submission-form">
@@ -243,13 +239,13 @@
                         <option value="Other Hardin County">Other Hardin County</option>
                     </select>
 
-                    <label for="location">Nearest Street, School, or Neighborhood Name</label>
+                    <label for="location">Nearest Street, School, or Neighborhood</label>
                     <input type="text" id="location" placeholder="e.g., Dixie Highway, Woodland Drive, or North Hardin High" required>
 
-                    <label for="description">What local issue needs attention?</label>
-                    <textarea id="description" rows="4" placeholder="Please describe the local issue or area of improvement safely and constructively here..." required></textarea>
+                    <label for="description">What issue needs attention?</label>
+                    <textarea id="description" rows="4" placeholder="Describe the area of improvement safely and constructively here..." required></textarea>
 
-                    <button type="submit" id="submit-button" class="action-btn" style="margin-top: 20px;">Submit to Citizen Ledger</button>
+                    <button type="submit" id="submit-button" class="action-btn" style="margin-top: 15px;">Submit to Citizen Ledger</button>
                     
                     <div id="response-banner" class="status-banner"></div>
                 </form>
@@ -257,15 +253,15 @@
 
             <!-- SERVER EXPANSION DONATION MODULE -->
             <div class="donation-module">
-                <h2 style="font-size: 1.1rem; border: none; padding-bottom: 0; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px;">Support This Tool</h2>
+                <h2 style="font-size: 1rem; border: none; padding-bottom: 0; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px;">Support This Tool</h2>
                 <p>
-                    This platform runs entirely independent of bureaucracy. 100% of all contributions go directly toward covering cloud server hosting bills and developing expanded interactive features for Hardin County neighbors.
+                    This tool runs independently. 100% of donations go directly toward cloud hosting costs and building new features for our community.
                 </p>
-                <button class="action-btn support-btn" onclick="alert('Donation engine module placeholder integration. Features expanding soon!')">Support This Tool</button>
+                <button class="action-btn support-btn" onclick="alert('Donation module placeholder. Features expanding soon!')">Support This Tool</button>
             </div>
 
             <!-- Return path to Control Deck -->
-            <div style="text-align: center; margin-top: 45px;">
+            <div style="text-align: center; margin-top: 35px;">
                 <a href="../home.html" class="hub-return-link">← Return to Control Deck</a>
             </div>
 
@@ -313,7 +309,7 @@
                 e.preventDefault();
                 
                 submitBtn.disabled = true;
-                submitBtn.innerText = "Encrypting & Dispatched...";
+                submitBtn.innerText = "Sending Note...";
                 banner.className = "status-banner";
                 banner.innerText = "";
 
@@ -346,7 +342,7 @@
                 } catch (err) {
                     console.error(err);
                     banner.classList.add('status-error');
-                    banner.innerText = "We couldn't link your entry to the server log. Please check your signal network and try again.";
+                    banner.innerText = "We couldn't connect to the log. Please check your network and try again.";
                 } finally {
                     submitBtn.disabled = false;
                     submitBtn.innerText = "Submit to Citizen Ledger";
