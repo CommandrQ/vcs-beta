@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Commander Q // Briefing</title>
+    <title>My Story</title>
     <link rel="stylesheet" href="../style.css">
 </head>
 <body>
@@ -16,29 +16,19 @@
 
         <main class="hub-card">
             
-            <h2>Operational Profile</h2>
+            <h2>My Story</h2>
             
-            <div class="narrative-block">
-                <div class="timeline-node">
-                    <div class="node-era">Early Realities</div>
-                    <div class="node-title">Eyes Wide Open</div>
-                </div>
+            <p>
+                From the time I was a kid, I have always seen the real, unvarnished truth of how our world works. That perspective followed me into my time in the armed forces, where my deployment opened my eyes to a completely different side of the world.
+            </p>
 
-                <div class="timeline-node">
-                    <div class="node-era">Armed Forces</div>
-                    <div class="node-title">Service & Deployment</div>
-                </div>
+            <p>
+                After my military service, I went into the tech industry, working on operations and infrastructure with major teams at Best Buy and Apple.
+            </p>
 
-                <div class="timeline-node">
-                    <div class="node-era">Technical Operations</div>
-                    <div class="node-title">Best Buy & Apple</div>
-                </div>
-
-                <div class="timeline-node" style="border-left-color: var(--stark-white);">
-                    <div class="node-era">Active Directive</div>
-                    <div class="node-title">Vanguard Knights</div>
-                </div>
-            </div>
+            <p style="margin-bottom: 20px;">
+                Today, I use all of those experiences to lead the Vanguard Knights. My mission now is to dive deep into our neighborhoods, listen to the people, and uncover the completely unique stories that make up our community.
+            </p>
 
             <div style="text-align: center; margin-top: 35px;">
                 <a href="../home.html" class="hub-return-link">← Return to Control Deck</a>
@@ -46,7 +36,17 @@
         </main>
     </div>
 
-    <footer class="system-footer">Powered by Vanguard Citizen Services</footer>
+    <footer class="system-footer">
+        &copy; <span id="current-year"></span> Vanguard Citizen Services
+    </footer>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const yearSpan = document.getElementById('current-year');
+            if (yearSpan) {
+                yearSpan.innerText = new Date().getFullYear();
+            }
+        });
+    </script>
 </body>
 </html>
