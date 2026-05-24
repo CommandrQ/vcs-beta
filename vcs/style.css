@@ -68,7 +68,7 @@ body {
     z-index: 3;
     width: 90%;
     max-width: 550px;
-    padding: 2.5rem 2rem;
+    padding: 3rem 2rem;
     text-align: center;
     background: rgba(255, 255, 255, 0.03);
     border-radius: 16px;
@@ -77,54 +77,26 @@ body {
     -webkit-backdrop-filter: blur(15px);
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
     transition: opacity 0.8s ease, transform 0.8s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    min-height: 480px;
 }
 
 /* ==========================================
-   4. BRAND ELEMENTS & TABS
+   4. BRAND ELEMENTS
    ========================================== */
 .logo {
     width: 40%;
-    max-width: 140px;
+    max-width: 160px;
     height: auto;
-    margin: 0 auto 1rem auto;
+    margin: 0 auto 1.5rem auto;
     display: block;
 }
 
 .tagline {
-    font-size: 0.85em;
+    font-size: 0.9em;
     letter-spacing: 4px;
     text-transform: uppercase;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
     color: #ffeb3b;
     font-weight: 600;
-}
-
-.tab-navigation {
-    display: flex;
-    gap: 1.5rem;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 2rem;
-    width: 100%;
-}
-
-.tab-link {
-    color: #ffffff;
-    text-decoration: none;
-    font-size: 0.75em;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    padding: 0.4rem 0.8rem;
-    transition: color 0.3s ease;
-}
-
-.tab-link:hover {
-    color: #ffeb3b;
 }
 
 /* ==========================================
@@ -163,21 +135,25 @@ body {
 }
 
 /* ==========================================
-   6. GLOBAL APP FOOTER
+   5a. SHARED SITE FOOTER SYSTEM
    ========================================== */
 .site-footer {
     width: 100%;
-    font-size: 0.65em;
+    margin-top: 2.5rem;
+    padding-top: 1rem;
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
+    text-align: center;
+}
+
+.footer-text {
+    font-size: 0.7em;
     text-transform: uppercase;
     letter-spacing: 2px;
-    color: #ffffff;
-    margin-top: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    padding-top: 1rem;
+    color: rgba(255, 255, 255, 0.4);
 }
 
 /* ==========================================
-   7. TRANSITION ANIMATIONS
+   6. TRANSITION ANIMATIONS
    ========================================== */
 @keyframes starRise {
     from { transform: translateY(0); }
