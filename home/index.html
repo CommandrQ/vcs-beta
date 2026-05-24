@@ -1,83 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vanguard Citizen Services</title>
-  <!-- Link to the root design stylesheet -->
-  <link rel="stylesheet" href="design.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="theme-golden-sky">
+<body>
 
-  <!-- Fixed background animation layer -->
-  <div class="starfield-container">
-    <!-- Star elements or canvas rendering would target this container -->
-  </div>
+    <div id="boot-screen"></div>
+    <div id="starfield"><div class="stars"></div></div>
 
-  <!-- Main application wrapper for desktop scaling optimization -->
-  <div class="app-container">
-    
-    <!-- Top Header Area -->
-    <header style="margin-bottom: 40px; text-align: center;">
-      <h1 style="font-size: 2.5rem; font-weight: 700; letter-spacing: -0.05em; margin-bottom: 8px;">Vanguard</h1>
-      <p style="color: rgba(255, 255, 255, 0.6); font-size: 1.1rem;">Citizen Services & Infrastructure</p>
-    </header>
+    <div class="hub-container">
+        <h1 class="hub-title">Commander Q</h1>
 
-    <!-- Navigation Hub Tabs -->
-    <nav class="hub-nav-tabs">
-      <a href="#" class="nav-tab active">Dashboard</a>
-      <a href="#" class="nav-tab">Submission Box</a>
-      <a href="#" class="nav-tab">Academy</a>
-      <a href="#" class="nav-tab">Settings</a>
-    </nav>
+        <main class="hub-card">
+            
+            <div class="profile-container">
+                <img src="images/headshot.jpg" alt="Commander Q Profile">
+            </div>
 
-    <!-- Main Responsive Dashboard Grid -->
-    <main class="dashboard-grid">
-      
-      <!-- Panel 1: Main Overview -->
-      <section class="glass-panel" style="padding: 30px;">
-        <h2 style="font-size: 1.5rem; margin-bottom: 12px; font-weight: 600;">Welcome, Commander</h2>
-        <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6; margin-bottom: 24px;">
-          The system framework is initialized. All responsive styles, typography definitions, and glass-morphism panels are controlled globally by the root layout.
-        </p>
-        <button class="btn-primary">Launch Console</button>
-      </section>
+            <div class="social-matrix">
+                <a href="https://music.apple.com/profile/cmdrq_music" target="_blank" class="social-glyph" title="Apple Music"><i class="fa-brands fa-apple"></i></a>
+                <a href="https://www.tiktok.com/@commandr_q" target="_blank" class="social-glyph" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+            </div>
 
-      <!-- Panel 2: Metrics / Quick Status -->
-      <section class="glass-panel" style="padding: 30px; display: flex; flex-direction: column; justify-content: space-between;">
-        <div>
-          <h2 style="font-size: 1.5rem; margin-bottom: 12px; font-weight: 600;">System Status</h2>
-          <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6;">
-            All core functional modules are bound to the centralized container configuration.
-          </p>
-        </div>
-        <div style="margin-top: 24px; display: flex; justify-content: space-between; align-items: center;">
-          <span style="color: rgba(255, 255, 255, 0.5); font-size: 0.9rem;">Repository: Operational</span>
-          <span style="display: inline-block; width: 10px; height: 10px; background-color: #34c759; border-radius: 50%;"></span>
-        </div>
-      </section>
+            <h2>Citizen Platforms</h2>
+            <div class="menu-grid" style="margin-bottom: 25px;">
+                <div class="btn-wrapper">
+                    <a href="communityvoicebox/index.html" class="btn">Community Voice Box</a>
+                </div>
+                <div class="btn-wrapper">
+                    <a href="about/index.html" class="btn">About Me</a>
+                </div>
+            </div>
 
-      <!-- Panel 3: Recent Activity -->
-      <section class="glass-panel" style="padding: 30px;">
-        <h2 style="font-size: 1.5rem; margin-bottom: 16px; font-weight: 600;">Active Projects</h2>
-        <ul style="list-style: none;">
-          <li style="padding: 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1); display: flex; justify-content: space-between;">
-            <span>Community Submission Box</span>
-            <span style="color: rgba(255, 255, 255, 0.5);">v1.2</span>
-          </li>
-          <li style="padding: 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1); display: flex; justify-content: space-between;">
-            <span>Vanguard Academy Hub</span>
-            <span style="color: rgba(255, 255, 255, 0.5);">Planning</span>
-          </li>
-          <li style="padding: 12px 0; display: flex; justify-content: space-between;">
-            <span>Root CSS Migration</span>
-            <span style="color: #34c759;">Complete</span>
-          </li>
-        </ul>
-      </section>
+            <h2>Media Decks</h2>
+            <div class="menu-grid">
+                <div class="btn-wrapper">
+                    <a href="dreamscapedrift/index.html" class="btn">Dreamscape Drift</a>
+                </div>
+                <div class="btn-wrapper">
+                    <a href="musicplayer/index.html" class="btn">Music Player</a>
+                </div>
+            </div>
 
-    </main>
-  </div>
+            <div style="text-align: center; margin-top: 35px;">
+                <a href="../index.html" class="hub-return-link">← Return To Main Hub</a>
+            </div>
+        </main>
+    </div>
 
+    <footer class="system-footer">
+        &copy; <span id="current-year"></span> Vanguard Citizen Services
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Synced dynamic year handler
+            const yearSpan = document.getElementById('current-year');
+            if (yearSpan) {
+                yearSpan.innerText = new Date().getFullYear();
+            }
+        });
+    </script>
 </body>
 </html>
