@@ -1,92 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Vanguard Citizen Services</title>
-  <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="viewport-lock">
+<body>
+    <canvas id="space-layer"></canvas>
 
-  <!-- Background Space Canvas -->
-  <canvas id="atmosphere-canvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1; pointer-events: none;"></canvas>
-
-  <!-- Transitions Mask (Handles initial fade-in from black) -->
-  <div id="transition-mask" style="opacity: 1;"></div>
-
-  <!-- Old TV Intro Shield -->
-  <div id="intro-stage" class="intro-overlay">
-    <img src="images/vanguardorglogo.png" alt="Vanguard Citizen Services Logo" class="intro-logo">
-    <div class="loading-track">
-      <div id="loading-progress" class="loading-bar"></div>
+    <div class="intro-ui" id="ui">
+        <img src="images/vanguardorglogo.png" id="vanguard-logo">
+        <div class="tagline">Empower. Educate. Elevate</div>
+        <div class="progress-bg"><div class="progress-fill" id="bar"></div></div>
     </div>
-    <p class="intro-motto">Empower. Educate. Elevate.</p>
-  </div>
 
-  <!-- Primary Workspace Layout -->
-  <main id="main-content" class="app-container">
-    
-    <!-- Hero Branding Frame -->
-    <header class="vanguard-hero">
-      <img src="images/vanguardorglogo.png" alt="Vanguard Logo" class="hero-logo-small">
-      <h1 class="hero-title">Welcome, Citizen</h1>
-    </header>
-
-    <!-- Announcements Panel -->
-    <section class="vanguard-panel announcements-panel-wrapper">
-      <h2 class="panel-label">Guild Announcements</h2>
-      <div id="announcements-mount" class="announcements-container scrollable-interior">
-        <div class="announcement-node">
-          <div class="announcement-meta">MAY 23, 2026 // SITE UPDATE</div>
-          <div class="announcement-txt">We are currently making improvements to our website. </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Navigation Hub Section -->
-    <section class="vanguard-panel operations-hub">
-      <h2 class="panel-label">Operations Registry</h2>
-      
-      <div class="split-layout-engine">
-        <!-- Menu Button Deck -->
-        <div id="tabs-mount" class="tabs-stacked-track">
-          
-          <!-- ========================================================================= -->
-          <!-- HOW TO ADD MENU ITEMS:                                                    -->
-          <!-- Type 1 (Popup Window):   use data-type="popup" data-id="about-us"          -->
-          <!-- Type 2 (Links/Folders): use data-type="link"  data-url="roster/"           -->
-          <!-- ========================================================================= -->
-          
-          <button class="action-tab-btn" data-type="popup" data-id="about-us">About Us</button>
-         
-          <button class="action-tab-btn" data-type="popup" data-url="community-voice-box/">Community Voice Box</button>
-          
-          <button class="action-tab-btn" data-type="link" data-url="roster/">Roster</button>
-          
-          <button class="action-tab-btn" data-type="popup" data-id="legal">Legal</button>
-          
-          <button class="action-tab-btn" data-type="link" data-url="support/">Support</button>
-          
-          <!-- Example of an External Link (Just copy, paste, and change the data-url) -->
-          <!-- <button class="action-tab-btn" data-type="link" data-url="https://google.com">External Link</button> -->
-
-          <!-- ========================================================================= -->
-        </div>
-        
-        <!-- Right Hand Narrative Content Window Placeholder -->
-        <div id="desktop-content-window" class="narrative-pane"></div>
-      </div>
-    </section>
-
-    <!-- Shared Persistent Footer -->
-    <footer class="vanguard-footer">
-      <p class="footer-text">
-        &copy; <span id="current-year"></span> vanguard citizen services
-      </p>
-    </footer>
-    
-  </main>
-
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
