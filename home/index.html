@@ -1,26 +1,71 @@
-<!-- ... inside home/index.html ... -->
-<nav>
-    <img src="../images/vanguardorglogo.png" style="width: 100%;">
-    <ul>
-        <li><a href="index.html">Dashboard</a></li>
-        <li><a href="../communityvoicebox/index.html">Announcements</a></li>
-        <li><a href="#" onclick="showAbout()">About Vanguard</a></li>
-    </ul>
-</nav>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vanguard Citizen Services | Dashboard</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
 
-<!-- About Popup Modal -->
-<div id="about-modal" class="modal-overlay" onclick="closeAbout()">
-    <div class="modal-content glass-panel" onclick="event.stopPropagation()">
-        <h2>Our Story</h2>
-        <p>Vanguard Citizen Services was founded by two friends with a shared background 
-           in the military and technology. They started by helping local citizens with 
-           everyday issues, which evolved into a dedicated creative studio focused on 
-           highlighting the diverse narratives and perspectives of our world.</p>
-        <button onclick="closeAbout()">Close</button>
+    <!-- Mobile Menu Button -->
+    <div class="menu-btn" onclick="toggleSidebar()">MENU</div>
+
+    <div class="site-wrapper">
+        <!-- Sidebar Navigation -->
+        <aside id="sidebar">
+            <nav>
+                <img src="../images/vanguardorglogo.png" style="width: 100%; margin-bottom: 20px;">
+                <ul>
+                    <li><a href="index.html">Dashboard</a></li>
+                    <li><a href="../communityvoicebox/index.html">Community Voicebox</a></li>
+                    <li><a href="../support/index.html">Support</a></li>
+                    <li><a href="#" onclick="showAbout()">About Vanguard</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            <div class="content-window glass-panel">
+                <h1>Welcome to Vanguard</h1>
+                <p>Empower. Educate. Elevate. Access your resources and community tools below.</p>
+            </div>
+        </main>
     </div>
-</div>
 
-<script>
-    function showAbout() { document.getElementById('about-modal').style.display = 'flex'; }
-    function closeAbout() { document.getElementById('about-modal').style.display = 'none'; }
-</script>
+    <!-- About Popup Modal -->
+    <div id="about-modal" class="modal-overlay" onclick="closeAbout()">
+        <div class="modal-content glass-panel" onclick="event.stopPropagation()">
+            <h2>Our Story</h2>
+            <p>Vanguard Citizen Services was founded by two friends with a shared background 
+               in the military and technology. They started by helping local citizens with 
+               everyday issues, which evolved into a dedicated creative studio focused on 
+               highlighting the diverse narratives and perspectives of our world.</p>
+            <button onclick="closeAbout()" style="margin-top: 20px; cursor: pointer;">Close</button>
+        </div>
+    </div>
+
+    <!-- Persistent Footer -->
+    <footer>
+        &copy; <span id="year"></span> Vanguard Citizen Services
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../canvas.js"></script>
+    <script>
+        // Set Year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Menu Toggle
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.style.display = (sidebar.style.display === 'block') ? 'none' : 'block';
+        }
+
+        // Modal Logic
+        function showAbout() { document.getElementById('about-modal').style.display = 'flex'; }
+        function closeAbout() { document.getElementById('about-modal').style.display = 'none'; }
+    </script>
+</body>
+</html>
