@@ -5,39 +5,138 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>CMDR Q // Gateway</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* --- INTRO SCENE INFRASTRUCTURE LOCKS --- */
+        .gateway-viewport {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            overflow: hidden;
+        }
+
+        .intro-scene-block {
+            position: absolute;
+            width: 90%;
+            max-width: 500px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            opacity: 0;
+            transform: scale(0.97);
+            transition: opacity 1s ease-in-out, transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+            pointer-events: none;
+        }
+
+        .intro-scene-block.stage-active {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+        }
+
+        /* --- STAGE 3 PROFILE INJECTION LAYOUT --- */
+        .stage-avatar {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--glass-border);
+            filter: drop-shadow(0 0 15px rgba(142, 202, 230, 0.4));
+            margin-bottom: 20px;
+        }
+
+        .shimmer-caption {
+            font-size: clamp(1.4rem, 5vw, 1.8rem);
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            background: linear-gradient(to right, var(--light-blue) 20%, #fff 40%, #fff 60%, var(--light-blue) 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: sheen 3s linear infinite;
+            line-height: 1.2;
+        }
+
+        /* --- OUTBOUND TRANSITION VEIL --- */
+        #shutdown-curtain {
+            position: fixed;
+            inset: 0;
+            background: #000000;
+            z-index: 99999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s ease-in-out;
+        }
+        #shutdown-curtain.drop-veil {
+            opacity: 1;
+        }
+    </style>
 </head>
 <body class="cinematic-body">
 
-    <!-- Intro Stage Container -->
-    <div id="intro-viewport" class="intro-canvas">
-        
-        <!-- Scene 1: The Philosophy Title -->
-        <div id="scene-1" class="cinematic-scene active">
+    <!-- MATCHING DEEP SPACE BACKGROUND SYSTEMS -->
+    <div id="starfield"><div class="stars"></div></div>
+
+    <!-- BLACK ROUTING VEIL LAYER -->
+    <div id="shutdown-curtain"></div>
+
+    <!-- CORE CINEMATIC SEQUENCE STAGE -->
+    <div class="gateway-viewport">
+
+        <!-- SCENE 1: PHILOSOPHY TAG -->
+        <div id="stage-1" class="intro-scene-block stage-active">
             <h2 class="cinematic-text tracking-out">Unfiltered Narratives.</h2>
         </div>
 
-        <!-- Scene 2: The Identity Reveal -->
-        <div id="scene-2" class="cinematic-scene">
-            <h2 class="cinematic-text glow-text">COMMANDER Q // PLATFORM</h2>
+        <!-- SCENE 2: PRESENTATION PRELUDE -->
+        <div id="stage-2" class="intro-scene-block">
+            <h2 class="cinematic-text glow-text">The Vanguard Knights Presents…</h2>
+        </div>
+
+        <!-- SCENE 3: PROFILE REVEAL COMMAND STAGE -->
+        <div id="stage-3" class="intro-scene-block">
+            <img src="images/headshot.jpg" alt="Commander Q Profile" class="stage-avatar">
+            <h1 class="shimmer-caption">Captain Commander Q</h1>
         </div>
 
     </div>
 
+    <!-- ENGINE SEQUENCE CONTROLLER -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const scene1 = document.getElementById('scene-1');
-            const scene2 = document.getElementById('scene-2');
-            const introViewport = document.getElementById('intro-viewport');
+            const stage1 = document.getElementById('stage-1');
+            const stage2 = document.getElementById('stage-2');
+            const stage3 = document.getElementById('stage-3');
+            const curtain = document.getElementById('shutdown-curtain');
 
+            // Time Marker 3.0s: Fade Scene 1, Deploy Scene 2
             setTimeout(() => {
-                scene1.classList.remove('active');
-                scene2.classList.add('active');
+                stage1.classList.remove('stage-active');
+                stage2.classList.add('stage-active');
             }, 3000);
 
+            // Time Marker 6.0s: Fade Scene 2, Deploy Scene 3 Profile
             setTimeout(() => {
-                introViewport.classList.add('dissolve-out');
-                setTimeout(() => { window.location.href = 'home.html'; }, 800);
-            }, 6500);
+                stage2.classList.remove('stage-active');
+                stage3.classList.add('stage-active');
+            }, 6000);
+
+            // Time Marker 8.5s: Hold Profile for 2.5 seconds, then drop black curtain veil
+            setTimeout(() => {
+                curtain.classList.add('drop-veil');
+                
+                // Time Marker 9.5s: Complete blackout transition and migrate frame to home
+                setTimeout(() => {
+                    window.location.href = 'home.html';
+                }, 1000);
+            }, 8500);
         });
     </script>
 </body>
