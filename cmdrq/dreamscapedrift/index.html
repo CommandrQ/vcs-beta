@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../style.css">
     
     <style>
-        /* --- VIEWPORT LOCK SYSTEMS (STOP SCROLLING) --- */
+        /* --- BLOCK OVERALL SCROLLING --- */
         html, body {
             overflow: hidden !important;
             height: 100dvh;
@@ -30,29 +30,30 @@
             }
         }
 
-        /* --- PULSING INTERFACE WINDOW CARD --- */
+        /* --- PULSING EDGE FRAME --- */
         .hub-card {
             display: flex;
             flex-direction: column;
-            max-height: 90dvh;
+            max-height: 85dvh;
             padding: 20px;
             margin-bottom: 0;
             overflow: hidden;
-            animation: windowGlowPulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            animation: borderGlowPulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
 
-        @keyframes windowGlowPulse {
+        @keyframes borderGlowPulse {
             0%, 100% {
                 border-color: rgba(255, 255, 255, 0.15);
                 box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
             }
             50% {
-                border-color: rgba(142, 202, 230, 0.6);
-                box-shadow: 0 20px 50px rgba(142, 202, 230, 0.15), 0 0 15px rgba(142, 202, 230, 0.1);
+                border-color: rgba(142, 202, 230, 0.7);
+                box-shadow: 0 20px 50px rgba(142, 202, 230, 0.15), 0 0 20px rgba(142, 202, 230, 0.2);
             }
         }
 
-        /* --- YOUTUBE VIEWPORT CONTROLLER --- */
+        /* --- PLAYER VIEWPORT FRAME --- */
         .player-viewport {
             width: 100%;
             background: #000000;
@@ -71,7 +72,7 @@
             display: block;
         }
 
-        /* --- INTERNAL SCROLL SECTIONS ONLY --- */
+        /* --- FIXED SUB-SECTION SCROLLER --- */
         .scroller-bay {
             overflow-y: auto;
             flex-grow: 1;
@@ -97,7 +98,7 @@
             }
         }
 
-        /* --- SELECTION BUTTON LAYOUT --- */
+        /* --- MENU BUTTON SHAPES --- */
         .video-thumb {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--glass-border);
@@ -147,12 +148,12 @@
 
         <main class="hub-card">
 
-            <!-- YOUTUBE PLAYER -->
+            <!-- YOUTUBE IFRAME VIEWPORT -->
             <div class="player-viewport">
-                <iframe id="main-drift-player" src="" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+                <iframe id="main-drift-player" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
             </div>
 
-            <!-- SCROLLABLE TRACK NAVIGATOR -->
+            <!-- SCROLLABLE LIST SELECTION ARRAYS -->
             <div class="scroller-bay">
                 <h2>Video Menu</h2>
                 <div id="video-menu-hook" class="video-selection-grid" style="margin-top: 10px;"></div>
@@ -178,7 +179,7 @@
         &copy; <span id="current-year"></span> Vanguard Citizen Services
     </footer>
 
-    <!-- RUNTIME AUTOMATION CONTROL -->
+    <!-- INTERACTION AND URL EXTRACTION ENGINE -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const menuContainer = document.getElementById('video-menu-hook');
@@ -189,7 +190,7 @@
             const yearSpan = document.getElementById('current-year');
             if (yearSpan) yearSpan.innerText = new Date().getFullYear();
 
-            // Audio Track System Control
+            // Native Mix Set Controller Track
             if (audioTrack && audioBtn) {
                 audioBtn.addEventListener('click', () => {
                     if (audioTrack.paused) {
@@ -203,7 +204,31 @@
                 });
             }
 
-            // Fetch and Inject Data Tracks
+            /**
+             * CONVERTER ENGINE
+             * Takes any raw YouTube string layout input and returns a valid secure stream path
+             */
+            function cleanYouTubeUrl(urlStr) {
+                let idFound = "";
+                
+                try {
+                    if (urlStr.includes("youtube.com/embed/")) {
+                        idFound = urlStr.split("youtube.com/embed/")[1].split("?")[0];
+                    } else if (urlStr.includes("youtu.be/")) {
+                        idFound = urlStr.split("youtu.be/")[1].split("?")[0];
+                    } else if (urlStr.includes("v=")) {
+                        idFound = urlStr.split("v=")[1].split("&")[0];
+                    } else {
+                        idFound = urlStr; // Fallback assuming plain ID
+                    }
+                } catch(e) {
+                    console.error("URL string parsing error", e);
+                }
+                
+                return "https://www.youtube.com/embed/" + idFound.trim();
+            }
+
+            // Load and build configuration components
             fetch('videos.json')
                 .then(res => res.json())
                 .then(data => {
@@ -214,20 +239,21 @@
                         btn.className = 'video-thumb';
                         btn.innerText = item.title;
                         
-                        // Append autoplay config rules to query sequence
-                        const autoplayUrl = item.src.includes('?') ? `${item.src}&autoplay=1` : `${item.src}?autoplay=1`;
+                        // Parse URLs into explicit sandboxed secure formats
+                        const safeBaseUrl = cleanYouTubeUrl(item.src);
+                        const safeAutoplayUrl = safeBaseUrl + "?autoplay=1&rel=0";
                         
                         if (index === 0) {
                             btn.classList.add('active');
-                            mainPlayer.src = item.src; // Initial track remains stopped until prompted
+                            mainPlayer.src = safeBaseUrl + "?rel=0"; // Load but don't autoplay initially
                         }
 
                         btn.addEventListener('click', () => {
                             document.querySelectorAll('.video-thumb').forEach(t => t.classList.remove('active'));
                             btn.classList.add('active');
                             
-                            // Swap source engine variables to trigger immediate load execution
-                            mainPlayer.src = autoplayUrl;
+                            // Completely breaks active session state and forces the new source URL tracking path
+                            mainPlayer.src = safeAutoplayUrl;
                         });
 
                         menuContainer.appendChild(btn);
