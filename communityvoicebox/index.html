@@ -20,7 +20,10 @@
             --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        html { scroll-behavior: smooth; }
+        html { 
+            scroll-behavior: smooth; 
+            overflow-x: hidden;
+        }
 
         body {
             background: linear-gradient(180deg, #020108 0%, #0a0815 40%, #1a1005 75%, #D4AF37 120%);
@@ -30,6 +33,9 @@
             min-height: 100dvh;
             margin: 0;
             padding: 0;
+            overflow-y: auto; /* Force vertical scroll activation */
+            overflow-x: hidden; /* Lock horizontal shift */
+            -webkit-overflow-scrolling: touch; /* Smooth touch acceleration */
         }
 
         /* --- BACKGROUND ENVIRONMENT --- */
@@ -243,6 +249,7 @@
             border: 1px solid var(--glass-border);
             border-radius: 16px; background: rgba(0, 0, 0, 0.3);
             margin-top: 20px;
+            -webkit-overflow-scrolling: touch;
         }
 
         .citizen-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; min-width: 600px; text-align: center; }
@@ -305,7 +312,6 @@
 
     <div class="app-container">
         
-        <!-- SIDEBAR / MOBILE HEADER -->
         <aside class="sidebar">
             <div class="module-card" style="padding: 30px 20px; text-align: center;">
                 <header class="page-header" style="margin-bottom: 25px;">
@@ -313,18 +319,15 @@
                     <div class="page-subtitle">Project V // Hardin County</div>
                 </header>
                 
-                <!-- Primary Action Button -->
                 <button class="action-btn" onclick="toggleModal(true)">
                     Submit A Report
                 </button>
                 
-                <!-- Shimmering Navigation Link -->
                 <div style="margin-top: 25px;">
                     <a href="../home/index.html" class="shimmer-gold-link">← Return Home</a>
                 </div>
             </div>
 
-            <!-- FUTURE RESOURCE LIBRARY HOLDER -->
             <div class="module-card" style="border: 1px dashed rgba(212, 175, 55, 0.3); text-align: center; padding: 25px;">
                 <h2 style="font-size: 1.1rem; margin-bottom: 10px; letter-spacing: 1px;">Resource Library</h2>
                 <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0; line-height: 1.5;">
@@ -332,7 +335,6 @@
                 </p>
             </div>
 
-            <!-- DESKTOP DONATION MODULE (Only visible on larger screens) -->
             <div class="module-card donation-module desktop-donation">
                 <div class="pulse-text">Support This Tool</div>
                 <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 10px; line-height: 1.5;">
@@ -342,10 +344,8 @@
             </div>
         </aside>
 
-        <!-- MAIN CONTENT AREA -->
         <main class="main-content">
             
-            <!-- MODULE 1: THE VISION -->
             <section class="module-card">
                 <p class="highlight-text">
                     Whether dealing with local or nationwide hurdles, it can be tough for neighbors in Radcliff and across Hardin County to get their voices heard by local leaders. We are building a bridge to fix that.
@@ -356,7 +356,6 @@
                 </p>
             </section>
 
-            <!-- MODULE 2: THE AUDIENCES -->
             <section class="audience-grid">
                 <div class="audience-card">
                     <h3>Citizens</h3>
@@ -372,7 +371,6 @@
                 </div>
             </section>
 
-            <!-- MODULE 3: THE LEDGER -->
             <section class="module-card">
                 <h2 style="text-align: center;">Verified Community Ledger</h2>
                 <p style="font-size: 0.95rem; margin-bottom: 0; text-align: center;">
@@ -401,7 +399,6 @@
                 </div>
             </section>
 
-            <!-- MOBILE DONATION MODULE (Only visible on small screens at bottom of page flow) -->
             <div class="module-card donation-module mobile-donation">
                 <div class="pulse-text">Support This Tool</div>
                 <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 10px; line-height: 1.5;">
@@ -413,7 +410,6 @@
         </main>
     </div>
 
-    <!-- MODAL OVERLAY FOR FORM -->
     <div id="report-modal" class="modal-overlay" onclick="if(event.target === this) toggleModal(false)">
         <div class="modal-window">
             <button class="btn-close" onclick="toggleModal(false)">✕</button>
@@ -454,7 +450,6 @@
                 <div id="response-banner" class="status-banner"></div>
             </form>
 
-            <!-- ATTACHED DONATION MODULE IN MODAL -->
             <div class="donation-module" style="background: rgba(0,0,0,0.3); margin-top: 30px; border-radius: 16px; border: 1px solid var(--glass-border);">
                 <div class="pulse-text" style="font-size: 1rem;">Support This Tool</div>
                 <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 10px;">
@@ -465,7 +460,6 @@
         </div>
     </div>
 
-    <!-- FOOTER -->
     <div class="footer-pad">
         <footer class="system-footer">
             &copy; <span id="current-year"></span> Vanguard Citizen Services
