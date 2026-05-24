@@ -4,102 +4,122 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Commander Q // Dreamscape Drift</title>
-    <!-- Font Awesome for Player Glyphs -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../style.css">
     
     <style>
-        /* --- VIDEOS LAYOUT WIDE MATRIX OVERRIDES --- */
+        /* --- LOCK PLATFORM VIEWPORT (STOP SCROLLING) --- */
+        html, body {
+            overflow: hidden !important;
+            height: 100dvh;
+            width: 100vw;
+        }
+
+        .hub-container {
+            height: 100dvh;
+            max-height: 100dvh;
+            padding: 15px 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
         @media (min-width: 768px) {
             .hub-container { 
-                max-width: 850px !important; 
+                max-width: 750px !important; 
             }
         }
 
-        /* Responsive Player Window */
+        .hub-card {
+            display: flex;
+            flex-direction: column;
+            max-height: 90dvh;
+            padding: 20px;
+            margin-bottom: 0;
+            overflow: hidden;
+        }
+
+        /* --- IMMERSIVE YOUTUBE DISPLAY --- */
         .player-viewport {
             width: 100%;
-            position: relative;
             background: #000000;
             border: 1px solid var(--glass-border);
-            border-radius: 16px;
+            border-radius: 12px;
             overflow: hidden;
             aspect-ratio: 16 / 9;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            margin-bottom: 15px;
+            flex-shrink: 0;
         }
 
-        .player-viewport video {
+        .player-viewport iframe {
             width: 100%;
             height: 100%;
+            border: 0;
             display: block;
-            object-fit: contain;
         }
 
-        /* Dynamic Grid Layout for Choices */
+        /* --- SCROLLABLE CONTAINER FOR SELECTION MENUS ONLY --- */
+        .scroller-bay {
+            overflow-y: auto;
+            flex-grow: 1;
+            padding-right: 4px;
+            margin-bottom: 15px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .scroller-bay::-webkit-scrollbar { width: 4px; }
+        .scroller-bay::-webkit-scrollbar-track { background: transparent; }
+        .scroller-bay::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 10px; }
+
         .video-selection-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 12px;
+            gap: 10px;
             width: 100%;
-            margin-top: 15px;
-            margin-bottom: 25px;
         }
 
         @media (min-width: 768px) {
             .video-selection-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 16px;
             }
         }
 
-        /* Clickable Item Row Items */
         .video-thumb {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            padding: 14px 18px;
+            border-radius: 30px;
+            padding: 12px 15px;
             text-align: center;
             color: var(--light-blue);
             font-weight: bold;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             cursor: pointer;
             transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .video-thumb:hover {
             background: rgba(255, 255, 255, 0.08);
             border-color: var(--light-blue);
-            transform: translateY(-1px);
         }
 
         .video-thumb.active {
             background: var(--light-blue);
             color: var(--deep-space);
             border-color: var(--light-blue);
-            box-shadow: 0 0 15px rgba(142, 202, 230, 0.3);
         }
 
-        /* Audio Controls Box */
         .audio-showcase-box {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 30px;
+            border-radius: 12px;
+            padding: 12px;
             width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        #play-mix-btn {
-            max-width: 280px;
+            flex-shrink: 0;
         }
     </style>
 </head>
@@ -109,98 +129,90 @@
     <div id="starfield"><div class="stars"></div></div>
 
     <div class="hub-container">
-        <h1 class="hub-title">Dreamscape Drift</h1>
+        <h1 class="hub-title" style="margin-bottom: 10px;">Dreamscape Drift</h1>
 
         <main class="hub-card">
 
-            <h2>Video Showcase</h2>
-            
-            <!-- MAIN VIEWPORT DISPLAY -->
             <div class="player-viewport">
-                <video id="main-drift-video" controls poster="images/poster.jpg">
-                    <!-- Loaded dynamically via script -->
-                </video>
+                <iframe id="main-drift-player" src="" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
             </div>
 
-            <!-- CHANNELS INJECTED HERE -->
-            <div id="video-menu-hook" class="video-selection-grid">
-                <div style="color: rgba(255,255,255,0.4); font-size: 0.85rem; text-align: center; width: 100%; grid-column: 1/-1; padding: 20px 0;">
-                    Initializing Video Data Module...
-                </div>
+            <div class="scroller-bay">
+                <h2>Video Menu</h2>
+                <div id="video-menu-hook" class="video-selection-grid" style="margin-top: 10px;"></div>
             </div>
 
             <h2>DJ Audio Mix</h2>
             <div class="audio-showcase-box">
-                <!-- Native Audio Node Container -->
                 <audio id="dreamscape-audio-set" preload="none">
                     <source src="audio/livemix.mp3" type="audio/mpeg">
                 </audio>
-                
-                <button id="play-mix-btn" class="btn">
+                <button id="play-mix-btn" class="btn" style="padding: 10px;">
                     <i class="fa-solid fa-play"></i> Play Mix Set
                 </button>
             </div>
 
-            <div style="text-align: center; margin-top: 35px;">
+            <div style="text-align: center; margin-top: 15px; flex-shrink: 0;">
                 <a href="../home.html" class="hub-return-link">← Return to Control Deck</a>
             </div>
         </main>
     </div>
 
-    <footer class="system-footer">
+    <footer class="system-footer" style="padding: 10px 0 5px;">
         &copy; <span id="current-year"></span> Vanguard Citizen Services
     </footer>
 
-    <!-- Connect local engine controls -->
-    <script src="app.js"></script>
-
-    <!-- AUTOMATED JSON MENU INJECTION CONTROLLER -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const menuContainer = document.getElementById('video-menu-hook');
-            const mainVideoPlayer = document.getElementById('main-drift-video');
+            const mainPlayer = document.getElementById('main-drift-player');
+            const audioTrack = document.getElementById('dreamscape-audio-set');
+            const audioBtn = document.getElementById('play-mix-btn');
 
-            if (!menuContainer || !mainVideoPlayer) return;
+            const yearSpan = document.getElementById('current-year');
+            if (yearSpan) yearSpan.innerText = new Date().getFullYear();
 
-            // Fetch list mapping array from local JSON configuration file
-            fetch('videos.json')
-                .then(response => {
-                    if (!response.ok) throw new Error('Data track connection dropped');
-                    return response.json();
-                })
-                .then(data => {
-                    // Wipe the placeholder loader string out cleanly
-                    menuContainer.innerHTML = '';
-
-                    if (!data || data.length === 0) {
-                        menuContainer.innerHTML = '<div style="color: red; font-size: 0.85rem;">No active data tracks found.</div>';
-                        return;
+            if (audioTrack && audioBtn) {
+                audioBtn.addEventListener('click', () => {
+                    if (audioTrack.paused) {
+                        audioTrack.play().then(() => {
+                            audioBtn.innerHTML = '<i class="fa-solid fa-pause"></i> Pause Mix Set';
+                        });
+                    } else {
+                        audioTrack.pause();
+                        audioBtn.innerHTML = '<i class="fa-solid fa-play"></i> Play Mix Set';
                     }
+                });
+            }
 
-                    // Loop through records and paint menu options
+            fetch('videos.json')
+                .then(res => res.json())
+                .then(data => {
+                    menuContainer.innerHTML = '';
+                    
                     data.forEach((item, index) => {
-                        const optionBtn = document.createElement('div');
-                        optionBtn.className = 'video-thumb';
-                        optionBtn.setAttribute('data-video-src', item.src);
-                        optionBtn.innerText = item.title;
-
-                        // Auto-arm the first element as the active base item
+                        const btn = document.createElement('div');
+                        btn.className = 'video-thumb';
+                        btn.innerText = item.title;
+                        
+                        const autoplayUrl = item.src.includes('?') ? `${item.src}&autoplay=1` : `${item.src}?autoplay=1`;
+                        
                         if (index === 0) {
-                            optionBtn.classList.add('active');
-                            mainVideoPlayer.src = item.src;
+                            btn.classList.add('active');
+                            mainPlayer.src = item.src;
                         }
 
-                        menuContainer.appendChild(optionBtn);
-                    });
+                        btn.addEventListener('click', () => {
+                            document.querySelectorAll('.video-thumb').forEach(t => t.classList.remove('active'));
+                            btn.classList.add('active');
+                            mainPlayer.src = autoplayUrl;
+                        });
 
-                    // Re-arm app.js event loop hooks since elements were dynamically built
-                    if (typeof initializeVideoGallery === 'function') {
-                        initializeVideoGallery();
-                    }
+                        menuContainer.appendChild(btn);
+                    });
                 })
-                .catch(error => {
-                    console.error('System failed parsing videos.json configuration:', error);
-                    menuContainer.innerHTML = '<div style="color: rgba(255,255,255,0.4); font-size: 0.85rem;">Failed to load system list map track.</div>';
+                .catch(err => {
+                    menuContainer.innerHTML = '<div style="color:rgba(255,255,255,0.4); font-size:0.8rem; text-align:center; width:100%;">Configuration stream offline.</div>';
                 });
         });
     </script>
