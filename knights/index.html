@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vanguard Knights | Creator Guild</title>
+    <link rel="stylesheet" href="../vcs/style.css">
+    <style>
+        /* ==========================================
+           1. COMPACT ARCHITECTURE
+           ========================================== */
+        body {
+            overflow-y: auto;
+            padding: 1.5rem 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .glass-window {
+            max-width: 850px;
+            width: 100%;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ==========================================
+           1a. TOP PANEL NAVIGATION STRUCTURE
+           ========================================== */
+        .top-nav-panel {
+            display: flex;
+            justify-content: flex-start;
+            width: 100%;
+            margin-bottom: 1.5rem;
+        }
+
+        .back-nav {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.75em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: color 0.3s ease;
+        }
+
+        .back-nav:hover {
+            color: #ffeb3b;
+        }
+
+        /* ==========================================
+           2. STREAMLINED SECTIONS
+           ========================================== */
+        .guild-section {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .section-title {
+            color: #ffeb3b;
+            font-size: 1.3em;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid rgba(179, 136, 255, 0.3);
+            padding-bottom: 0.3rem;
+            width: fit-content;
+        }
+
+        .section-text {
+            line-height: 1.5;
+            font-size: 0.95em;
+            max-width: 650px;
+            margin-bottom: 1rem;
+        }
+
+        /* ==========================================
+           3. UTILITY ENGINE LAUNCH CARD
+           ========================================== */
+        .utility-box {
+            width: 100%;
+            max-width: 600px;
+            background: rgba(179, 136, 255, 0.03);
+            border: 1px solid rgba(179, 136, 255, 0.2);
+            border-radius: 12px;
+            padding: 1.8rem;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(179, 136, 255, 0.05);
+        }
+
+        /* ==========================================
+           4. ROSTER MATRIX GRID
+           ========================================== */
+        .roster-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+
+        .knight-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: left;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .knight-name {
+            font-size: 1.15em;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 1px;
+        }
+
+        .knight-rank {
+            font-size: 0.75em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #ffeb3b;
+            font-weight: 700;
+        }
+
+        .knight-division {
+            font-size: 0.75em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #b388ff;
+            font-weight: 600;
+        }
+
+        .knight-specialty {
+            font-size: 0.85em;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 0.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 0.5rem;
+        }
+
+        /* ==========================================
+           5. ACTION BUTTON CONFIGURATION
+           ========================================== */
+        .action-btn {
+            display: inline-block;
+            background: linear-gradient(90deg, #ffe082 0%, #ffb300 50%, #ffeb3b 100%);
+            color: #000000;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 0.7rem 1.5rem;
+            border-radius: 6px;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            transition: box-shadow 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .action-btn:hover {
+            box-shadow: 0 0 25px #ffd700, 0 0 10px rgba(179, 136, 255, 0.5);
+        }
+
+        .action-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+            animation: flashShimmer 2s infinite;
+        }
+
+        @media (min-width: 700px) {
+            .roster-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="space-bg">
+        <div class="starfield"></div>
+    </div>
+
+    <div class="glass-window">
+        
+        <div class="top-nav-panel">
+            <a href="../home/index.html" class="back-nav">← Back to Lobby</a>
+        </div>
+
+        <img src="../images/vanguardorglogo.png" alt="Vanguard Citizen Services Logo" class="logo">
+        <div class="tagline" style="margin-bottom: 1.5rem;">The Guild House</div>
+        
+        <section class="guild-section">
+            <h2 class="section-title">The Collective</h2>
+            <p class="section-text">
+                The Vanguard Knights are the architects, designers, and artisans behind our studio's output. Operating as a unified forge, this guild turns raw human perspectives into immersive digital narratives and community assets.
+            </p>
+        </section>
+
+        <section id="voicebox" class="guild-section">
+            <h2 class="section-title">Active Machinery</h2>
+            <div class="utility-box">
+                <span style="font-size: 0.7em; text-transform: uppercase; letter-spacing: 1px; color: #b388ff; font-weight: 700;">Community Asset Deployment</span>
+                <h3 style="font-size: 1.15em; font-weight: 700; margin: 0.3rem 0; color: #ffffff;">Hardin County Community Voice Box</h3>
+                <p style="font-size: 0.85rem; line-height: 1.5; color: rgba(255, 255, 255, 0.85); margin-bottom: 0;">
+                    Our primary regional interface developed to let neighbors bypass baseline bureaucracy and anonymously map local community infrastructure needs.
+                </p>
+                <a href="voicebox/index.html" class="action-btn">Launch Utility Console</a>
+            </div>
+        </section>
+
+        <section class="guild-section" style="margin-bottom: 0;">
+            <h2 class="section-title">Guild Roster</h2>
+            
+            <div class="roster-grid">
+                <div class="knight-card">
+                    <div class="knight-name">Quincy Jones</div>
+                    <div class="knight-rank">Captain Commander</div>
+                    <div class="knight-division">Chief Vision Officer // VCS</div>
+                    <p class="knight-specialty">
+                        Steers the core narrative systems, guiding design architecture and shaping strategic storytelling to move communities toward intentional coexistence.
+                    </p>
+                </div>
+                
+                <div class="knight-card">
+                    <div class="knight-name">Kona Agpalza</div>
+                    <div class="knight-rank">Grandmaster</div>
+                    <div class="knight-division">Chief Operational Officer // VCS</div>
+                    <p class="knight-specialty">
+                        Commands execution across internal operations, translating high-level concepts into active digital systems and orchestrating workflow deployment.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="site-footer">
+            <div class="footer-text">&copy; 2026 Vanguard Citizen Services. All Rights Reserved.</div>
+        </footer>
+
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const spaceBg = document.querySelector(".space-bg");
+
+            function launchComet() {
+                const comet = document.createElement("div");
+                comet.classList.add("comet");
+                const startTop = Math.random() * 40; 
+                const startLeft = Math.random() * 20;
+                
+                comet.style.top = `${startTop}vh`;
+                comet.style.left = `${startLeft}vw`;
+                comet.style.animation = "streak 3.2s cubic-bezier(0.25, 1, 0.5, 1) forwards";
+                
+                spaceBg.appendChild(comet);
+                setTimeout(() => comet.remove(), 3300);
+            }
+
+            setInterval(launchComet, 4000);
+            setTimeout(launchComet, 500);
+        });
+    </script>
+
+</body>
+</html>
