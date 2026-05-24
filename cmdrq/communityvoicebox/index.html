@@ -141,7 +141,63 @@
         input::placeholder, textarea::placeholder { color: rgba(255, 255, 255, 0.25); }
         textarea { resize: none; }
 
-        /* --- BUTTONS --- */
+        /* --- LIVE DATA RETRIEVAL MATRIX LIST --- */
+        .ledger-wrapper {
+            margin-top: 30px;
+            width: 100%;
+        }
+        
+        .ledger-scroll-area {
+            width: 100%;
+            overflow-x: auto;
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .citizen-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.85rem;
+            min-width: 550px;
+        }
+
+        .citizen-table th {
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--gold);
+            padding: 12px 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .citizen-table td {
+            padding: 12px 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: rgba(255, 255, 255, 0.85);
+            vertical-align: top;
+            line-height: 1.4;
+        }
+
+        .citizen-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .badge-status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .status-pending { background: rgba(243, 156, 18, 0.15); color: #f39c12; border: 1px solid #f39c12; }
+        .status-verified { background: rgba(52, 152, 219, 0.15); color: #3498db; border: 1px solid #3498db; }
+        .status-completed { background: rgba(46, 204, 113, 0.15); color: #2ecc71; border: 1px solid #2ecc71; }
+
+        /* --- BUTTONS & PULSING EFFECTS --- */
         .action-btn {
             width: 100%; padding: 14px; border-radius: 12px; border: none; 
             background: var(--white); color: #05040a; font-weight: 700; font-size: 0.95rem;
@@ -156,11 +212,29 @@
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid var(--glass-border);
             border-radius: 16px;
-            padding: 20px;
-            margin-top: 25px;
+            padding: 24px;
+            margin-top: 30px;
             text-align: center;
         }
-        .donation-module p { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px; line-height: 1.5; }
+        
+        .donation-module p { 
+            font-size: 0.85rem; 
+            color: var(--text-muted); 
+            margin-bottom: 15px; 
+            line-height: 1.5;
+        }
+
+        .pulse-text {
+            color: var(--gold);
+            font-weight: 700;
+            animation: textBrightPulse 3s infinite ease-in-out;
+        }
+
+        @keyframes textBrightPulse {
+            0%, 100% { text-shadow: 0 0 2px transparent; opacity: 0.85; }
+            50% { text-shadow: 0 0 12px var(--gold-glow), 0 0 20px var(--gold); color: #ffffff; opacity: 1; }
+        }
+
         .support-btn {
             background: transparent; border: 1px solid var(--gold); color: var(--gold); width: auto; display: inline-block; padding: 10px 25px; border-radius: 20px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; font-weight: bold;
         }
@@ -245,19 +319,47 @@
                     <label for="description">What issue needs attention?</label>
                     <textarea id="description" rows="4" placeholder="Describe the area of improvement safely and constructively here..." required></textarea>
 
-                    <button type="submit" id="submit-button" class="action-btn" style="margin-top: 15px;">Submit to Citizen Ledger</button>
+                    <button type="submit" id="submit-button" class="action-btn" style="margin-top: 15px;">Submit</button>
                     
                     <div id="response-banner" class="status-banner"></div>
                 </form>
             </div>
 
+            <!-- VERIFIED TRACKER DATA TABLE SECTION -->
+            <div class="ledger-wrapper">
+                <h2>Verified Community Ledger</h2>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">
+                    This log lists the issues received from neighbors that are currently undergoing validation or tracking for completion.
+                </p>
+                <div class="ledger-scroll-area">
+                    <table class="citizen-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 15%;">Logged</th>
+                                <th style="width: 20%;">Category</th>
+                                <th style="width: 20%;">Municipality</th>
+                                <th style="width: 30%;">Description</th>
+                                <th style="width: 15%;">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="live-ledger-hook">
+                            <tr>
+                                <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 20px;">
+                                    Syncing with cloud tracking entries...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
             <!-- SERVER EXPANSION DONATION MODULE -->
             <div class="donation-module">
-                <h2 style="font-size: 1rem; border: none; padding-bottom: 0; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px;">Support This Tool</h2>
+                <h2 class="pulse-text" style="font-size: 1rem; border: none; padding-bottom: 0; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px;">Support This Tool</h2>
                 <p>
-                    This tool runs independently. 100% of donations go directly toward cloud hosting costs and building new features for our community.
+                    This tool runs independently. 100% of donations go directly toward cloud hosting costs and building new features for our community. Every bit helps—feel free to support with **as low as $1**.
                 </p>
-                <button class="action-btn support-btn" onclick="alert('Donation module placeholder. Features expanding soon!')">Support This Tool</button>
+                <button class="action-btn support-btn" onclick="alert('Donation engine module placeholder integration. Features expanding soon!')">Support This Tool</button>
             </div>
 
             <!-- Return path to Control Deck -->
@@ -299,7 +401,63 @@
         const sbKey = 'sb_publishable_wjgbPekKmodd5mSDXIeUeg_Wq73GzOk';
         const supabaseClient = supabase.createClient(sbUrl, sbKey);
 
-        /* --- 4. DATA SUBMISSION DISPATCHER --- */
+        /* --- 4. DATA RETRIEVAL LOG INJECTION ENGINE --- */
+        async function fetchCommunityLedger() {
+            const ledgerHook = document.getElementById('live-ledger-hook');
+            if (!ledgerHook) return;
+
+            try {
+                // Request rows sorted down from newest entries
+                const { data, error } = await supabaseClient
+                    .from('suggestionbox')
+                    .select('created_at, category, municipality, description, status')
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+
+                if (!data || data.length === 0) {
+                    ledgerHook.innerHTML = `<tr><td colspan="5" style="text-align:center; color:rgba(255,255,255,0.4);">No records currently logged on the public ledger.</td></tr>`;
+                    return;
+                }
+
+                ledgerHook.innerHTML = '';
+
+                data.forEach(item => {
+                    const row = document.createElement('tr');
+
+                    // Parse timestamp to readable ISO format date
+                    let simpleDate = "Pending";
+                    if (item.created_at) {
+                        simpleDate = item.created_at.split('T')[0];
+                    }
+
+                    // Compute responsive status badges matching class hooks
+                    let statusClass = "status-pending";
+                    let matchedStatus = item.status || "Pending Verification";
+                    
+                    if (matchedStatus.toLowerCase().includes('verified')) statusClass = "status-verified";
+                    if (matchedStatus.toLowerCase().includes('complete')) statusClass = "status-completed";
+
+                    row.innerHTML = `
+                        <td style="font-family: monospace; color: var(--gold);">${simpleDate}</td>
+                        <td style="font-weight: 600;">${item.category || ''}</td>
+                        <td>${item.municipality || ''}</td>
+                        <td style="font-size:0.8rem; color:rgba(255,255,255,0.7); max-width: 240px; word-wrap: break-word; white-space: normal;">${item.description || ''}</td>
+                        <td><span class="badge-status ${statusClass}">${matchedStatus}</span></td>
+                    `;
+                    ledgerHook.appendChild(row);
+                });
+
+            } catch (err) {
+                console.error("Ledger rendering error:", err);
+                ledgerHook.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#e74c3c;">Failed to sync with active database log stream.</td></tr>`;
+            }
+        }
+
+        // Initialize ledger query loop immediately upon layout boot
+        document.addEventListener('DOMContentLoaded', fetchCommunityLedger);
+
+        /* --- 5. DATA SUBMISSION DISPATCHER --- */
         const form = document.getElementById('submission-form');
         const submitBtn = document.getElementById('submit-button');
         const banner = document.getElementById('response-banner');
@@ -309,7 +467,7 @@
                 e.preventDefault();
                 
                 submitBtn.disabled = true;
-                submitBtn.innerText = "Sending Note...";
+                submitBtn.innerText = "Sending...";
                 banner.className = "status-banner";
                 banner.innerText = "";
 
@@ -336,16 +494,19 @@
                     if (error) throw error;
 
                     banner.classList.add('status-success');
-                    banner.innerText = "Thank you! Your feedback has been safely submitted to the verified Hardin County log.";
+                    banner.innerText = "Success! Your message has been safely submitted to the verified Hardin County log.";
                     form.reset();
+                    
+                    // Instantly refresh tracking rows down into the visual display matrix
+                    fetchCommunityLedger();
 
                 } catch (err) {
                     console.error(err);
                     banner.classList.add('status-error');
-                    banner.innerText = "We couldn't connect to the log. Please check your network and try again.";
+                    banner.innerText = "Failed! We couldn't connect to the log. Please check your network and try again.";
                 } finally {
                     submitBtn.disabled = false;
-                    submitBtn.innerText = "Submit to Citizen Ledger";
+                    submitBtn.innerText = "Submit";
                 }
             });
         }
