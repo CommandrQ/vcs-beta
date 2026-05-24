@@ -260,12 +260,15 @@
 </head>
 <body>
 
+    <!-- VISUAL ENVIRONMENT -->
     <div class="space-bg">
         <div class="starfield"></div>
     </div>
 
+    <!-- MAIN INTERFACE -->
     <div class="glass-window">
         
+        <!-- TOP PANEL LAYOUT -->
         <div class="top-nav-panel">
             <a href="../home/index.html" class="back-nav">← Back</a>
             <a href="history/index.html" class="history-btn">Our History</a>
@@ -274,6 +277,7 @@
         <img src="../images/vanguardorglogo.png" alt="Vanguard Citizen Services Logo" class="logo">
         <div class="tagline" style="margin-bottom: 1.5rem;">Creative Studio</div>
         
+        <!-- ORIGINS & PILLARS -->
         <section class="studio-section">
             <h2 class="section-title">Our Vision</h2>
             <p class="section-text">
@@ -296,17 +300,20 @@
             </div>
         </section>
 
+        <!-- PORTAL INTERACTIVE SHOWCASE -->
         <section class="studio-section">
             <h2 class="section-title">Our Showcases</h2>
             
             <div class="slider-box">
+                <!-- PROJECT 1: REGIONAL CIVIC UTILITY -->
                 <div class="slide active">
                     <span class="project-tag">Civic Utility</span>
                     <h3 class="project-name">Hardin County Community Voice Box</h3>
                     <p class="project-summary">A shared platform for residents to submit local county issues, discover nearby resources, and learn about our community.</p>
-                    <a href="../communityvoicebox" class="action-btn">Launch Utility</a>
+                    <a href="../knights/index.html#voicebox" class="action-btn">Launch Utility</a>
                 </div>
 
+                <!-- CAROUSEL TRACK CONTROLS -->
                 <div class="slider-controls">
                     <button class="nav-btn" id="prev-slide">←</button>
                     <button class="nav-btn" id="next-slide">→</button>
@@ -314,12 +321,19 @@
             </div>
         </section>
 
+        <!-- CENTERED HELP NAVIGATION POINT -->
+        <div style="margin-top: 1.5rem; text-align: center; width: 100%;">
+            <a href="../home/support/index.html" style="color: #ffffff; text-decoration: none; font-size: 0.75em; text-transform: uppercase; letter-spacing: 2px; border: 1px solid rgba(255,255,255,0.15); padding: 0.5rem 1.4rem; border-radius: 4px; transition: all 0.3s ease;" onmouseover="this.style.borderColor='#ffeb3b'; this.style.color='#ffeb3b'; this.style.boxShadow='0 0 10px rgba(255, 235, 59, 0.1)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.15)'; this.style.color='#ffffff'; this.style.boxShadow='none';">Need Help?</a>
+        </div>
+
+        <!-- SITE FOOTER -->
         <footer class="site-footer">
             <div class="footer-text">&copy; 2026 Vanguard Citizen Services. All Rights Reserved.</div>
         </footer>
 
     </div>
 
+    <!-- LOGIC SYSTEM ENGINES -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             // 1. DYNAMIC AUTO-SCALING CAROUSEL ENGINE
@@ -329,7 +343,6 @@
             const controls = document.querySelector(".slider-controls");
             let currentIndex = 0;
 
-            // Hide arrows out of view if there is only 1 showcase card present
             if (slides.length <= 1) {
                 controls.style.display = "none";
             }
