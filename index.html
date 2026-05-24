@@ -1,147 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Vanguard Services</title>
-    <!-- Links to core shared styling files to maintain uniform appearance parameters -->
-    <link rel="stylesheet" href="style.css">
-    
-    <style>
-        /* --- ROOT SPLASH EXCLUSIVE VIEWPORT OVERRIDES --- */
-        body, html {
-            margin: 0; padding: 0; width: 100%; height: 100%;
-            background-color: #05040a; color: #ffffff;
-            font-family: sans-serif; display: flex; justify-content: center;
-            align-items: center; overflow: hidden;
-        }
-
-        #intro-container {
-            text-align: center; display: flex; flex-direction: column;
-            align-items: center; gap: 24px; z-index: 100;
-            width: 90%; max-width: 450px;
-            opacity: 0; /* Managed by loading sequence timeline checks */
-        }
-
-        /* --- OLD CRT TV BLINK-ON TURN KEYFRAMES --- */
-        .tv-turn-on {
-            animation: crtBlinkOn 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-        }
-
-        @keyframes crtBlinkOn {
-            0% { transform: scaleY(0.005) scaleX(0); opacity: 0; filter: brightness(3); }
-            50% { transform: scaleY(0.005) scaleX(1); opacity: 0.8; filter: brightness(2); }
-            70% { transform: scaleY(1.2) scaleX(1); opacity: 0.9; filter: brightness(1.5); }
-            100% { transform: scaleY(1) scaleX(1); opacity: 1; filter: brightness(1); }
-        }
-
-        .logo-container img {
-            max-width: 180px; height: auto; display: block; margin: 0 auto;
-        }
-
-        .tagline-text {
-            font-size: 1rem; letter-spacing: 4px; text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.85); font-weight: 600; margin: 0;
-            background: linear-gradient(180deg, #ffffff 0%, #D4AF37 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-
-        /* --- PROGRESS SYSTEM LAYOUT --- */
-        .progress-box {
-            width: 100%; display: flex; flex-direction: column;
-            align-items: center; gap: 8px; margin-top: 10px;
-        }
-
-        .loading-container {
-            width: 100%; height: 4px; background: rgba(255, 255, 255, 0.08);
-            border-radius: 10px; overflow: hidden; position: relative;
-            border: 1px solid rgba(255, 255, 255, 0.03);
-        }
-
-        .loading-bar {
-            width: 0%; height: 100%; background: #D4AF37;
-            box-shadow: 0 0 12px rgba(212, 175, 55, 0.4);
-        }
-
-        .percent-counter {
-            font-family: monospace; font-size: 0.85rem; letter-spacing: 1px;
-            color: rgba(255, 255, 255, 0.4); font-weight: bold;
-        }
-
-        /* --- SCREEN SHIELD FADE MATRIX --- */
-        #screen-curtain {
-            position: fixed; inset: 0; background-color: #05040a;
-            z-index: 9999; pointer-events: none; opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Vanguard Citizen Services</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="viewport-lock">
 
-    <!-- Target Backdrop space loop -->
-    <div id="starfield" style="position: absolute; inset: 0; pointer-events: none;"><div class="stars"></div></div>
-    
-    <!-- Screen overlay to handle terminal execution layout fades -->
-    <div id="screen-curtain"></div>
+  <!-- Background Space Canvas -->
+  <canvas id="atmosphere-canvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1; pointer-events: none;"></canvas>
 
-    <div id="intro-container">
-        <!-- Vanguard Corporate Branding Shield asset -->
-        <div class="logo-container">
-            <img src="images/vanguardorglogo.png" alt="Vanguard Logo">
-        </div>
+  <!-- Transitions Mask (Handles initial fade-in from black) -->
+  <div id="transition-mask" style="opacity: 1;"></div>
 
-        <!-- Platform Pillars Lineage -->
-        <p class="tagline-text">Empower . Educate . Elevate</p>
-
-        <!-- Dynamic Counter & Tracking Elements -->
-        <div class="progress-box">
-            <div class="loading-container">
-                <div id="progress-bar" class="loading-bar"></div>
-            </div>
-            <div id="percentage-readout" class="percent-counter">0%</div>
-        </div>
+  <!-- Old TV Intro Shield -->
+  <div id="intro-stage" class="intro-overlay">
+    <img src="images/vanguardorglogo.png" alt="Vanguard Citizen Services Logo" class="intro-logo">
+    <div class="loading-track">
+      <div id="loading-progress" class="loading-bar"></div>
     </div>
+    <p class="intro-motto">Empower. Educate. Elevate.</p>
+  </div>
 
-    <!-- Optional loading tracker engine scripts anchor hook -->
-    <script src="script.js" defer></script>
+  <!-- Primary Workspace Layout -->
+  <main id="main-content" class="app-container">
+    
+    <!-- Hero Branding Frame -->
+    <header class="vanguard-hero">
+      <img src="images/vanguardorglogo.png" alt="Vanguard Logo" class="hero-logo-small">
+      <h1 class="hero-title">Welcome, Citizen</h1>
+    </header>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const container = document.getElementById('intro-container');
-            const progressBar = document.getElementById('progress-bar');
-            const percentText = document.getElementById('percentage-readout');
-            
-            // 1. Instantly trigger the old CRT TV flicker bounce logic onto view container
-            if (container) {
-                container.classList.add('tv-turn-on');
-            }
+    <!-- Announcements Panel -->
+    <section class="vanguard-panel announcements-panel-wrapper">
+      <h2 class="panel-label">Guild Announcements</h2>
+      <div id="announcements-mount" class="announcements-container scrollable-interior">
+        <div class="announcement-node">
+          <div class="announcement-meta">MAY 23, 2026 // SITE UPDATE</div>
+          <div class="announcement-txt">We are currently making improvements to our website. </div>
+        </div>
+      </div>
+    </section>
 
-            // 2. Continuous increments engine running at 25ms intervals to complete in exactly 2.5 seconds
-            let currentPercentage = 0;
-            
-            const linearCounter = setInterval(() => {
-                if (currentPercentage >= 100) {
-                    clearInterval(linearCounter);
-                    executeBlackoutFade();
-                } else {
-                    currentPercentage += 1;
-                    if (progressBar) progressBar.style.width = currentPercentage + '%';
-                    if (percentText) percentText.innerText = currentPercentage + '%';
-                }
-            }, 25); 
-        });
+    <!-- Navigation Hub Section -->
+    <section class="vanguard-panel operations-hub">
+      <h2 class="panel-label">Operations Registry</h2>
+      
+      <div class="split-layout-engine">
+        <!-- Menu Button Deck -->
+        <div id="tabs-mount" class="tabs-stacked-track">
+          
+          <!-- ========================================================================= -->
+          <!-- HOW TO ADD MENU ITEMS:                                                    -->
+          <!-- Type 1 (Popup Window):   use data-type="popup" data-id="about-us"          -->
+          <!-- Type 2 (Links/Folders): use data-type="link"  data-url="roster/"           -->
+          <!-- ========================================================================= -->
+          
+          <button class="action-tab-btn" data-type="popup" data-id="about-us">About Us</button>
+         
+          <button class="action-tab-btn" data-type="popup" data-url="community-voice-box/">Community Voice Box</button>
+          
+          <button class="action-tab-btn" data-type="link" data-url="roster/">Roster</button>
+          
+          <button class="action-tab-btn" data-type="popup" data-id="legal">Legal</button>
+          
+          <button class="action-tab-btn" data-type="link" data-url="support/">Support</button>
+          
+          <!-- Example of an External Link (Just copy, paste, and change the data-url) -->
+          <!-- <button class="action-tab-btn" data-type="link" data-url="https://google.com">External Link</button> -->
 
-        function executeBlackoutFade() {
-            const curtain = document.getElementById('screen-curtain');
-            if (curtain) {
-                curtain.style.opacity = '1';
-            }
-            
-            // Wait for complete curtain drop transition sequence profile before executing redirection
-            setTimeout(() => {
-                window.location.href = "home/index.html";
-            }, 550);
-        }
-    </script>
+          <!-- ========================================================================= -->
+        </div>
+        
+        <!-- Right Hand Narrative Content Window Placeholder -->
+        <div id="desktop-content-window" class="narrative-pane"></div>
+      </div>
+    </section>
+
+    <!-- Shared Persistent Footer -->
+    <footer class="vanguard-footer">
+      <p class="footer-text">
+        &copy; <span id="current-year"></span> vanguard citizen services
+      </p>
+    </footer>
+    
+  </main>
+
+  <script src="script.js"></script>
 </body>
 </html>
