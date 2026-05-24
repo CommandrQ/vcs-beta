@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../style.css">
     
     <style>
-        /* --- BLOCK OVERALL SCROLLING --- */
+        /* --- FORCE SYSTEM SCREEN LOCK (STOP ALL SCROLLING) --- */
         html, body {
             overflow: hidden !important;
             height: 100dvh;
@@ -22,18 +22,16 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-        }
-
-        @media (min-width: 768px) {
-            .hub-container { 
-                max-width: 750px !important; 
-            }
+            width: 92%; 
+            max-width: 500px !important; /* Unified mobile & desktop width */
+            margin: 0 auto;
         }
 
         /* --- PULSING EDGE FRAME --- */
         .hub-card {
             display: flex;
             flex-direction: column;
+            height: auto;
             max-height: 85dvh;
             padding: 20px;
             margin-bottom: 0;
@@ -61,7 +59,7 @@
             border-radius: 12px;
             overflow: hidden;
             aspect-ratio: 16 / 9;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             flex-shrink: 0;
         }
 
@@ -72,7 +70,7 @@
             display: block;
         }
 
-        /* --- FIXED SUB-SECTION SCROLLER --- */
+        /* --- INDEPENDENT SCROLLER FOR VIDEO SELECTIONS --- */
         .scroller-bay {
             overflow-y: auto;
             flex-grow: 1;
@@ -86,16 +84,10 @@
         .scroller-bay::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 10px; }
 
         .video-selection-grid {
-            display: grid;
-            grid-template-columns: 1fr;
+            display: flex;
+            flex-direction: column;
             gap: 10px;
             width: 100%;
-        }
-
-        @media (min-width: 768px) {
-            .video-selection-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
         }
 
         /* --- MENU BUTTON SHAPES --- */
@@ -115,6 +107,8 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            width: 100%;
+            flex-shrink: 0;
         }
 
         .video-thumb:hover {
@@ -126,15 +120,6 @@
             background: var(--light-blue);
             color: var(--deep-space);
             border-color: var(--light-blue);
-        }
-
-        .audio-showcase-box {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            padding: 12px;
-            width: 100%;
-            flex-shrink: 0;
         }
     </style>
 </head>
@@ -159,16 +144,6 @@
                 <div id="video-menu-hook" class="video-selection-grid" style="margin-top: 10px;"></div>
             </div>
 
-            <h2>DJ Audio Mix</h2>
-            <div class="audio-showcase-box">
-                <audio id="dreamscape-audio-set" preload="none">
-                    <source src="audio/livemix.mp3" type="audio/mpeg">
-                </audio>
-                <button id="play-mix-btn" class="btn" style="padding: 10px;">
-                    <i class="fa-solid fa-play"></i> Play Mix Set
-                </button>
-            </div>
-
             <div style="text-align: center; margin-top: 15px; flex-shrink: 0;">
                 <a href="../home.html" class="hub-return-link">← Return to Control Deck</a>
             </div>
@@ -184,29 +159,13 @@
         document.addEventListener('DOMContentLoaded', () => {
             const menuContainer = document.getElementById('video-menu-hook');
             const mainPlayer = document.getElementById('main-drift-player');
-            const audioTrack = document.getElementById('dreamscape-audio-set');
-            const audioBtn = document.getElementById('play-mix-btn');
 
             const yearSpan = document.getElementById('current-year');
             if (yearSpan) yearSpan.innerText = new Date().getFullYear();
 
-            // Native Mix Set Controller Track
-            if (audioTrack && audioBtn) {
-                audioBtn.addEventListener('click', () => {
-                    if (audioTrack.paused) {
-                        audioTrack.play().then(() => {
-                            audioBtn.innerHTML = '<i class="fa-solid fa-pause"></i> Pause Mix Set';
-                        });
-                    } else {
-                        audioTrack.pause();
-                        audioBtn.innerHTML = '<i class="fa-solid fa-play"></i> Play Mix Set';
-                    }
-                });
-            }
-
             /**
              * CONVERTER ENGINE
-             * Takes any raw YouTube string layout input and returns a valid secure stream path
+             * Converts regular watch paths into valid embed parameters
              */
             function cleanYouTubeUrl(urlStr) {
                 let idFound = "";
@@ -219,7 +178,7 @@
                     } else if (urlStr.includes("v=")) {
                         idFound = urlStr.split("v=")[1].split("&")[0];
                     } else {
-                        idFound = urlStr; // Fallback assuming plain ID
+                        idFound = urlStr;
                     }
                 } catch(e) {
                     console.error("URL string parsing error", e);
@@ -228,7 +187,7 @@
                 return "https://www.youtube.com/embed/" + idFound.trim();
             }
 
-            // Load and build configuration components
+            // Load and build configurations
             fetch('videos.json')
                 .then(res => res.json())
                 .then(data => {
@@ -239,20 +198,17 @@
                         btn.className = 'video-thumb';
                         btn.innerText = item.title;
                         
-                        // Parse URLs into explicit sandboxed secure formats
                         const safeBaseUrl = cleanYouTubeUrl(item.src);
                         const safeAutoplayUrl = safeBaseUrl + "?autoplay=1&rel=0";
                         
                         if (index === 0) {
                             btn.classList.add('active');
-                            mainPlayer.src = safeBaseUrl + "?rel=0"; // Load but don't autoplay initially
+                            mainPlayer.src = safeBaseUrl + "?rel=0"; 
                         }
 
                         btn.addEventListener('click', () => {
                             document.querySelectorAll('.video-thumb').forEach(t => t.classList.remove('active'));
                             btn.classList.add('active');
-                            
-                            // Completely breaks active session state and forces the new source URL tracking path
                             mainPlayer.src = safeAutoplayUrl;
                         });
 
