@@ -14,7 +14,7 @@
             --gold-glow: rgba(212, 175, 55, 0.4);
             --bg-dark: #05040a;
             --white: #ffffff;
-            --text-muted: rgba(255, 255, 255, 0.7);
+            --text-muted: #ffffff; /* UPDATED FROM GRAY TO WHITE */
             --glass-bg: rgba(15, 15, 20, 0.65);
             --glass-border: rgba(255, 255, 255, 0.08);
             --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
@@ -33,9 +33,9 @@
             min-height: 100dvh;
             margin: 0;
             padding: 0;
-            overflow-y: auto; /* Force vertical scroll activation */
-            overflow-x: hidden; /* Lock horizontal shift */
-            -webkit-overflow-scrolling: touch; /* Smooth touch acceleration */
+            overflow-y: auto; 
+            overflow-x: hidden; 
+            -webkit-overflow-scrolling: touch; 
         }
 
         /* --- BACKGROUND ENVIRONMENT --- */
@@ -241,7 +241,7 @@
             font-family: inherit; font-size: 0.95rem; transition: all 0.3s ease;
         }
         select:focus, input:focus, textarea:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 12px var(--gold-glow); background: rgba(0, 0, 0, 0.6); }
-        input::placeholder, textarea::placeholder { color: rgba(255, 255, 255, 0.3); }
+        input::placeholder, textarea::placeholder { color: rgba(255, 255, 255, 0.4); }
 
         /* --- LIVE DATA RETRIEVAL MATRIX LIST --- */
         .ledger-scroll-area {
@@ -260,7 +260,7 @@
         }
         .citizen-table td {
             padding: 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            color: rgba(255, 255, 255, 0.85); vertical-align: middle; line-height: 1.5; text-align: center;
+            color: rgba(255, 255, 255, 0.9); vertical-align: middle; line-height: 1.5; text-align: center;
         }
 
         .badge-status {
@@ -286,6 +286,7 @@
             background: transparent; border: 2px solid var(--gold); color: var(--gold); 
             width: auto; display: inline-block; padding: 10px 25px; border-radius: 30px; 
             margin-top: 5px; font-weight: bold; font-size: 0.8rem; text-transform: uppercase; cursor: pointer; transition: 0.3s;
+            text-decoration: none; /* Safely strips anchor underline formatting */
         }
         .support-btn:hover { background: var(--gold); color: #05040a; }
 
@@ -302,7 +303,22 @@
         .status-success { display: block; background: rgba(46, 204, 113, 0.15); border: 1px solid #2ecc71; color: #2ecc71; }
         .status-error { display: block; background: rgba(231, 76, 60, 0.15); border: 1px solid #e74c3c; color: #e74c3c; }
         
-        .footer-pad { margin-top: auto; width: 100%; }
+        /* --- CENTERED SYSTEM FOOTER ARCHEGEN --- */
+        .footer-pad { 
+            margin-top: auto; 
+            width: 100%; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .system-footer {
+            padding: 25px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #ffffff;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -340,7 +356,7 @@
                 <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 10px; line-height: 1.5;">
                     This platform runs independently. 100% of donations cover cloud hosting and feature development. Support the server with <strong>as low as $1</strong>.
                 </p>
-                <button class="support-btn" onclick="alert('Donation engine module placeholder integration. Features expanding soon!')">Donate</button>
+                <a href="https://square.link/u/E37Gsz7R?src=sheet" target="_blank" class="support-btn">Donate</a>
             </div>
         </aside>
 
@@ -404,7 +420,7 @@
                 <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 10px; line-height: 1.5;">
                     This platform runs independently. 100% of donations cover cloud hosting and feature development. Support the server with <strong>as low as $1</strong>.
                 </p>
-                <button class="support-btn" onclick="alert('Donation engine module placeholder integration. Features expanding soon!')">Donate</button>
+                <a href="https://square.link/u/E37Gsz7R?src=sheet" target="_blank" class="support-btn">Donate</a>
             </div>
             
         </main>
@@ -455,7 +471,7 @@
                 <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 10px;">
                     100% of donations cover server costs. Support us with <strong>as low as $1</strong>.
                 </p>
-                <button class="support-btn" onclick="alert('Donation engine module placeholder integration. Features expanding soon!')" style="padding: 8px 20px; font-size: 0.75rem;">Donate</button>
+                <a href="https://square.link/u/E37Gsz7R?src=sheet" target="_blank" class="support-btn" style="padding: 8px 20px; font-size: 0.75rem;">Donate</a>
             </div>
         </div>
     </div>
@@ -519,7 +535,7 @@
                 if (error) throw error;
 
                 if (!data || data.length === 0) {
-                    ledgerHook.innerHTML = `<tr><td colspan="5" style="color:rgba(255,255,255,0.4); padding: 30px;">No records currently approved for the public ledger.</td></tr>`;
+                    ledgerHook.innerHTML = `<tr><td colspan="5" style="color:rgba(255,255,255,0.9); padding: 30px;">No records currently approved for the public ledger.</td></tr>`;
                     return;
                 }
 
@@ -538,7 +554,7 @@
                         <td style="font-family: monospace; color: var(--gold);">${simpleDate}</td>
                         <td style="font-weight: 600;">${item.category || ''}</td>
                         <td>${item.municipality || ''}</td>
-                        <td style="font-size:0.85rem; color:rgba(255,255,255,0.8);">${item.description || ''}</td>
+                        <td style="font-size:0.85rem; color:rgba(255,255,255,0.9);">${item.description || ''}</td>
                         <td><span class="badge-status ${statusClass}">${matchedStatus}</span></td>
                     `;
                     ledgerHook.appendChild(row);
