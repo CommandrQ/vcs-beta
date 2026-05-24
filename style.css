@@ -1,59 +1,73 @@
-body { margin: 0; background: #0a0a0a; color: white; overflow: hidden; font-family: sans-serif; }
-
-/* Canvas Background */
-#space-layer { position: fixed; top: 0; left: 0; z-index: 1; pointer-events: none; }
-
-/* UI Layer */
-.intro-ui {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    transition: opacity 1s ease;
+/* --- Global Reset & Animations --- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { 
+    background-color: #0a0a0a; 
+    color: #ffffff; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    animation: fadeIn 1s ease-in; /* Fade from black on load */
+    min-height: 100vh;
 }
 
-#vanguard-logo { 
-    width: 200px; 
-    opacity: 0; 
-    animation: tv-flicker 0.4s ease forwards;
-}
-
-@keyframes tv-flicker {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.7; }
-    25% { opacity: 0.9; }
-}
-
-.tagline { margin: 20px 0; letter-spacing: 2px; color: #f5c518; }
-
-/* Loading Bar */
-.progress-bg { width: 300px; height: 4px; background: #333; }
-.progress-fill { width: 0%; height: 100%; background: #f5c518; transition: width 2s linear; }
-/* Fade-in Effect for all pages */
-body { animation: fadeIn 1s ease-in; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-/* Layout Structure */
-.site-wrapper { display: flex; min-height: 100vh; }
-aside { width: 250px; border-right: 1px solid #f5c518; padding: 20px; background: rgba(0,0,0,0.8); }
+/* --- Glass-morphism Base --- */
+.glass-panel {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(245, 197, 24, 0.2); /* Gold-tinted border */
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
 
-/* Menu Button (Mobile) */
-.menu-btn { display: none; position: fixed; top: 20px; right: 20px; z-index: 100; cursor: pointer; color: #f5c518; }
+/* --- Layout: Sidebar (Desktop) --- */
+.site-wrapper { display: flex; min-height: 100vh; }
+
+aside {
+    width: 280px;
+    border-right: 1px solid rgba(245, 197, 24, 0.3);
+    padding: 30px;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+main {
+    flex: 1;
+    display: flex;
+    justify-content: center; /* Centers content horizontally */
+    align-items: center;    /* Centers content vertically */
+    padding: 20px;
+}
+
+/* The Centered Window */
+.content-window {
+    width: 100%;
+    max-width: 800px;
+}
+
+/* --- Mobile Navigation --- */
+.menu-btn { 
+    display: none; 
+    position: fixed; 
+    top: 20px; 
+    right: 20px; 
+    z-index: 100; 
+    cursor: pointer; 
+    color: #f5c518;
+    background: rgba(0,0,0,0.5);
+    padding: 10px 20px;
+    border: 1px solid #f5c518;
+}
 
 @media (max-width: 768px) {
-    aside { display: none; } /* Hidden by default on mobile */
+    aside { display: none; } /* Hide sidebar on mobile */
     .menu-btn { display: block; }
 }
 
-/* Glass-morphism Panels */
-.glass-panel {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 20px;
-    margin: 20px;
-    border-radius: 8px;
-}
+/* --- Typography & Branding --- */
+h2 { color: #f5c518; margin-bottom: 20px; }
+p { line-height: 1.6; }
+ul { list-style: none; margin-top: 20px; }
+li { padding: 10px 0; border-bottom: 1px solid #333; }
+a { color: white; text-decoration: none; }
+a:hover { color: #f5c518; }
