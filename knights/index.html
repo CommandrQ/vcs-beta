@@ -237,12 +237,15 @@
 </head>
 <body>
 
+    <!-- VISUAL ENVIRONMENT -->
     <div class="space-bg">
         <div class="starfield"></div>
     </div>
 
+    <!-- MAIN INTERFACE -->
     <div class="glass-window">
         
+        <!-- TOP PANEL LAYOUT -->
         <div class="top-nav-panel">
             <a href="../home/index.html" class="back-nav">← Back to Lobby</a>
         </div>
@@ -250,6 +253,7 @@
         <img src="../images/vanguardorglogo.png" alt="Vanguard Citizen Services Logo" class="logo">
         <div class="tagline" style="margin-bottom: 1.5rem; color: #ffeb3b;">The Guild House</div>
         
+        <!-- SECTION 1: MISSION -->
         <section class="guild-section">
             <h2 class="section-title">The Collective</h2>
             <p class="section-text">
@@ -257,10 +261,12 @@
             </p>
         </section>
 
+        <!-- SECTION 2: ACTIVE PROJECTS SLIDER MODULE -->
         <section id="voicebox" class="guild-section">
             <h2 class="section-title">Active Projects</h2>
             
             <div class="slider-box">
+                <!-- PROJECT CARD 1 -->
                 <div class="slide active">
                     <span style="font-size: 0.7em; text-transform: uppercase; letter-spacing: 1px; color: #b388ff; font-weight: 700;">Community Tool</span>
                     <h3 style="font-size: 1.15em; font-weight: 700; margin: 0.3rem 0; color: #ffffff;">Hardin County Community Voice Box</h3>
@@ -270,6 +276,7 @@
                     <a href="voicebox/index.html" class="action-btn">Launch Tool</a>
                 </div>
 
+                <!-- CAROUSEL TRACK CONTROLS -->
                 <div class="slider-controls">
                     <button class="nav-btn" id="prev-slide">←</button>
                     <button class="nav-btn" id="next-slide">→</button>
@@ -277,19 +284,25 @@
             </div>
         </section>
 
+        <!-- SECTION 3: THE ROSTER -->
         <section class="guild-section" style="margin-bottom: 0;">
             <h2 class="section-title">Guild Roster</h2>
             
             <div class="roster-grid">
+                <!-- CARD 1: QUINCY -->
                 <div class="knight-card">
                     <div class="knight-name">Quincy Jones</div>
                     <div class="knight-rank">Captain Commander</div>
                     <div class="knight-division">Chief Vision Officer // VCS</div>
+                    <div style="margin: 0.2rem 0 0.5rem 0;">
+                        <a href="https://vcscitizen.org" target="_blank" style="color: #ffeb3b; font-size: 0.8em; text-decoration: none; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">Visit Website →</a>
+                    </div>
                     <p class="knight-specialty">
                         Steers our core creative direction and ideas to help push our local spaces closer to working well together.
                     </p>
                 </div>
                 
+                <!-- CARD 2: KONA -->
                 <div class="knight-card">
                     <div class="knight-name">Kona Agpalza</div>
                     <div class="knight-rank">Grandmaster</div>
@@ -298,15 +311,30 @@
                         Handles running our internal work operations and shifts high-level visions into active systems for deployment.
                     </p>
                 </div>
+
+                <!-- CARD 3: LANCELOT -->
+                <div class="knight-card">
+                    <div class="knight-name">Lancelot</div>
+                    <div class="knight-rank">Vanguard Knight</div>
+                    <div class="knight-division">Creative Specialist // VCS</div>
+                    <div style="margin: 0.2rem 0 0.5rem 0;">
+                        <a href="mailto:lancelot@vcscitizen.org" style="color: #ffeb3b; font-size: 0.8em; text-decoration: none; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">Contact Email →</a>
+                    </div>
+                    <p class="knight-specialty">
+                        Brings tactical narrative design and asset creation to the collective, helping build immersive multimedia workflows.
+                    </p>
+                </div>
             </div>
         </section>
 
+        <!-- SITE FOOTER -->
         <footer class="site-footer">
             <div class="footer-text" style="color: #ffffff;">&copy; 2026 Vanguard Citizen Services. All Rights Reserved.</div>
         </footer>
 
     </div>
 
+    <!-- SYSTEM LOGIC ENGINES -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             // 1. AUTO-SCALING SLIDER ENGINE
@@ -316,7 +344,6 @@
             const controls = document.querySelector(".slider-controls");
             let currentIndex = 0;
 
-            // Automatically hides directional arrows if you only have 1 active project slide loaded
             if (slides.length <= 1) {
                 controls.style.display = "none";
             }
