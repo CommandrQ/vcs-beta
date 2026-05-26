@@ -3,176 +3,225 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CMDR Q // Gateway</title>
+    <title>SYS//_COMMANDER_Q</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        /* --- INLINE SKIP LOCK REINFORCEMENT --- */
-        /* Forces absolute hidden view state to completely stop any layout flickering during automatic rerouting */
-        body.redirecting {
-            background: #000000 !important;
-            display: none !important;
-        }
-
-        /* --- IMMERSIVE STARFIELD INTEGRATION --- */
-        .cinematic-stage {
-            position: fixed;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            z-index: 10;
-        }
-
-        /* --- TIMED TIMELINE ANIMATION BLOCKS --- */
-        .intro-scene {
-            position: absolute;
-            width: 100%;
-            text-align: center;
-            padding: 0 20px;
-            opacity: 0;
-            transform: scale(0.97);
-            transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1), transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
-            pointer-events: none;
-        }
-
-        .intro-scene.show-node {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .intro-scene.fade-node {
-            opacity: 0;
-            transform: scale(1.02);
-            transition: opacity 0.8s ease-in, transform 0.8s ease-in;
-        }
-
-        /* --- HERO INTRO IMAGE AND TEXT --- */
-        .hero-portrait {
-            display: block;
-            margin: 0 auto 20px auto;
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--glass-border);
-            filter: drop-shadow(0 0 15px rgba(142, 202, 230, 0.4));
-        }
-
-        .shimmer-rank {
-            font-size: clamp(1.4rem, 5vw, 1.8rem);
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            background: linear-gradient(to right, var(--light-blue) 20%, #ffffff 40%, #ffffff 60%, var(--light-blue) 80%);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: sheen 3s linear infinite;
-        }
-
-        /* --- CINEMATIC VEIL TRANSITION OVERLAY --- */
-        #fade-curtain {
-            position: fixed;
-            inset: 0;
-            background: #000000;
-            z-index: 99999;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 1s ease-in-out;
-        }
-        #fade-curtain.blackout {
-            opacity: 1;
-        }
-    </style>
-    <script>
-        /* --- SESSION SKIPPED CONTROLLER ENGINE --- */
-        // Runs immediately prior to layout painting to eliminate flashing animations
-        if (localStorage.getItem('cmdrq_intro_played') === 'true') {
-            document.documentElement.classList.add('redirecting');
-            window.location.replace('home.html');
-        }
-    </script>
 </head>
-<body class="cinematic-body">
+<body>
 
-    <!-- Screen Transition Veil Layer -->
-    <div id="fade-curtain"></div>
+    <!-- 3D Perspective Vector Grid Background -->
+    <div class="vapor-grid"></div>
+    <div class="ambient-glow"></div>
 
-    <!-- The exact matching CSS Background Starfield Matrix from menu -->
-    <div id="starfield"><div class="stars"></div></div>
+    <!-- Main Panoramic Unified Interface Frame -->
+    <main class="app-interface">
+        
+        <!-- Universal HUD Top Ribbon -->
+        <header class="hud-header">
+            <div class="hud-left">SYS//_Q.JONES</div>
+            <div class="hud-center">CHIEF VISION OFFICER // VCS // CAPTAIN COMMANDER // VANGUARD KNIGHTS</div>
+            <div class="hud-right">
+                <span class="hud-label">AUDIO:</span>
+                <button class="toggle-btn" id="audio-toggle" onclick="toggleSetting('audio')">OFF</button>
+            </div>
+        </header>
 
-    <!-- Cinematic Screen Matrix Stage -->
-    <div class="cinematic-stage">
+        <!-- Dynamic Multi-Column Hub / Mobile Vertical Stack -->
+        <div class="workspace-grid">
+            
+            <!-- Phase 01: Empower Panel -->
+            <section class="workspace-column" id="col-empower">
+                <div class="column-header">
+                    <span class="column-num">01</span>
+                    <h2>EMPOWER</h2>
+                </div>
+                <div class="column-body">
+                    <div class="action-card" onclick="openModal('modal-profile')">
+                        <div class="card-meta">SYS_INIT//</div>
+                        <h3>Operational Profile</h3>
+                        <p>Combat veteran, creative director, and tactical systems architect summary.</p>
+                    </div>
+                    <div class="action-card" onclick="openModal('modal-voices')">
+                        <div class="card-meta">SYS_UTIL//</div>
+                        <h3>Hardin County Voices</h3>
+                        <p>Civic feedback and local governance transparency platform blueprint.</p>
+                    </div>
+                </div>
+            </section>
 
-        <!-- NODE 1: UNFILTERED NARRATIVES -->
-        <div id="node-1" class="intro-scene">
-            <h2 class="cinematic-text tracking-out">Unfiltered Narratives.</h2>
+            <!-- Center Anchor Panel (Operational Core) -->
+            <section class="workspace-column" id="col-core">
+                <div class="center-engine">
+                    <div class="monogram-outer">
+                        <div class="monogram-inner">Q</div>
+                    </div>
+                    <div class="core-statement">
+                        <p class="directive-tag">CORE DIRECTIVE</p>
+                        <p class="directive-text">Meet people where they are. Ensure public needs are met with mutual understanding and structural dignity—never treated as an afterthought.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Phase 02: Educate Panel (Combined with Elevate via tabs/layout rows for compact space) -->
+            <section class="workspace-column" id="col-educate">
+                <div class="column-header">
+                    <span class="column-num">02</span>
+                    <h2>EDUCATE</h2>
+                </div>
+                <div class="column-body">
+                    <div class="action-card" onclick="openModal('modal-chemistry')">
+                        <div class="card-meta">SYS_FRAMEWORK//</div>
+                        <h3>Team Chemistry Classes</h3>
+                        <p>Masterclasses for corporate units navigating high-pressure tactical environments.</p>
+                    </div>
+                    <div class="action-card" onclick="openModal('modal-playbooks')">
+                        <div class="card-meta">SYS_DOC//</div>
+                        <h3>Operational Playbooks</h3>
+                        <p>Open-source documentation on decentralized governance and metrics.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Phase 03: Elevate Panel -->
+            <section class="workspace-column" id="col-elevate">
+                <div class="column-header">
+                    <span class="column-num">03</span>
+                    <h2>ELEVATE</h2>
+                </div>
+                <div class="column-body">
+                    <div class="action-card" onclick="openModal('modal-soundstage')">
+                        <div class="card-meta">SYS_AUDIO//</div>
+                        <h3>The Sound Stage</h3>
+                        <p>Frequency-blended mashups, seamless tracking lists, and live mixer module.</p>
+                    </div>
+                    <div class="action-card" onclick="openModal('modal-drift')">
+                        <div class="card-meta">SYS_TELEMETRY//</div>
+                        <h3>The Drift Terminal</h3>
+                        <p>Forza Horizon 6 vehicle mechanics, physics analysis, and dream script drift logs.</p>
+                    </div>
+                </div>
+            </section>
+
         </div>
 
-        <!-- NODE 2: VANGUARD KNIGHTS PRESENTS -->
-        <div id="node-2" class="intro-scene">
-            <h2 class="cinematic-text glow-text">The Vanguard Knights Presents…</h2>
-        </div>
+        <!-- Universal Channel Dock Footer -->
+        <footer class="channel-dock">
+            <a href="https://github.com" target="_blank" class="dock-link"><span class="link-prefix">SYS_LINK//</span>GITHUB</a>
+            <a href="https://music.apple.com" target="_blank" class="dock-link"><span class="link-prefix">SYS_LINK//</span>APPLE_MUSIC</a>
+            <a href="https://tiktok.com" target="_blank" class="dock-link"><span class="link-prefix">SYS_LINK//</span>TIKTOK</a>
+            <a href="mailto:contact@vanguard.services" class="dock-link"><span class="link-prefix">SYS_LINK//</span>SECURE</a>
+        </footer>
 
-        <!-- NODE 3: HERO PROFILE REVEAL CARD -->
-        <div id="node-3" class="intro-scene">
-            <img src="images/headshot.jpg" alt="Commander Q Portrait" class="hero-portrait">
-            <h1 class="shimmer-rank">Captain Commander Q</h1>
-        </div>
+    </main>
 
+    <!-- Global Application Modal Layer Systems -->
+    
+    <!-- E1 Profile Modal -->
+    <div id="modal-profile" class="modal-overlay" onclick="closeModalOutside(event, 'modal-profile')">
+        <div class="modal-window">
+            <button class="close-btn" onclick="closeModal('modal-profile')">✕</button>
+            <div class="modal-header">SYS_PROFILE// COMMANDER Q</div>
+            <div class="modal-body-content">
+                <p>Owner and Chief Vision Officer of Vanguard Citizen Services (VCS), a dedicated creative studio crafting unique narratives designed to move our global community toward positive coexistence.</p>
+                <p>Serving operationally as the Captain Commander of the Vanguard Knights, balancing structural discipline with absolute local transparency.</p>
+            </div>
+        </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Safe guard path layout switch step
-            if (localStorage.getItem('cmdrq_intro_played') === 'true') return;
+    <!-- E2 Hardin County Voices Modal -->
+    <div id="modal-voices" class="modal-overlay" onclick="closeModalOutside(event, 'modal-voices')">
+        <div class="modal-window">
+            <button class="close-btn" onclick="closeModal('modal-voices')">✕</button>
+            <div class="modal-header">SYS_UTIL// HARDIN COUNTY VOICES</div>
+            <div class="modal-body-content">
+                <p>A regional open-access data pipeline and community suggestion utility designed to directly bridge gaps between residents and administrative leadership elements.</p>
+                <p>Engineered to ensure that hyper-local infrastructure inquiries (e.g., residential street parking, road maintenance frameworks) are surfaced transparently and monitored structurally rather than handled as an operational afterthought.</p>
+            </div>
+        </div>
+    </div>
 
-            const n1 = document.getElementById('node-1');
-            const n2 = document.getElementById('node-2');
-            const n3 = document.getElementById('node-3');
-            const curtain = document.getElementById('fade-curtain');
+    <!-- ED1 Team Chemistry Modal -->
+    <div id="modal-chemistry" class="modal-overlay" onclick="closeModalOutside(event, 'modal-chemistry')">
+        <div class="modal-window">
+            <button class="close-btn" onclick="closeModal('modal-chemistry')">✕</button>
+            <div class="modal-header">SYS_FRAMEWORK// TEAM CHEMISTRY</div>
+            <div class="modal-body-content">
+                <p>Strategic training modules applying tactical drift mechanics and audio synchronization to enterprise team dynamics.</p>
+                <p>Teaches corporate management how to safely initiate controlled organizational momentum changes, handle external friction factors, and layer diverse employee skill sets without overriding critical individual voice frequencies.</p>
+            </div>
+        </div>
+    </div>
 
-            // PHASE 1: Display "Unfiltered Narratives" immediately
-            setTimeout(() => {
-                n1.classList.add('show-node');
-            }, 200);
+    <!-- ED2 Playbooks Modal -->
+    <div id="modal-playbooks" class="modal-overlay" onclick="closeModalOutside(event, 'modal-playbooks')">
+        <div class="modal-window">
+            <button class="close-btn" onclick="closeModal('modal-playbooks')">✕</button>
+            <div class="modal-header">SYS_DOC// MINDFUL DISRUPTIONS</div>
+            <div class="modal-body-content">
+                <p>Open-source architecture repositories outlining standard operating procedures for local community oversight groups, verification protocols, and community dashboard templates.</p>
+            </div>
+        </div>
+    </div>
 
-            // PHASE 2: Clear Node 1 away
-            setTimeout(() => {
-                n1.classList.remove('show-node');
-                n1.classList.add('fade-node');
-            }, 2800);
+    <!-- EL1 Sound Stage Modal (Integrated Player Layout Component) -->
+    <div id="modal-soundstage" class="modal-overlay" onclick="closeModalOutside(event, 'modal-soundstage')">
+        <div class="modal-window wide-modal">
+            <button class="close-btn" onclick="closeModal('modal-soundstage')">✕</button>
+            <div class="modal-header">SYS_AUDIO// INTEGRATED MIX COMPILER</div>
+            <div class="modal-body-content">
+                <div class="audio-deck-layout">
+                    <div class="deck-controls">
+                        <div class="now-playing-tag">TRACK_INDEX// MIX_04_VAPOR_DRIFT.MP3</div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar-fill"></div>
+                        </div>
+                        <div class="deck-btn-group">
+                            <button class="deck-btn">PREV</button>
+                            <button class="deck-btn target-neon">PLAY</button>
+                            <button class="deck-btn">NEXT</button>
+                        </div>
+                    </div>
+                    <div class="track-index-list">
+                        <div class="track-row active-track"><span>01.</span> MIX_04_VAPOR_DRIFT.MP3 <span class="track-time">04:12</span></div>
+                        <div class="track-row"><span>02.</span> KNIGHTS_ANALYST_MASHUP.RAW <span class="track-time">03:55</span></div>
+                        <div class="track-row"><span>03.</span> RADCLIFF_NIGHTS_VIBE.MP3 <span class="track-time">05:21</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-            // PHASE 3: Fire up "The Vanguard Knights Presents..."
-            setTimeout(() => {
-                n2.classList.add('show-node');
-            }, 3800);
+    <!-- EL2 Drift Terminal Modal -->
+    <div id="modal-drift" class="modal-overlay" onclick="closeModalOutside(event, 'modal-drift')">
+        <div class="modal-window wide-modal">
+            <button class="close-btn" onclick="closeModal('modal-drift')">✕</button>
+            <div class="modal-header">SYS_TELEMETRY// DREAM_SCRIPT_DRIFT_LOGS</div>
+            <div class="modal-body-content">
+                <div class="telemetry-layout">
+                    <div class="telemetry-stats-grid">
+                        <div class="stat-node">
+                            <span class="stat-label">ANGLE_THROTTLE_RATIO</span>
+                            <span class="stat-value text-blue">88.4%</span>
+                        </div>
+                        <div class="stat-node">
+                            <span class="stat-label">COUNTER_STEER_LATENCY</span>
+                            <span class="stat-value text-pink">12MS</span>
+                        </div>
+                        <div class="stat-node">
+                            <span class="stat-label">FORZA_6_PLATFORM_STABILITY</span>
+                            <span class="stat-value text-purple">ACTIVE</span>
+                        </div>
+                    </div>
+                    <div class="script-terminal-box">
+                        <p class="term-line">&gt; INITIALIZING DREAM_SCRIPT VELOCITY MODULE...</p>
+                        <p class="term-line">&gt; CONFIGURING CLUTCH-KICK FRICTION COEFFICIENTS: SUCCESS</p>
+                        <p class="term-line">&gt; FORZA HORIZON 6 DRIFT METRICS RECOVERY: RUNNING...</p>
+                        <p class="term-line text-pink">&gt; ALERT: LATERAL FORCE DISPLACEMENT OPTIMIZED FOR SYSTEM SYNERGY</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-            // PHASE 4: Clear Node 2 away
-            setTimeout(() => {
-                n2.classList.remove('show-node');
-                n2.classList.add('fade-node');
-            }, 6400);
-
-            // PHASE 5: Reveal Captain Commander Q and Headshot Portrait Matrix
-            setTimeout(() => {
-                n3.classList.add('show-node');
-            }, 7400);
-
-            // PHASE 6: Bring down the black cinematic curtain after a 2-second delay window
-            setTimeout(() => {
-                curtain.classList.add('blackout');
-            }, 9400);
-
-            // PHASE 7: Set tracking lock token parameters and load home plate deck
-            setTimeout(() => {
-                localStorage.setItem('cmdrq_intro_played', 'true');
-                window.location.href = 'home.html';
-            }, 10400);
-        });
-    </script>
+    <script src="app.js"></script>
 </body>
 </html>
