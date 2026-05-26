@@ -8,7 +8,7 @@
     --card-surface: rgba(14, 10, 26, 0.85);
     --border-color: rgba(149, 117, 205, 0.3);
     --text-primary: #f1ecfb;
-    --text-dim: #8b82a6;
+    --text-dim: #ffffff;
     --animation-engine: on;
 }
 
@@ -68,57 +68,46 @@ body {
 
 /* --- Universal HUD System Top Ribbon --- */
 .hud-header {
-    display: table-row;
-    height: 45px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 70px;
     background: rgba(6, 4, 13, 0.9);
     border-bottom: 1px solid var(--border-color);
 }
 
-.hud-left, .hud-center, .hud-right {
-    display: table-cell;
-    vertical-align: middle;
-    padding: 0 20px;
-    font-size: 0.8rem;
+.hud-title {
+    font-size: 1.4rem;
+    font-weight: 900;
+    letter-spacing: 4px;
+    color: #ffffff;
+    text-shadow: 0 0 10px var(--blue-muted), 0 0 20px var(--blue-muted);
+    animation: bluePulse 2s infinite alternate ease-in-out;
+}
+
+.hud-subtitle {
+    font-size: 0.85rem;
     font-weight: 700;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
+    color: #ffffff;
+    margin-top: 4px;
+    text-shadow: 0 0 8px var(--blue-muted);
 }
 
-.hud-left {
-    width: 250px;
-    color: var(--blue-muted);
-}
-
-.hud-center {
-    text-align: center;
-    color: var(--text-dim);
-}
-
-.hud-right {
-    width: 250px;
-    text-align: right;
-}
-
-.hud-label {
-    color: var(--text-dim);
-    margin-right: 5px;
-}
-
-.toggle-btn {
-    background: transparent;
-    border: 1px solid var(--pink-neon);
-    color: var(--pink-neon);
-    padding: 2px 8px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    cursor: pointer;
-    border-radius: 4px;
-    box-shadow: 0 0 4px var(--pink-glow);
+@keyframes bluePulse {
+    from {
+        text-shadow: 0 0 10px var(--blue-muted), 0 0 20px var(--blue-muted);
+    }
+    to {
+        text-shadow: 0 0 15px var(--blue-muted), 0 0 30px var(--blue-muted), 0 0 45px var(--blue-muted);
+    }
 }
 
 /* --- Panoramic Dashboard Columns Layout --- */
 .workspace-grid {
     display: table-row;
-    height: calc(100vh - 95px); /* Subtracts header and footer heights */
+    height: calc(100vh - 120px); 
 }
 
 .workspace-column {
@@ -377,7 +366,6 @@ body {
 
 /* --- Specialized Integrated Application Mock Systems --- */
 
-/* Audio Player Sub-System */
 .audio-deck-layout {
     display: block;
 }
@@ -465,7 +453,6 @@ body {
     color: var(--text-dim) !important;
 }
 
-/* Telemetry System & Script Analytics Box */
 .telemetry-layout {
     display: block;
 }
@@ -538,29 +525,16 @@ body {
         width: 100%;
     }
 
-    /* Collapse Top HUD Stack */
     .hud-header {
-        display: block;
+        display: flex;
         height: auto;
         padding: 15px;
         text-align: center;
     }
 
-    .hud-left, .hud-center, .hud-right {
-        display: block;
-        width: 100% !important;
-        padding: 0;
-        text-align: center;
-        margin-bottom: 8px;
-    }
-
-    .hud-right {
-        margin-bottom: 0;
-    }
-
-    /* Transform Panoramic Grid to Vertically Stacked Feed */
     .workspace-grid {
-        display: block;
+        display: flex;
+        flex-direction: column;
         height: auto;
         padding: 20px 15px;
     }
@@ -575,6 +549,7 @@ body {
     }
 
     #col-core {
+        order: -1; /* Forces the Q monogram and Core Directive to the absolute top of the mobile viewport feed */
         margin-bottom: 40px;
     }
 
@@ -582,7 +557,6 @@ body {
         padding: 20px 0;
     }
 
-    /* Transform Modals to Mobile Drawer Controls */
     .modal-window {
         position: fixed;
         top: auto;
@@ -603,7 +577,6 @@ body {
         transform: translateY(0);
     }
 
-    /* Collapse Footer Layout */
     .channel-dock {
         display: block;
         height: auto;
@@ -618,6 +591,6 @@ body {
     }
     
     .link-prefix {
-        display: none; /* Strip string text bloating for small viewports */
+        display: none; 
     }
 }
