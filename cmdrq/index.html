@@ -18,7 +18,7 @@
     <main class="app-interface">
         
         <header class="hud-header">
-            </header>
+        </header>
 
         <div class="workspace-grid">
             
@@ -28,15 +28,15 @@
                     <h2>EMPOWER</h2>
                 </div>
                 <div class="column-body">
-                    <div class="action-card" onclick="openModal('modal-profile')">
+                    <div class="action-card" onclick="openModal('modal-about')">
                         <div class="card-meta">SYS_INIT//</div>
-                        <h3>Operational Profile</h3>
+                        <h3>About Me</h3>
                         <p>Combat veteran, creative director, and tactical systems architect summary.</p>
                     </div>
                     <div class="action-card" onclick="openModal('modal-voices')">
                         <div class="card-meta">SYS_UTIL//</div>
                         <h3>Hardin County Voices</h3>
-                        <p>Civic feedback and local governance transparency platform blueprint.</p>
+                        <p>I created this tool to elevate the many narratives that share our community.</p>
                     </div>
                 </div>
             </section>
@@ -64,9 +64,9 @@
                         <h3>Team Chemistry Classes</h3>
                         <p>Masterclasses for corporate units navigating high-pressure tactical environments.</p>
                     </div>
-                    <div class="action-card" onclick="openModal('modal-playbooks')">
+                    <div class="action-card" onclick="openModal('modal-guides')">
                         <div class="card-meta">SYS_DOC//</div>
-                        <h3>Operational Playbooks</h3>
+                        <h3>Guides</h3>
                         <p>Open-source documentation on decentralized governance and metrics.</p>
                     </div>
                 </div>
@@ -78,14 +78,14 @@
                     <h2>ELEVATE</h2>
                 </div>
                 <div class="column-body">
-                    <div class="action-card" onclick="openModal('modal-soundstage')">
+                    <div class="action-card" onclick="openModal('modal-music')">
                         <div class="card-meta">SYS_AUDIO//</div>
-                        <h3>The Sound Stage</h3>
+                        <h3>Music Player</h3>
                         <p>Frequency-blended mashups, seamless tracking lists, and live mixer module.</p>
                     </div>
                     <div class="action-card" onclick="openModal('modal-drift')">
                         <div class="card-meta">SYS_TELEMETRY//</div>
-                        <h3>The Drift Terminal</h3>
+                        <h3>Dreamscape Drift</h3>
                         <p>Forza Horizon 6 vehicle mechanics, physics analysis, and dream script drift logs.</p>
                     </div>
                 </div>
@@ -94,21 +94,19 @@
         </div>
 
         <footer class="channel-dock">
-            <a href="https://github.com" target="_blank" class="dock-link"><span class="link-prefix">SYS_LINK//</span>GITHUB</a>
             <a href="https://music.apple.com" target="_blank" class="dock-link"><span class="link-prefix">SYS_LINK//</span>APPLE_MUSIC</a>
             <a href="https://tiktok.com" target="_blank" class="dock-link"><span class="link-prefix">SYS_LINK//</span>TIKTOK</a>
-            <a href="mailto:contact@vanguard.services" class="dock-link"><span class="link-prefix">SYS_LINK//</span>SECURE</a>
         </footer>
 
     </main>
 
-    <div id="modal-profile" class="modal-overlay" onclick="closeModalOutside(event, 'modal-profile')">
+    <div id="modal-about" class="modal-overlay" onclick="closeModalOutside(event, 'modal-about')">
         <div class="modal-window">
-            <button class="close-btn" onclick="closeModal('modal-profile')">✕</button>
-            <div class="modal-header">SYS_PROFILE// COMMANDER Q</div>
+            <button class="close-btn" onclick="closeModal('modal-about')">✕</button>
+            <div class="modal-header">SYS_PROFILE// ABOUT ME</div>
             <div class="modal-body-content">
                 <p>Owner and Chief Vision Officer of Vanguard Citizen Services (VCS), a dedicated creative studio crafting unique narratives designed to move our global community toward positive coexistence.</p>
-                <p>Serving operationally as the Captain Commander of the Vanguard Knights, balancing structural discipline with absolute local transparency.</p>
+                <p>Serving operationally as the Captain Commander of the Vanguard Knights. Combat veteran and creative director balancing structural discipline with absolute local transparency.</p>
             </div>
         </div>
     </div>
@@ -118,8 +116,9 @@
             <button class="close-btn" onclick="closeModal('modal-voices')">✕</button>
             <div class="modal-header">SYS_UTIL// HARDIN COUNTY VOICES</div>
             <div class="modal-body-content">
+                <p>I created this tool to elevate the many narratives that share our community.</p>
                 <p>A regional open-access data pipeline and community suggestion utility designed to directly bridge gaps between residents and administrative leadership elements.</p>
-                <p>Engineered to ensure that hyper-local infrastructure inquiries (e.g., residential street parking, road maintenance frameworks) are surfaced transparently and monitored structurally rather than handled as an operational afterthought.</p>
+                <p>Engineered to ensure that hyper-local infrastructure inquiries are surfaced transparently and monitored structurally rather than handled as an operational afterthought.</p>
             </div>
         </div>
     </div>
@@ -135,20 +134,20 @@
         </div>
     </div>
 
-    <div id="modal-playbooks" class="modal-overlay" onclick="closeModalOutside(event, 'modal-playbooks')">
+    <div id="modal-guides" class="modal-overlay" onclick="closeModalOutside(event, 'modal-guides')">
         <div class="modal-window">
-            <button class="close-btn" onclick="closeModal('modal-playbooks')">✕</button>
-            <div class="modal-header">SYS_DOC// MINDFUL DISRUPTIONS</div>
+            <button class="close-btn" onclick="closeModal('modal-guides')">✕</button>
+            <div class="modal-header">SYS_DOC// GUIDES</div>
             <div class="modal-body-content">
                 <p>Open-source architecture repositories outlining standard operating procedures for local community oversight groups, verification protocols, and community dashboard templates.</p>
             </div>
         </div>
     </div>
 
-    <div id="modal-soundstage" class="modal-overlay" onclick="closeModalOutside(event, 'modal-soundstage')">
+    <div id="modal-music" class="modal-overlay" onclick="closeModalOutside(event, 'modal-music')">
         <div class="modal-window wide-modal">
-            <button class="close-btn" onclick="closeModal('modal-soundstage')">✕</button>
-            <div class="modal-header">SYS_AUDIO// INTEGRATED MIX COMPILER</div>
+            <button class="close-btn" onclick="closeModal('modal-music')">✕</button>
+            <div class="modal-header">SYS_AUDIO// MUSIC PLAYER</div>
             <div class="modal-body-content">
                 <div class="audio-deck-layout">
                     <div class="deck-controls">
@@ -175,7 +174,7 @@
     <div id="modal-drift" class="modal-overlay" onclick="closeModalOutside(event, 'modal-drift')">
         <div class="modal-window wide-modal">
             <button class="close-btn" onclick="closeModal('modal-drift')">✕</button>
-            <div class="modal-header">SYS_TELEMETRY// DREAM_SCRIPT_DRIFT_LOGS</div>
+            <div class="modal-header">SYS_TELEMETRY// DREAMSCAPE DRIFT</div>
             <div class="modal-body-content">
                 <div class="telemetry-layout">
                     <div class="telemetry-stats-grid">
