@@ -119,7 +119,7 @@ body {
 /* --- Universal HUD System Top Ribbon --- */
 .hud-header {
     display: table-row;
-    height: 25px; /* Sized down to act as a clean margin buffer */
+    height: 25px; 
     background: transparent;
 }
 
@@ -545,7 +545,7 @@ body {
     }
 
     .hud-header {
-        display: none; /* Strip unneeded spacers from smartphone screens */
+        display: none; 
     }
 
     .workspace-grid {
