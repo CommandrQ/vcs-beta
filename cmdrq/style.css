@@ -28,20 +28,70 @@ body {
     display: block;
 }
 
-/* --- Panoramic Background Grid Array --- */
-.vapor-grid {
+/* --- Animated Cosmic Canvas Background --- */
+.space-field {
     position: fixed;
     top: 0;
     left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    overflow: hidden;
+    background: radial-gradient(circle at center, #11092c 0%, var(--bg-deep) 100%);
+}
+
+/* Starfield Layers */
+.stars {
+    position: absolute;
     width: 100%;
     height: 100%;
     background-image: 
-        linear-gradient(to right, rgba(77, 208, 225, 0.05) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(149, 117, 205, 0.05) 1px, transparent 1px);
-    background-size: 60px 60px;
-    transform: perspective(600px) rotateX(60deg);
-    transform-origin: top;
-    z-index: 1;
+        radial-gradient(1px 1px at 10% 20%, #fff 100%, transparent),
+        radial-gradient(1.5px 1.5px at 40% 70%, var(--blue-muted) 100%, transparent),
+        radial-gradient(1px 1px at 80% 40%, var(--purple-muted) 100%, transparent),
+        radial-gradient(2px 2px at 90% 80%, #fff 100%, transparent);
+    background-size: 300px 300px;
+    animation: driftStars 120s linear infinite;
+}
+
+@keyframes driftStars {
+    from { background-position: 0 0; }
+    to { background-position: 300px 600px; }
+}
+
+/* Glass Shard Vector Shells */
+.glass-shard {
+    position: absolute;
+    background: linear-gradient(135deg, rgba(77, 208, 225, 0.15) 0%, rgba(149, 117, 205, 0.05) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(1px);
+    clip-path: polygon(30% 0%, 100% 40%, 70% 100%, 0% 70%);
+    animation: floatShard 25s infinite linear;
+}
+
+@keyframes floatShard {
+    0% { transform: translateY(110vh) rotate(0deg) scale(0.8); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(-10vh) rotate(360deg) scale(1.2); opacity: 0; }
+}
+
+/* Cosmic Comets */
+.comet {
+    position: absolute;
+    width: 4px;
+    height: 120px;
+    background: linear-gradient(to bottom, rgba(255, 64, 129, 1) 0%, rgba(77, 208, 225, 0.6) 40%, transparent 100%);
+    transform: rotate(-45deg);
+    opacity: 0;
+    animation: streakComet 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    pointer-events: none;
+}
+
+@keyframes streakComet {
+    0% { transform: translate(0, 0) rotate(-45deg); opacity: 0; scale: 0.5; }
+    20% { opacity: 1; scale: 1; }
+    100% { transform: translate(-400px, 400px) rotate(-45deg); opacity: 0; scale: 1.2; }
 }
 
 .ambient-glow {
@@ -68,46 +118,15 @@ body {
 
 /* --- Universal HUD System Top Ribbon --- */
 .hud-header {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 70px;
-    background: rgba(6, 4, 13, 0.9);
-    border-bottom: 1px solid var(--border-color);
-}
-
-.hud-title {
-    font-size: 1.4rem;
-    font-weight: 900;
-    letter-spacing: 4px;
-    color: #ffffff;
-    text-shadow: 0 0 10px var(--blue-muted), 0 0 20px var(--blue-muted);
-    animation: bluePulse 2s infinite alternate ease-in-out;
-}
-
-.hud-subtitle {
-    font-size: 0.85rem;
-    font-weight: 700;
-    letter-spacing: 3px;
-    color: #ffffff;
-    margin-top: 4px;
-    text-shadow: 0 0 8px var(--blue-muted);
-}
-
-@keyframes bluePulse {
-    from {
-        text-shadow: 0 0 10px var(--blue-muted), 0 0 20px var(--blue-muted);
-    }
-    to {
-        text-shadow: 0 0 15px var(--blue-muted), 0 0 30px var(--blue-muted), 0 0 45px var(--blue-muted);
-    }
+    display: table-row;
+    height: 25px; /* Sized down to act as a clean margin buffer */
+    background: transparent;
 }
 
 /* --- Panoramic Dashboard Columns Layout --- */
 .workspace-grid {
     display: table-row;
-    height: calc(100vh - 120px); 
+    height: calc(100vh - 75px); 
 }
 
 .workspace-column {
@@ -526,10 +545,7 @@ body {
     }
 
     .hud-header {
-        display: flex;
-        height: auto;
-        padding: 15px;
-        text-align: center;
+        display: none; /* Strip unneeded spacers from smartphone screens */
     }
 
     .workspace-grid {
@@ -549,7 +565,7 @@ body {
     }
 
     #col-core {
-        order: -1; /* Forces the Q monogram and Core Directive to the absolute top of the mobile viewport feed */
+        order: -1; 
         margin-bottom: 40px;
     }
 
