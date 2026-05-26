@@ -6,7 +6,7 @@ const AppState = {
 /* --- Global Background Vector Injector Engine --- */
 document.addEventListener("DOMContentLoaded", () => {
     generateGlassShards(8);
-    setInterval(triggerRandomComet, 3000); // Triggers exactly every 3 seconds
+    setInterval(triggerRandomComet, 3000); 
 });
 
 function generateGlassShards(count) {
@@ -17,14 +17,12 @@ function generateGlassShards(count) {
         const shard = document.createElement("div");
         shard.classList.add("glass-shard");
         
-        // Randomize dimensions and trajectories
         const sizeW = Math.random() * 40 + 20;
         const sizeH = Math.random() * 60 + 30;
         shard.style.width = `${sizeW}px`;
         shard.style.height = `${sizeH}px`;
         shard.style.left = `${Math.random() * 100}vw`;
         
-        // Stagger animation timing arrays
         shard.style.animationDelay = `${Math.random() * -25}s`;
         shard.style.animationDuration = `${Math.random() * 15 + 20}s`;
         
@@ -39,13 +37,11 @@ function triggerRandomComet() {
     const comet = document.createElement("div");
     comet.classList.add("comet");
     
-    // Position anywhere along the top or right border paths
     comet.style.top = `${Math.random() * 40 - 10}%`;
     comet.style.left = `${Math.random() * 50 + 50}%`;
     
     container.appendChild(comet);
     
-    // Garbage collection sweep to free document object memory leaks
     setTimeout(() => {
         comet.remove();
     }, 1500);
