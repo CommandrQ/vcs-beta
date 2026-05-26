@@ -1,213 +1,623 @@
-/**
- * CMDR Q PERSONAL PLATFORM — STRIPPED FLUID AUTO-FIT AESTHETIC
- * Path: cmdrq/style.css
- */
-
+/* --- System Design Architecture Tokens --- */
 :root {
-    --light-purple: #e0c3fc;
-    --light-blue: #8ecae6;
-    --deep-space: #0f0c29;
-    --glass-bg: rgba(15, 15, 25, 0.85);
-    --glass-border: rgba(255, 255, 255, 0.15);
-    --stark-white: #ffffff;
+    --bg-deep: #06040d;
+    --purple-muted: #9575cd;
+    --blue-muted: #4dd0e1;
+    --pink-neon: #ff4081;
+    --pink-glow: #ff0055;
+    --card-surface: rgba(14, 10, 26, 0.85);
+    --border-color: rgba(149, 117, 205, 0.3);
+    --text-primary: #f1ecfb;
+    --text-dim: #8b82a6;
+    --animation-engine: on;
 }
 
-* { 
-    box-sizing: border-box; 
-    margin: 0; 
-    padding: 0; 
-}
-
-html, body {
-    width: 100%;
-    height: 100%;
-    overflow-x: hidden; 
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    background: linear-gradient(180deg, #1a1a2e 0%, #2b1055 70%, #7597de 100%);
-    background-attachment: fixed;
-    font-family: 'Segoe UI', Tahoma, sans-serif;
-    color: var(--stark-white);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100dvh; 
-}
-
-/* --- CSS Background Matrix Animation --- */
-#boot-screen { position: fixed; inset: 0; background: black; z-index: 9999; pointer-events: none; animation: fadeOut 1.5s forwards; }
-@keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
-
-#starfield { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
-.stars { 
-    position: absolute; width: 2px; height: 2px; background: transparent; 
-    box-shadow: 10vw 20vh #fff, 35vw 45vh #fff, 80vw 10vh #fff, 25vw 90vh #fff, 60vw 80vh #fff, 45vw 15vh #fff, 15vw 75vh #fff, 85vw 60vh #fff, 50vw 90vh #fff;
-    animation: moveStars 150s linear infinite; 
-}
-@keyframes moveStars { from { transform: translateY(0); } to { transform: translateY(-2000px); } }
-
-/* --- Auto-Fit Layout Container --- */
-.hub-container {
-    width: 92%; 
-    max-width: 500px; 
-    z-index: 10;
-    padding: clamp(20px, 5vh, 40px) 0 clamp(10px, 3vh, 20px); 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    margin: auto 0; 
-}
-
-/* Fluid Auto-Scaling Title */
-.hub-title { 
-    font-size: clamp(2rem, 8vw, 3rem); 
-    font-weight: bold; 
-    background: linear-gradient(to right, var(--light-blue) 20%, #fff 40%, #fff 60%, var(--light-blue) 80%);
-    background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    animation: sheen 3s linear infinite;
-    margin-bottom: clamp(15px, 4vw, 25px);
-    line-height: 1.1;
-}
-@keyframes sheen { to { background-position: 200% center; } }
-
-/* Fluid Glass Backdrop Card Window */
-.hub-card {
-    background: var(--glass-bg);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid var(--glass-border);
-    border-radius: clamp(16px, 5vw, 28px);
-    padding: clamp(20px, 6vw, 35px) clamp(15px, 5vw, 30px); 
-    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-    width: 100%;
-    margin-bottom: 25px; 
-}
-
-/* --- Profile Photo Framework --- */
-.profile-container { 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    width: 100%; 
-    margin-bottom: clamp(10px, 3vw, 15px); 
-}
-
-.profile-container img {
+    background-color: var(--bg-deep);
+    color: var(--text-primary);
+    font-family: 'SF Pro Display', -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+    min-height: 100vh;
+    overflow: hidden;
+    position: relative;
     display: block;
+}
+
+/* --- Panoramic Background Grid Array --- */
+.vapor-grid {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(to right, rgba(77, 208, 225, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(149, 117, 205, 0.05) 1px, transparent 1px);
+    background-size: 60px 60px;
+    transform: perspective(600px) rotateX(60deg);
+    transform-origin: top;
+    z-index: 1;
+}
+
+.ambient-glow {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 80vw;
+    height: 80vh;
+    background: radial-gradient(circle, rgba(149, 117, 205, 0.08) 0%, rgba(77, 208, 225, 0.03) 50%, transparent 100%);
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* --- Fixed Screen App Frame Layout --- */
+.app-interface {
+    position: relative;
+    z-index: 3;
+    width: 100vw;
+    height: 100vh;
+    display: table;
+    table-layout: fixed;
+}
+
+/* --- Universal HUD System Top Ribbon --- */
+.hud-header {
+    display: table-row;
+    height: 45px;
+    background: rgba(6, 4, 13, 0.9);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.hud-left, .hud-center, .hud-right {
+    display: table-cell;
+    vertical-align: middle;
+    padding: 0 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.hud-left {
+    width: 250px;
+    color: var(--blue-muted);
+}
+
+.hud-center {
+    text-align: center;
+    color: var(--text-dim);
+}
+
+.hud-right {
+    width: 250px;
+    text-align: right;
+}
+
+.hud-label {
+    color: var(--text-dim);
+    margin-right: 5px;
+}
+
+.toggle-btn {
+    background: transparent;
+    border: 1px solid var(--pink-neon);
+    color: var(--pink-neon);
+    padding: 2px 8px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 4px;
+    box-shadow: 0 0 4px var(--pink-glow);
+}
+
+/* --- Panoramic Dashboard Columns Layout --- */
+.workspace-grid {
+    display: table-row;
+    height: calc(100vh - 95px); /* Subtracts header and footer heights */
+}
+
+.workspace-column {
+    display: table-cell;
+    height: 100%;
+    vertical-align: top;
+    border-right: 1px solid var(--border-color);
+    padding: 40px 30px;
+    transition: background-color 0.3s ease;
+}
+
+.workspace-column:last-of-type {
+    border-right: none;
+}
+
+#col-core {
+    width: 32%;
+    vertical-align: middle;
+    text-align: center;
+}
+
+#col-empower, #col-educate, #col-elevate {
+    width: 22.6%;
+}
+
+/* --- Internal Core Engine Components --- */
+.center-engine {
+    max-width: 400px;
     margin: 0 auto;
-    width: 90px; 
-    height: 90px; 
-    min-width: 90px; 
-    max-width: 90px;
-    min-height: 90px;
-    max-height: 90px;
-    flex-shrink: 0; 
-    border-radius: 50%; 
-    object-fit: cover;
-    border: 2px solid var(--glass-border); 
-    filter: drop-shadow(0 0 12px rgba(142, 202, 230, 0.3));
-    transition: all 0.3s ease;
 }
 
-/* --- Social Glyphs Matrix --- */
-.social-matrix { 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    gap: clamp(15px, 4vw, 22px); 
-    margin-bottom: clamp(15px, 4vw, 25px); 
-    width: 100%; 
-}
-.social-glyph { color: var(--light-blue); font-size: clamp(1.2rem, 4vw, 1.4rem); transition: transform 0.3s ease, color 0.3s ease, filter 0.3s ease; text-decoration: none; }
-.social-glyph:hover { color: var(--light-purple); transform: scale(1.15); filter: drop-shadow(0 0 8px var(--light-purple)); }
-
-/* --- Fluid Centered Typography --- */
-.greeting { font-size: clamp(1.1rem, 4vw, 1.25rem); color: var(--stark-white); margin-bottom: 15px; overflow-wrap: break-word; text-align: center; }
-.greeting strong { color: #ffffff; text-shadow: 0 0 10px rgba(255, 255, 255, 0.2); }
-
-h2 { 
-    color: var(--light-blue); 
-    margin-bottom: clamp(15px, 4vw, 20px); 
-    font-size: clamp(0.9rem, 3vw, 1rem); 
-    text-transform: uppercase; 
-    letter-spacing: 2px; 
-    border-bottom: 1px solid rgba(255,255,255,0.1); 
-    padding-bottom: 8px; 
-    text-align: center; 
-    overflow-wrap: break-word;
+.monogram-outer {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: transparent;
+    border: 2px solid var(--blue-muted);
+    box-shadow: 0 0 20px rgba(77, 208, 225, 0.4);
+    margin: 0 auto 30px auto;
+    display: block;
+    padding: 4px;
 }
 
-/* --- Navigation Deck Array Layout --- */
-.menu-grid { display: flex; flex-direction: column; gap: clamp(12px, 3vw, 16px); width: 100%; margin-bottom: 20px; }
-.btn-wrapper { display: flex; flex-direction: column; gap: 8px; width: 100%; }
-
-.btn {
-    width: 100%; 
-    padding: clamp(12px, 3vw, 15px); 
-    border-radius: 50px; 
-    border: 1px solid var(--light-blue); 
-    background: transparent; color: var(--light-blue); font-weight: bold; 
-    cursor: pointer; transition: 0.3s; text-transform: uppercase; 
-    font-size: clamp(0.75rem, 2.5vw, 0.8rem);
-    text-decoration: none; display: flex; align-items: center; justify-content: center;
-    letter-spacing: 1px; text-align: center;
-    line-height: 1.3;
+.monogram-inner {
+    width: 108px;
+    height: 108px;
+    border-radius: 50%;
+    background: rgba(14, 10, 26, 0.9);
+    border: 1px dashed var(--purple-muted);
+    font-size: 3rem;
+    font-weight: 900;
+    line-height: 108px;
+    color: var(--pink-neon);
+    text-shadow: 0 0 10px var(--pink-glow);
+    text-align: center;
 }
-.btn:hover { background: var(--light-blue); color: var(--deep-space); box-shadow: 0 0 15px var(--light-blue); }
 
-.btn-accent { border-color: var(--light-purple); color: var(--light-purple); }
-.btn-accent:hover { background: var(--light-purple); color: var(--deep-space); box-shadow: 0 0 15px var(--light-purple); }
-
-/* --- About Page Narrative Tracks --- */
-.narrative-block { display: flex; flex-direction: column; gap: clamp(15px, 4vw, 20px); text-align: left; width: 100%; }
-.timeline-node { border-left: 2px solid var(--light-purple); padding-left: clamp(10px, 3vw, 16px); margin-left: 4px; }
-.node-era { font-size: clamp(0.7rem, 2.5vw, 0.75rem); text-transform: uppercase; letter-spacing: 2px; color: var(--light-blue); font-weight: 700; margin-bottom: 4px; }
-.node-title { font-size: clamp(1rem, 3.5vw, 1.1rem); font-weight: 600; color: var(--stark-white); margin-bottom: 6px; overflow-wrap: break-word; }
-
-/* --- Return Systems & Infrastructure Footers --- */
-.hub-return-link { font-size: clamp(0.7rem, 2.5vw, 0.75rem); text-transform: uppercase; letter-spacing: 1.5px; color: var(--light-blue); text-decoration: none; font-weight: bold; }
-.system-footer { 
-    z-index: 10; padding: 20px 20px 30px; text-align: center; color: var(--stark-white); 
-    font-size: clamp(0.65rem, 2vw, 0.7rem); letter-spacing: 1.5px; text-transform: uppercase; 
-    animation: pulse 4s ease-in-out infinite; width: 100%; margin-top: auto; 
-    overflow-wrap: break-word;
+.directive-tag {
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: var(--blue-muted);
+    margin-bottom: 12px;
 }
-@keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.8; } }
 
-/* --- Cinematic Structural Overlays (index.html only) --- */
-.cinematic-body { background: #000000 !important; }
-.intro-canvas { position: fixed; inset: 0; background: #000000; z-index: 99999; display: flex; justify-content: center; align-items: center; transition: opacity 1s ease-in-out; }
-.cinematic-scene { position: absolute; opacity: 0; transform: scale(0.96); transition: opacity 0.8s ease-in-out, transform 1.2s cubic-bezier(0.25, 1, 0.5, 1); display: flex; flex-direction: column; align-items: center; width: 100%; text-align: center; padding: 0 20px; }
-.cinematic-scene.active { opacity: 1; transform: scale(1); }
-.cinematic-text { font-size: clamp(1.2rem, 5vw, 1.5rem); font-weight: 200; letter-spacing: 0.25em; text-transform: uppercase; color: var(--stark-white); overflow-wrap: break-word; }
-.glow-text { text-shadow: 0 0 20px rgba(224, 195, 252, 0.6), 0 0 40px rgba(142, 202, 230, 0.3); }
-.tracking-out { animation: trackOut 3.2s ease-out forwards; }
-.dissolve-out { opacity: 0 !important; }
-@keyframes trackOut { 0% { letter-spacing: 0.15em; opacity: 0; filter: blur(4px); } 15% { opacity: 1; filter: blur(0); } 100% { letter-spacing: clamp(0.2em, 2vw, 0.35em); opacity: 0.8; } }
+.directive-text {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text-primary);
+    font-weight: 400;
+}
 
-/* =========================================
-   DESKTOP VIEWPORT ENHANCEMENTS (650px Core)
-   ========================================= */
-@media (min-width: 768px) {
-    .hub-container {
-        max-width: 650px; 
-        padding-top: 6vh;
+/* --- Segment Column Interface Header Blocks --- */
+.column-header {
+    margin-bottom: 30px;
+    border-left: 3px solid var(--blue-muted);
+    padding-left: 12px;
+}
+
+.column-num {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--pink-neon);
+    display: block;
+    letter-spacing: 1px;
+}
+
+.column-header h2 {
+    font-size: 1.3rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: var(--text-primary);
+    margin-top: 2px;
+}
+
+/* --- High Performance Interaction Cards --- */
+.column-body {
+    display: block;
+}
+
+.action-card {
+    background: var(--card-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+    text-align: left;
+}
+
+.action-card:hover {
+    border-color: var(--pink-neon);
+    box-shadow: 0 0 15px rgba(255, 64, 129, 0.2);
+    transform: translateY(-2px);
+}
+
+.card-meta {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--blue-muted);
+    margin-bottom: 8px;
+}
+
+.action-card h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+}
+
+.action-card p {
+    font-size: 0.85rem;
+    line-height: 1.4;
+    color: var(--text-dim);
+}
+
+/* --- Universal Channel Dock Layout Footer --- */
+.channel-dock {
+    display: table-row;
+    height: 50px;
+    background: rgba(6, 4, 13, 0.9);
+    border-top: 1px solid var(--border-color);
+    text-align: center;
+}
+
+.dock-link {
+    display: inline-block;
+    height: 50px;
+    line-height: 50px;
+    padding: 0 30px;
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.link-prefix {
+    color: rgba(149, 117, 205, 0.5);
+    font-weight: 400;
+    transition: color 0.2s ease;
+}
+
+.dock-link:hover {
+    color: var(--pink-neon);
+    text-shadow: 0 0 8px var(--pink-glow);
+}
+
+.dock-link:hover .link-prefix {
+    color: var(--blue-muted);
+}
+
+/* --- Global Popup Window Engine Architecture --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(6, 4, 13, 0.8);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+    display: block;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-window {
+    background: var(--card-surface);
+    border: 2px solid var(--blue-muted);
+    box-shadow: 0 0 30px rgba(77, 208, 225, 0.25);
+    border-radius: 12px;
+    padding: 40px;
+    width: 90%;
+    max-width: 500px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -46%);
+    transition: transform 0.3s ease;
+}
+
+.modal-overlay.active .modal-window {
+    transform: translate(-50%, -50%);
+}
+
+.modal-window.wide-modal {
+    max-width: 650px;
+}
+
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: transparent;
+    border: none;
+    color: var(--text-dim);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.close-btn:hover {
+    color: var(--pink-neon);
+}
+
+.modal-header {
+    font-size: 0.9rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: var(--pink-neon);
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 12px;
+}
+
+.modal-body-content p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-primary);
+    margin-bottom: 15px;
+}
+
+.modal-body-content p:last-child {
+    margin-bottom: 0;
+}
+
+/* --- Specialized Integrated Application Mock Systems --- */
+
+/* Audio Player Sub-System */
+.audio-deck-layout {
+    display: block;
+}
+
+.deck-controls {
+    background: rgba(6, 4, 13, 0.6);
+    border: 1px dashed var(--border-color);
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.now-playing-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--blue-muted);
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+}
+
+.progress-bar-container {
+    height: 4px;
+    background: rgba(149, 117, 205, 0.2);
+    border-radius: 2px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    width: 35%;
+    height: 100%;
+    background: var(--pink-neon);
+    box-shadow: 0 0 8px var(--pink-glow);
+}
+
+.deck-btn-group {
+    display: block;
+    text-align: center;
+}
+
+.deck-btn {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 6px 16px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin: 0 6px;
+    cursor: pointer;
+    border-radius: 4px;
+    letter-spacing: 1px;
+}
+
+.deck-btn.target-neon {
+    border-color: var(--pink-neon);
+    color: var(--pink-neon);
+    box-shadow: 0 0 8px var(--pink-glow);
+}
+
+.track-index-list {
+    display: block;
+}
+
+.track-row {
+    padding: 12px;
+    border-bottom: 1px solid rgba(149, 117, 205, 0.1);
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    color: var(--text-dim);
+}
+
+.track-row span {
+    color: rgba(149, 117, 205, 0.6);
+    margin-right: 8px;
+}
+
+.track-row.active-track {
+    color: var(--blue-muted);
+    font-weight: 600;
+    background: rgba(77, 208, 225, 0.04);
+}
+
+.track-time {
+    float: right;
+    color: var(--text-dim) !important;
+}
+
+/* Telemetry System & Script Analytics Box */
+.telemetry-layout {
+    display: block;
+}
+
+.telemetry-stats-grid {
+    display: block;
+    margin-bottom: 20px;
+}
+
+.stat-node {
+    display: inline-block;
+    width: 31%;
+    margin-right: 3.3%;
+    background: rgba(6, 4, 13, 0.5);
+    border: 1px solid var(--border-color);
+    padding: 12px;
+    border-radius: 6px;
+}
+
+.stat-node:last-child {
+    margin-right: 0;
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+}
+
+.stat-value {
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+.text-blue { color: var(--blue-muted); }
+.text-pink { color: var(--pink-neon); text-shadow: 0 0 6px var(--pink-glow); }
+.text-purple { color: var(--purple-muted); }
+
+.script-terminal-box {
+    background: #020105;
+    border: 1px solid rgba(149, 117, 205, 0.2);
+    border-radius: 6px;
+    padding: 20px;
+    height: 160px;
+    overflow-y: auto;
+}
+
+.term-line {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+}
+
+/* --- Mobile Viewport Engineering Adjustments --- */
+@media (max-width: 900px) {
+    body {
+        overflow-y: auto;
+    }
+
+    .app-interface {
+        display: block;
+        height: auto;
+        width: 100%;
+    }
+
+    /* Collapse Top HUD Stack */
+    .hud-header {
+        display: block;
+        height: auto;
+        padding: 15px;
+        text-align: center;
+    }
+
+    .hud-left, .hud-center, .hud-right {
+        display: block;
+        width: 100% !important;
+        padding: 0;
+        text-align: center;
+        margin-bottom: 8px;
+    }
+
+    .hud-right {
+        margin-bottom: 0;
+    }
+
+    /* Transform Panoramic Grid to Vertically Stacked Feed */
+    .workspace-grid {
+        display: block;
+        height: auto;
+        padding: 20px 15px;
+    }
+
+    .workspace-column {
+        display: block;
+        width: 100% !important;
+        height: auto;
+        padding: 0;
+        border-right: none;
+        margin-bottom: 40px;
+    }
+
+    #col-core {
+        margin-bottom: 40px;
+    }
+
+    .center-engine {
+        padding: 20px 0;
+    }
+
+    /* Transform Modals to Mobile Drawer Controls */
+    .modal-window {
+        position: fixed;
+        top: auto;
+        left: 0;
+        bottom: 0;
+        transform: translateY(100%);
+        width: 100%;
+        max-width: 100% !important;
+        border-radius: 16px 16px 0 0;
+        border-right: none;
+        border-left: none;
+        border-bottom: none;
+        padding: 30px 20px;
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .modal-overlay.active .modal-window {
+        transform: translateY(0);
+    }
+
+    /* Collapse Footer Layout */
+    .channel-dock {
+        display: block;
+        height: auto;
+        padding: 15px 0;
+    }
+
+    .dock-link {
+        display: inline-block;
+        height: auto;
+        line-height: 1;
+        padding: 10px 15px;
     }
     
-    .hub-card {
-        padding: 45px 50px; 
-    }
-
-    .profile-container img {
-        width: 105px; 
-        height: 105px;
-        min-width: 105px;
-        max-width: 105px;
-        min-height: 105px;
-        max-height: 105px;
+    .link-prefix {
+        display: none; /* Strip string text bloating for small viewports */
     }
 }
