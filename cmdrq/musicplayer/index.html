@@ -6,12 +6,12 @@
     <title>MUSIC PLAYER</title>
     <link rel="stylesheet" href="../style.css?v=2">
     <style>
-        /* --- MP4 HARDWARE INTERFACE OVERRIDES --- */
+        /* --- MP4 CHASSIS OVERRIDES --- */
         .mp4-chassis {
             display: flex;
             flex-direction: column;
             width: 100%;
-            max-width: 380px; /* Forces compact pocket-player dimensions on all viewports */
+            max-width: 380px; 
             margin: 0 auto;
             background: #000000;
             border: 2px solid var(--purple-muted);
@@ -41,7 +41,7 @@
             text-align: center;
             padding: 4px 8px 12px 8px;
             border-bottom: 1px dashed rgba(149, 117, 205, 0.2);
-            margin-bottom: 12px;
+            margin-bottom: 16px;
         }
 
         .mp4-track-title {
@@ -49,9 +49,6 @@
             font-weight: 900;
             color: #e1d5ff;
             margin-bottom: 4px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
             text-shadow: 0 0 10px var(--purple-glow);
         }
 
@@ -63,81 +60,20 @@
             text-transform: uppercase;
         }
 
-        /* Hardware Scroll & Index Area */
-        .mp4-scroller-bay {
-            height: 160px;
-            overflow-y: auto;
-            padding-right: 4px;
-            margin-bottom: 16px;
-        }
-
-        .mp4-scroller-bay::-webkit-scrollbar { width: 3px; }
-        .mp4-scroller-bay::-webkit-scrollbar-thumb { background: var(--purple-muted); border-radius: 4px; }
-
-        .mp4-selection-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .mp4-track-node {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 10px 14px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .mp4-track-node:hover {
-            border-color: var(--purple-glow);
-            background: rgba(149, 117, 205, 0.05);
-        }
-
-        .mp4-track-node.active {
-            border-color: var(--purple-glow);
-            background: rgba(149, 117, 205, 0.15);
-            box-shadow: 0 0 10px rgba(149, 117, 205, 0.2);
-        }
-
-        .mp4-node-title {
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: #ffffff;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .mp4-node-desc {
-            font-size: 0.7rem;
-            color: #ffffff;
-            opacity: 0.6;
-            margin-top: 2px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .mp4-track-node.active .mp4-node-title {
-            color: #e1d5ff;
-            text-shadow: 0 0 8px var(--purple-glow);
-        }
-
-        /* Physical Device Hardware Buttons */
+        /* Physical Wheel Media Controls Block */
         .mp4-controls-wheel {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 16px;
-            padding-top: 4px;
+            gap: 12px;
+            padding: 8px 0;
         }
 
         .mp4-btn {
             background: rgba(149, 117, 205, 0.04);
             border: 2px solid var(--purple-muted);
             color: #e1d5ff;
-            padding: 8px 24px;
+            padding: 10px 20px;
             font-size: 0.7rem;
             font-weight: 800;
             cursor: pointer;
@@ -153,7 +89,12 @@
             border-color: var(--purple-glow);
             color: #ffffff;
             box-shadow: 0 0 12px var(--purple-glow);
-            transform: translateY(-1px);
+        }
+
+        .mp4-btn.active-play {
+            border-color: var(--pink-neon);
+            color: var(--pink-neon);
+            box-shadow: 0 0 12px var(--pink-glow);
         }
     </style>
 </head>
@@ -167,21 +108,17 @@
         <main class="mp4-chassis">
 
             <div class="mp4-screen-viewport">
-                <iframe id="mp4-video-frame" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                <iframe id="mp4-video-frame" src="https://www.youtube.com/playlist?list=PLwX0pb3GErenzxXjayWA-U4A_GKKnMsgP" allow="autoplay; encrypted-media" allowfullscreen></iframe>
             </div>
 
             <div class="mp4-metadata-deck">
-                <div id="mp4-title-display" class="mp4-track-title">Loading Track Array...</div>
-                <div id="mp4-artist-display" class="mp4-track-artist">Commander Q</div>
-            </div>
-
-            <div class="mp4-scroller-bay">
-                <div class="mp4-selection-grid" id="mp4-menu-hook">
-                    </div>
+                <div class="mp4-track-title">VCS TRACK STATION</div>
+                <div class="mp4-track-artist">Commander Q // Playlist</div>
             </div>
 
             <div class="mp4-controls-wheel">
                 <button class="mp4-btn" id="mp4-prev">Prev</button>
+                <button class="mp4-btn active-play" id="mp4-play-toggle">Play</button>
                 <button class="mp4-btn" id="mp4-next">Next</button>
             </div>
 
@@ -194,82 +131,40 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const menuHook = document.getElementById('mp4-menu-hook');
-            const videoFrame = document.getElementById('mp4-video-frame');
-            const titleDisplay = document.getElementById('mp4-title-display');
-            const artistDisplay = document.getElementById('mp4-artist-display');
+            const playerIframe = document.getElementById('mp4-video-frame');
+            const playToggleBtn = document.getElementById('mp4-play-toggle');
+            
+            let isPlaying = true; // YouTube video players with playlist tokens initialize on standby loop arrays
 
-            /**
-             * DIRECT DATA CONFIGURATION LAYER
-             * Bypasses XML feed locks to load your targeted audio clips natively.
-             */
-            const playlistRegistry = [
-                {
-                    id: "PLwX0pb3GErenzxXjayWA-U4A_GKKnMsgP",
-                    title: "Forza Vapor Drift Mix",
-                    artist: "Commander Q // VCS"
-                }
-            ];
-
-            let activeIndex = 0;
-
-            function initPlayerChassis() {
-                menuHook.innerHTML = '';
+            // Hardware playback toggle engine interceptor execution
+            playToggleBtn.addEventListener('click', () => {
+                isPlaying = !isPlaying;
                 
-                playlistRegistry.forEach((track, index) => {
-                    const node = document.createElement('div');
-                    node.className = 'mp4-track-node';
-                    if (index === activeIndex) node.classList.add('active');
-
-                    node.innerHTML = `
-                        <div class="mp4-node-title">${track.title}</div>
-                        <div class="mp4-node-desc">${track.artist}</div>
-                    `;
-
-                    node.addEventListener('click', () => {
-                        executeTrackSwap(index, true);
-                    });
-
-                    menuHook.appendChild(node);
-                });
-            }
-
-            function executeTrackSwap(index, autoPlayIntent) {
-                activeIndex = index;
-                const currentTrack = playlistRegistry[activeIndex];
-
-                titleDisplay.innerText = currentTrack.title;
-                artistDisplay.innerText = currentTrack.artist;
-
-                // Enforce explicit formatting parameters to force YouTube layout rendering checks
-                const flags = autoPlayIntent ? "?autoplay=1&rel=0&modestbranding=1" : "?rel=0&modestbranding=1";
-                videoFrame.src = `https://www.youtube.com/embed/${currentTrack.id}${flags}`;
-
-                // Update physical state triggers inside selection view
-                document.querySelectorAll('.mp4-track-node').forEach((node, idx) => {
-                    if (idx === activeIndex) {
-                        node.classList.add('active');
-                    } else {
-                        node.classList.remove('active');
-                    }
-                });
-            }
+                // PostMessage window frame pipeline intercept commands required to control YouTube core API objects
+                if (isPlaying) {
+                    playerIframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+                    playToggleBtn.innerText = "Play";
+                    playToggleBtn.classList.add('active-play');
+                } else {
+                    playerIframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+                    playToggleBtn.innerText = "Pause";
+                    playToggleBtn.classList.remove('active-play');
+                }
+            });
 
             document.getElementById('mp4-next').addEventListener('click', () => {
-                let target = activeIndex + 1;
-                if (target >= playlistRegistry.length) target = 0;
-                executeTrackSwap(target, true);
+                playerIframe.contentWindow.postMessage('{"event":"command","func":"nextVideo","args":""}', '*');
+                isPlaying = true;
+                playToggleBtn.innerText = "Play";
+                playToggleBtn.classList.add('active-play');
             });
 
             document.getElementById('mp4-prev').addEventListener('click', () => {
-                let target = activeIndex - 1;
-                if (target < 0) target = playlistRegistry.length - 1;
-                executeTrackSwap(target, true);
+                playerIframe.contentWindow.postMessage('{"event":"command","func":"previousVideo","args":""}', '*');
+                isPlaying = true;
+                playToggleBtn.innerText = "Play";
+                playToggleBtn.classList.add('active-play');
             });
-
-            // Hardware Boot Ignition
-            initPlayerChassis();
-            executeTrackSwap(0, false);
         });
     </script>
 </body>
