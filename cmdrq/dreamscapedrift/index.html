@@ -33,10 +33,10 @@
             z-index: 3;
         }
 
-        /* --- DESKTOP SCALE EXPANSION --- */
-        @media (min-width: 901px) {
+        /* --- DESKTOP SCALE ADJUSTMENTS --- */
+        @media (min-width: 768px) {
             .hub-container { 
-                max-width: 850px !important; /* Widened frame layout to support columns easily */
+                max-width: 700px !important; 
             }
         }
 
@@ -87,15 +87,16 @@
             }
         }
 
-        /* --- PLAYER VIEWPORT FRAME --- */
+        /* --- PLAYER VIEWPORT FRAME (REDUCED HEIGHT SPECIFICATIONS) --- */
         .player-viewport {
             width: 100%;
+            max-width: 480px; /* Constrains expansion blowout on desktop rigs */
+            margin: 0 auto 20px auto;
             background: #000000;
             border: 1px solid var(--border-color, rgba(149, 117, 205, 0.3));
             border-radius: 8px;
             overflow: hidden;
             aspect-ratio: 16 / 9;
-            margin-bottom: 20px;
             flex-shrink: 0;
         }
 
@@ -119,18 +120,11 @@
         .scroller-bay::-webkit-scrollbar-track { background: transparent; }
         .scroller-bay::-webkit-scrollbar-thumb { background: var(--border-color, rgba(149, 117, 205, 0.3)); border-radius: 10px; }
 
-        /* REVISED: Fluid layout shifting from single column to grid array pattern */
         .video-selection-grid {
-            display: grid;
-            grid-template-columns: 1fr; /* Single column layout default for mobile profiles */
-            gap: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
             width: 100%;
-        }
-
-        @media (min-width: 768px) {
-            .video-selection-grid {
-                grid-template-columns: 1fr 1fr; /* Split into balanced multi-column grid view layout on desktop screens */
-            }
         }
 
         /* --- MENU BUTTON SHAPES WITH TEXT WRAPPING RULES --- */
@@ -147,8 +141,7 @@
             cursor: pointer;
             transition: all 0.2s ease;
             width: 100%;
-            display: flex;
-            align-items: center;
+            flex-shrink: 0;
 
             white-space: normal;
             word-wrap: break-word;
