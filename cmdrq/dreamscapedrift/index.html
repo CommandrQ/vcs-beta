@@ -5,14 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Dreamscape Drift</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../style.css?v=2">
     
     <style>
-        /* --- FORCE SYSTEM SCREEN LOCK (STOP ALL SCROLLING) --- */
+        /* --- FORCE SYSTEM SCREEN LOCK --- */
         html, body {
             overflow: hidden !important;
             height: 100dvh;
             width: 100vw;
+            background-color: var(--bg-deep, #06040d);
+            color: var(--text-primary, #f1ecfb);
+            font-family: 'SF Pro Display', -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
         }
 
         .hub-container {
@@ -26,13 +29,35 @@
             max-width: 500px;
             margin: 0 auto;
             transition: max-width 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            position: relative;
+            z-index: 3;
         }
 
         /* --- DESKTOP SCALE ADJUSTMENTS --- */
-        @media (min-width: 768px) {
+        @media (min-width: 901px) {
             .hub-container { 
                 max-width: 700px !important; 
             }
+        }
+
+        .hub-title {
+            font-size: 1.6rem;
+            font-weight: 900;
+            letter-spacing: 4px;
+            color: var(--blue-muted, #4dd0e1);
+            text-transform: uppercase;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--pink-neon, #ff4081);
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--border-color, rgba(149, 117, 205, 0.3));
+            padding-bottom: 8px;
         }
 
         /* --- PULSING EDGE FRAME --- */
@@ -40,11 +65,13 @@
             display: flex;
             flex-direction: column;
             height: auto;
-            max-height: 90dvh;
+            max-height: 82dvh;
             padding: 20px;
             margin-bottom: 0;
             overflow: hidden;
+            background: var(--card-surface, rgba(14, 10, 26, 0.85));
             border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
             animation: borderGlowPulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
 
@@ -54,8 +81,8 @@
                 box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
             }
             50% {
-                border-color: rgba(142, 202, 230, 0.7);
-                box-shadow: 0 20px 50px rgba(142, 202, 230, 0.15), 0 0 20px rgba(142, 202, 230, 0.2);
+                border-color: var(--blue-muted, #4dd0e1);
+                box-shadow: 0 20px 50px rgba(77, 208, 225, 0.15), 0 0 20px rgba(77, 208, 225, 0.2);
             }
         }
 
@@ -63,8 +90,8 @@
         .player-viewport {
             width: 100%;
             background: #000000;
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
+            border: 1px solid var(--border-color, rgba(149, 117, 205, 0.3));
+            border-radius: 8px;
             overflow: hidden;
             aspect-ratio: 16 / 9;
             margin-bottom: 20px;
@@ -82,14 +109,14 @@
         .scroller-bay {
             overflow-y: auto;
             flex-grow: 1;
-            padding-right: 4px;
+            padding-right: 6px;
             margin-bottom: 15px;
             -webkit-overflow-scrolling: touch;
         }
 
         .scroller-bay::-webkit-scrollbar { width: 4px; }
         .scroller-bay::-webkit-scrollbar-track { background: transparent; }
-        .scroller-bay::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 10px; }
+        .scroller-bay::-webkit-scrollbar-thumb { background: var(--border-color, rgba(149, 117, 205, 0.3)); border-radius: 10px; }
 
         .video-selection-grid {
             display: flex;
@@ -98,76 +125,97 @@
             width: 100%;
         }
 
-        /* --- MENU BUTTON SHAPES --- */
+        /* --- MENU BUTTON SHAPES WITH TEXT WRAPPING RULES --- */
         .video-thumb {
             background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--glass-border);
-            border-radius: 30px; 
-            padding: 12px 15px;
-            text-align: center;
-            color: var(--light-blue);
-            font-weight: bold;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            border: 1px solid var(--border-color, rgba(149, 117, 205, 0.3));
+            border-radius: 8px; 
+            padding: 14px 20px;
+            text-align: left;
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
             cursor: pointer;
             transition: all 0.2s ease;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
             width: 100%;
             flex-shrink: 0;
+
+            /* Allows long clip descriptions or titles to wrap down gracefully */
+            white-space: normal;
+            word-wrap: break-word;
+            overflow: visible;
+            text-overflow: clip;
         }
 
         .video-thumb:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: var(--light-blue);
+            background: rgba(255, 255, 255, 0.06);
+            border-color: var(--pink-neon, #ff4081);
         }
 
         .video-thumb.active {
-            background: var(--light-blue);
-            color: var(--deep-space);
-            border-color: var(--light-blue);
+            background: rgba(149, 117, 205, 0.1);
+            color: #ffffff;
+            border-color: var(--purple-glow, #b388ff);
+            box-shadow: 0 0 10px rgba(149, 117, 205, 0.2);
+            text-shadow: 0 0 8px var(--purple-glow, #b388ff);
+        }
+
+        .hub-return-container {
+            text-align: center;
+            margin-top: 5px;
+            flex-shrink: 0;
+            padding-top: 15px;
+            border-top: 1px solid var(--border-color, rgba(149, 117, 205, 0.3));
+        }
+
+        .hub-return-link {
+            color: #ffffff !important;
+            text-decoration: none !important;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: color 0.2s ease, text-shadow 0.2s ease;
+            display: inline-block;
+        }
+
+        .hub-return-link:hover {
+            color: var(--pink-neon, #ff4081) !important;
+            text-shadow: 0 0 8px var(--pink-glow, #ff0055);
         }
     </style>
 </head>
 <body>
 
-    <div id="boot-screen"></div>
     <div id="starfield"><div class="stars"></div></div>
+    <div class="ambient-glow"></div>
 
     <div class="hub-container">
-        <h1 class="hub-title" style="margin-bottom: 10px;">Dreamscape Drift</h1>
+        <h1 class="hub-title">Dreamscape Drift</h1>
 
         <main class="hub-card">
 
-            <!-- YOUTUBE IFRAME VIEWPORT -->
             <div class="player-viewport">
                 <iframe id="main-drift-player" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
             </div>
 
-            <!-- SCROLLABLE LIST SELECTION ARRAYS -->
             <div class="scroller-bay">
                 <h2>Video Menu</h2>
-                <div id="video-menu-hook" class="video-selection-grid" style="margin-top: 10px;"></div>
+                <div id="video-menu-hook" class="video-selection-grid" style="margin-top: 15px;"></div>
             </div>
 
-            <div style="text-align: center; margin-top: 5px; flex-shrink: 0;">
-                <a href="../home.html" class="hub-return-link">← Return to Control Deck</a>
+            <div class="hub-return-container">
+                <a href="../" class="hub-return-link">← Return to Control Deck</a>
             </div>
         </main>
     </div>
 
-    <!-- INTERACTION AND URL EXTRACTION ENGINE -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const menuContainer = document.getElementById('video-menu-hook');
             const mainPlayer = document.getElementById('main-drift-player');
 
-            /**
-             * CONVERTER ENGINE
-             * Converts regular watch paths into valid embed parameters
-             */
             function cleanYouTubeUrl(urlStr) {
                 let idFound = "";
                 
@@ -188,7 +236,6 @@
                 return "https://www.youtube.com/embed/" + idFound.trim();
             }
 
-            // Load and build configurations
             fetch('videos.json')
                 .then(res => res.json())
                 .then(data => {
@@ -200,11 +247,11 @@
                         btn.innerText = item.title;
                         
                         const safeBaseUrl = cleanYouTubeUrl(item.src);
-                        const safeAutoplayUrl = safeBaseUrl + "?autoplay=1&rel=0";
+                        const safeAutoplayUrl = safeBaseUrl + "?autoplay=1&rel=0&modestbranding=1";
                         
                         if (index === 0) {
                             btn.classList.add('active');
-                            mainPlayer.src = safeBaseUrl + "?rel=0"; 
+                            mainPlayer.src = safeBaseUrl + "?rel=0&modestbranding=1"; 
                         }
 
                         btn.addEventListener('click', () => {
@@ -217,7 +264,7 @@
                     });
                 })
                 .catch(err => {
-                    menuContainer.innerHTML = '<div style="color:rgba(255,255,255,0.4); font-size:0.8rem; text-align:center; width:100%;">Configuration stream offline.</div>';
+                    menuContainer.innerHTML = '<div style="color:#ffffff; font-size:0.8rem; text-align:center; width:100%;">Configuration stream offline.</div>';
                 });
         });
     </script>
