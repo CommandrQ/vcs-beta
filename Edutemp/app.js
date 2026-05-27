@@ -1,8 +1,8 @@
 /* ==========================================================================
    SUPABASE SERVICE NODE INITIALIZATION CONFIGURATION
    ========================================================================== */
-const SUPABASE_URL = "https://your-project-url.supabase.co"; 
-const SUPABASE_ANON_KEY = "your-anon-key-string";
+const SUPABASE_URL = "https://dvyjupytbwbrcoyouxpf.supabase.co"; 
+const SUPABASE_ANON_KEY = "sb_publishable_NFV734_yORRlbG4NUOWVjQ_E_7BWnJ6";
 
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -26,14 +26,12 @@ document.querySelectorAll('.na-checkbox').forEach(checkbox => {
         const inputsInRow = targetScaleRow.querySelectorAll('input[type="radio"]');
 
         if (e.target.checked) {
-            // Visual state shifts to greyed out layout profiles
             targetScaleRow.classList.add('disabled-scale');
             inputsInRow.forEach(radio => {
                 radio.checked = false;
-                radio.required = false; // Disables field validation rules cleanly
+                radio.required = false; 
             });
         } else {
-            // Re-enforces active tracking configurations
             targetScaleRow.classList.remove('disabled-scale');
             inputsInRow.forEach(radio => {
                 radio.required = true;
@@ -47,7 +45,6 @@ document.querySelectorAll('.na-checkbox').forEach(checkbox => {
    ========================================================================== */
 surveyForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    // Intercept operational flow and reveal access gate layout modal popups
     identityModal.classList.add('active');
 });
 
@@ -61,7 +58,6 @@ modalAbortBtn.addEventListener('click', () => {
 modalGateForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    // Collect Step 1 and 2 payload profiles directly from view
     const zipCodeValue = document.getElementById('user-zip').value.trim();
     
     const cat1Na = document.getElementById('na-cat1').checked;
@@ -74,7 +70,6 @@ modalGateForm.addEventListener('submit', async (e) => {
     const cat3Score = cat3Na ? null : parseInt(document.querySelector('input[name="cat3"]:checked')?.value || null);
     const cat4Score = cat4Na ? null : parseInt(document.querySelector('input[name="cat4"]:checked')?.value || null);
 
-    // Collect Step 3 target parameters from overlay container fields
     const firstNameValue = document.getElementById('auth-first-name').value.trim();
     const emailValue = document.getElementById('auth-email').value.trim();
 
@@ -82,7 +77,7 @@ modalGateForm.addEventListener('submit', async (e) => {
         // PIPELINE DELAY PARTITION A: Secure Authentication Generation Signups
         const { data: authData, error: authError } = await supabase.auth.signUp({
             email: emailValue,
-            password: Math.random().toString(36).slice(-12), // Generates standard secure dummy token key hashes automatically
+            password: Math.random().toString(36).slice(-12), 
             options: {
                 data: {
                     first_name: firstNameValue
@@ -112,7 +107,6 @@ modalGateForm.addEventListener('submit', async (e) => {
         surveyForm.reset();
         modalGateForm.reset();
         
-        // Restore radio requirement baselines safely across loop components
         document.querySelectorAll('.slider-row').forEach(row => row.classList.remove('disabled-scale'));
 
         engineChassis.style.display = 'none';
