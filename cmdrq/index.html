@@ -8,16 +8,13 @@
 </head>
 <body>
 
-    <!-- Dynamic Cosmic Vapor Environment Background -->
     <div class="space-field">
         <div class="stars"></div>
     </div>
     <div class="ambient-glow"></div>
 
-    <!-- Main Panoramic Unified Interface Frame -->
     <main class="app-interface">
         
-        <!-- Top Centralized Identity Header Element Block -->
         <header class="central-header">
             <div class="monogram-outer">
                 <div class="monogram-inner">Q</div>
@@ -25,192 +22,75 @@
             <h1 class="shimmer-title">Commander Q</h1>
         </header>
 
-        <!-- Centered Core Content Workspace Layout Array -->
         <div class="workspace-wrapper">
             
-            <!-- Centralized Directive Panel Display -->
             <div class="core-statement-banner">
                 <p class="directive-tag">Chief Vision Officer of VCS // Captain Commander of the Vanguard Knights</p>
                 <p class="directive-text">I serve as a dedicated voice in our community and a strategic leader guiding a new perspective on coexistence. Select a sector below to explore the work.</p>
             </div>
 
-            <!-- Focused Segment Grid Configuration -->
             <div class="workspace-grid">
                 
-                <!-- Phase 01: Empower Panel -->
                 <section class="workspace-column" id="col-empower">
                     <div class="column-header">
                         <span class="column-num">01</span>
                         <h2>EMPOWER</h2>
                     </div>
                     <div class="column-body">
-                        <div class="action-card" onclick="openModal('modal-about')">
+                        <a href="about/" class="action-card">
                             <h3>About Me</h3>
                             <p>Opens my professional background, creative experience, and military service summary.</p>
-                        </div>
-                        <div class="action-card" onclick="openModal('modal-voices')">
+                        </a>
+                        <a href="root/communityvoicebox" class="action-card">
                             <h3>Hardin County Voices</h3>
                             <p>Opens the overview and system details for my local community feedback tool.</p>
-                        </div>
+                        </a>
                     </div>
                 </section>
 
-                <!-- Phase 02: Educate Panel -->
                 <section class="workspace-column" id="col-educate">
                     <div class="column-header">
                         <span class="column-num">02</span>
                         <h2>EDUCATE</h2>
                     </div>
                     <div class="column-body">
-                        <div class="action-card" onclick="openModal('modal-chemistry')">
+                        <a href="#" class="action-card">
                             <h3>Team Chemistry Classes</h3>
                             <p>Opens information about my mindset training and masterclasses for corporate businesses.</p>
-                        </div>
-                        <div class="action-card" onclick="openModal('modal-guides')">
+                        </a>
+                        <a href="#" class="action-card">
                             <h3>Guides</h3>
                             <p>Opens my shared operational files, transparency frameworks, and community playbooks.</p>
-                        </div>
+                        </a>
                     </div>
                 </section>
 
-                <!-- Phase 03: Elevate Panel -->
                 <section class="workspace-column" id="col-elevate">
                     <div class="column-header">
                         <span class="column-num">03</span>
                         <h2>ELEVATE</h2>
                     </div>
                     <div class="column-body">
-                        <div class="action-card" onclick="openModal('modal-music')">
+                        <a href="musicplayer/" class="action-card">
                             <h3>Music Player</h3>
                             <p>Opens an interactive music console containing my custom track mashups and remixes.</p>
-                        </div>
-                        <div class="action-card" onclick="openModal('modal-drift')">
+                        </a>
+                        <a href="dreamscapedrift/" class="action-card">
                             <h3>Dreamscape Drift</h3>
                             <p>Opens my physics telemetry logs, tuning specs, and video media for Forza Horizon 6.</p>
-                        </div>
+                        </a>
                     </div>
                 </section>
 
             </div>
         </div>
 
-        <!-- Centralized Channel Dock Footer Base -->
         <footer class="channel-dock">
             <a href="https://music.apple.com" target="_blank" class="dock-link">APPLE_MUSIC</a>
             <a href="https://tiktok.com" target="_blank" class="dock-link">TIKTOK</a>
         </footer>
 
     </main>
-
-    <!-- Global Application Modal Layer Systems -->
-    
-    <!-- About Me Modal -->
-    <div id="modal-about" class="modal-overlay" onclick="closeModalOutside(event, 'modal-about')">
-        <div class="modal-window">
-            <button class="close-btn" onclick="closeModal('modal-about')">✕</button>
-            <div class="modal-header">ABOUT ME</div>
-            <div class="modal-body-content">
-                <p>Owner and Chief Vision Officer of Vanguard Citizen Services (VCS), a dedicated creative studio crafting unique narratives designed to move our global community toward positive coexistence.</p>
-                <p>Serving operationally as the Captain Commander of the Vanguard Knights. Combat veteran and creative director balancing structural discipline with absolute local transparency.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Hardin County Voices Modal -->
-    <div id="modal-voices" class="modal-overlay" onclick="closeModalOutside(event, 'modal-voices')">
-        <div class="modal-window">
-            <button class="close-btn" onclick="closeModal('modal-voices')">✕</button>
-            <div class="modal-header">HARDIN COUNTY VOICES</div>
-            <div class="modal-body-content">
-                <p>I created this tool to elevate the many narratives that share our community.</p>
-                <p>A regional open-access data pipeline and community suggestion utility designed to directly bridge gaps between residents and administrative leadership elements.</p>
-                <p>Engineered to ensure that hyper-local infrastructure inquiries are surfaced transparently and monitored structurally rather than handled as an operational afterthought.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Team Chemistry Modal -->
-    <div id="modal-chemistry" class="modal-overlay" onclick="closeModalOutside(event, 'modal-chemistry')">
-        <div class="modal-window">
-            <button class="close-btn" onclick="closeModal('modal-chemistry')">✕</button>
-            <div class="modal-header">TEAM CHEMISTRY</div>
-            <div class="modal-body-content">
-                <p>Strategic training modules applying tactical drift mechanics and audio synchronization to enterprise team dynamics.</p>
-                <p>Teaches corporate management how to safely initiate controlled organizational momentum changes, handle external friction factors, and layer diverse employee skill sets without overriding critical individual voice frequencies.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Guides Modal -->
-    <div id="modal-guides" class="modal-overlay" onclick="closeModalOutside(event, 'modal-guides')">
-        <div class="modal-window">
-            <button class="close-btn" onclick="closeModal('modal-guides')">✕</button>
-            <div class="modal-header">GUIDES</div>
-            <div class="modal-body-content">
-                <p>Open-source architecture repositories outlining standard operating procedures for local community oversight groups, verification protocols, and community dashboard templates.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Music Player Modal -->
-    <div id="modal-music" class="modal-overlay" onclick="closeModalOutside(event, 'modal-music')">
-        <div class="modal-window wide-modal">
-            <button class="close-btn" onclick="closeModal('modal-music')">✕</button>
-            <div class="modal-header">MUSIC PLAYER</div>
-            <div class="modal-body-content">
-                <div class="audio-deck-layout">
-                    <div class="deck-controls">
-                        <div class="now-playing-tag">TRACK_INDEX// MIX_04_VAPOR_DRIFT.MP3</div>
-                        <div class="progress-bar-container">
-                            <div class="progress-bar-fill"></div>
-                        </div>
-                        <div class="deck-btn-group">
-                            <button class="deck-btn">PREV</button>
-                            <button class="deck-btn target-neon">PLAY</button>
-                            <button class="deck-btn">NEXT</button>
-                        </div>
-                    </div>
-                    <div class="track-index-list">
-                        <div class="track-row active-track"><span>01.</span> MIX_04_VAPOR_DRIFT.MP3 <span class="track-time">04:12</span></div>
-                        <div class="track-row"><span>02.</span> KNIGHTS_ANALYST_MASHUP.RAW <span class="track-time">03:55</span></div>
-                        <div class="track-row"><span>03.</span> RADCLIFF_NIGHTS_VIBE.MP3 <span class="track-time">05:21</span></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Dreamscape Drift Modal -->
-    <div id="modal-drift" class="modal-overlay" onclick="closeModalOutside(event, 'modal-drift')">
-        <div class="modal-window wide-modal">
-            <button class="close-btn" onclick="closeModal('modal-drift')">✕</button>
-            <div class="modal-header">DREAMSCAPE DRIFT</div>
-            <div class="modal-body-content">
-                <div class="telemetry-layout">
-                    <div class="telemetry-stats-grid">
-                        <div class="stat-node">
-                            <span class="stat-label">ANGLE_THROTTLE_RATIO</span>
-                            <span class="stat-value text-blue">88.4%</span>
-                        </div>
-                        <div class="stat-node">
-                            <span class="stat-label">COUNTER_STEER_LATENCY</span>
-                            <span class="stat-value text-pink">12MS</span>
-                        </div>
-                        <div class="stat-node">
-                            <span class="stat-label">FORZA_6_PLATFORM_STABILITY</span>
-                            <span class="stat-value text-purple">ACTIVE</span>
-                        </div>
-                    </div>
-                    <div class="script-terminal-box">
-                        <p class="term-line">&gt; INITIALIZING DREAM_SCRIPT VELOCITY MODULE...</p>
-                        <p class="term-line">&gt; CONFIGURING CLUTCH-KICK FRICTION COEFFICIENTS: SUCCESS</p>
-                        <p class="term-line">&gt; FORZA HORIZON 6 DRIFT METRICS RECOVERY: RUNNING...</p>
-                        <p class="term-line text-pink">&gt; ALERT: LATERAL FORCE DISPLACEMENT OPTIMIZED FOR SYSTEM SYNERGY</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <script src="app.js"></script>
 </body>
