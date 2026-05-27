@@ -126,15 +126,6 @@
         .field-query { font-size: 0.95rem; color: #ffffff; line-height: 1.5; margin-bottom: 15px; }
         .field-query strong { color: var(--gold); }
 
-        .shimmer-gold-link {
-            font-size: 0.95rem; font-weight: 700; text-decoration: none; text-transform: uppercase; letter-spacing: 1px;
-            background: linear-gradient(to right, #D4AF37 20%, #ffffff 50%, #D4AF37 80%); background-size: 200% auto;
-            color: transparent; -webkit-background-clip: text; background-clip: text;
-            animation: goldShine 3s linear infinite; display: inline-block; transition: transform 0.3s ease, filter 0.3s ease;
-        }
-        .shimmer-gold-link:hover { transform: scale(1.05); filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.5)); }
-        @keyframes goldShine { to { background-position: 200% center; } }
-
         /* --- INSTRUCTION PANEL STYLES --- */
         .instruction-box {
             background: rgba(0, 0, 0, 0.25);
@@ -145,6 +136,24 @@
         }
         .instruction-step { font-size: 0.85rem; color: var(--white); margin-bottom: 6px; line-height: 1.4; }
         .instruction-step strong { color: var(--gold); }
+
+        /* --- DONATION MODULE STYLING --- */
+        .donation-module { text-align: center; padding: 25px; margin-top: 10px; }
+        .pulse-text {
+            color: var(--gold); font-size: 1.1rem; font-weight: 800; text-transform: uppercase;
+            letter-spacing: 2px; margin-bottom: 10px; animation: textBrightPulse 3s infinite ease-in-out;
+        }
+        @keyframes textBrightPulse {
+            0%, 100% { text-shadow: 0 0 2px transparent; opacity: 0.85; }
+            50% { text-shadow: 0 0 15px var(--gold-glow), 0 0 25px var(--gold); color: #ffffff; opacity: 1; }
+        }
+        .support-btn {
+            background: transparent; border: 2px solid var(--gold); color: var(--gold); 
+            width: auto; display: inline-block; padding: 10px 25px; border-radius: 30px; 
+            margin-top: 5px; font-weight: bold; font-size: 0.8rem; text-transform: uppercase; cursor: pointer; transition: 0.3s;
+            text-decoration: none;
+        }
+        .support-btn:hover { background: var(--gold); color: #05040a; }
 
         /* --- FORM CONTROLS --- */
         label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.85rem; color: var(--gold); text-transform: uppercase; letter-spacing: 0.5px; }
@@ -219,14 +228,17 @@
             <form id="index-survey-form" class="civic-window-form" autocomplete="off">
                 <div class="scroller-bay">
                     
+                    <!-- STEP 1: REGION CHECK -->
                     <h2>01 // Your Town</h2>
                     <div style="margin-bottom: 25px;">
                         <label for="user-zip">Zip Code Verification</label>
                         <input type="text" id="user-zip" pattern="[0-9]{5}" maxlength="5" placeholder="Enter 5-digit zip code..." required>
                     </div>
 
+                    <!-- STEP 2: METRICS FORM -->
                     <h2>02 // Core Metrics</h2>
                     
+                    <!-- Category 1 -->
                     <div class="metric-block" id="block-cat1">
                         <p class="field-query"><strong>Starting Strong:</strong> Does your local school make it easy for the youngest kids to get ready and start learning?</p>
                         <div class="slider-row" id="scale-cat1">
@@ -247,6 +259,7 @@
                         </div>
                     </div>
 
+                    <!-- Category 2 -->
                     <div class="metric-block" id="block-cat2">
                         <p class="field-query"><strong>The Middle School Slide:</strong> How well do you feel the school keeps kids from falling behind in reading and math as they get older?</p>
                         <div class="slider-row" id="scale-cat2">
@@ -267,6 +280,7 @@
                         </div>
                     </div>
 
+                    <!-- Category 3 -->
                     <div class="metric-block" id="block-cat3">
                         <p class="field-query"><strong>The Diploma Dropout:</strong> When kids graduate, does the school give them a clear, real-world plan for college or a local career?</p>
                         <div class="slider-row" id="scale-cat3">
@@ -287,6 +301,7 @@
                         </div>
                     </div>
 
+                    <!-- Category 4 -->
                     <div class="metric-block" id="block-cat4">
                         <p class="field-query"><strong>The Good Job Gap:</strong> Are the schools teaching the actual technical skills and trades that local employers are hiring for right now?</p>
                         <div class="slider-row" id="scale-cat4">
@@ -315,6 +330,15 @@
             </form>
         </main>
 
+        <!-- MOUNT SUPPORT TOOL MODULE BASE -->
+        <div class="module-card donation-module">
+            <div class="pulse-text">Support This Tool</div>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 10px; line-height: 1.5;">
+                All proceeds go to server costs and features.
+            </p>
+            <a href="https://square.link/u/E37Gsz7R?src=sheet" target="_blank" class="support-btn">Donate</a>
+        </div>
+
     </div>
 
     <div class="footer-pad">
@@ -323,6 +347,7 @@
         </footer>
     </div>
 
+    <!-- COMET ENVIRONMENT SCENE GRAPHICS -->
     <script>
         function spawnComet() {
             const container = document.getElementById('environment');
@@ -341,9 +366,9 @@
         if (yearSpan) yearSpan.innerText = new Date().getFullYear();
     </script>
 
+    <!-- INLINE ENGINE DISPATCH ENGINE CONTAINER -->
     <script src="../config.js"></script>
     <script>
-        // INTERCEPT RETURNING USERS IMMEDIATELY ON LOAD
         if (localStorage.getItem('vcs_report_submitted') === 'on') {
             window.location.href = "results.html";
         }
@@ -409,7 +434,6 @@
 
                     if (dbError) throw dbError;
 
-                    // SET RETURNING USER LOCK TO PREVENT MULTIPLE SUBMISSIONS
                     localStorage.setItem('vcs_report_submitted', 'on');
 
                     surveyForm.reset();
