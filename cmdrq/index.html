@@ -3,95 +3,276 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>COMMANDER Q</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Dreamscape Drift</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+    
+    <style>
+        /* --- Vaporwave Theme Variables Mapping --- */
+        :root {
+            --bg-deep: #06040d;
+            --purple-muted: #9575cd;
+            --purple-glow: #b388ff;
+            --blue-muted: #4dd0e1;
+            --pink-neon: #ff4081;
+            --pink-glow: #ff0055;
+            --card-surface: rgba(14, 10, 26, 0.85);
+            --border-color: rgba(149, 117, 205, 0.3);
+            --text-primary: #f1ecfb;
+        }
+
+        /* --- Force System Screen Lock --- */
+        html, body {
+            overflow: hidden !important;
+            height: 100dvh;
+            width: 100vw;
+            background-color: var(--bg-deep);
+            color: var(--text-primary);
+            font-family: 'SF Pro Display', -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+        }
+
+        /* --- Base Layout --- */
+        .hub-container {
+            height: 100dvh;
+            max-height: 100dvh;
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 92%; 
+            max-width: 500px;
+            margin: 0 auto;
+            transition: max-width 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            position: relative;
+            z-index: 3;
+        }
+
+        @media (min-width: 768px) {
+            .hub-container { 
+                max-width: 700px !important; 
+            }
+        }
+
+        /* --- Global Typography Resets --- */
+        .hub-title {
+            font-size: 1.8rem;
+            font-weight: 900;
+            letter-spacing: 4px;
+            color: var(--blue-muted);
+            text-transform: uppercase;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--pink-neon);
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+
+        /* --- Pulsing Edge Frame --- */
+        .hub-card {
+            display: flex;
+            flex-direction: column;
+            height: auto;
+            max-height: 85dvh;
+            padding: 20px;
+            margin-bottom: 0;
+            overflow: hidden;
+            background: var(--card-surface);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            animation: borderGlowPulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes borderGlowPulse {
+            0%, 100% {
+                border-color: var(--border-color);
+                box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            }
+            50% {
+                border-color: var(--blue-muted);
+                box-shadow: 0 20px 50px rgba(77, 208, 225, 0.15), 0 0 20px rgba(77, 208, 225, 0.2);
+            }
+        }
+
+        /* --- Player Viewport Frame --- */
+        .player-viewport {
+            width: 100%;
+            background: #000000;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            aspect-ratio: 16 / 9;
+            margin-bottom: 20px;
+            flex-shrink: 0;
+        }
+
+        .player-viewport iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            display: block;
+        }
+
+        /* --- Independent Scroller Bay --- */
+        .scroller-bay {
+            overflow-y: auto;
+            flex-grow: 1;
+            padding-right: 4px;
+            margin-bottom: 15px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .scroller-bay::-webkit-scrollbar { width: 4px; }
+        .scroller-bay::-webkit-scrollbar-track { background: transparent; }
+        .scroller-bay::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 10px; }
+
+        .video-selection-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+        }
+
+        /* --- Selection Buttons --- */
+        .video-thumb {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 8px; 
+            padding: 14px 20px;
+            text-align: left;
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+            flex-shrink: 0;
+        }
+
+        .video-thumb:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--pink-neon);
+        }
+
+        .video-thumb.active {
+            background: rgba(77, 208, 225, 0.1);
+            color: var(--blue-muted);
+            border-color: var(--blue-muted);
+            box-shadow: 0 0 10px rgba(77, 208, 225, 0.2);
+        }
+
+        /* --- Clean Return Link Override --- */
+        .hub-return-container {
+            text-align: center; 
+            margin-top: 5px; 
+            flex-shrink: 0;
+        }
+
+        .hub-return-link {
+            color: #ffffff !important;
+            text-decoration: none !important;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: color 0.2s ease, text-shadow 0.2s ease;
+            display: inline-block;
+        }
+
+        .hub-return-link:hover {
+            color: var(--pink-neon) !important;
+            text-shadow: 0 0 8px var(--pink-glow);
+        }
+    </style>
 </head>
 <body>
 
-    <div class="space-field">
-        <div class="stars"></div>
+    <div id="starfield"><div class="stars"></div></div>
+
+    <div class="hub-container">
+        <h1 class="hub-title">Dreamscape Drift</h1>
+
+        <main class="hub-card">
+
+            <div class="player-viewport">
+                <iframe id="main-drift-player" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+
+            <div class="scroller-bay">
+                <h2>Video Menu</h2>
+                <div id="video-menu-hook" class="video-selection-grid" style="margin-top: 15px;"></div>
+            </div>
+
+            <div class="hub-return-container">
+                <a href="../" class="hub-return-link">← Return to Control Deck</a>
+            </div>
+        </main>
     </div>
-    <div class="ambient-glow"></div>
 
-    <main class="app-interface">
-        
-        <header class="central-header">
-            <div class="monogram-outer">
-                <div class="monogram-inner">Q</div>
-            </div>
-            <h1 class="shimmer-title">Commander Q</h1>
-        </header>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuContainer = document.getElementById('video-menu-hook');
+            const mainPlayer = document.getElementById('main-drift-player');
 
-        <div class="workspace-wrapper">
-            
-            <div class="core-statement-banner">
-                <p class="directive-tag">Chief Vision Officer of VCS // Captain Commander of the Vanguard Knights</p>
-                <p class="directive-text">I serve as a dedicated voice in our community and a strategic leader guiding a new perspective on coexistence. Select a sector below to explore the work.</p>
-            </div>
+            function cleanYouTubeUrl(urlStr) {
+                let idFound = "";
+                try {
+                    if (urlStr.includes("youtube.com/embed/")) {
+                        idFound = urlStr.split("youtube.com/embed/")[1].split("?")[0];
+                    } else if (urlStr.includes("youtu.be/")) {
+                        idFound = urlStr.split("youtu.be/")[1].split("?")[0];
+                    } else if (urlStr.includes("v=")) {
+                        idFound = urlStr.split("v=")[1].split("&")[0];
+                    } else {
+                        idFound = urlStr;
+                    }
+                } catch(e) {
+                    console.error("URL string parsing error", e);
+                }
+                return "https://www.youtube.com/embed/" + idFound.trim();
+            }
 
-            <div class="workspace-grid">
-                
-                <section class="workspace-column" id="col-empower">
-                    <div class="column-header">
-                        <span class="column-num">01</span>
-                        <h2>EMPOWER</h2>
-                    </div>
-                    <div class="column-body">
-                        <a href="about/" class="action-card">
-                            <h3>About Me</h3>
-                            <p>Opens my professional background, creative experience, and military service summary.</p>
-                        </a>
-                        <a href="root/communityvoicebox" class="action-card">
-                            <h3>Hardin County Voices</h3>
-                            <p>Opens the overview and system details for my local community feedback tool.</p>
-                        </a>
-                    </div>
-                </section>
+            fetch('videos.json')
+                .then(res => res.json())
+                .then(data => {
+                    menuContainer.innerHTML = '';
+                    
+                    data.forEach((item, index) => {
+                        const btn = document.createElement('div');
+                        btn.className = 'video-thumb';
+                        btn.innerText = item.title;
+                        
+                        const safeBaseUrl = cleanYouTubeUrl(item.src);
+                        const safeAutoplayUrl = safeBaseUrl + "?autoplay=1&rel=0";
+                        
+                        if (index === 0) {
+                            btn.classList.add('active');
+                            mainPlayer.src = safeBaseUrl + "?rel=0"; 
+                        }
 
-                <section class="workspace-column" id="col-educate">
-                    <div class="column-header">
-                        <span class="column-num">02</span>
-                        <h2>EDUCATE</h2>
-                    </div>
-                    <div class="column-body">
-                        <a href="#" class="action-card">
-                            <h3>Team Chemistry Classes</h3>
-                            <p>Opens information about my mindset training and masterclasses for corporate businesses.</p>
-                        </a>
-                        <a href="#" class="action-card">
-                            <h3>Guides</h3>
-                            <p>Opens my shared operational files, transparency frameworks, and community playbooks.</p>
-                        </a>
-                    </div>
-                </section>
+                        btn.addEventListener('click', () => {
+                            document.querySelectorAll('.video-thumb').forEach(t => t.classList.remove('active'));
+                            btn.classList.add('active');
+                            mainPlayer.src = safeAutoplayUrl;
+                        });
 
-                <section class="workspace-column" id="col-elevate">
-                    <div class="column-header">
-                        <span class="column-num">03</span>
-                        <h2>ELEVATE</h2>
-                    </div>
-                    <div class="column-body">
-                        <a href="musicplayer/" class="action-card">
-                            <h3>Music Player</h3>
-                            <p>Opens an interactive music console containing my custom track mashups and remixes.</p>
-                        </a>
-                        <a href="dreamscapedrift/" class="action-card">
-                            <h3>Dreamscape Drift</h3>
-                            <p>Opens my physics telemetry logs, tuning specs, and video media for Forza Horizon 6.</p>
-                        </a>
-                    </div>
-                </section>
-
-            </div>
-        </div>
-
-        <footer class="channel-dock">
-            <a href="https://music.apple.com" target="_blank" class="dock-link">APPLE_MUSIC</a>
-            <a href="https://tiktok.com" target="_blank" class="dock-link">TIKTOK</a>
-        </footer>
-
-    </main>
-
-    <script src="app.js"></script>
+                        menuContainer.appendChild(btn);
+                    });
+                })
+                .catch(err => {
+                    menuContainer.innerHTML = '<div style="color:#ffffff; font-size:0.8rem; text-align:center; width:100%;">Configuration stream offline.</div>';
+                });
+        });
+    </script>
 </body>
 </html>
