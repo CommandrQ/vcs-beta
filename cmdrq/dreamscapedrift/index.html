@@ -33,10 +33,10 @@
             z-index: 3;
         }
 
-        /* --- DESKTOP SCALE ADJUSTMENTS --- */
+        /* --- DESKTOP SCALE EXPANSION --- */
         @media (min-width: 901px) {
             .hub-container { 
-                max-width: 700px !important; 
+                max-width: 850px !important; /* Widened frame layout to support columns easily */
             }
         }
 
@@ -58,6 +58,7 @@
             text-transform: uppercase;
             border-bottom: 1px solid var(--border-color, rgba(149, 117, 205, 0.3));
             padding-bottom: 8px;
+            margin-bottom: 15px;
         }
 
         /* --- PULSING EDGE FRAME --- */
@@ -65,7 +66,7 @@
             display: flex;
             flex-direction: column;
             height: auto;
-            max-height: 82dvh;
+            max-height: 85dvh;
             padding: 20px;
             margin-bottom: 0;
             overflow: hidden;
@@ -118,11 +119,18 @@
         .scroller-bay::-webkit-scrollbar-track { background: transparent; }
         .scroller-bay::-webkit-scrollbar-thumb { background: var(--border-color, rgba(149, 117, 205, 0.3)); border-radius: 10px; }
 
+        /* REVISED: Fluid layout shifting from single column to grid array pattern */
         .video-selection-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+            display: grid;
+            grid-template-columns: 1fr; /* Single column layout default for mobile profiles */
+            gap: 12px;
             width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .video-selection-grid {
+                grid-template-columns: 1fr 1fr; /* Split into balanced multi-column grid view layout on desktop screens */
+            }
         }
 
         /* --- MENU BUTTON SHAPES WITH TEXT WRAPPING RULES --- */
@@ -139,9 +147,9 @@
             cursor: pointer;
             transition: all 0.2s ease;
             width: 100%;
-            flex-shrink: 0;
+            display: flex;
+            align-items: center;
 
-            /* Allows long clip descriptions or titles to wrap down gracefully */
             white-space: normal;
             word-wrap: break-word;
             overflow: visible;
@@ -202,7 +210,7 @@
 
             <div class="scroller-bay">
                 <h2>Video Menu</h2>
-                <div id="video-menu-hook" class="video-selection-grid" style="margin-top: 15px;"></div>
+                <div id="video-menu-hook" class="video-selection-grid"></div>
             </div>
 
             <div class="hub-return-container">
