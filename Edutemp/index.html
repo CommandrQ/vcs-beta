@@ -3,395 +3,399 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>RADCLIFF CIVILIAN INDEX</title>
-    <link rel="stylesheet" href="../style.css?v=2">
+    <title>Radcliff Civilian Index | Project V</title>
+    <link rel="stylesheet" href="../style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     <style>
-        /* --- SYSTEM SCREEN LOCK --- */
-        html, body {
-            overflow: hidden !important;
-            height: 100dvh;
-            width: 100vw;
+        /* --- BRANDING & LOCAL VARIABLES --- */
+        :root {
+            --gold: #D4AF37;
+            --gold-glow: rgba(212, 175, 55, 0.4);
+            --bg-dark: #05040a;
+            --white: #ffffff;
+            --text-muted: #ffffff;
+            --glass-bg: rgba(15, 15, 20, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        html { 
+            scroll-behavior: smooth; 
+            overflow-x: hidden;
+        }
+
+        body {
+            background: linear-gradient(180deg, #020108 0%, #0a0815 40%, #1a1005 75%, #D4AF37 120%);
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            min-height: 100dvh;
             margin: 0;
             padding: 0;
+            overflow-y: auto; 
+            overflow-x: hidden; 
+            -webkit-overflow-scrolling: touch; 
         }
 
-        /* --- INTERNAL WINDOW SCROLLER ENGINE --- */
-        .civic-chassis {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            max-width: 480px;
-            height: auto;
-            max-height: 85dvh; 
-            margin: 0 auto;
-            background: #000000;
-            border: 2px solid var(--purple-muted);
-            border-radius: 16px;
-            padding: 20px;
-            box-shadow: 0 0 25px rgba(149, 117, 205, 0.4);
-            overflow: hidden; 
+        /* --- BACKGROUND ENVIRONMENT --- */
+        #environment { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+        .starfield {
+            position: absolute; width: 200vw; height: 200vh; top: -50%; left: -50%;
+            background-image: 
+                radial-gradient(1.5px 1.5px at 10% 10%, #fff, transparent),
+                radial-gradient(2px 2px at 30% 40%, var(--gold), transparent),
+                radial-gradient(1px 1px at 80% 20%, #fff, transparent),
+                radial-gradient(2.5px 2.5px at 50% 80%, var(--gold), transparent);
+            background-size: 350px 350px;
+            animation: stellar-drift 400s linear infinite;
+            opacity: 0.5;
+        }
+        @keyframes stellar-drift { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        .comet {
+            position: absolute; width: 120px; height: 2px;
+            background: linear-gradient(90deg, #fff 0%, var(--gold) 20%, transparent 100%);
+            border-radius: 50%; box-shadow: 0 0 15px var(--gold-glow);
+            animation: comet-strike 2s var(--ease-smooth) forwards; opacity: 0;
+        }
+        @keyframes comet-strike {
+            0% { transform: translate(0, 0) rotate(-35deg); opacity: 1; }
+            100% { transform: translate(-1000px, 600px) rotate(-35deg); opacity: 0; }
         }
 
-        .survey-window-form {
+        /* --- MASTER LAYOUT --- */
+        .app-container {
+            width: 92%;
+            max-width: 600px;
+            margin: 40px auto 20px;
             display: flex;
             flex-direction: column;
-            height: 100%;
-            overflow: hidden;
+            gap: 30px;
+            flex-grow: 1;
+            z-index: 10;
+        }
+
+        /* --- MODULAR WINDOW CHASSIS --- */
+        .module-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px) saturate(150%);
+            -webkit-backdrop-filter: blur(25px) saturate(150%);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 30px 25px; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(255,255,255,0.05);
+            text-align: left;
+        }
+
+        @media (min-width: 768px) {
+            .module-card { padding: 40px; }
+        }
+
+        .civic-window-form {
+            display: flex;
+            flex-direction: column;
+            max-height: 70dvh;
         }
 
         .scroller-bay {
             overflow-y: auto;
-            flex-grow: 1;
-            padding-right: 6px;
+            padding-right: 10px;
             -webkit-overflow-scrolling: touch;
         }
 
         .scroller-bay::-webkit-scrollbar { width: 4px; }
         .scroller-bay::-webkit-scrollbar-track { background: transparent; }
-        .scroller-bay::-webkit-scrollbar-thumb { background: var(--border-color, rgba(149, 117, 205, 0.3)); border-radius: 10px; }
+        .scroller-bay::-webkit-scrollbar-thumb { background: var(--gold-glow); border-radius: 10px; }
 
-        /* --- INTERFACE PRESENTATION MODULES --- */
-        .step-block {
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 1px dashed var(--border-color);
+        /* --- TYPOGRAPHY --- */
+        .page-header { text-align: center; margin-bottom: 25px; }
+        .page-title { 
+            font-size: clamp(1.8rem, 5vw, 2.3rem); font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
+            background: linear-gradient(180deg, #fff 0%, var(--gold) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.3));
+            margin-bottom: 5px;
+            line-height: 1.1;
         }
+        .page-subtitle { color: var(--gold); font-size: 0.95rem; letter-spacing: 3px; text-transform: uppercase; font-weight: 600; }
 
-        .step-block:last-of-type {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
+        h2 { color: var(--gold); font-size: 1.1rem; font-weight: 700; margin-top: 0; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid var(--glass-border); padding-bottom: 8px; }
+        p { color: rgba(255, 255, 255, 0.9); font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px; }
+        
+        .field-query { font-size: 0.95rem; color: #ffffff; line-height: 1.5; margin-bottom: 15px; }
+        .field-query strong { color: var(--gold); }
+
+        .shimmer-gold-link {
+            font-size: 0.95rem; font-weight: 700; text-decoration: none; text-transform: uppercase; letter-spacing: 1px;
+            background: linear-gradient(to right, #D4AF37 20%, #ffffff 50%, #D4AF37 80%); background-size: 200% auto;
+            color: transparent; -webkit-background-clip: text; background-clip: text;
+            animation: goldShine 3s linear infinite; display: inline-block; transition: transform 0.3s ease, filter 0.3s ease;
         }
+        .shimmer-gold-link:hover { transform: scale(1.05); filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.5)); }
+        @keyframes goldShine { to { background-position: 200% center; } }
 
-        .footer-action-block {
-            flex-shrink: 0;
-            padding-top: 15px;
-            border-top: 1px solid var(--border-color);
-            margin-top: 10px;
+        /* --- FORM CONTROLS --- */
+        label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.85rem; color: var(--gold); text-transform: uppercase; letter-spacing: 0.5px; }
+        input { 
+            width: 100%; padding: 14px; border-radius: 12px; 
+            border: 1px solid rgba(255, 255, 255, 0.15); background: rgba(0, 0, 0, 0.4); color: white; 
+            font-family: inherit; font-size: 0.95rem; transition: all 0.3s ease; margin-bottom: 5px;
         }
+        input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 12px var(--gold-glow); background: rgba(0, 0, 0, 0.6); }
+        input::placeholder { color: rgba(255, 255, 255, 0.4); }
 
-        .field-label {
-            font-size: 0.95rem;
-            font-weight: 800;
-            letter-spacing: 1px;
-            color: var(--blue-muted);
-            text-transform: uppercase;
-            margin-bottom: 8px;
-            display: block;
-        }
-
-        .field-query {
-            font-size: 0.85rem;
-            line-height: 1.4;
-            color: #ffffff;
-            margin-bottom: 12px;
-        }
-
-        .zip-input, .modal-input {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 12px;
-            color: #ffffff;
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        .zip-input:focus, .modal-input:focus {
-            border-color: var(--pink-neon);
-        }
-
+        /* --- LINEAR MATRIX SLIDER ARRAY --- */
         .slider-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 4px;
-            margin-bottom: 12px;
-            transition: opacity 0.2s ease;
+            display: flex; justify-content: space-between; align-items: center; gap: 5px; margin-bottom: 15px; transition: opacity 0.3s var(--ease-smooth);
         }
 
-        .radio-node {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer;
-        }
-
-        .radio-node input {
-            display: none;
-        }
-
+        .radio-node { flex: 1; display: flex; flex-direction: column; align-items: center; cursor: pointer; }
+        .radio-node input { display: none; }
         .radio-node .node-box {
-            width: 100%;
-            padding: 8px 0;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            text-align: center;
-            font-size: 0.8rem;
-            font-weight: 800;
-            color: #ffffff;
-            transition: all 0.2s ease;
+            width: 100%; padding: 10px 0; background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 8px; text-align: center; font-size: 0.9rem; font-weight: 700; color: #ffffff; transition: all 0.2s ease;
         }
-
         .radio-node input:checked + .node-box {
-            background: var(--purple-glow);
-            border-color: var(--purple-glow);
-            color: #06040d;
-            box-shadow: 0 0 10px var(--purple-glow);
+            background: var(--gold); border-color: var(--gold); color: #05040a; box-shadow: 0 0 15px var(--gold-glow);
         }
 
-        .na-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+        .na-row { display: flex; align-items: center; gap: 8px; margin-bottom: 25px; }
+        .na-checkbox { accent-color: var(--gold); width: 16px; height: 16px; cursor: pointer; margin: 0; }
+        .na-label { font-size: 0.8rem; font-weight: 700; color: rgba(255, 255, 255, 0.6); cursor: pointer; letter-spacing: 0.5px; text-transform: uppercase; }
+        .na-checkbox:checked + .na-label { color: var(--gold); }
 
-        .na-checkbox {
-            accent-color: var(--pink-neon);
-            width: 16px;
-            height: 16px;
-            cursor: pointer;
-        }
+        .disabled-scale { opacity: 0.2; pointer-events: none; }
 
-        .na-label {
-            font-size: 0.8rem;
-            font-weight: 800;
-            color: var(--pink-neon);
-            cursor: pointer;
-            letter-spacing: 1px;
+        /* --- BUTTONS --- */
+        .action-btn {
+            width: 100%; padding: 18px; border-radius: 14px; border: none; 
+            background: var(--white); color: #05040a; font-weight: 800; font-size: 1rem;
+            text-transform: uppercase; letter-spacing: 1px;
+            cursor: pointer; transition: all 0.3s var(--ease-smooth);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: flex; justify-content: center; align-items: center; gap: 10px;
         }
+        .action-btn:hover { background: var(--gold); box-shadow: 0 0 25px var(--gold-glow); transform: translateY(-2px); }
 
-        .disabled-scale {
-            opacity: 0.25;
-            pointer-events: none;
-        }
+        .footer-action-block { padding-top: 20px; border-top: 1px solid var(--glass-border); margin-top: 15px; }
 
-        .gate-modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(6, 4, 13, 0.9);
-            z-index: 100;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
+        /* --- GATEWAY OVERLAY & MODAL WINDOW --- */
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            z-index: 999; display: flex; justify-content: center; align-items: center;
+            opacity: 0; visibility: hidden; transition: all 0.4s var(--ease-smooth);
+            padding: 20px;
         }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
 
-        .gate-modal-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
+        .modal-window {
+            background: rgba(15, 15, 20, 0.95); border: 1px solid var(--gold); border-radius: 24px;
+            padding: 35px 25px; width: 100%; max-width: 450px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6), inset 0 0 20px rgba(212,175,55,0.1);
+            transform: scale(0.95); transition: transform 0.4s var(--ease-smooth); position: relative;
         }
+        .modal-overlay.active .modal-window { transform: scale(1); }
 
-        .gate-modal-box {
-            background: #000000;
-            border: 2px solid var(--pink-neon);
-            border-radius: 12px;
-            padding: 24px;
-            width: 90%;
-            max-width: 400px;
-            box-shadow: 0 0 30px var(--pink-glow);
-            text-align: center;
+        .btn-close {
+            position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.05);
+            border: none; color: rgba(255,255,255,0.5); width: 36px; height: 36px; border-radius: 50%;
+            font-size: 1.2rem; cursor: pointer; display: flex; justify-content: center; align-items: center; transition: all 0.2s ease;
         }
+        .btn-close:hover { background: rgba(255,255,255,0.15); color: var(--gold); }
 
-        .gate-modal-box h3 {
-            font-size: 1.2rem;
-            font-weight: 900;
-            color: #ffffff;
-            letter-spacing: 1px;
-            margin-bottom: 12px;
-            text-transform: uppercase;
-        }
+        .modal-field-group { margin-bottom: 15px; }
+        .modal-actions { display: flex; gap: 15px; margin-top: 25px; }
 
-        .gate-modal-box p {
-            font-size: 0.85rem;
-            line-height: 1.5;
-            color: var(--text-primary);
-            margin-bottom: 20px;
-        }
+        /* --- RESPONSE FEEDBACK SCREEN --- */
+        .system-feedback { display: none; text-align: center; padding: 40px 20px; }
+        .system-feedback h2 { color: var(--gold); border-bottom: none; font-size: 1.5rem; margin-bottom: 15px; }
 
-        .modal-field-group {
-            margin-bottom: 16px;
-            text-align: left;
-        }
-
-        .modal-actions {
-            display: flex;
-            gap: 12px;
-            margin-top: 20px;
-        }
-
-        .system-feedback {
-            display: none;
-            text-align: center;
-            padding: 30px 20px;
-        }
-
-        .system-feedback h2 {
-            color: var(--blue-muted);
-            font-size: 1.4rem;
-            font-weight: 900;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-
-        .system-feedback p {
-            font-size: 0.9rem;
-            line-height: 1.5;
-        }
+        /* --- CENTERED SYSTEM FOOTER --- */
+        .footer-pad { margin-top: auto; width: 100%; display: flex; justify-content: center; align-items: center; }
+        .system-footer { padding: 25px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: #ffffff; text-align: center; }
     </style>
 </head>
 <body>
 
-    <div id="starfield"><div class="stars"></div></div>
-    <div class="ambient-glow"></div>
+    <div id="environment"><div class="starfield"></div></div>
 
-    <div class="hub-container">
-        <main class="civic-chassis" id="engine-chassis">
-            
-            <form id="index-survey-form" class="survey-window-form" autocomplete="off">
+    <div class="app-container">
+        
+        <header class="page-header">
+            <h1 class="page-title">Radcliff Civilian Index</h1>
+            <div class="page-subtitle">Project V // 60-Second Temperature Check</div>
+        </header>
+
+        <main class="module-card" id="engine-chassis">
+            <form id="index-survey-form" class="civic-window-form" autocomplete="off">
                 
                 <div class="scroller-bay">
                     
-                    <section class="step-block">
-                        <label for="user-zip" class="field-label">01 // Zip Code Verification</label>
-                        <p class="field-query">Provide your 5-digit residency sector to isolate geographic reporting streams.</p>
-                        <input type="text" id="user-zip" class="zip-input" pattern="[0-9]{5}" maxlength="5" placeholder="Enter zip code..." required>
-                    </section>
+                    <!-- STEP 1: REGION CHECK -->
+                    <h2>01 // Geographic Sector</h2>
+                    <div style="margin-bottom: 25px;">
+                        <label for="user-zip">Zip Code Verification</label>
+                        <input type="text" id="user-zip" pattern="[0-9]{5}" maxlength="5" placeholder="Enter 5-digit zip code..." required>
+                    </div>
 
-                    <section class="step-block">
-                        <span class="field-label">02 // Local Metrics Survey</span>
-                        
-                        <div class="metric-block" style="margin-top: 15px;" id="block-cat1">
-                            <p class="field-query"><strong>Starting Strong:</strong> Does your local school make it easy for the youngest kids to get ready and start learning?</p>
-                            <div class="slider-row" id="scale-cat1">
-                                <script>
-                                    for(let i=1; i<=10; i++) {
-                                        document.write(`
-                                            <label class="radio-node">
-                                                <input type="radio" name="cat1" value="${i}" required>
-                                                <span class="node-box">${i}</span>
-                                            </label>
-                                        `);
-                                    }
-                                </script>
-                            </div>
-                            <div class="na-row">
-                                <input type="checkbox" id="na-cat1" class="na-checkbox" data-target="cat1">
-                                <label for="na-cat1" class="na-label">N/A // OUTSIDE SECTOR</label>
-                            </div>
+                    <!-- STEP 2: METRICS FORM -->
+                    <h2>02 // Core Metrics</h2>
+                    
+                    <!-- Category 1 -->
+                    <div class="metric-block" id="block-cat1">
+                        <p class="field-query"><strong>Starting Strong:</strong> Does your local school make it easy for the youngest kids to get ready and start learning?</p>
+                        <div class="slider-row" id="scale-cat1">
+                            <script>
+                                for(let i=1; i<=10; i++) {
+                                    document.write(`
+                                        <label class="radio-node">
+                                            <input type="radio" name="cat1" value="${i}" required>
+                                            <span class="node-box">${i}</span>
+                                        </label>
+                                    `);
+                                }
+                            </script>
                         </div>
+                        <div class="na-row">
+                            <input type="checkbox" id="na-cat1" class="na-checkbox" data-target="cat1">
+                            <label for="na-cat1" class="na-label">N/A // Outside Sector</label>
+                        </div>
+                    </div>
 
-                        <div class="metric-block" style="margin-top: 25px;" id="block-cat2">
-                            <p class="field-query"><strong>The Middle School Slide:</strong> How well do you feel the school keeps kids from falling behind in reading and math as they get older?</p>
-                            <div class="slider-row" id="scale-cat2">
-                                <script>
-                                    for(let i=1; i<=10; i++) {
-                                        document.write(`
-                                            <label class="radio-node">
-                                                <input type="radio" name="cat2" value="${i}" required>
-                                                <span class="node-box">${i}</span>
-                                            </label>
-                                        `);
-                                    }
-                                </script>
-                            </div>
-                            <div class="na-row">
-                                <input type="checkbox" id="na-cat2" class="na-checkbox" data-target="cat2">
-                                <label for="na-cat2" class="na-label">N/A // OUTSIDE SECTOR</label>
-                            </div>
+                    <!-- Category 2 -->
+                    <div class="metric-block" id="block-cat2">
+                        <p class="field-query"><strong>The Middle School Slide:</strong> How well do you feel the school keeps kids from falling behind in reading and math as they get older?</p>
+                        <div class="slider-row" id="scale-cat2">
+                            <script>
+                                for(let i=1; i<=10; i++) {
+                                    document.write(`
+                                        <label class="radio-node">
+                                            <input type="radio" name="cat2" value="${i}" required>
+                                            <span class="node-box">${i}</span>
+                                        </label>
+                                    `);
+                                }
+                            </script>
                         </div>
+                        <div class="na-row">
+                            <input type="checkbox" id="na-cat2" class="na-checkbox" data-target="cat2">
+                            <label for="na-cat2" class="na-label">N/A // Outside Sector</label>
+                        </div>
+                    </div>
 
-                        <div class="metric-block" style="margin-top: 25px;" id="block-cat3">
-                            <p class="field-query"><strong>The Diploma Dropout:</strong> When kids graduate, does the school give them a clear, real-world plan for college or a local career?</p>
-                            <div class="slider-row" id="scale-cat3">
-                                <script>
-                                    for(let i=1; i<=10; i++) {
-                                        document.write(`
-                                            <label class="radio-node">
-                                                <input type="radio" name="cat3" value="${i}" required>
-                                                <span class="node-box">${i}</span>
-                                            </label>
-                                        `);
-                                    }
-                                </script>
-                            </div>
-                            <div class="na-row">
-                                <input type="checkbox" id="na-cat3" class="na-checkbox" data-target="cat3">
-                                <label for="na-cat3" class="na-label">N/A // OUTSIDE SECTOR</label>
-                            </div>
+                    <!-- Category 3 -->
+                    <div class="metric-block" id="block-cat3">
+                        <p class="field-query"><strong>The Diploma Dropout:</strong> When kids graduate, does the school give them a clear, real-world plan for college or a local career?</p>
+                        <div class="slider-row" id="scale-cat3">
+                            <script>
+                                for(let i=1; i<=10; i++) {
+                                    document.write(`
+                                        <label class="radio-node">
+                                            <input type="radio" name="cat3" value="${i}" required>
+                                            <span class="node-box">${i}</span>
+                                        </label>
+                                    `);
+                                }
+                            </script>
                         </div>
+                        <div class="na-row">
+                            <input type="checkbox" id="na-cat3" class="na-checkbox" data-target="cat3">
+                            <label for="na-cat3" class="na-label">N/A // Outside Sector</label>
+                        </div>
+                    </div>
 
-                        <div class="metric-block" style="margin-top: 25px; margin-bottom: 10px;" id="block-cat4">
-                            <p class="field-query"><strong>The Good Job Gap:</strong> Are the schools teaching the actual technical skills and trades that local employers are hiring for right now?</p>
-                            <div class="slider-row" id="scale-cat4">
-                                <script>
-                                    for(let i=1; i<=10; i++) {
-                                        document.write(`
-                                            <label class="radio-node">
-                                                <input type="radio" name="cat4" value="${i}" required>
-                                                <span class="node-box">${i}</span>
-                                            </label>
-                                        `);
-                                    }
-                                </script>
-                            </div>
-                            <div class="na-row">
-                                <input type="checkbox" id="na-cat4" class="na-checkbox" data-target="cat4">
-                                <label for="na-cat4" class="na-label">N/A // OUTSIDE SECTOR</label>
-                            </div>
+                    <!-- Category 4 -->
+                    <div class="metric-block" id="block-cat4">
+                        <p class="field-query"><strong>The Good Job Gap:</strong> Are the schools teaching the actual technical skills and trades that local employers are hiring for right now?</p>
+                        <div class="slider-row" id="scale-cat4">
+                            <script>
+                                for(let i=1; i<=10; i++) {
+                                    document.write(`
+                                        <label class="radio-node">
+                                            <input type="radio" name="cat4" value="${i}" required>
+                                            <span class="node-box">${i}</span>
+                                        </label>
+                                    `);
+                                }
+                            </script>
                         </div>
-                    </section>
+                        <div class="na-row">
+                            <input type="checkbox" id="na-cat4" class="na-checkbox" data-target="cat4">
+                            <label for="na-cat4" class="na-label">N/A // Outside Sector</label>
+                        </div>
+                    </div>
                     
                 </div>
 
                 <div class="footer-action-block">
-                    <button type="submit" class="mp4-btn" style="width:100%; font-size:0.85rem; padding:14px 0;">See Local Report</button>
+                    <button type="submit" class="action-btn">See Local Report</button>
                 </div>
                 
             </form>
         </main>
 
-        <div class="gate-modal-overlay" id="identity-modal">
-            <div class="gate-modal-box">
-                <h3>Account Access Required</h3>
+        <!-- STEP 3: GATEWAY POPUP -->
+        <div class="modal-overlay" id="identity-modal">
+            <div class="modal-window">
+                <button type="button" class="btn-close" id="modal-close-x">✕</button>
+                
+                <h2 style="border-none">Account Access Required</h2>
                 <p>Create a free account to unlock the full Hardin County Report.</p>
                 
                 <form id="modal-gate-form">
                     <div class="modal-field-group">
-                        <label for="auth-first-name" class="field-label" style="font-size:0.75rem;">First Name</label>
-                        <input type="text" id="auth-first-name" class="modal-input" placeholder="Enter first name..." required>
+                        <label for="auth-first-name">First Name</label>
+                        <input type="text" id="auth-first-name" placeholder="Enter first name..." required>
                     </div>
                     <div class="modal-field-group">
-                        <label for="auth-email" class="field-label" style="font-size:0.75rem;">Email Address</label>
-                        <input type="email" id="auth-email" class="modal-input" placeholder="name@domain.com" required>
+                        <label for="auth-email">Email Address</label>
+                        <input type="email" id="auth-email" placeholder="name@domain.com" required>
                     </div>
                     <div class="modal-actions">
-                        <button type="button" class="mp4-btn" id="modal-abort-btn" style="flex:1; border-color:var(--border-color); color:#ffffff; background:transparent; box-shadow:none;">Cancel</button>
-                        <button type="submit" class="mp4-btn" style="flex:1; border-color:var(--pink-neon); color:var(--pink-neon);">Unlock Index</button>
+                        <button type="button" class="action-btn" id="modal-abort-btn" style="background: transparent; border: 2px solid rgba(255,255,255,0.15); color: white; box-shadow: none;">Cancel</button>
+                        <button type="submit" class="action-btn" style="background: var(--white); color: #05040a;">Unlock Report</button>
                     </div>
                 </form>
             </div>
         </div>
 
-        <div class="civic-chassis system-feedback" id="success-screen">
+        <!-- SUCCESS SCREEN -->
+        <div class="module-card system-feedback" id="success-screen">
             <h2>Transmission Verified</h2>
-            <p>Your scores have been injected anonymously into the local datastream. Your account configuration framework has been synchronized successfully.</p>
-            <div style="margin-top: 25px; padding-top: 15px; border-top: 1px solid var(--border-color);">
-                <a href="../" class="dock-link" style="font-size: 0.8rem;">← Return to Control Deck</a>
+            <p>Your scores have been submitted completely anonymously. Your free community dashboard access configuration framework has been synchronized successfully.</p>
+            <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--glass-border);">
+                <a href="../" class="shimmer-gold-link">← Return Home</a>
             </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <div class="footer-pad">
+        <footer class="system-footer">
+            &copy; <span id="current-year"></span> Vanguard Citizen Services
+        </footer>
+    </div>
+
+    <script>
+        /* --- COMET GENERATOR --- */
+        function spawnComet() {
+            const container = document.getElementById('environment');
+            if (!container) return;
+            const comet = document.createElement('div');
+            comet.classList.add('comet');
+            comet.style.top = `${Math.random() * 40}vh`;
+            comet.style.left = `${50 + (Math.random() * 50)}vw`;
+            container.appendChild(comet);
+            setTimeout(() => comet.remove(), 2000);
+        }
+        setInterval(spawnComet, 3500);
+        spawnComet();
+
+        /* --- DYNAMIC YEAR --- */
+        const yearSpan = document.getElementById('current-year');
+        if (yearSpan) yearSpan.innerText = new Date().getFullYear();
+    </script>
     <script src="../config.js"></script>
     <script src="app.js"></script>
 </body>
