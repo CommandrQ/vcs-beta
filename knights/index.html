@@ -2,384 +2,177 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vanguard Knights</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>COMMANDER Q</title>
+    <link rel="stylesheet" href="style.css?v=2">
     <style>
-        /* ==========================================
-           1. COMPACT ARCHITECTURE
-           ========================================== */
+        /* --- FADE TRANSITION STYLES --- */
         body {
-            overflow-y: auto;
-            padding: 1.5rem 1rem;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        body.fade-in {
+            opacity: 1;
+        }
+        body.fade-out {
+            opacity: 0;
+        }
+        
+        /* --- BRAND LOGO LAYOUT --- */
+        .brand-logo-container {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px auto;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
         }
-
-        .glass-window {
-            max-width: 850px;
+        .brand-logo-img {
             width: 100%;
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* ==========================================
-           1a. TOP PANEL NAVIGATION STRUCTURE
-           ========================================== */
-        .top-nav-panel {
-            display: flex;
-            justify-content: flex-start;
-            width: 100%;
-            margin-bottom: 1.5rem;
-        }
-
-        .back-nav {
-            color: #ffffff;
-            text-decoration: none;
-            font-size: 0.75em;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            transition: color 0.3s ease;
-        }
-
-        .back-nav:hover {
-            color: #ffeb3b;
-        }
-
-        /* ==========================================
-           2. STREAMLINED SECTIONS
-           ========================================== */
-        .guild-section {
-            width: 100%;
-            text-align: center;
-            margin-bottom: 2.5rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .section-title {
-            color: #ffeb3b;
-            font-size: 1.3em;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-            border-bottom: 2px solid rgba(179, 136, 255, 0.3);
-            padding-bottom: 0.3rem;
-            width: fit-content;
-        }
-
-        .section-text {
-            line-height: 1.5;
-            font-size: 0.95em;
-            max-width: 650px;
-            margin-bottom: 1rem;
-            color: #ffffff;
-        }
-
-        /* ==========================================
-           3. INTERACTIVE SLIDER BOX
-           ========================================== */
-        .slider-box {
-            width: 100%;
-            max-width: 600px;
-            background: rgba(255, 255, 255, 0.01);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            padding: 1.8rem;
-            margin-top: 0.5rem;
-            position: relative;
-        }
-
-        .slide {
-            display: none;
-            animation: fadeIn 0.4s ease;
-        }
-
-        .slide.active {
-            display: block;
-        }
-
-        .slider-controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            margin-top: 1rem;
-        }
-
-        .nav-btn {
-            background: transparent;
-            border: 1px solid rgba(255, 235, 59, 0.4);
-            color: #ffeb3b;
-            font-size: 1.2rem;
-            padding: 0.3rem 1rem;
-            cursor: pointer;
-            border-radius: 4px;
-            transition: all 0.2s ease;
-        }
-
-        .nav-btn:hover {
-            background: #ffeb3b;
-            color: #000000;
-            box-shadow: 0 0 10px #ffeb3b;
-        }
-
-        /* ==========================================
-           4. ROSTER MATRIX GRID
-           ========================================== */
-        .roster-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-            width: 100%;
-            margin-top: 0.5rem;
-        }
-
-        .knight-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 10px;
-            padding: 1.5rem;
-            text-align: left;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            gap: 0.3rem;
-        }
-
-        .knight-name {
-            font-size: 1.15em;
-            font-weight: 700;
-            color: #ffffff;
-            letter-spacing: 1px;
-        }
-
-        .knight-rank {
-            font-size: 0.75em;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #ffeb3b;
-            font-weight: 700;
-        }
-
-        .knight-division {
-            font-size: 0.75em;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #b388ff;
-            font-weight: 600;
-        }
-
-        .knight-specialty {
-            font-size: 0.85em;
-            line-height: 1.5;
-            color: #ffffff;
-            margin-top: 0.5rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding-top: 0.5rem;
-        }
-
-        /* ==========================================
-           5. ACTION BUTTON CONFIGURATION
-           ========================================== */
-        .action-btn {
-            display: inline-block;
-            background: linear-gradient(90deg, #ffe082 0%, #ffb300 50%, #ffeb3b 100%);
-            color: #000000;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 0.8em;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            padding: 0.7rem 1.5rem;
-            border-radius: 6px;
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
-            position: relative;
-            overflow: hidden;
-            transition: box-shadow 0.3s ease;
-            margin-top: 1rem;
-        }
-
-        .action-btn:hover {
-            box-shadow: 0 0 25px #ffd700, 0 0 10px rgba(179, 136, 255, 0.5);
-        }
-
-        .action-btn::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 50%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
-            animation: flashShimmer 2s infinite;
+            object-fit: contain;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.98); }
-            to { opacity: 1; transform: scale(1); }
+        /* --- STABLE WINDOW CHASSIS HOUSING --- */
+        .tool-window-bay {
+            width: 100%;
+            height: 420px;
+            background: rgba(15, 15, 20, 0.65);
+            backdrop-filter: blur(25px) saturate(150%);
+            -webkit-backdrop-filter: blur(25px) saturate(150%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(255,255,255,0.05);
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            box-sizing: border-box;
+            margin-top: 20px;
         }
 
-        @media (min-width: 700px) {
-            .roster-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1.2rem;
-            }
-        }
+        .tool-window-bay::-webkit-scrollbar { width: 4px; }
+        .tool-window-bay::-webkit-scrollbar-track { background: transparent; }
+        .tool-window-bay::-webkit-scrollbar-thumb { background: rgba(214, 175, 55, 0.3); border-radius: 10px; }
     </style>
 </head>
 <body>
 
-    <!-- VISUAL ENVIRONMENT -->
-    <div class="space-bg">
-        <div class="starfield"></div>
-    </div>
+    <div id="starfield"><div class="stars"></div></div>
+    <div class="ambient-glow"></div>
 
-    <!-- MAIN INTERFACE -->
-    <div class="glass-window">
+    <div class="hub-container">
         
-        <!-- TOP PANEL LAYOUT -->
-        <div class="top-nav-panel">
-            <a href="../home/index.html" class="back-nav">← Back to Lobby</a>
-        </div>
+        <header class="central-header">
+            <div class="brand-logo-container">
+                <img src="../images/vklogo.png" alt="Vanguard Knights Logo" class="brand-logo-img">
+            </div>
+            <h1 class="shimmer-title">Commander Q</h1>
+        </header>
 
-        <img src="../images/vanguardorglogo.png" alt="Vanguard Citizen Services Logo" class="logo">
-        <div class="tagline" style="margin-bottom: 1.5rem; color: #ffeb3b;">The Vanguard Knights</div>
-        
-        <!-- SECTION 1: MISSION -->
-        <section class="guild-section">
-            <h2 class="section-title">The Collective</h2>
-            <p class="section-text">
-                The Vanguard Knights are the people who create our different narratives and experiences. We work as a team to turn real human stories into digital tools and media.
-            </p>
-        </section>
+        <main class="hub-card">
 
-        <!-- SECTION 2: ACTIVE PROJECTS SLIDER MODULE -->
-        <section id="voicebox" class="guild-section">
-            <h2 class="section-title">Active Projects</h2>
-            
-            <div class="slider-box">
-                <!-- PROJECT CARD 1 -->
-                <div class="slide active">
-                    <span style="font-size: 0.7em; text-transform: uppercase; letter-spacing: 1px; color: #b388ff; font-weight: 700;">Community Tool</span>
-                    <h3 style="font-size: 1.15em; font-weight: 700; margin: 0.3rem 0; color: #ffffff;">Hardin County Community Voice Box</h3>
-                    <p style="font-size: 0.85rem; line-height: 1.5; color: #ffffff; margin-bottom: 0;">
-                        Our primary local page built for neighbors to easily submit community issues and safely track updates down the line.
-                    </p>
-                    <a href="../communityvoicebox/index.html" class="action-btn">Launch Tool</a>
-                   
-                    <h3 style="font-size: 1.15em; font-weight: 700; margin: 0.3rem 0; color: #ffffff;">Hardin County Community Voice Box</h3>
-                    <p style="font-size: 0.85rem; line-height: 1.5; color: #ffffff; margin-bottom: 0;">
-                        Our primary local page built for neighbors to easily submit community issues and safely track updates down the line.
-                    </p>
-                    <a href="../communityvoicebox/index.html" class="action-btn">Launch Tool</a>
-                </div>
+            <div class="core-statement-banner">
+                <p class="directive-tag">Chief Vision Officer of VCS // Captain Commander of the Vanguard Knights</p>
+                <p class="directive-text">I serve as a dedicated voice in our community and a strategic leader guiding a new perspective on coexistence. Explore the functional toolsets loaded below.</p>
+            </div>
 
-                <!-- CAROUSEL TRACK CONTROLS -->
-                <div class="slider-controls">
-                    <button class="nav-btn" id="prev-slide">←</button>
-                    <button class="nav-btn" id="next-slide">→</button>
+            <!-- HOST WINDOW TERMINAL CONTAINER -->
+            <div class="tool-window-bay">
+                <div class="workspace-grid">
+                    
+                    <!-- Phase 01: Empower Panel -->
+                    <section class="workspace-column" id="col-empower">
+                        <div class="column-header">
+                            <span class="column-num">01</span>
+                            <h2>EMPOWER</h2>
+                        </div>
+                        <div class="column-body">
+                            <a href="about/" class="action-card">
+                                <h3>About Me</h3>
+                                <p>Opens my professional background, creative experience, and military service summary.</p>
+                            </a>
+                        </div>
+                    </section>
+
+                    <!-- Phase 02: Educate Panel -->
+                    <section class="workspace-column" id="col-educate">
+                        <div class="column-header">
+                            <span class="column-num">02</span>
+                            <h2>EDUCATE</h2>
+                        </div>
+                        <div class="column-body">
+                            <a href="#" class="action-card">
+                                <h3>Team Chemistry Classes</h3>
+                                <p>Opens information about my mindset training and masterclasses for businesses.</p>
+                            </a>
+                            <a href="#" class="action-card">
+                                <h3>Guides</h3>
+                                <p>Opens my shared operational files, transparency frameworks, and community playbooks.</p>
+                            </a>
+                        </div>
+                    </section>
+
+                    <!-- Phase 03: Elevate Panel -->
+                    <section class="workspace-column" id="col-elevate">
+                        <div class="column-header">
+                            <span class="column-num">03</span>
+                            <h2>ELEVATE</h2>
+                        </div>
+                        <div class="column-body">
+                            <a href="musicplayer/" class="action-card">
+                                <h3>Music Player</h3>
+                                <p>Opens an interactive music console containing my custom track mashups and remixes.</p>
+                            </a>
+                            <a href="dreamscapedrift/" class="action-card">
+                                <h3>Dreamscape Drift</h3>
+                                <p>Opens my physics telemetry logs, tuning specs, and video media for Forza Horizon 6.</p>
+                            </a>
+                        </div>
+                    </section>
+
                 </div>
             </div>
-        </section>
 
-        <!-- SECTION 3: THE ROSTER -->
-        <section class="guild-section" style="margin-bottom: 0;">
-            <h2 class="section-title">Guild Roster</h2>
-            
-            <div class="roster-grid">
-                <!-- CARD 1: QUINCY (COMMANDER Q) -->
-                <div class="knight-card">
-                    <div class="knight-name">Quincy Jones</div>
-                    <div class="knight-rank">Captain Commander // "Commander Q"</div>
-                    <div class="knight-division">Chief Vision Officer // VCS</div>
-                    <div style="margin: 0.2rem 0 0.5rem 0;">
-                        <a href="https://vcscitizen.org/cmdrq" target="_blank" style="color: #ffeb3b; font-size: 0.8em; text-decoration: none; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">Visit Website →</a>
-                    </div>
-                    <p class="knight-specialty">
-                        Steers our core creative direction and ideas to help push our local spaces closer to working well together.
-                    </p>
-                </div>
-                
-                <!-- CARD 2: KONA (LANCELOT) -->
-                <div class="knight-card">
-                    <div class="knight-name">Kona Agpalza</div>
-                    <div class="knight-rank">Grandmaster // "Lancelot"</div>
-                    <div class="knight-division">Chief Operational Officer // VCS</div>
-                    <div style="margin: 0.2rem 0 0.5rem 0;">
-                        <a href="mailto:vglancelot@tutamail.com" style="color: #ffeb3b; font-size: 0.8em; text-decoration: none; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">Contact Email →</a>
-                    </div>
-                    <p class="knight-specialty">
-                        Handles running our internal work operations and transforms high-level visions into active systems.
-                    </p>
-                </div>
-            </div>
-        </section>
+            <footer class="channel-dock">
+                <a href="https://music.apple.com" target="_blank" class="dock-link">APPLE_MUSIC</a>
+                <a href="https://tiktok.com" target="_blank" class="dock-link">TIKTOK</a>
+            </footer>
 
-        <!-- SITE FOOTER -->
-        <footer class="site-footer">
-            <div class="footer-text" style="color: #ffffff;">&copy; 2026 Vanguard Citizen Services. All Rights Reserved.</div>
-        </footer>
-
+        </main>
     </div>
 
-    <!-- SYSTEM LOGIC ENGINES -->
+    <script src="app.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            // 1. AUTO-SCALING SLIDER ENGINE
-            const slides = document.querySelectorAll(".slide");
-            const prevBtn = document.getElementById("prev-slide");
-            const nextBtn = document.getElementById("next-slide");
-            const controls = document.querySelector(".slider-controls");
-            let currentIndex = 0;
+        /* --- AUTO REFRESH & FADE CONTROLLERS --- */
+        (function() {
+            const currentVersion = "2"; 
+            const storageKey = "hub_version_check";
+            const lastChecked = localStorage.getItem(storageKey);
 
-            if (slides.length <= 1) {
-                controls.style.display = "none";
+            if (lastChecked !== currentVersion) {
+                localStorage.setItem(storageKey, currentVersion);
+                window.location.reload(window.location.href.split('?')[0] + '?v=' + currentVersion);
+                return;
             }
 
-            function updateSlider(index) {
-                slides.forEach(slide => slide.classList.remove("active"));
-                slides[index].classList.add("active");
-            }
+            document.addEventListener("DOMContentLoaded", () => {
+                document.body.classList.add("fade-in");
 
-            prevBtn.addEventListener("click", () => {
-                currentIndex = (currentIndex === 0) ? slides.length - 1 : currentIndex - 1;
-                updateSlider(currentIndex);
+                document.querySelectorAll("a").forEach(link => {
+                    if (link.hostname === window.location.hostname && link.getAttribute("href") !== "#") {
+                        link.addEventListener("click", (e) => {
+                            e.preventDefault();
+                            const targetUrl = link.href;
+                            document.body.classList.remove("fade-in");
+                            document.body.classList.add("fade-out");
+                            setTimeout(() => {
+                                window.location.href = targetUrl;
+                            }, 500);
+                        });
+                    }
+                });
             });
-
-            nextBtn.addEventListener("click", () => {
-                currentIndex = (currentIndex === slides.length - 1) ? 0 : currentIndex + 1;
-                updateSlider(currentIndex);
-            });
-
-            // 2. COMET GENERATOR ENGINE
-            const spaceBg = document.querySelector(".space-bg");
-
-            function launchComet() {
-                const comet = document.createElement("div");
-                comet.classList.add("comet");
-                const startTop = Math.random() * 40; 
-                const startLeft = Math.random() * 20;
-                
-                comet.style.top = `${startTop}vh`;
-                comet.style.left = `${startLeft}vw`;
-                comet.style.animation = "streak 3.2s cubic-bezier(0.25, 1, 0.5, 1) forwards";
-                
-                spaceBg.appendChild(comet);
-                setTimeout(() => comet.remove(), 3300);
-            }
-
-            setInterval(launchComet, 4000);
-            setTimeout(launchComet, 500);
-        });
+        })();
     </script>
-
 </body>
 </html>
