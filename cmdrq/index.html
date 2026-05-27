@@ -3,19 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SYS//_COMMANDER_Q</title>
+    <title>COMMANDER Q</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+    <!-- Dynamic Cosmic Vapor Environment Background -->
     <div class="space-field">
         <div class="stars"></div>
-        <div class="comet-spawner" id="comet-layer"></div>
     </div>
     <div class="ambient-glow"></div>
 
+    <!-- Main Panoramic Unified Interface Frame -->
     <main class="app-interface">
         
+        <!-- Top Centralized Identity Header Element Block -->
         <header class="central-header">
             <div class="monogram-outer">
                 <div class="monogram-inner">Q</div>
@@ -23,15 +25,19 @@
             <h1 class="shimmer-title">Commander Q</h1>
         </header>
 
+        <!-- Centered Core Content Workspace Layout Array -->
         <div class="workspace-wrapper">
             
+            <!-- Centralized Directive Panel Display -->
             <div class="core-statement-banner">
                 <p class="directive-tag">Chief Vision Officer of VCS // Captain Commander of the Vanguard Knights</p>
-                <p class="directive-text">Combat veteran and creative director mixing community tools, mindset guides, and high-speed drift music into a singular ecosystem. Click a sector below to see how the machine runs.</p>
+                <p class="directive-text">I serve as a dedicated voice in our community and a strategic leader guiding a new perspective on coexistence. Select a sector below to explore the work.</p>
             </div>
 
+            <!-- Focused Segment Grid Configuration -->
             <div class="workspace-grid">
                 
+                <!-- Phase 01: Empower Panel -->
                 <section class="workspace-column" id="col-empower">
                     <div class="column-header">
                         <span class="column-num">01</span>
@@ -39,18 +45,17 @@
                     </div>
                     <div class="column-body">
                         <div class="action-card" onclick="openModal('modal-about')">
-                            <div class="card-meta">SYS_INIT//</div>
                             <h3>About Me</h3>
                             <p>Combat veteran, creative director, and tactical systems architect summary.</p>
                         </div>
                         <div class="action-card" onclick="openModal('modal-voices')">
-                            <div class="card-meta">SYS_UTIL//</div>
                             <h3>Hardin County Voices</h3>
                             <p>I created this tool to elevate the many narratives that share our community.</p>
                         </div>
                     </div>
                 </section>
 
+                <!-- Phase 02: Educate Panel -->
                 <section class="workspace-column" id="col-educate">
                     <div class="column-header">
                         <span class="column-num">02</span>
@@ -58,30 +63,28 @@
                     </div>
                     <div class="column-body">
                         <div class="action-card" onclick="openModal('modal-chemistry')">
-                            <div class="card-meta">SYS_FRAMEWORK//</div>
                             <h3>Team Chemistry Classes</h3>
                             <p>Masterclasses for corporate units navigating high-pressure tactical environments.</p>
                         </div>
                         <div class="action-card" onclick="openModal('modal-guides')">
-                            <div class="card-meta">SYS_DOC//</div>
                             <h3>Guides</h3>
                             <p>Open-source documentation on decentralized governance and metrics.</p>
                         </div>
                     </div>
                 </section>
 
+                <!-- Phase 03: Elevate Panel -->
                 <section class="workspace-column" id="col-elevate">
                     <div class="column-header">
                         <span class="column-num">03</span>
+                        <h2>ELEVATE</h2>
                     </div>
                     <div class="column-body">
                         <div class="action-card" onclick="openModal('modal-music')">
-                            <div class="card-meta">SYS_AUDIO//</div>
                             <h3>Music Player</h3>
                             <p>Frequency-blended mashups, seamless tracking lists, and live mixer module.</p>
                         </div>
                         <div class="action-card" onclick="openModal('modal-drift')">
-                            <div class="card-meta">SYS_TELEMETRY//</div>
                             <h3>Dreamscape Drift</h3>
                             <p>Forza Horizon 6 vehicle mechanics, physics analysis, and dream script drift logs.</p>
                         </div>
@@ -91,6 +94,7 @@
             </div>
         </div>
 
+        <!-- Centralized Channel Dock Footer Base -->
         <footer class="channel-dock">
             <a href="https://music.apple.com" target="_blank" class="dock-link">APPLE_MUSIC</a>
             <a href="https://tiktok.com" target="_blank" class="dock-link">TIKTOK</a>
@@ -98,10 +102,13 @@
 
     </main>
 
+    <!-- Global Application Modal Layer Systems -->
+    
+    <!-- About Me Modal -->
     <div id="modal-about" class="modal-overlay" onclick="closeModalOutside(event, 'modal-about')">
         <div class="modal-window">
             <button class="close-btn" onclick="closeModal('modal-about')">✕</button>
-            <div class="modal-header">SYS_PROFILE// ABOUT ME</div>
+            <div class="modal-header">ABOUT ME</div>
             <div class="modal-body-content">
                 <p>Owner and Chief Vision Officer of Vanguard Citizen Services (VCS), a dedicated creative studio crafting unique narratives designed to move our global community toward positive coexistence.</p>
                 <p>Serving operationally as the Captain Commander of the Vanguard Knights. Combat veteran and creative director balancing structural discipline with absolute local transparency.</p>
@@ -109,10 +116,11 @@
         </div>
     </div>
 
+    <!-- Hardin County Voices Modal -->
     <div id="modal-voices" class="modal-overlay" onclick="closeModalOutside(event, 'modal-voices')">
         <div class="modal-window">
             <button class="close-btn" onclick="closeModal('modal-voices')">✕</button>
-            <div class="modal-header">SYS_UTIL// HARDIN COUNTY VOICES</div>
+            <div class="modal-header">HARDIN COUNTY VOICES</div>
             <div class="modal-body-content">
                 <p>I created this tool to elevate the many narratives that share our community.</p>
                 <p>A regional open-access data pipeline and community suggestion utility designed to directly bridge gaps between residents and administrative leadership elements.</p>
@@ -121,10 +129,11 @@
         </div>
     </div>
 
+    <!-- Team Chemistry Modal -->
     <div id="modal-chemistry" class="modal-overlay" onclick="closeModalOutside(event, 'modal-chemistry')">
         <div class="modal-window">
             <button class="close-btn" onclick="closeModal('modal-chemistry')">✕</button>
-            <div class="modal-header">SYS_FRAMEWORK// TEAM CHEMISTRY</div>
+            <div class="modal-header">TEAM CHEMISTRY</div>
             <div class="modal-body-content">
                 <p>Strategic training modules applying tactical drift mechanics and audio synchronization to enterprise team dynamics.</p>
                 <p>Teaches corporate management how to safely initiate controlled organizational momentum changes, handle external friction factors, and layer diverse employee skill sets without overriding critical individual voice frequencies.</p>
@@ -132,20 +141,22 @@
         </div>
     </div>
 
+    <!-- Guides Modal -->
     <div id="modal-guides" class="modal-overlay" onclick="closeModalOutside(event, 'modal-guides')">
         <div class="modal-window">
             <button class="close-btn" onclick="closeModal('modal-guides')">✕</button>
-            <div class="modal-header">SYS_DOC// GUIDES</div>
+            <div class="modal-header">GUIDES</div>
             <div class="modal-body-content">
                 <p>Open-source architecture repositories outlining standard operating procedures for local community oversight groups, verification protocols, and community dashboard templates.</p>
             </div>
         </div>
     </div>
 
+    <!-- Music Player Modal -->
     <div id="modal-music" class="modal-overlay" onclick="closeModalOutside(event, 'modal-music')">
         <div class="modal-window wide-modal">
             <button class="close-btn" onclick="closeModal('modal-music')">✕</button>
-            <div class="modal-header">SYS_AUDIO// MUSIC PLAYER</div>
+            <div class="modal-header">MUSIC PLAYER</div>
             <div class="modal-body-content">
                 <div class="audio-deck-layout">
                     <div class="deck-controls">
@@ -169,10 +180,11 @@
         </div>
     </div>
 
+    <!-- Dreamscape Drift Modal -->
     <div id="modal-drift" class="modal-overlay" onclick="closeModalOutside(event, 'modal-drift')">
         <div class="modal-window wide-modal">
             <button class="close-btn" onclick="closeModal('modal-drift')">✕</button>
-            <div class="modal-header">SYS_TELEMETRY// DREAMSCAPE DRIFT</div>
+            <div class="modal-header">DREAMSCAPE DRIFT</div>
             <div class="modal-body-content">
                 <div class="telemetry-layout">
                     <div class="telemetry-stats-grid">
