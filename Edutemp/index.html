@@ -145,9 +145,6 @@
         }
         .instruction-step { font-size: 0.85rem; color: var(--white); margin-bottom: 6px; line-height: 1.4; }
         .instruction-step strong { color: var(--gold); }
-        .login-trigger-text { font-size: 0.85rem; color: rgba(255, 255, 255, 0.6); text-align: center; margin-top: 15px; }
-        .login-trigger-link { color: var(--gold); text-decoration: none; font-weight: 700; cursor: pointer; }
-        .login-trigger-link:hover { text-decoration: underline; }
 
         /* --- FORM CONTROLS --- */
         label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.85rem; color: var(--gold); text-transform: uppercase; letter-spacing: 0.5px; }
@@ -194,34 +191,6 @@
 
         .footer-action-block { padding-top: 20px; border-top: 1px solid var(--glass-border); margin-top: 15px; }
 
-        /* --- GATEWAY OVERLAY & MODAL WINDOWS --- */
-        .modal-overlay {
-            position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            z-index: 999; display: flex; justify-content: center; align-items: center;
-            opacity: 0; visibility: hidden; transition: all 0.4s var(--ease-smooth);
-            padding: 20px;
-        }
-        .modal-overlay.active { opacity: 1; visibility: visible; }
-
-        .modal-window {
-            background: rgba(15, 15, 20, 0.95); border: 1px solid var(--gold); border-radius: 24px;
-            padding: 35px 25px; width: 100%; max-width: 450px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.6), inset 0 0 20px rgba(212,175,55,0.1);
-            transform: scale(0.95); transition: transform 0.4s var(--ease-smooth); position: relative;
-        }
-        .modal-overlay.active .modal-window { transform: scale(1); }
-
-        .btn-close {
-            position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.05);
-            border: none; color: rgba(255,255,255,0.5); width: 36px; height: 36px; border-radius: 50%;
-            font-size: 1.2rem; cursor: pointer; display: flex; justify-content: center; align-items: center; transition: all 0.2s ease;
-        }
-        .btn-close:hover { background: rgba(255,255,255,0.15); color: var(--gold); }
-
-        .modal-field-group { margin-bottom: 15px; }
-        .modal-actions { display: flex; gap: 15px; margin-top: 25px; }
-
         /* --- SYSTEM FOOTER --- */
         .footer-pad { margin-top: auto; width: 100%; display: flex; justify-content: center; align-items: center; }
         .system-footer { padding: 25px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: #ffffff; text-align: center; }
@@ -240,29 +209,24 @@
 
         <main class="module-card" id="engine-chassis">
             
-            <!-- BASIC CITIZEN INSTRUCTIONS -->
             <div class="instruction-box">
                 <h2 style="font-size:0.95rem; margin-bottom:10px; border-bottom:none; padding-bottom:0;">How to Use the Index</h2>
                 <div class="instruction-step"><strong>1. Location:</strong> Provide your zip code to isolate geographic report sets.</div>
                 <div class="instruction-step"><strong>2. Scoring:</strong> Rate each metric from 1 (lowest) to 10 (highest). Check N/A if it does not apply to you.</div>
-                <div class="instruction-step"><strong>3. Unlock:</strong> Create an anonymous identity key or sign in to open the live results dataset instantly.</div>
-                <div class="login-trigger-text">Returning tracking user? <span class="login-trigger-link" id="trigger-login-modal">Sign in here</span></div>
+                <div class="instruction-step"><strong>3. Transmit:</strong> Click below to deliver your score anonymously and review the live index results tracker instantly.</div>
             </div>
 
             <form id="index-survey-form" class="civic-window-form" autocomplete="off">
                 <div class="scroller-bay">
                     
-                    <!-- STEP 1: REGION CHECK -->
                     <h2>01 // Geographic Sector</h2>
                     <div style="margin-bottom: 25px;">
                         <label for="user-zip">Zip Code Verification</label>
                         <input type="text" id="user-zip" pattern="[0-9]{5}" maxlength="5" placeholder="Enter 5-digit zip code..." required>
                     </div>
 
-                    <!-- STEP 2: METRICS FORM -->
                     <h2>02 // Core Metrics</h2>
                     
-                    <!-- Category 1 -->
                     <div class="metric-block" id="block-cat1">
                         <p class="field-query"><strong>Starting Strong:</strong> Does your local school make it easy for the youngest kids to get ready and start learning?</p>
                         <div class="slider-row" id="scale-cat1">
@@ -283,7 +247,6 @@
                         </div>
                     </div>
 
-                    <!-- Category 2 -->
                     <div class="metric-block" id="block-cat2">
                         <p class="field-query"><strong>The Middle School Slide:</strong> How well do you feel the school keeps kids from falling behind in reading and math as they get older?</p>
                         <div class="slider-row" id="scale-cat2">
@@ -304,7 +267,6 @@
                         </div>
                     </div>
 
-                    <!-- Category 3 -->
                     <div class="metric-block" id="block-cat3">
                         <p class="field-query"><strong>The Diploma Dropout:</strong> When kids graduate, does the school give them a clear, real-world plan for college or a local career?</p>
                         <div class="slider-row" id="scale-cat3">
@@ -325,7 +287,6 @@
                         </div>
                     </div>
 
-                    <!-- Category 4 -->
                     <div class="metric-block" id="block-cat4">
                         <p class="field-query"><strong>The Good Job Gap:</strong> Are the schools teaching the actual technical skills and trades that local employers are hiring for right now?</p>
                         <div class="slider-row" id="scale-cat4">
@@ -349,56 +310,10 @@
                 </div>
 
                 <div class="footer-action-block">
-                    <button type="submit" class="action-btn">See Local Report</button>
+                    <button type="submit" id="submit-btn" class="action-btn">Submit Report</button>
                 </div>
             </form>
         </main>
-
-        <!-- REGISTRATION GATEWAY OVERLAY -->
-        <div class="modal-overlay" id="identity-modal">
-            <div class="modal-window">
-                <button type="button" class="btn-close" id="modal-close-x">✕</button>
-                
-                <h2 style="margin-top:0; border-bottom:none; padding-bottom:0;">Account Access Required</h2>
-                <p>Create a free account to unlock the full Hardin County Report.</p>
-                
-                <form id="modal-gate-form">
-                    <div class="modal-field-group">
-                        <label for="auth-first-name">First Name</label>
-                        <input type="text" id="auth-first-name" placeholder="Enter first name..." required>
-                    </div>
-                    <div class="modal-field-group">
-                        <label for="auth-email">Email Address</label>
-                        <input type="email" id="auth-email" placeholder="name@domain.com" required>
-                    </div>
-                    <div class="modal-actions">
-                        <button type="button" class="action-btn" id="modal-abort-btn" style="background: transparent; border: 2px solid rgba(255,255,255,0.15); color: white; box-shadow: none;">Cancel</button>
-                        <button type="submit" id="final-submit-btn" class="action-btn" style="background: var(--white); color: #05040a;">Unlock Report</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <!-- RETURNING USER LOGIN OVERLAY -->
-        <div class="modal-overlay" id="login-modal">
-            <div class="modal-window">
-                <button type="button" class="btn-close" id="login-close-x">✕</button>
-                
-                <h2 style="margin-top:0; border-bottom:none; padding-bottom:0;">Welcome Back</h2>
-                <p>Enter your email to verify your status and access the index results engine immediately.</p>
-                
-                <form id="login-gate-form">
-                    <div class="modal-field-group">
-                        <label for="login-email">Email Address</label>
-                        <input type="email" id="login-email" placeholder="name@domain.com" required>
-                    </div>
-                    <div class="modal-actions">
-                        <button type="button" class="action-btn" id="login-abort-btn" style="background: transparent; border: 2px solid rgba(255,255,255,0.15); color: white; box-shadow: none;">Cancel</button>
-                        <button type="submit" id="final-login-btn" class="action-btn" style="background: var(--white); color: #05040a;">Verify Access</button>
-                    </div>
-                </form>
-            </div>
-        </div>
 
     </div>
 
@@ -408,7 +323,6 @@
         </footer>
     </div>
 
-    <!-- COMET ENVIRONMENT SCENE GRAPHICS -->
     <script>
         function spawnComet() {
             const container = document.getElementById('environment');
@@ -427,26 +341,11 @@
         if (yearSpan) yearSpan.innerText = new Date().getFullYear();
     </script>
 
-    <!-- INLINE ENGINE DISPATCH ENGINE CONTAINER -->
     <script src="../config.js"></script>
     <script>
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-        // Form & Registration DOM Targets
         const surveyForm = document.getElementById('index-survey-form');
-        const identityModal = document.getElementById('identity-modal');
-        const modalGateForm = document.getElementById('modal-gate-form');
-        const modalAbortBtn = document.getElementById('modal-abort-btn');
-        const modalCloseX = document.getElementById('modal-close-x');
-        const finalSubmitBtn = document.getElementById('final-submit-btn');
-
-        // Login DOM Targets
-        const loginModal = document.getElementById('login-modal');
-        const triggerLoginModal = document.getElementById('trigger-login-modal');
-        const loginGateForm = document.getElementById('login-gate-form');
-        const loginAbortBtn = document.getElementById('login-abort-btn');
-        const loginCloseX = document.getElementById('login-close-x');
-        const finalLoginBtn = document.getElementById('final-login-btn');
+        const submitBtn = document.getElementById('submit-btn');
 
         /* --- SLIDER MATRICES ON/OFF TOGGLES --- */
         document.querySelectorAll('.na-checkbox').forEach(checkbox => {
@@ -470,51 +369,13 @@
             });
         });
 
-        /* --- MODAL DISPLAY CORE CONTROLLERS --- */
-        function toggleRegistrationModal(open) {
-            if (open) {
-                identityModal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            } else {
-                identityModal.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        }
-
-        function toggleLoginModal(open) {
-            if (open) {
-                loginModal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            } else {
-                loginModal.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        }
-
-        // Registration Event Bindings
+        /* --- DIRECT SUBMISSION ROUTING ENGINE --- */
         if (surveyForm) {
-            surveyForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                toggleRegistrationModal(true);
-            });
-        }
-        if (modalAbortBtn) modalAbortBtn.addEventListener('click', () => toggleRegistrationModal(false));
-        if (modalCloseX) modalCloseX.addEventListener('click', () => toggleRegistrationModal(false));
-
-        // Login Event Bindings
-        if (triggerLoginModal) {
-            triggerLoginModal.addEventListener('click', () => toggleLoginModal(true));
-        }
-        if (loginAbortBtn) loginAbortBtn.addEventListener('click', () => toggleLoginModal(false));
-        if (loginCloseX) loginCloseX.addEventListener('click', () => toggleLoginModal(false));
-
-        /* --- ENGINE SIGN UP PIPELINE DISPATCH --- */
-        if (modalGateForm) {
-            modalGateForm.addEventListener('submit', async (e) => {
+            surveyForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
 
-                finalSubmitBtn.disabled = true;
-                finalSubmitBtn.innerText = "Processing...";
+                submitBtn.disabled = true;
+                submitBtn.innerText = "Processing...";
 
                 const zipCodeValue = document.getElementById('user-zip').value.trim();
                 
@@ -528,22 +389,7 @@
                 const cat3Score = cat3Na ? null : parseInt(document.querySelector('input[name="cat3"]:checked')?.value || null);
                 const cat4Score = cat4Na ? null : parseInt(document.querySelector('input[name="cat4"]:checked')?.value || null);
 
-                const firstNameValue = document.getElementById('auth-first-name').value.trim();
-                const emailValue = document.getElementById('auth-email').value.trim();
-
                 try {
-                    const { data: authData, error: authError } = await supabaseClient.auth.signUp({
-                        email: emailValue,
-                        password: Math.random().toString(36).slice(-12), 
-                        options: {
-                            data: {
-                                first_name: firstNameValue
-                            }
-                        }
-                    });
-
-                    if (authError) throw authError;
-
                     const { error: dbError } = await supabaseClient
                         .from('school_scores')
                         .insert([
@@ -558,53 +404,15 @@
 
                     if (dbError) throw dbError;
 
-                    toggleRegistrationModal(false);
                     surveyForm.reset();
-                    modalGateForm.reset();
-                    
                     window.location.href = "results.html";
 
                 } catch (err) {
                     console.error(err);
                     alert(`Transmission Error: ${err.message || 'Offline'}`);
                 } finally {
-                    finalSubmitBtn.disabled = false;
-                    finalSubmitBtn.innerText = "Unlock Report";
-                }
-            });
-        }
-
-        /* --- MAGIC LINK PASSWORDLESS RETURNING USER ROUTER --- */
-        if (loginGateForm) {
-            loginGateForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-
-                finalLoginBtn.disabled = true;
-                finalLoginBtn.innerText = "Verifying...";
-
-                const emailValue = document.getElementById('login-email').value.trim();
-
-                try {
-                    // Triggers passwordless secure magic link stream profile logic
-                    const { error } = await supabaseClient.auth.signInWithOtp({
-                        email: emailValue,
-                        options: {
-                            emailRedirectTo: window.location.href.substring(0, window.location.href.lastIndexOf('/')) + '/results.html'
-                        }
-                    });
-
-                    if (error) throw error;
-
-                    alert("Access clearance sequence dispatched! Check your email inbox for a secure magic access token link.");
-                    toggleLoginModal(false);
-                    loginGateForm.reset();
-
-                } catch (err) {
-                    console.error(err);
-                    alert(`Verification System Alert: ${err.message || 'Identity array fault.'}`);
-                } finally {
-                    finalLoginBtn.disabled = false;
-                    finalLoginBtn.innerText = "Verify Access";
+                    submitBtn.disabled = false;
+                    submitBtn.innerText = "Submit Report";
                 }
             });
         }
