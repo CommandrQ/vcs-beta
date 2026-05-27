@@ -108,7 +108,7 @@
         <main class="mp4-chassis">
 
             <div class="mp4-screen-viewport">
-                <iframe id="mp4-video-frame" src="https://www.youtube.com/playlist?list=PLwX0pb3GErenzxXjayWA-U4A_GKKnMsgP" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                <iframe id="mp4-video-frame" src="https://www.youtube.com/embed/videoseries?listType=playlist&list=PLwX0pb3GErenzxXjayWA-U4A_GKKnMsgP&enablejsapi=1&rel=0&modestbranding=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>
             </div>
 
             <div class="mp4-metadata-deck">
@@ -134,13 +134,11 @@
             const playerIframe = document.getElementById('mp4-video-frame');
             const playToggleBtn = document.getElementById('mp4-play-toggle');
             
-            let isPlaying = true; // YouTube video players with playlist tokens initialize on standby loop arrays
+            let isPlaying = true; 
 
-            // Hardware playback toggle engine interceptor execution
             playToggleBtn.addEventListener('click', () => {
                 isPlaying = !isPlaying;
                 
-                // PostMessage window frame pipeline intercept commands required to control YouTube core API objects
                 if (isPlaying) {
                     playerIframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
                     playToggleBtn.innerText = "Play";
