@@ -6,159 +6,154 @@
     <title>MUSIC PLAYER</title>
     <link rel="stylesheet" href="../style.css?v=2">
     <style>
-        /* --- PURPLE GLOW SYSTEM INTERFACE OVERRIDES --- */
-        .device-screen {
+        /* --- MP4 HARDWARE INTERFACE OVERRIDES --- */
+        .mp4-chassis {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 380px; /* Forces compact pocket-player dimensions on all viewports */
+            margin: 0 auto;
+            background: #000000;
+            border: 2px solid var(--purple-muted);
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: 0 0 25px rgba(149, 117, 205, 0.4);
+        }
+
+        .mp4-screen-viewport {
+            width: 100%;
+            aspect-ratio: 16 / 9;
             background: #020105;
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 25px;
-            flex-shrink: 0;
-            box-shadow: 0 0 15px rgba(149, 117, 205, 0.15);
-        }
-
-        .media-core-layout {
-            display: flex;
-            flex-direction: row;
-            gap: 20px;
-        }
-
-        .video-viewport-wrapper {
-            width: 220px;
-            height: 124px; /* Scaled 16:9 widescreen hardware profile */
-            background: #000000;
-            border: 2px solid var(--purple-muted);
-            border-radius: 6px;
             overflow: hidden;
-            box-shadow: 0 0 15px rgba(149, 117, 205, 0.3);
-            flex-shrink: 0;
+            margin-bottom: 12px;
         }
 
-        .video-viewport-wrapper iframe {
+        .mp4-screen-viewport iframe {
             width: 100%;
             height: 100%;
             border: 0;
             display: block;
         }
 
-        .device-metadata-panel {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            overflow: hidden;
+        .mp4-metadata-deck {
+            text-align: center;
+            padding: 4px 8px 12px 8px;
+            border-bottom: 1px dashed rgba(149, 117, 205, 0.2);
+            margin-bottom: 12px;
         }
 
-        .now-playing-tag {
-            font-size: 0.7rem;
-            font-weight: 800;
-            letter-spacing: 2px;
-            color: #ffffff;
-            text-transform: uppercase;
-            margin-bottom: 6px;
-        }
-
-        /* Pure Purple Glowing Track Typography Engine */
-        .current-track-title {
-            font-size: 1.2rem;
+        .mp4-track-title {
+            font-size: 1.1rem;
             font-weight: 900;
             color: #e1d5ff;
-            margin-bottom: 8px;
+            margin-bottom: 4px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            text-shadow: 0 0 10px var(--purple-glow), 0 0 20px var(--purple-glow);
+            text-shadow: 0 0 10px var(--purple-glow);
         }
 
-        .track-description-excerpt {
-            font-size: 0.8rem;
-            line-height: 1.4;
-            color: #ffffff;
-            opacity: 0.8;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        /* Glowing Purple Hardware Buttons Array */
-        .hardware-btn-group {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            margin-top: 15px;
-            border-top: 1px dashed rgba(149, 117, 205, 0.2);
-            padding-top: 15px;
-        }
-
-        .deck-btn {
-            background: rgba(149, 117, 205, 0.05);
-            border: 2px solid var(--purple-muted);
-            color: #e1d5ff;
-            padding: 10px 28px;
+        .mp4-track-artist {
             font-size: 0.75rem;
-            font-weight: 700;
-            cursor: pointer;
-            border-radius: 30px;
+            font-weight: 800;
             letter-spacing: 1.5px;
+            color: var(--purple-glow);
             text-transform: uppercase;
-            transition: all 0.2s ease;
-            box-shadow: 0 0 8px rgba(149, 117, 205, 0.3);
         }
 
-        .deck-btn:hover {
-            background: rgba(149, 117, 205, 0.15);
-            border-color: var(--purple-glow);
-            color: #ffffff;
-            box-shadow: 0 0 15px var(--purple-glow), 0 0 5px #ffffff;
-            transform: translateY(-1px);
+        /* Hardware Scroll & Index Area */
+        .mp4-scroller-bay {
+            height: 160px;
+            overflow-y: auto;
+            padding-right: 4px;
+            margin-bottom: 16px;
         }
 
-        /* Selection Index Card Adjustments */
-        .track-item-card {
+        .mp4-scroller-bay::-webkit-scrollbar { width: 3px; }
+        .mp4-scroller-bay::-webkit-scrollbar-thumb { background: var(--purple-muted); border-radius: 4px; }
+
+        .mp4-selection-grid {
             display: flex;
             flex-direction: column;
-            align-items: flex-start !important;
-            gap: 4px;
-            white-space: normal !important;
-            height: auto !important;
+            gap: 8px;
         }
 
-        .track-item-title {
+        .mp4-track-node {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 10px 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .mp4-track-node:hover {
+            border-color: var(--purple-glow);
+            background: rgba(149, 117, 205, 0.05);
+        }
+
+        .mp4-track-node.active {
+            border-color: var(--purple-glow);
+            background: rgba(149, 117, 205, 0.15);
+            box-shadow: 0 0 10px rgba(149, 117, 205, 0.2);
+        }
+
+        .mp4-node-title {
+            font-size: 0.85rem;
             font-weight: 700;
-            font-size: 0.9rem;
-            color: var(--purple-glow);
-        }
-
-        .track-item-desc {
-            font-size: 0.75rem;
-            line-height: 1.4;
             color: #ffffff;
-            opacity: 0.7;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        .track-item-card.active {
-            border-color: var(--purple-glow) !important;
-            background: rgba(149, 117, 205, 0.1) !important;
-            box-shadow: 0 0 12px rgba(149, 117, 205, 0.2) !important;
+        .mp4-node-desc {
+            font-size: 0.7rem;
+            color: #ffffff;
+            opacity: 0.6;
+            margin-top: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        .track-item-card.active .track-item-title {
-            color: #ffffff !important;
+        .mp4-track-node.active .mp4-node-title {
+            color: #e1d5ff;
             text-shadow: 0 0 8px var(--purple-glow);
         }
 
-        @media (max-width: 600px) {
-            .media-core-layout {
-                flex-direction: column;
-                align-items: center;
-            }
-            .video-viewport-wrapper {
-                width: 100%;
-                height: auto;
-                aspect-ratio: 16 / 9;
-            }
+        /* Physical Device Hardware Buttons */
+        .mp4-controls-wheel {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            padding-top: 4px;
+        }
+
+        .mp4-btn {
+            background: rgba(149, 117, 205, 0.04);
+            border: 2px solid var(--purple-muted);
+            color: #e1d5ff;
+            padding: 8px 24px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            cursor: pointer;
+            border-radius: 20px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+            box-shadow: 0 0 6px rgba(149, 117, 205, 0.2);
+        }
+
+        .mp4-btn:hover {
+            background: rgba(149, 117, 205, 0.15);
+            border-color: var(--purple-glow);
+            color: #ffffff;
+            box-shadow: 0 0 12px var(--purple-glow);
+            transform: translateY(-1px);
         }
     </style>
 </head>
@@ -167,158 +162,124 @@
     <div id="starfield"><div class="stars"></div></div>
     <div class="ambient-glow"></div>
 
-    <div class="hub-container">
+    <div class="hub-container" style="max-width: 440px !important;">
         
-        <header class="central-header">
-            <div class="monogram-outer">
-                <div class="monogram-inner">Q</div>
-            </div>
-            <h1 class="shimmer-title">Music Player</h1>
-        </header>
+        <main class="mp4-chassis">
 
-        <main class="hub-card">
-
-            <section class="device-screen">
-                <div class="media-core-layout">
-                    
-                    <div class="video-viewport-wrapper">
-                        <iframe id="zune-video-iframe" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                    </div>
-
-                    <div class="device-metadata-panel">
-                        <div class="now-playing-tag">Now Playing</div>
-                        <div class="current-track-title" id="track-title-display">Loading Playlist...</div>
-                        <div class="track-description-excerpt" id="track-desc-display">Synchronizing with cloud networks.</div>
-                    </div>
-
-                </div>
-
-                <div class="hardware-btn-group">
-                    <button class="deck-btn" id="prev-track-btn">Prev</button>
-                    <button class="deck-btn" id="next-track-btn">Next</button>
-                </div>
-            </section>
-
-            <div class="scroller-bay">
-                <h2>Track Index</h2>
-                <div class="video-selection-grid" style="margin-top: 15px;" id="playlist-index-hook">
-                </div>
+            <div class="mp4-screen-viewport">
+                <iframe id="mp4-video-frame" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
             </div>
 
-            <footer class="channel-dock" style="border-top: 1px solid var(--border-color); padding-top: 15px;">
-                <a href="../" class="dock-link">← Return to Control Deck</a>
-            </footer>
+            <div class="mp4-metadata-deck">
+                <div id="mp4-title-display" class="mp4-track-title">Loading Track Array...</div>
+                <div id="mp4-artist-display" class="mp4-track-artist">Commander Q</div>
+            </div>
+
+            <div class="mp4-scroller-bay">
+                <div class="mp4-selection-grid" id="mp4-menu-hook">
+                    </div>
+            </div>
+
+            <div class="mp4-controls-wheel">
+                <button class="mp4-btn" id="mp4-prev">Prev</button>
+                <button class="mp4-btn" id="mp4-next">Next</button>
+            </div>
+
+            <div style="text-align: center; margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--border-color);">
+                <a href="../" class="dock-link" style="font-size: 0.75rem;">← Return to Control Deck</a>
+            </div>
 
         </main>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const indexHook = document.getElementById('playlist-index-hook');
-            const iframeScreen = document.getElementById('zune-video-iframe');
-            const titleDisplay = document.getElementById('track-title-display');
-            const descDisplay = document.getElementById('track-desc-display');
+            const menuHook = document.getElementById('mp4-menu-hook');
+            const videoFrame = document.getElementById('mp4-video-frame');
+            const titleDisplay = document.getElementById('mp4-title-display');
+            const artistDisplay = document.getElementById('mp4-artist-display');
 
-            const PLAYLIST_ID = "PLwX0pb3GErenzxXjayWA-U4A_GKKnMsgP";
-            const CORS_PROXY_WORKER = "https://images-opensocial.googleusercontent.com/gadgets/proxy?container=focus&refresh=600&url=";
-            const TARGET_FEED_URL = encodeURIComponent(`https://www.youtube.com/feeds/videos.xml?playlist_id=${PLAYLIST_ID}`);
-            
-            let trackRegistry = [];
-            let currentTrackIndex = 0;
+            /**
+             * DIRECT DATA CONFIGURATION LAYER
+             * Bypasses XML feed locks to load your targeted audio clips natively.
+             */
+            const playlistRegistry = [
+                {
+                    id: "K6Z8z-nB0a4",
+                    title: "Forza Vapor Drift Mix",
+                    artist: "Commander Q // VCS"
+                },
+                {
+                    id: "F2-MhN053sc",
+                    title: "Knights Analyst Mashup",
+                    artist: "Vanguard Knights // Raw"
+                },
+                {
+                    id: "zW_m019v26A",
+                    title: "Radcliff Nights Vibe",
+                    artist: "Commander Q // Audio"
+                }
+            ];
 
-            function parsePlaylistStream() {
-                fetch(`${CORS_PROXY_WORKER}${TARGET_FEED_URL}`)
-                    .then(res => res.text())
-                    .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
-                    .then(xmlData => {
-                        const entries = xmlData.querySelectorAll("entry");
-                        trackRegistry = [];
+            let activeIndex = 0;
 
-                        entries.forEach(entry => {
-                            const videoId = entry.querySelector("videoId")?.textContent || 
-                                            entry.querySelector("id")?.textContent.split("video:")[1];
-                            const title = entry.querySelector("title")?.textContent || "Untitled Track";
-                            
-                            const description = entry.getElementsByTagName("media:description")[0]?.textContent || 
-                                                entry.querySelector("description")?.textContent || 
-                                                "No track listing layout documented.";
+            function initPlayerChassis() {
+                menuHook.innerHTML = '';
+                
+                playlistRegistry.forEach((track, index) => {
+                    const node = document.createElement('div');
+                    node.className = 'mp4-track-node';
+                    if (index === activeIndex) node.classList.add('active');
 
-                            if (videoId) {
-                                trackRegistry.push({
-                                    id: videoId.trim(),
-                                    title: title.trim(),
-                                    desc: description.trim()
-                                });
-                            }
-                        });
-
-                        if (trackRegistry.length > 0) {
-                            renderDeviceConsole();
-                            switchTrack(0, false);
-                        } else {
-                            throw new Error("Empty registry stream");
-                        }
-                    })
-                    .catch(err => {
-                        console.error("Pipeline Sync Error:", err);
-                        indexHook.innerHTML = '<div style="color:#ffffff; font-size:0.8rem; text-align:center; width:100%;">Network link configuration offline.</div>';
-                    });
-            }
-
-            function renderDeviceConsole() {
-                indexHook.innerHTML = '';
-                trackRegistry.forEach((track, index) => {
-                    const row = document.createElement('div');
-                    row.className = 'video-thumb track-item-card';
-                    if (index === currentTrackIndex) row.classList.add('active');
-
-                    const summaryDesc = track.desc.length > 90 ? track.desc.substring(0, 90) + "..." : track.desc;
-
-                    row.innerHTML = `
-                        <div class="track-item-title">${track.title}</div>
-                        <div class="track-item-desc">${summaryDesc}</div>
+                    node.innerHTML = `
+                        <div class="mp4-node-title">${track.title}</div>
+                        <div class="mp4-node-desc">${track.artist}</div>
                     `;
 
-                    row.addEventListener('click', () => {
-                        switchTrack(index, true);
+                    node.addEventListener('click', () => {
+                        executeTrackSwap(index, true);
                     });
 
-                    indexHook.appendChild(row);
+                    menuHook.appendChild(node);
                 });
             }
 
-            function switchTrack(index, shouldAutoplay) {
-                currentTrackIndex = index;
-                const track = trackRegistry[currentTrackIndex];
+            function executeTrackSwap(index, autoPlayIntent) {
+                activeIndex = index;
+                const currentTrack = playlistRegistry[activeIndex];
 
-                titleDisplay.innerText = track.title;
-                descDisplay.innerText = track.desc;
+                titleDisplay.innerText = currentTrack.title;
+                artistDisplay.innerText = currentTrack.artist;
 
-                const queryParams = shouldAutoplay ? "?autoplay=1&rel=0&modestbranding=1" : "?rel=0&modestbranding=1";
-                iframeScreen.src = `https://www.youtube.com/embed/${track.id}${queryParams}`;
+                // Enforce explicit formatting parameters to force YouTube layout rendering checks
+                const flags = autoPlayIntent ? "?autoplay=1&rel=0&modestbranding=1" : "?rel=0&modestbranding=1";
+                videoFrame.src = `https://www.youtube.com/embed/${currentTrack.id}${flags}`;
 
-                document.querySelectorAll('.track-item-card').forEach((card, idx) => {
-                    if (idx === currentTrackIndex) {
-                        card.classList.add('active');
+                // Update physical state triggers inside selection view
+                document.querySelectorAll('.mp4-track-node').forEach((node, idx) => {
+                    if (idx === activeIndex) {
+                        node.classList.add('active');
                     } else {
-                        card.classList.remove('active');
+                        node.classList.remove('active');
                     }
                 });
             }
 
-            document.getElementById('next-track-btn').addEventListener('click', () => {
-                let targetIdx = currentTrackIndex + 1;
-                if (targetIdx >= trackRegistry.length) targetIdx = 0;
-                switchTrack(targetIdx, true);
+            document.getElementById('mp4-next').addEventListener('click', () => {
+                let target = activeIndex + 1;
+                if (target >= playlistRegistry.length) target = 0;
+                executeTrackSwap(target, true);
             });
 
-            document.getElementById('prev-track-btn').addEventListener('click', () => {
-                let targetIdx = currentTrackIndex - 1;
-                if (targetIdx < 0) targetIdx = trackRegistry.length - 1;
-                switchTrack(targetIdx, true);
+            document.getElementById('mp4-prev').addEventListener('click', () => {
+                let target = activeIndex - 1;
+                if (target < 0) target = playlistRegistry.length - 1;
+                executeTrackSwap(target, true);
             });
 
-            parsePlaylistStream();
+            // Hardware Boot Ignition
+            initPlayerChassis();
+            executeTrackSwap(0, false);
         });
     </script>
 </body>
