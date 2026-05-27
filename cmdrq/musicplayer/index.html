@@ -27,7 +27,7 @@
             border: 1px solid var(--border-color);
             border-radius: 8px;
             overflow: hidden;
-            margin-bottom: 20px; /* Increased spacer footprint since text header block was dropped */
+            margin-bottom: 12px;
         }
 
         .mp4-screen-viewport iframe {
@@ -37,13 +37,44 @@
             display: block;
         }
 
+        /* Live Extracted Metadata Presentation Block */
+        .mp4-metadata-deck {
+            text-align: center;
+            padding: 4px 8px 12px 8px;
+            border-bottom: 1px dashed rgba(149, 117, 205, 0.2);
+            margin-bottom: 16px;
+            min-height: 52px; /* Stabilizes chassis size variations during network loading shifts */
+        }
+
+        .mp4-track-title {
+            font-size: 1.05rem;
+            font-weight: 900;
+            color: #e1d5ff;
+            margin-bottom: 4px;
+            text-shadow: 0 0 10px var(--purple-glow);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .mp4-track-author {
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            color: var(--purple-glow);
+            text-transform: uppercase;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
         /* Physical Wheel Media Controls Block */
         .mp4-controls-wheel {
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 12px;
-            padding: 12px 0 4px 0;
+            padding: 4px 0;
         }
 
         .mp4-btn {
@@ -83,11 +114,21 @@
         /* --- DESKTOP TYPOGRAPHY SCALING INTERCEPTORS --- */
         @media (min-width: 901px) {
             .hub-container {
-                max-width: 550px !important; /* Expansion framework optimization for desktop views */
+                max-width: 550px !important;
             }
             .mp4-chassis {
                 max-width: 460px;
                 padding: 24px;
+            }
+            .mp4-metadata-deck {
+                min-height: 64px;
+                margin-bottom: 20px;
+            }
+            .mp4-track-title {
+                font-size: 1.2rem;
+            }
+            .mp4-track-author {
+                font-size: 0.85rem;
             }
             .mp4-btn {
                 padding: 12px 26px;
@@ -112,6 +153,11 @@
                 <iframe id="mp4-video-frame" src="https://www.youtube.com/embed/videoseries?listType=playlist&list=PLwX0pb3GErenzxXjayWA-U4A_GKKnMsgP&enablejsapi=1&rel=0&modestbranding=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>
             </div>
 
+            <div class="mp4-metadata-deck">
+                <div id="live-title" class="mp4-track-title">STATION STANDBY</div>
+                <div id="live-author" class="mp4-track-author">Tap Load Array</div>
+            </div>
+
             <div class="mp4-controls-wheel">
                 <button class="mp4-btn" id="mp4-prev">Prev</button>
                 <button class="mp4-btn active-load" id="mp4-play-toggle">Load</button>
@@ -129,12 +175,33 @@
         document.addEventListener('DOMContentLoaded', () => {
             const playerIframe = document.getElementById('mp4-video-frame');
             const playToggleBtn = document.getElementById('mp4-play-toggle');
+            const liveTitle = document.getElementById('live-title');
+            const liveAuthor = document.getElementById('live-author');
             
             let hasInitialized = false;
             let isPlaying = false; 
 
+            // PostMessage Listener: Captures internal player data streams as they update inside the frame
+            window.addEventListener('message', (event) => {
+                try {
+                    const data = JSON.parse(event.data);
+                    
+                    // Intercepts structural delivery packets containing live track info
+                    if (data.event === "infoDelivery" && data.info && data.info.videoData) {
+                        const videoData = data.info.videoData;
+                        if (videoData.title) {
+                            liveTitle.innerText = videoData.title.toUpperCase();
+                        }
+                        if (videoData.author) {
+                            liveAuthor.innerText = videoData.author.toUpperCase();
+                        }
+                    }
+                } catch (e) {
+                    // Filter unrelated frame browser messaging updates silently
+                }
+            });
+
             playToggleBtn.addEventListener('click', () => {
-                // Initial state logic check: fires playlist bootstrap link alignment rules first
                 if (!hasInitialized) {
                     playerIframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
                     hasInitialized = true;
@@ -145,7 +212,6 @@
                     return;
                 }
 
-                // Subsequent toggle operations handling looping values properly
                 isPlaying = !isPlaying;
                 if (isPlaying) {
                     playerIframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
