@@ -17,6 +17,21 @@
         body.fade-out {
             opacity: 0;
         }
+        
+        /* --- BRAND LOGO LAYOUT --- */
+        .brand-logo-container {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .brand-logo-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
     </style>
 </head>
 <body>
@@ -27,8 +42,8 @@
     <div class="hub-container">
         
         <header class="central-header">
-            <div class="monogram-outer">
-                <div class="monogram-inner">Q</div>
+            <div class="brand-logo-container">
+                <img src="../images/vklogo.png" alt="Vanguard Knights Logo" class="brand-logo-img">
             </div>
             <h1 class="shimmer-title">Commander Q</h1>
         </header>
