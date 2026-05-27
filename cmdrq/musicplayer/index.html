@@ -6,7 +6,7 @@
     <title>MUSIC PLAYER</title>
     <link rel="stylesheet" href="../style.css?v=2">
     <style>
-        /* --- MP4 CHASSIS OVERRIDES --- */
+        /* --- MP4 CHASSIS DESIGN PROFILES --- */
         .mp4-chassis {
             display: flex;
             flex-direction: column;
@@ -37,7 +37,7 @@
             display: block;
         }
 
-        /* Live Extracted Metadata Presentation Block */
+        /* Metadata Deck with Text-Wrapping Frameworks */
         .mp4-metadata-deck {
             text-align: center;
             padding: 4px 8px 12px 8px;
@@ -52,8 +52,6 @@
             color: #e1d5ff;
             margin-bottom: 6px;
             text-shadow: 0 0 10px var(--purple-glow);
-            
-            /* REVISED: Allows titles to wrap cleanly to next line instead of getting cut off */
             white-space: normal;
             word-wrap: break-word;
             overflow: visible;
@@ -66,15 +64,13 @@
             letter-spacing: 1.5px;
             color: var(--purple-glow);
             text-transform: uppercase;
-            
-            /* REVISED: Allows author text to wrap if necessary */
             white-space: normal;
             word-wrap: break-word;
             overflow: visible;
             text-overflow: clip;
         }
 
-        /* Physical Wheel Media Controls Block */
+        /* Physical Device Hardware Controls Wheel */
         .mp4-controls-wheel {
             display: flex;
             justify-content: center;
@@ -117,7 +113,7 @@
             box-shadow: 0 0 12px var(--pink-glow);
         }
 
-        /* --- DESKTOP TYPOGRAPHY SCALING INTERCEPTORS --- */
+        /* Desktop Optimization Magnifier Interceptors */
         @media (min-width: 901px) {
             .hub-container {
                 max-width: 550px !important;
@@ -188,7 +184,8 @@
                     list: 'PLwX0pb3GErenzxXjayWA-U4A_GKKnMsgP',
                     enablejsapi: 1,
                     rel: 0,
-                    modestbranding: 1
+                    modestbranding: 1,
+                    vq: 'hd1080'
                 },
                 events: {
                     'onStateChange': onPlayerStateChange
