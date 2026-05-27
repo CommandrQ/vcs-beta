@@ -3,329 +3,281 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Sound Station</title>
-    <!-- Supabase JS Library -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <title>MUSIC PLAYER</title>
+    <link rel="stylesheet" href="../style.css?v=2">
     <style>
-        :root {
-            --light-purple: #e0c3fc;
-            --light-blue: #8ecae6;
-            --deep-space: #0f0c29;
-            --glass-bg: rgba(15, 15, 25, 0.85);
-            --glass-border: rgba(255, 255, 255, 0.15);
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        html, body {
-            width: 100%;
-            height: 100%;
-            overflow-x: hidden;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        body {
-            background: linear-gradient(180deg, #1a1a2e 0%, #2b1055 70%, #7597de 100%);
-            background-attachment: fixed;
-            font-family: 'Segoe UI', Tahoma, sans-serif;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100dvh; 
-        }
-
-        /* --- Background Matrix Animation --- */
-        #boot-screen { position: fixed; inset: 0; background: black; z-index: 1000; pointer-events: none; animation: fadeOut 1.5s forwards; }
-        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
-
-        #starfield { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
-        .stars { position: absolute; width: 2px; height: 2px; background: transparent; 
-                  box-shadow: 10vw 20vh #fff, 35vw 45vh #fff, 80vw 10vh #fff, 25vw 90vh #fff, 60vw 80vh #fff, 45vw 15vh #fff;
-                  animation: moveStars 150s linear infinite; }
-        @keyframes moveStars { from { transform: translateY(0); } to { transform: translateY(-2000px); } }
-
-        /* --- Layout Container --- */
-        .player-container {
-            width: 90%;
-            max-width: 450px;
-            z-index: 10;
-            padding: 40px 0; 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            margin: auto 0; 
-            transition: max-width 0.4s ease;
-        }
-
-        /* Responsive Widescreen Optimization */
-        @media (min-width: 768px) {
-            .player-container {
-                max-width: 850px; 
-            }
-        }
-
-        .commander-title { 
-            font-size: clamp(2rem, 6vw, 2.8rem); font-weight: bold; 
-            background: linear-gradient(to right, #8ecae6 20%, #fff 40%, #fff 60%, #8ecae6 80%);
-            background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            animation: sheen 3s linear infinite;
+        /* --- HYBRID HARDWARE INTERFACE OVERRIDES --- */
+        .device-screen {
+            background: #020105;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
             margin-bottom: 25px;
-        }
-        @keyframes sheen { to { background-position: 200% center; } }
-
-        .settings-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 28px;
-            padding: 40px 30px; 
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            width: 100%;
-            margin-bottom: 20px; 
+            flex-shrink: 0;
         }
 
-        .intro-block {
-            width: 100%;
-            margin-bottom: 25px;
-        }
-
-        h2 { color: var(--light-blue); margin-bottom: 15px; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 3px; }
-        p { font-size: 0.95rem; line-height: 1.6; color: rgba(255, 255, 255, 0.8); }
-
-        /* --- Split Column Engine for Widescreen Presentation --- */
-        .deck-layout {
+        .media-core-layout {
             display: flex;
-            flex-direction: column;
-            width: 100%;
+            flex-direction: row;
             gap: 20px;
         }
 
-        @media (min-width: 768px) {
-            .deck-layout {
-                flex-direction: row;
-                align-items: center;
-                text-align: left;
-                gap: 30px;
-            }
-            .deck-left {
-                flex: 1.3;
-                width: 100%;
-            }
-            .deck-right {
-                flex: 1;
-                width: 100%;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-            }
-            .intro-block {
-                text-align: center;
-            }
-        }
-
-        /* --- YouTube Frame Viewport --- */
-        .video-viewport {
-            width: 100%;
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid var(--glass-border);
-            background: rgba(0,0,0,0.4);
-            aspect-ratio: 16 / 9;
-        }
-
-        /* --- Live Track Metadata Box --- */
-        .track-info-box {
-            width: 100%;
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 14px;
-            padding: 18px 20px;
-            text-align: center;
-        }
-        @media (min-width: 768px) {
-            .track-info-box {
-                text-align: left;
-                padding: 22px 24px;
-            }
-        }
-        .track-title {
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: white;
-            line-height: 1.4;
-        }
-
-        /* --- Control Mechanics Layout --- */
-        .controls-row {
+        .album-art-vault {
+            width: 140px;
+            height: 140px;
+            background: linear-gradient(135deg, rgba(149, 117, 205, 0.2) 0%, rgba(77, 208, 225, 0.1) 100%);
+            border: 1px solid var(--blue-muted);
+            border-radius: 6px;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 15px;
-            margin-top: 20px;
-            width: 100%;
-        }
-        @media (min-width: 768px) {
-            .controls-row {
-                justify-content: flex-start;
-                margin-top: 25px;
-            }
+            box-shadow: 0 0 15px rgba(77, 208, 225, 0.15);
+            flex-shrink: 0;
         }
 
-        .btn {
-            width: 100%; padding: 14px; border-radius: 50px; border: 1px solid var(--light-blue); 
-            background: transparent; color: var(--light-blue); font-weight: bold; 
-            cursor: pointer; transition: 0.3s; text-transform: uppercase; font-size: 0.8rem;
-            margin-bottom: 15px; text-decoration: none; display: inline-block; letter-spacing: 1px;
-            text-align: center;
+        .device-metadata-panel {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
-        .btn:hover { background: var(--light-blue); color: var(--deep-space); box-shadow: 0 0 15px var(--light-blue); }
-        
-        .control-sub-btn {
-            width: auto;
-            min-width: 90px;
-            padding: 12px 18px;
-            margin-bottom: 0;
+
+        .now-playing-tag {
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--pink-neon);
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .current-track-title {
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: #ffffff;
+            margin-bottom: 15px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .progress-bar-container {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            margin-bottom: 8px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            width: 42%;
+            height: 100%;
+            background: var(--blue-muted);
+            box-shadow: 0 0 8px rgba(77, 208, 225, 0.6);
+        }
+
+        .time-stamps {
+            display: flex;
+            justify-content: space-between;
             font-size: 0.75rem;
+            color: var(--purple-muted);
+            font-family: monospace;
         }
-        @media (min-width: 768px) {
-            .control-sub-btn {
-                min-width: 100px;
-                padding: 14px 20px;
+
+        /* Hardware Deck Interaction Controls */
+        .hardware-btn-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .deck-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            color: #ffffff;
+            padding: 10px 24px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 30px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+        }
+
+        .deck-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--pink-neon);
+        }
+
+        .deck-btn.target-neon {
+            border-color: var(--pink-neon);
+            color: var(--pink-neon);
+            box-shadow: 0 0 10px rgba(255, 64, 129, 0.3);
+        }
+
+        .deck-btn.target-neon:hover {
+            background: rgba(255, 64, 129, 0.1);
+            box-shadow: 0 0 15px rgba(255, 64, 129, 0.5);
+        }
+
+        /* Responsive Hardware Shifting */
+        @media (max-width: 600px) {
+            .media-core-layout {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
             }
-        }
-        .play-master-btn {
-            border-color: var(--light-purple);
-            color: var(--light-purple);
-            min-width: 120px;
-        }
-        .play-master-btn:hover {
-            background: var(--light-purple);
-            box-shadow: 0 0 15px var(--light-purple);
+            .album-art-vault {
+                width: 120px;
+                height: 120px;
+            }
+            .current-track-title {
+                text-align: center;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div id="boot-screen"></div>
     <div id="starfield"><div class="stars"></div></div>
+    <div class="ambient-glow"></div>
 
-    <div class="player-container">
-        <h1 class="commander-title">Sound Station</h1>
+    <div class="hub-container">
+        
+        <header class="central-header">
+            <div class="monogram-outer">
+                <div class="monogram-inner">Q</div>
+            </div>
+            <h1 class="shimmer-title">Music Player</h1>
+        </header>
 
-        <main class="settings-card">
-            
-            <div class="intro-block">
-                <h2>Commander Q Mixes</h2>
-                <p>Turn up the volume and lock into the zone. This station streams unofficial remixes and mashups directly from the archive. It updates automatically whenever new beats drop.</p>
+        <main class="hub-card">
+
+            <section class="device-screen">
+                <div class="media-core-layout">
+                    
+                    <div class="album-art-vault">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--blue-muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 18V5l12-2v13"></path>
+                            <circle cx="6" cy="18" r="3"></circle>
+                            <circle cx="18" cy="16" r="3"></circle>
+                        </svg>
+                    </div>
+
+                    <div class="device-metadata-panel">
+                        <div class="now-playing-tag">Now Playing</div>
+                        <div class="current-track-title" id="track-display">MIX_04_VAPOR_DRIFT.MP3</div>
+                        
+                        <div class="progress-bar-container">
+                            <div class="progress-bar-fill"></div>
+                        </div>
+                        <div class="time-stamps">
+                            <span>01:48</span>
+                            <span id="duration-display">04:12</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="hardware-btn-group">
+                    <button class="deck-btn" id="prev-btn">Prev</button>
+                    <button class="deck-btn target-neon" id="play-btn">Play</button>
+                    <button class="deck-btn" id="next-btn">Next</button>
+                </div>
+            </section>
+
+            <div class="scroller-bay">
+                <h2>Track Index</h2>
+                <div class="video-selection-grid" style="margin-top: 15px;" id="track-list-hook">
+                    </div>
             </div>
 
-            <!-- Double Column Adaptive Layout Wrapper -->
-            <div class="deck-layout">
-                
-                <!-- Left Node: Visual Screen Window -->
-                <div class="deck-left">
-                    <div class="video-viewport">
-                        <div id="embed-target"></div>
-                    </div>
-                </div>
-                
-                <!-- Right Node: Interactive Meta Details and Mechanics Controls -->
-                <div class="deck-right">
-                    <div class="track-info-box">
-                        <div id="current-track-title" class="track-title">Waiting to play</div>
-                    </div>
-
-                    <div class="controls-row">
-                        <button class="btn control-sub-btn" onclick="triggerPrevTrack()">Back</button>
-                        <button id="master-toggle-btn" class="btn control-sub-btn play-master-btn" onclick="triggerPlayToggle()">Play</button>
-                        <button class="btn control-sub-btn" onclick="triggerNextTrack()">Next</button>
-                    </div>
-                </div>
-
-            </div>
+            <footer class="channel-dock" style="border-top: 1px solid var(--border-color); padding-top: 15px;">
+                <a href="../" class="dock-link">← Return to Control Deck</a>
+            </footer>
 
         </main>
-
-        <!-- Corrected navigation target path to go back to home layout -->
-        <a href="../home.html" class="btn" style="width: auto; padding: 12px 40px; margin-bottom: 0;">Return to Hub</a>
     </div>
 
     <script>
-        /* --- 1. LOAD EXTERNAL ASYNCHRONOUS YOUTUBE API ASSETS --- */
-        const tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        const firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        document.addEventListener('DOMContentLoaded', () => {
+            const trackHook = document.getElementById('track-list-hook');
+            const trackDisplay = document.getElementById('track-display');
+            const durationDisplay = document.getElementById('duration-display');
+            const playBtn = document.getElementById('play-btn');
 
-        let audioPlayer;
-        const playButton = document.getElementById('master-toggle-btn');
+            // Static audio configuration registry layout
+            const audioDatabase = [
+                { title: "MIX_04_VAPOR_DRIFT.MP3", length: "04:12" },
+                { title: "KNIGHTS_ANALYST_MASHUP.RAW", length: "03:55" },
+                { title: "RADCLIFF_NIGHTS_VIBE.MP3", length: "05:21" }
+            ];
 
-        /* --- 2. INITIALIZE PLAYER PROTOCOLS ONCE API LIFTS --- */
-        function onYouTubeIframeAPIReady() {
-            audioPlayer = new YT.Player('embed-target', {
-                height: '100%',
-                width: '100%',
-                playerVars: {
-                    listType: 'playlist',
-                    list: 'PLwX0pb3GErenzxXjayWA-U4A_GKKnMsgP',
-                    autoplay: 0,
-                    controls: 0, // Hides native youtube player control bars completely
-                    modestbranding: 1,
-                    rel: 0,
-                    showinfo: 0
-                },
-                events: {
-                    'onStateChange': handlePlayerStateChange
+            let activeIndex = 0;
+            let isPlaying = false;
+
+            function renderTracklist() {
+                trackHook.innerHTML = '';
+                audioDatabase.forEach((track, index) => {
+                    const row = document.createElement('div');
+                    row.className = 'video-thumb';
+                    if (index === activeIndex) row.classList.add('active');
+
+                    row.style.display = 'flex';
+                    row.style.justifyContent = 'space-between';
+                    row.style.alignItems = 'center';
+
+                    row.innerHTML = `
+                        <span>${track.title}</span>
+                        <span style="font-family: monospace; opacity: 0.6; font-size: 0.75rem;">${track.length}</span>
+                    `;
+
+                    row.addEventListener('click', () => {
+                        loadTrack(index);
+                        if (!isPlaying) triggerPlayToggle();
+                    });
+
+                    trackHook.appendChild(row);
+                });
+            }
+
+            function loadTrack(index) {
+                activeIndex = index;
+                trackDisplay.innerText = audioDatabase[activeIndex].title;
+                durationDisplay.innerText = audioDatabase[activeIndex].length;
+                renderTracklist();
+            }
+
+            function triggerPlayToggle() {
+                isPlaying = !isPlaying;
+                playBtn.innerText = isPlaying ? "Pause" : "Play";
+                if (isPlaying) {
+                    playBtn.style.boxShadow = '0 0 15px var(--pink-glow)';
+                } else {
+                    playBtn.style.boxShadow = '0 0 10px rgba(255, 64, 129, 0.3)';
                 }
+            }
+
+            playBtn.addEventListener('click', triggerPlayToggle);
+
+            document.getElementById('next-btn').addEventListener('click', () => {
+                let target = activeIndex + 1;
+                if (target >= audioDatabase.length) target = 0;
+                loadTrack(target);
             });
-        }
 
-        /* --- 3. HARMONIZE INTERACTIVE VISUAL AND DATA STATES --- */
-        function handlePlayerStateChange(event) {
-            // YT.PlayerState.PLAYING corresponds to value 1
-            if (event.data === 1) {
-                playButton.innerText = "Pause";
-                updateLiveTrackMetadata();
-            } else {
-                playButton.innerText = "Play";
-            }
-        }
+            document.getElementById('prev-btn').addEventListener('click', () => {
+                let target = activeIndex - 1;
+                if (target < 0) target = audioDatabase.length - 1;
+                loadTrack(target);
+            });
 
-        /* --- 4. EXTRACT LIVE METADATA FROM THE PLAYLIST STREAM --- */
-        function updateLiveTrackMetadata() {
-            if (audioPlayer && typeof audioPlayer.getVideoData === 'function') {
-                const videoData = audioPlayer.getVideoData();
-                if (videoData && videoData.title) {
-                    document.getElementById('current-track-title').innerText = videoData.title;
-                }
-            }
-        }
-
-        /* --- 5. CORE CONTROLLER INTERACTION ACTIONS --- */
-        function triggerPlayToggle() {
-            if (!audioPlayer) return;
-            
-            const currentState = audioPlayer.getPlayerState();
-            if (currentState === 1) {
-                audioPlayer.pauseVideo();
-            } else {
-                audioPlayer.playVideo();
-            }
-        }
-
-        function triggerNextTrack() {
-            if (!audioPlayer) return;
-            audioPlayer.nextVideo();
-        }
-
-        function triggerPrevTrack() {
-            if (!audioPlayer) return;
-            audioPlayer.previousVideo();
-        }
+            // System Initialization
+            loadTrack(0);
+        });
     </script>
 </body>
 </html>
