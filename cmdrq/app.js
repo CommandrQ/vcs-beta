@@ -5,30 +5,8 @@ const AppState = {
 
 /* --- Global Background Vector Injector Engine --- */
 document.addEventListener("DOMContentLoaded", () => {
-    generateGlassShards(8);
     setInterval(triggerRandomComet, 3000); 
 });
-
-function generateGlassShards(count) {
-    const container = document.getElementById("glass-shards");
-    if (!container) return;
-
-    for (let i = 0; i < count; i++) {
-        const shard = document.createElement("div");
-        shard.classList.add("glass-shard");
-        
-        const sizeW = Math.random() * 40 + 20;
-        const sizeH = Math.random() * 60 + 30;
-        shard.style.width = `${sizeW}px`;
-        shard.style.height = `${sizeH}px`;
-        shard.style.left = `${Math.random() * 100}vw`;
-        
-        shard.style.animationDelay = `${Math.random() * -25}s`;
-        shard.style.animationDuration = `${Math.random() * 15 + 20}s`;
-        
-        container.appendChild(shard);
-    }
-}
 
 function triggerRandomComet() {
     const container = document.getElementById("comet-layer");
@@ -44,7 +22,7 @@ function triggerRandomComet() {
     
     setTimeout(() => {
         comet.remove();
-    }, 1500);
+    }, 1200);
 }
 
 /* --- Popup Overlay & Drawer Interactivity Architecture --- */
