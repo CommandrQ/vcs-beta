@@ -50,11 +50,14 @@
             font-size: 1.05rem;
             font-weight: 900;
             color: #e1d5ff;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
             text-shadow: 0 0 10px var(--purple-glow);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            
+            /* REVISED: Allows titles to wrap cleanly to next line instead of getting cut off */
+            white-space: normal;
+            word-wrap: break-word;
+            overflow: visible;
+            text-overflow: clip;
         }
 
         .mp4-track-author {
@@ -63,9 +66,12 @@
             letter-spacing: 1.5px;
             color: var(--purple-glow);
             text-transform: uppercase;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            
+            /* REVISED: Allows author text to wrap if necessary */
+            white-space: normal;
+            word-wrap: break-word;
+            overflow: visible;
+            text-overflow: clip;
         }
 
         /* Physical Wheel Media Controls Block */
@@ -173,7 +179,6 @@
         let hasInitialized = false;
         let isPlaying = false;
 
-        // Auto-fires automatically when secure API script finishes downloading
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('player-target', {
                 width: '100%',
@@ -191,7 +196,6 @@
             });
         }
 
-        // Pulls secure tracking metadata inside running frame the millisecond the track advances
         function updateMetadataDisplay() {
             if (player && typeof player.getVideoData === 'function') {
                 const videoData = player.getVideoData();
@@ -203,7 +207,6 @@
         }
 
         function onPlayerStateChange(event) {
-            // YT.PlayerState.PLAYING signals data transfer is active and metadata window is open
             if (event.data == YT.PlayerState.PLAYING) {
                 updateMetadataDisplay();
                 isPlaying = true;
