@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Hardin County Report | Project V</title>
+    <link rel="stylesheet" href="../style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <style>
+        /* --- BRANDING & LOCAL VARIABLES --- */
+        :root {
+            --gold: #D4AF37;
+            --gold-glow: rgba(212, 175, 55, 0.4);
+            --bg-dark: #05040a;
+            --white: #ffffff;
+            --glass-bg: rgba(15, 15, 20, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        body {
+            background: linear-gradient(180deg, #020108 0%, #0a0815 40%, #1a1005 75%, #D4AF37 120%);
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            min-height: 100dvh;
+            margin: 0;
+            padding: 0;
+            overflow-y: auto; 
+            overflow-x: hidden; 
+            -webkit-overflow-scrolling: touch; 
+        }
+
+        #environment { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+        .starfield {
+            position: absolute; width: 200vw; height: 200vh; top: -50%; left: -50%;
+            background-image: 
+                radial-gradient(1.5px 1.5px at 10% 10%, #fff, transparent),
+                radial-gradient(2px 2px at 30% 40%, var(--gold), transparent),
+                radial-gradient(1px 1px at 80% 20%, #fff, transparent),
+                radial-gradient(2.5px 2.5px at 50% 80%, var(--gold), transparent);
+            background-size: 350px 350px;
+            animation: stellar-drift 400s linear infinite;
+            opacity: 0.5;
+        }
+        @keyframes stellar-drift { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        .app-container {
+            width: 92%;
+            max-width: 600px;
+            margin: 40px auto 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            flex-grow: 1;
+            z-index: 10;
+        }
+
+        .module-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px) saturate(150%);
+            -webkit-backdrop-filter: blur(25px) saturate(150%);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 30px 25px; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(255,255,255,0.05);
+        }
+
+        .page-header { text-align: center; margin-bottom: 25px; }
+        .page-title { 
+            font-size: clamp(1.8rem, 5vw, 2.3rem); font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
+            background: linear-gradient(180deg, #fff 0%, var(--gold) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.3));
+            margin-bottom: 5px;
+            line-height: 1.1;
+        }
+        .page-subtitle { color: var(--gold); font-size: 0.95rem; letter-spacing: 3px; text-transform: uppercase; font-weight: 600; }
+
+        .shimmer-gold-link {
+            font-size: 0.95rem; font-weight: 700; text-decoration: none; text-transform: uppercase; letter-spacing: 1px;
+            background: linear-gradient(to right, #D4AF37 20%, #ffffff 50%, #D4AF37 80%); background-size: 200% auto;
+            color: transparent; -webkit-background-clip: text; background-clip: text;
+            animation: goldShine 3s linear infinite; display: inline-block; transition: transform 0.3s ease, filter 0.3s ease;
+        }
+        .shimmer-gold-link:hover { transform: scale(1.05); filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.5)); }
+        @keyframes goldShine { to { background-position: 200% center; } }
+
+        /* --- RESULTS DISPLAY VISUALS --- */
+        .metric-result-row {
+            margin-bottom: 25px;
+            border-bottom: 1px dashed var(--glass-border);
+            padding-bottom: 20px;
+        }
+        .metric-result-row:last-of-type {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 0;
+        }
+        .metric-title {
+            color: var(--gold);
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+        .metric-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .metric-score-pill {
+            background: rgba(214, 175, 55, 0.1);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            box-shadow: 0 0 10px var(--gold-glow);
+        }
+        .metric-count {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .bar-container {
+            width: 100%;
+            height: 12px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--glass-border);
+            border-radius: 6px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--gold-glow) 0%, var(--gold) 100%);
+            width: 0%;
+            transition: width 1s var(--ease-smooth);
+            box-shadow: 0 0 10px var(--gold);
+        }
+
+        .loading-text {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+            padding: 40px 0;
+        }
+
+        .footer-pad { margin-top: auto; width: 100%; display: flex; justify-content: center; align-items: center; }
+        .system-footer { padding: 25px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: #ffffff; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <div id="environment"><div class="starfield"></div></div>
+
+    <div class="app-container">
+        <header class="page-header">
+            <h1 class="page-title">Hardin County Report</h1>
+            <div class="page-subtitle">Project V // Live Index Metrics</div>
+        </header>
+
+        <main class="module-card" id="results-display">
+            <div class="loading-text" id="loader">Retrieving live index metrics from cloud stream...</div>
+            <div id="metrics-wrapper" style="display: none;">
+                
+                <div class="metric-result-row">
+                    <div class="metric-title">Starting Strong</div>
+                    <div class="bar-container"><div class="bar-fill" id="bar-cat1"></div></div>
+                    <div class="metric-stats">
+                        <span class="metric-count" id="count-cat1">0 Submissions</span>
+                        <span class="metric-score-pill" id="score-cat1">0.0</span>
+                    </div>
+                </div>
+
+                <div class="metric-result-row">
+                    <div class="metric-title">The Middle School Slide</div>
+                    <div class="bar-container"><div class="bar-fill" id="bar-cat2"></div></div>
+                    <div class="metric-stats">
+                        <span class="metric-count" id="count-cat2">0 Submissions</span>
+                        <span class="metric-score-pill" id="score-cat2">0.0</span>
+                    </div>
+                </div>
+
+                <div class="metric-result-row">
+                    <div class="metric-title">The Diploma Dropout</div>
+                    <div class="bar-container"><div class="bar-fill" id="bar-cat3"></div></div>
+                    <div class="metric-stats">
+                        <span class="metric-count" id="count-cat3">0 Submissions</span>
+                        <span class="metric-score-pill" id="score-cat3">0.0</span>
+                    </div>
+                </div>
+
+                <div class="metric-result-row">
+                    <div class="metric-title">The Good Job Gap</div>
+                    <div class="bar-container"><div class="bar-fill" id="bar-cat4"></div></div>
+                    <div class="metric-stats">
+                        <span class="metric-count" id="count-cat4">0 Submissions</span>
+                        <span class="metric-score-pill" id="score-cat4">0.0</span>
+                    </div>
+                </div>
+
+                <div style="margin-top: 35px; padding-top: 20px; border-top: 1px solid var(--glass-border); text-align: center;">
+                    <a href="index.html" class="shimmer-gold-link">← Submit Another Check</a>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <div class="footer-pad">
+        <footer class="system-footer">
+            &copy; <span id="current-year"></span> Vanguard Citizen Services
+        </footer>
+    </div>
+
+    <script src="../config.js"></script>
+    <script>
+        const yearSpan = document.getElementById('current-year');
+        if (yearSpan) yearSpan.innerText = new Date().getFullYear();
+
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        async function renderMetrics() {
+            try {
+                const { data, error } = await supabaseClient
+                    .from('school_scores')
+                    .select('category_1, category_2, category_3, category_4');
+
+                if (error) throw error;
+
+                const totals = { cat1: 0, cat2: 0, cat3: 0, cat4: 0 };
+                const counts = { cat1: 0, cat2: 0, cat3: 0, cat4: 0 };
+
+                data.forEach(row => {
+                    if (row.category_1 !== null) { totals.cat1 += row.category_1; counts.cat1++; }
+                    if (row.category_2 !== null) { totals.cat2 += row.category_2; counts.cat2++; }
+                    if (row.category_3 !== null) { totals.cat3 += row.category_3; counts.cat3++; }
+                    if (row.category_4 !== null) { totals.cat4 += row.category_4; counts.cat4++; }
+                });
+
+                const finalMetrics = [
+                    { key: 'cat1', total: totals.cat1, count: counts.cat1 },
+                    { key: 'cat2', total: totals.cat2, count: counts.cat2 },
+                    { key: 'cat3', total: totals.cat3, count: counts.cat3 },
+                    { key: 'cat4', total: totals.cat4, count: counts.cat4 }
+                ];
+
+                document.getElementById('loader').style.display = 'none';
+                document.getElementById('metrics-wrapper').style.display = 'block';
+
+                finalMetrics.forEach(m => {
+                    const average = m.count > 0 ? (m.total / m.count).toFixed(1) : "0.0";
+                    const percentage = m.count > 0 ? (average * 10) : 0;
+
+                    document.getElementById(`score-${m.key}`).innerText = average;
+                    document.getElementById(`count-${m.key}`).innerText = `${m.count} Submissions`;
+                    
+                    setTimeout(() => {
+                        document.getElementById(`bar-${m.key}`).style.width = `${percentage}%`;
+                    }, 100);
+                });
+
+            } catch (err) {
+                console.error(err);
+                document.getElementById('loader').innerText = "Failed to sync active metrics log stream.";
+                document.getElementById('loader').style.color = "#e74c3c";
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', renderMetrics);
+    </script>
+</body>
+</html>
