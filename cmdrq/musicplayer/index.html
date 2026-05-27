@@ -43,7 +43,7 @@
             padding: 4px 8px 12px 8px;
             border-bottom: 1px dashed rgba(149, 117, 205, 0.2);
             margin-bottom: 16px;
-            min-height: 52px; /* Stabilizes chassis size variations during network loading shifts */
+            min-height: 52px; 
         }
 
         .mp4-track-title {
@@ -124,19 +124,10 @@
                 min-height: 64px;
                 margin-bottom: 20px;
             }
-            .mp4-track-title {
-                font-size: 1.2rem;
-            }
-            .mp4-track-author {
-                font-size: 0.85rem;
-            }
-            .mp4-btn {
-                padding: 12px 26px;
-                font-size: 0.85rem;
-            }
-            .dock-link {
-                font-size: 0.95rem !important;
-            }
+            .mp4-track-title { font-size: 1.2rem; }
+            .mp4-track-author { font-size: 0.85rem; }
+            .mp4-btn { padding: 12px 26px; font-size: 0.85rem; }
+            .dock-link { font-size: 0.95rem !important; }
         }
     </style>
 </head>
@@ -150,7 +141,7 @@
         <main class="mp4-chassis">
 
             <div class="mp4-screen-viewport">
-                <iframe id="mp4-video-frame" src="https://www.youtube.com/embed/videoseries?listType=playlist&list=PLwX0pb3GErenzxXjayWA-U4A_GKKnMsgP&enablejsapi=1&rel=0&modestbranding=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                <div id="player-target"></div>
             </div>
 
             <div class="mp4-metadata-deck">
@@ -171,76 +162,85 @@
         </main>
     </div>
 
+    <script src="https://www.youtube.com/iframe_api"></script>
+
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const playerIframe = document.getElementById('mp4-video-frame');
-            const playToggleBtn = document.getElementById('mp4-play-toggle');
-            const liveTitle = document.getElementById('live-title');
-            const liveAuthor = document.getElementById('live-author');
-            
-            let hasInitialized = false;
-            let isPlaying = false; 
+        let player;
+        const playToggleBtn = document.getElementById('mp4-play-toggle');
+        const liveTitle = document.getElementById('live-title');
+        const liveAuthor = document.getElementById('live-author');
+        
+        let hasInitialized = false;
+        let isPlaying = false;
 
-            // PostMessage Listener: Captures internal player data streams as they update inside the frame
-            window.addEventListener('message', (event) => {
-                try {
-                    const data = JSON.parse(event.data);
-                    
-                    // Intercepts structural delivery packets containing live track info
-                    if (data.event === "infoDelivery" && data.info && data.info.videoData) {
-                        const videoData = data.info.videoData;
-                        if (videoData.title) {
-                            liveTitle.innerText = videoData.title.toUpperCase();
-                        }
-                        if (videoData.author) {
-                            liveAuthor.innerText = videoData.author.toUpperCase();
-                        }
-                    }
-                } catch (e) {
-                    // Filter unrelated frame browser messaging updates silently
+        // Auto-fires automatically when secure API script finishes downloading
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player-target', {
+                width: '100%',
+                height: '100%',
+                playerVars: {
+                    listType: 'playlist',
+                    list: 'PLwX0pb3GErenzxXjayWA-U4A_GKKnMsgP',
+                    enablejsapi: 1,
+                    rel: 0,
+                    modestbranding: 1
+                },
+                events: {
+                    'onStateChange': onPlayerStateChange
                 }
             });
+        }
 
-            playToggleBtn.addEventListener('click', () => {
-                if (!hasInitialized) {
-                    playerIframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-                    hasInitialized = true;
-                    isPlaying = true;
-                    playToggleBtn.innerText = "Pause";
-                    playToggleBtn.classList.remove('active-load');
-                    playToggleBtn.classList.add('active-play');
-                    return;
+        // Pulls secure tracking metadata inside running frame the millisecond the track advances
+        function updateMetadataDisplay() {
+            if (player && typeof player.getVideoData === 'function') {
+                const videoData = player.getVideoData();
+                if (videoData) {
+                    if (videoData.title) liveTitle.innerText = videoData.title.toUpperCase();
+                    if (videoData.author) liveAuthor.innerText = videoData.author.toUpperCase();
                 }
+            }
+        }
 
-                isPlaying = !isPlaying;
-                if (isPlaying) {
-                    playerIframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-                    playToggleBtn.innerText = "Pause";
-                    playToggleBtn.classList.add('active-play');
-                } else {
-                    playerIframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
-                    playToggleBtn.innerText = "Play";
-                    playToggleBtn.classList.remove('active-play');
-                }
-            });
-
-            document.getElementById('mp4-next').addEventListener('click', () => {
-                playerIframe.contentWindow.postMessage('{"event":"command","func":"nextVideo","args":""}', '*');
-                hasInitialized = true;
+        function onPlayerStateChange(event) {
+            // YT.PlayerState.PLAYING signals data transfer is active and metadata window is open
+            if (event.data == YT.PlayerState.PLAYING) {
+                updateMetadataDisplay();
                 isPlaying = true;
                 playToggleBtn.innerText = "Pause";
                 playToggleBtn.classList.remove('active-load');
                 playToggleBtn.classList.add('active-play');
-            });
+            }
+        }
 
-            document.getElementById('mp4-prev').addEventListener('click', () => {
-                playerIframe.contentWindow.postMessage('{"event":"command","func":"previousVideo","args":""}', '*');
+        playToggleBtn.addEventListener('click', () => {
+            if (!hasInitialized) {
+                player.playVideo();
                 hasInitialized = true;
+                return;
+            }
+
+            if (isPlaying) {
+                player.pauseVideo();
+                isPlaying = false;
+                playToggleBtn.innerText = "Play";
+                playToggleBtn.classList.remove('active-play');
+            } else {
+                player.playVideo();
                 isPlaying = true;
                 playToggleBtn.innerText = "Pause";
-                playToggleBtn.classList.remove('active-load');
                 playToggleBtn.classList.add('active-play');
-            });
+            }
+        });
+
+        document.getElementById('mp4-next').addEventListener('click', () => {
+            player.nextVideo();
+            hasInitialized = true;
+        });
+
+        document.getElementById('mp4-prev').addEventListener('click', () => {
+            player.previousVideo();
+            hasInitialized = true;
         });
     </script>
 </body>
