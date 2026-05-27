@@ -4,6 +4,7 @@ const surveyForm = document.getElementById('index-survey-form');
 const identityModal = document.getElementById('identity-modal');
 const modalGateForm = document.getElementById('modal-gate-form');
 const modalAbortBtn = document.getElementById('modal-abort-btn');
+const modalCloseX = document.getElementById('modal-close-x');
 const engineChassis = document.getElementById('engine-chassis');
 const successScreen = document.getElementById('success-screen');
 
@@ -28,14 +29,23 @@ document.querySelectorAll('.na-checkbox').forEach(checkbox => {
     });
 });
 
+function toggleModal(open) {
+    if (open) {
+        identityModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    } else {
+        identityModal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
 surveyForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    identityModal.classList.add('active');
+    toggleModal(true);
 });
 
-modalAbortBtn.addEventListener('click', () => {
-    identityModal.classList.remove('active');
-});
+modalAbortBtn.addEventListener('click', () => toggleModal(false));
+modalCloseX.addEventListener('click', () => toggleModal(false));
 
 modalGateForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -82,14 +92,11 @@ modalGateForm.addEventListener('submit', async (e) => {
 
         if (dbError) throw dbError;
 
-        identityModal.classList.remove('active');
+        toggleModal(false);
         surveyForm.reset();
         modalGateForm.reset();
         
-        document.querySelectorAll('.slider-row').forEach(row => row.classList.remove('disabled-scale'));
-
-        engineChassis.style.display = 'none';
-        successScreen.style.display = 'block';
+        window.location.href = "results.html";
 
     } catch (err) {
         console.error(err.message || err);
