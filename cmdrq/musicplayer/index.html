@@ -143,7 +143,7 @@
         <main class="mp4-chassis">
 
             <div class="mp4-screen-viewport">
-                <div id="player-target"></div>
+                <iframe id="mp4-video-frame" src="https://www.youtube.com/embed/videoseries?listType=playlist&list=PLwX0pb3GErenzxXjayWA-U4A_GKKnMsgP&enablejsapi=1&rel=0&modestbranding=1&vq=hd1080" allow="autoplay; encrypted-media" allowfullscreen></iframe>
             </div>
 
             <div class="mp4-metadata-deck">
@@ -175,18 +175,9 @@
         let hasInitialized = false;
         let isPlaying = false;
 
+        // Attaches API securely directly onto the pre-rendered HTML iframe element
         function onYouTubeIframeAPIReady() {
-            player = new YT.Player('player-target', {
-                width: '100%',
-                height: '100%',
-                playerVars: {
-                    listType: 'playlist',
-                    list: 'PLwX0pb3GErenzxXjayWA-U4A_GKKnMsgP',
-                    enablejsapi: 1,
-                    rel: 0,
-                    modestbranding: 1,
-                    vq: 'hd1080'
-                },
+            player = new YT.Player('mp4-video-frame', {
                 events: {
                     'onStateChange': onPlayerStateChange
                 }
