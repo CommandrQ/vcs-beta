@@ -6,19 +6,51 @@
     <title>RADCLIFF CIVILIAN INDEX</title>
     <link rel="stylesheet" href="../style.css?v=2">
     <style>
+        /* --- SYSTEM SCREEN LOCK --- */
+        html, body {
+            overflow: hidden !important;
+            height: 100dvh;
+            width: 100vw;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* --- INTERNAL WINDOW SCROLLER ENGINE --- */
         .civic-chassis {
             display: flex;
             flex-direction: column;
             width: 100%;
             max-width: 480px;
+            height: auto;
+            max-height: 85dvh; 
             margin: 0 auto;
             background: #000000;
             border: 2px solid var(--purple-muted);
             border-radius: 16px;
             padding: 20px;
             box-shadow: 0 0 25px rgba(149, 117, 205, 0.4);
+            overflow: hidden; 
         }
 
+        .survey-window-form {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .scroller-bay {
+            overflow-y: auto;
+            flex-grow: 1;
+            padding-right: 6px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .scroller-bay::-webkit-scrollbar { width: 4px; }
+        .scroller-bay::-webkit-scrollbar-track { background: transparent; }
+        .scroller-bay::-webkit-scrollbar-thumb { background: var(--border-color, rgba(149, 117, 205, 0.3)); border-radius: 10px; }
+
+        /* --- INTERFACE PRESENTATION MODULES --- */
         .step-block {
             margin-bottom: 24px;
             padding-bottom: 16px;
@@ -27,7 +59,15 @@
 
         .step-block:last-of-type {
             border-bottom: none;
-            margin-bottom: 12px;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .footer-action-block {
+            flex-shrink: 0;
+            padding-top: 15px;
+            border-top: 1px solid var(--border-color);
+            margin-top: 10px;
         }
 
         .field-label {
@@ -217,101 +257,105 @@
     <div class="hub-container">
         <main class="civic-chassis" id="engine-chassis">
             
-            <form id="index-survey-form" autocomplete="off">
+            <form id="index-survey-form" class="survey-window-form" autocomplete="off">
                 
-                <section class="step-block">
-                    <label for="user-zip" class="field-label">01 // Zip Code Verification</label>
-                    <p class="field-query">Provide your 5-digit residency sector to isolate geographic reporting streams.</p>
-                    <input type="text" id="user-zip" class="zip-input" pattern="[0-9]{5}" maxlength="5" placeholder="Enter zip code..." required>
-                </section>
-
-                <section class="step-block">
-                    <span class="field-label">02 // Local Metrics Survey</span>
+                <div class="scroller-bay">
                     
-                    <div class="metric-block" style="margin-top: 15px;" id="block-cat1">
-                        <p class="field-query"><strong>Starting Strong:</strong> Does your local school make it easy for the youngest kids to get ready and start learning?</p>
-                        <div class="slider-row" id="scale-cat1">
-                            <script>
-                                for(let i=1; i<=10; i++) {
-                                    document.write(`
-                                        <label class="radio-node">
-                                            <input type="radio" name="cat1" value="${i}" required>
-                                            <span class="node-box">${i}</span>
-                                        </label>
-                                    `);
-                                }
-                            </script>
-                        </div>
-                        <div class="na-row">
-                            <input type="checkbox" id="na-cat1" class="na-checkbox" data-target="cat1">
-                            <label for="na-cat1" class="na-label">N/A // OUTSIDE SECTOR</label>
-                        </div>
-                    </div>
+                    <section class="step-block">
+                        <label for="user-zip" class="field-label">01 // Zip Code Verification</label>
+                        <p class="field-query">Provide your 5-digit residency sector to isolate geographic reporting streams.</p>
+                        <input type="text" id="user-zip" class="zip-input" pattern="[0-9]{5}" maxlength="5" placeholder="Enter zip code..." required>
+                    </section>
 
-                    <div class="metric-block" style="margin-top: 25px;" id="block-cat2">
-                        <p class="field-query"><strong>The Middle School Slide:</strong> How well do you feel the school keeps kids from falling behind in reading and math as they get older?</p>
-                        <div class="slider-row" id="scale-cat2">
-                            <script>
-                                for(let i=1; i<=10; i++) {
-                                    document.write(`
-                                        <label class="radio-node">
-                                            <input type="radio" name="cat2" value="${i}" required>
-                                            <span class="node-box">${i}</span>
-                                        </label>
-                                    `);
-                                }
-                            </script>
+                    <section class="step-block">
+                        <span class="field-label">02 // Local Metrics Survey</span>
+                        
+                        <div class="metric-block" style="margin-top: 15px;" id="block-cat1">
+                            <p class="field-query"><strong>Starting Strong:</strong> Does your local school make it easy for the youngest kids to get ready and start learning?</p>
+                            <div class="slider-row" id="scale-cat1">
+                                <script>
+                                    for(let i=1; i<=10; i++) {
+                                        document.write(`
+                                            <label class="radio-node">
+                                                <input type="radio" name="cat1" value="${i}" required>
+                                                <span class="node-box">${i}</span>
+                                            </label>
+                                        `);
+                                    }
+                                </script>
+                            </div>
+                            <div class="na-row">
+                                <input type="checkbox" id="na-cat1" class="na-checkbox" data-target="cat1">
+                                <label for="na-cat1" class="na-label">N/A // OUTSIDE SECTOR</label>
+                            </div>
                         </div>
-                        <div class="na-row">
-                            <input type="checkbox" id="na-cat2" class="na-checkbox" data-target="cat2">
-                            <label for="na-cat2" class="na-label">N/A // OUTSIDE SECTOR</label>
-                        </div>
-                    </div>
 
-                    <div class="metric-block" style="margin-top: 25px;" id="block-cat3">
-                        <p class="field-query"><strong>The Diploma Dropout:</strong> When kids graduate, does the school give them a clear, real-world plan for college or a local career?</p>
-                        <div class="slider-row" id="scale-cat3">
-                            <script>
-                                for(let i=1; i<=10; i++) {
-                                    document.write(`
-                                        <label class="radio-node">
-                                            <input type="radio" name="cat3" value="${i}" required>
-                                            <span class="node-box">${i}</span>
-                                        </label>
-                                    `);
-                                }
-                            </script>
+                        <div class="metric-block" style="margin-top: 25px;" id="block-cat2">
+                            <p class="field-query"><strong>The Middle School Slide:</strong> How well do you feel the school keeps kids from falling behind in reading and math as they get older?</p>
+                            <div class="slider-row" id="scale-cat2">
+                                <script>
+                                    for(let i=1; i<=10; i++) {
+                                        document.write(`
+                                            <label class="radio-node">
+                                                <input type="radio" name="cat2" value="${i}" required>
+                                                <span class="node-box">${i}</span>
+                                            </label>
+                                        `);
+                                    }
+                                </script>
+                            </div>
+                            <div class="na-row">
+                                <input type="checkbox" id="na-cat2" class="na-checkbox" data-target="cat2">
+                                <label for="na-cat2" class="na-label">N/A // OUTSIDE SECTOR</label>
+                            </div>
                         </div>
-                        <div class="na-row">
-                            <input type="checkbox" id="na-cat3" class="na-checkbox" data-target="cat3">
-                            <label for="na-cat3" class="na-label">N/A // OUTSIDE SECTOR</label>
-                        </div>
-                    </div>
 
-                    <div class="metric-block" style="margin-top: 25px; margin-bottom: 10px;" id="block-cat4">
-                        <p class="field-query"><strong>The Good Job Gap:</strong> Are the schools teaching the actual technical skills and trades that local employers are hiring for right now?</p>
-                        <div class="slider-row" id="scale-cat4">
-                            <script>
-                                for(let i=1; i<=10; i++) {
-                                    document.write(`
-                                        <label class="radio-node">
-                                            <input type="radio" name="cat4" value="${i}" required>
-                                            <span class="node-box">${i}</span>
-                                        </label>
-                                    `);
-                                }
-                            </script>
+                        <div class="metric-block" style="margin-top: 25px;" id="block-cat3">
+                            <p class="field-query"><strong>The Diploma Dropout:</strong> When kids graduate, does the school give them a clear, real-world plan for college or a local career?</p>
+                            <div class="slider-row" id="scale-cat3">
+                                <script>
+                                    for(let i=1; i<=10; i++) {
+                                        document.write(`
+                                            <label class="radio-node">
+                                                <input type="radio" name="cat3" value="${i}" required>
+                                                <span class="node-box">${i}</span>
+                                            </label>
+                                        `);
+                                    }
+                                </script>
+                            </div>
+                            <div class="na-row">
+                                <input type="checkbox" id="na-cat3" class="na-checkbox" data-target="cat3">
+                                <label for="na-cat3" class="na-label">N/A // OUTSIDE SECTOR</label>
+                            </div>
                         </div>
-                        <div class="na-row">
-                            <input type="checkbox" id="na-cat4" class="na-checkbox" data-target="cat4">
-                            <label for="na-cat4" class="na-label">N/A // OUTSIDE SECTOR</label>
-                        </div>
-                    </div>
-                </section>
 
-                <section class="step-block" style="padding-top: 10px;">
+                        <div class="metric-block" style="margin-top: 25px; margin-bottom: 10px;" id="block-cat4">
+                            <p class="field-query"><strong>The Good Job Gap:</strong> Are the schools teaching the actual technical skills and trades that local employers are hiring for right now?</p>
+                            <div class="slider-row" id="scale-cat4">
+                                <script>
+                                    for(let i=1; i<=10; i++) {
+                                        document.write(`
+                                            <label class="radio-node">
+                                                <input type="radio" name="cat4" value="${i}" required>
+                                                <span class="node-box">${i}</span>
+                                            </label>
+                                        `);
+                                    }
+                                </script>
+                            </div>
+                            <div class="na-row">
+                                <input type="checkbox" id="na-cat4" class="na-checkbox" data-target="cat4">
+                                <label for="na-cat4" class="na-label">N/A // OUTSIDE SECTOR</label>
+                            </div>
+                        </div>
+                    </section>
+                    
+                </div>
+
+                <div class="footer-action-block">
                     <button type="submit" class="mp4-btn" style="width:100%; font-size:0.85rem; padding:14px 0;">See Local Report</button>
-                </section>
+                </div>
                 
             </form>
         </main>
