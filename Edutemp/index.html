@@ -209,7 +209,6 @@
 
         <main class="module-card" id="engine-chassis">
             
-            <!-- BASIC CITIZEN INSTRUCTIONS -->
             <div class="instruction-box">
                 <h2 style="font-size:0.95rem; margin-bottom:10px; border-bottom:none; padding-bottom:0;">How to Use This Tool</h2>
                 <div class="instruction-step"><strong>1. Location:</strong> Type in your 5-digit zip code so we know what town you live in.</div>
@@ -220,17 +219,14 @@
             <form id="index-survey-form" class="civic-window-form" autocomplete="off">
                 <div class="scroller-bay">
                     
-                    <!-- STEP 1: REGION CHECK -->
                     <h2>01 // Your Town</h2>
                     <div style="margin-bottom: 25px;">
                         <label for="user-zip">Zip Code Verification</label>
                         <input type="text" id="user-zip" pattern="[0-9]{5}" maxlength="5" placeholder="Enter 5-digit zip code..." required>
                     </div>
 
-                    <!-- STEP 2: METRICS FORM -->
                     <h2>02 // Core Metrics</h2>
                     
-                    <!-- Category 1 -->
                     <div class="metric-block" id="block-cat1">
                         <p class="field-query"><strong>Starting Strong:</strong> Does your local school make it easy for the youngest kids to get ready and start learning?</p>
                         <div class="slider-row" id="scale-cat1">
@@ -251,7 +247,6 @@
                         </div>
                     </div>
 
-                    <!-- Category 2 -->
                     <div class="metric-block" id="block-cat2">
                         <p class="field-query"><strong>The Middle School Slide:</strong> How well do you feel the school keeps kids from falling behind in reading and math as they get older?</p>
                         <div class="slider-row" id="scale-cat2">
@@ -272,7 +267,6 @@
                         </div>
                     </div>
 
-                    <!-- Category 3 -->
                     <div class="metric-block" id="block-cat3">
                         <p class="field-query"><strong>The Diploma Dropout:</strong> When kids graduate, does the school give them a clear, real-world plan for college or a local career?</p>
                         <div class="slider-row" id="scale-cat3">
@@ -293,7 +287,6 @@
                         </div>
                     </div>
 
-                    <!-- Category 4 -->
                     <div class="metric-block" id="block-cat4">
                         <p class="field-query"><strong>The Good Job Gap:</strong> Are the schools teaching the actual technical skills and trades that local employers are hiring for right now?</p>
                         <div class="slider-row" id="scale-cat4">
@@ -330,7 +323,6 @@
         </footer>
     </div>
 
-    <!-- COMET ENVIRONMENT SCENE GRAPHICS -->
     <script>
         function spawnComet() {
             const container = document.getElementById('environment');
@@ -349,9 +341,13 @@
         if (yearSpan) yearSpan.innerText = new Date().getFullYear();
     </script>
 
-    <!-- INLINE ENGINE DISPATCH ENGINE CONTAINER -->
     <script src="../config.js"></script>
     <script>
+        // INTERCEPT RETURNING USERS IMMEDIATELY ON LOAD
+        if (localStorage.getItem('vcs_report_submitted') === 'on') {
+            window.location.href = "results.html";
+        }
+
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         const surveyForm = document.getElementById('index-survey-form');
         const submitBtn = document.getElementById('submit-btn');
@@ -413,12 +409,15 @@
 
                     if (dbError) throw dbError;
 
+                    // SET RETURNING USER LOCK TO PREVENT MULTIPLE SUBMISSIONS
+                    localStorage.setItem('vcs_report_submitted', 'on');
+
                     surveyForm.reset();
                     window.location.href = "results.html";
 
                 } catch (err) {
                     console.error(err);
-                    alert(`Transmission Error: ${err.message || 'Offline'}`);
+                    alert(`Submission Denied: Too many entries are arriving from this location right now. Please wait a minute and try again.`);
                 } finally {
                     submitBtn.disabled = false;
                     submitBtn.innerText = "Submit Report";
