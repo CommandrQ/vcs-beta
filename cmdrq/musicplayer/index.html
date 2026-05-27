@@ -6,7 +6,7 @@
     <title>MUSIC PLAYER</title>
     <link rel="stylesheet" href="../style.css?v=2">
     <style>
-        /* --- HYBRID SYSTEM OVERRIDES --- */
+        /* --- PURPLE GLOW SYSTEM INTERFACE OVERRIDES --- */
         .device-screen {
             background: #020105;
             border: 1px solid var(--border-color);
@@ -14,6 +14,7 @@
             padding: 20px;
             margin-bottom: 25px;
             flex-shrink: 0;
+            box-shadow: 0 0 15px rgba(149, 117, 205, 0.15);
         }
 
         .media-core-layout {
@@ -23,13 +24,13 @@
         }
 
         .video-viewport-wrapper {
-            width: 180px;
-            height: 101px; /* Locked standard 16:9 iPod/Zune digital screen profile ratio */
+            width: 220px;
+            height: 124px; /* Scaled 16:9 widescreen hardware profile */
             background: #000000;
-            border: 1px solid var(--blue-muted);
+            border: 2px solid var(--purple-muted);
             border-radius: 6px;
             overflow: hidden;
-            box-shadow: 0 0 15px rgba(77, 208, 225, 0.15);
+            box-shadow: 0 0 15px rgba(149, 117, 205, 0.3);
             flex-shrink: 0;
         }
 
@@ -52,19 +53,21 @@
             font-size: 0.7rem;
             font-weight: 800;
             letter-spacing: 2px;
-            color: var(--pink-neon);
+            color: #ffffff;
             text-transform: uppercase;
             margin-bottom: 6px;
         }
 
+        /* Pure Purple Glowing Track Typography Engine */
         .current-track-title {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: 900;
-            color: #ffffff;
+            color: #e1d5ff;
             margin-bottom: 8px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            text-shadow: 0 0 10px var(--purple-glow), 0 0 20px var(--purple-glow);
         }
 
         .track-description-excerpt {
@@ -78,7 +81,7 @@
             overflow: hidden;
         }
 
-        /* Hardware Media Buttons Array */
+        /* Glowing Purple Hardware Buttons Array */
         .hardware-btn-group {
             display: flex;
             justify-content: center;
@@ -90,25 +93,29 @@
         }
 
         .deck-btn {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border-color);
-            color: #ffffff;
-            padding: 10px 24px;
+            background: rgba(149, 117, 205, 0.05);
+            border: 2px solid var(--purple-muted);
+            color: #e1d5ff;
+            padding: 10px 28px;
             font-size: 0.75rem;
             font-weight: 700;
             cursor: pointer;
             border-radius: 30px;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
             transition: all 0.2s ease;
+            box-shadow: 0 0 8px rgba(149, 117, 205, 0.3);
         }
 
         .deck-btn:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: var(--pink-neon);
+            background: rgba(149, 117, 205, 0.15);
+            border-color: var(--purple-glow);
+            color: #ffffff;
+            box-shadow: 0 0 15px var(--purple-glow), 0 0 5px #ffffff;
+            transform: translateY(-1px);
         }
 
-        /* Index List Item Layout Overrides */
+        /* Selection Index Card Adjustments */
         .track-item-card {
             display: flex;
             flex-direction: column;
@@ -121,7 +128,7 @@
         .track-item-title {
             font-weight: 700;
             font-size: 0.9rem;
-            color: var(--blue-muted);
+            color: var(--purple-glow);
         }
 
         .track-item-desc {
@@ -129,6 +136,17 @@
             line-height: 1.4;
             color: #ffffff;
             opacity: 0.7;
+        }
+
+        .track-item-card.active {
+            border-color: var(--purple-glow) !important;
+            background: rgba(149, 117, 205, 0.1) !important;
+            box-shadow: 0 0 12px rgba(149, 117, 205, 0.2) !important;
+        }
+
+        .track-item-card.active .track-item-title {
+            color: #ffffff !important;
+            text-shadow: 0 0 8px var(--purple-glow);
         }
 
         @media (max-width: 600px) {
@@ -170,7 +188,7 @@
                     <div class="device-metadata-panel">
                         <div class="now-playing-tag">Now Playing</div>
                         <div class="current-track-title" id="track-title-display">Loading Playlist...</div>
-                        <div class="track-description-excerpt" id="track-desc-display">Synchronizing with cloud network arrays.</div>
+                        <div class="track-description-excerpt" id="track-desc-display">Synchronizing with cloud networks.</div>
                     </div>
 
                 </div>
@@ -184,7 +202,7 @@
             <div class="scroller-bay">
                 <h2>Track Index</h2>
                 <div class="video-selection-grid" style="margin-top: 15px;" id="playlist-index-hook">
-                    </div>
+                </div>
             </div>
 
             <footer class="channel-dock" style="border-top: 1px solid var(--border-color); padding-top: 15px;">
@@ -201,7 +219,6 @@
             const titleDisplay = document.getElementById('track-title-display');
             const descDisplay = document.getElementById('track-desc-display');
 
-            // Hardcoded configuration targets to bypass server-side data bloat
             const PLAYLIST_ID = "PLwX0pb3GErenzxXjayWA-U4A_GKKnMsgP";
             const CORS_PROXY_WORKER = "https://images-opensocial.googleusercontent.com/gadgets/proxy?container=focus&refresh=600&url=";
             const TARGET_FEED_URL = encodeURIComponent(`https://www.youtube.com/feeds/videos.xml?playlist_id=${PLAYLIST_ID}`);
@@ -222,7 +239,6 @@
                                             entry.querySelector("id")?.textContent.split("video:")[1];
                             const title = entry.querySelector("title")?.textContent || "Untitled Track";
                             
-                            // Target Media Namespace schemas cleanly to retrieve detailed description string blocks
                             const description = entry.getElementsByTagName("media:description")[0]?.textContent || 
                                                 entry.querySelector("description")?.textContent || 
                                                 "No track listing layout documented.";
@@ -256,7 +272,6 @@
                     row.className = 'video-thumb track-item-card';
                     if (index === currentTrackIndex) row.classList.add('active');
 
-                    // Limit layout character string blurs safely inside index listing card limits
                     const summaryDesc = track.desc.length > 90 ? track.desc.substring(0, 90) + "..." : track.desc;
 
                     row.innerHTML = `
@@ -279,11 +294,9 @@
                 titleDisplay.innerText = track.title;
                 descDisplay.innerText = track.desc;
 
-                // Strip browser color bloating and force accurate video embed formatting rules
                 const queryParams = shouldAutoplay ? "?autoplay=1&rel=0&modestbranding=1" : "?rel=0&modestbranding=1";
                 iframeScreen.src = `https://www.youtube.com/embed/${track.id}${queryParams}`;
 
-                // Update system highlights active loop states
                 document.querySelectorAll('.track-item-card').forEach((card, idx) => {
                     if (idx === currentTrackIndex) {
                         card.classList.add('active');
@@ -293,7 +306,6 @@
                 });
             }
 
-            // Hardware Nav Bindings
             document.getElementById('next-track-btn').addEventListener('click', () => {
                 let targetIdx = currentTrackIndex + 1;
                 if (targetIdx >= trackRegistry.length) targetIdx = 0;
@@ -306,7 +318,6 @@
                 switchTrack(targetIdx, true);
             });
 
-            // Initial Bootstrap Fire
             parsePlaylistStream();
         });
     </script>
