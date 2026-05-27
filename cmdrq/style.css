@@ -19,7 +19,6 @@
     padding: 0;
 }
 
-/* Hard-lock the body so the viewport never bounces or scrolls globally */
 body {
     background-color: var(--bg-deep);
     color: var(--text-primary);
@@ -85,7 +84,7 @@ body {
     z-index: 3;
     width: 100vw;
     height: 100vh;
-    height: 100dvh; /* Dynamic viewport height for modern mobile browsers */
+    height: 100dvh; 
     display: flex;
     flex-direction: column;
 }
@@ -145,9 +144,9 @@ body {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px 40px 20px; /* 40px bottom padding guarantees clearance */
+    padding: 0 20px 40px 20px; 
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    -webkit-overflow-scrolling: touch; 
     display: flex;
     flex-direction: column;
 }
@@ -216,6 +215,9 @@ body {
     margin-bottom: 20px;
     cursor: pointer;
     transition: all 0.25s ease;
+    display: block;
+    text-decoration: none;
+    color: var(--text-primary);
 }
 
 .action-card:hover {
@@ -264,186 +266,6 @@ body {
 }
 
 /* ==========================================================================
-   POPUP WINDOW MODAL ARCHITECTURE
-   ========================================================================== */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    height: 100dvh;
-    background: rgba(6, 4, 13, 0.8);
-    backdrop-filter: blur(10px);
-    z-index: 100;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.modal-overlay.active {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.modal-window {
-    background: var(--card-surface);
-    border: 2px solid var(--blue-muted);
-    box-shadow: 0 0 30px rgba(77, 208, 225, 0.25);
-    border-radius: 12px;
-    padding: 45px 40px 40px 40px; 
-    width: 90%;
-    max-width: 500px;
-    position: relative;
-    transform: scale(0.95);
-    transition: transform 0.3s ease;
-}
-
-.modal-overlay.active .modal-window {
-    transform: scale(1);
-}
-
-.modal-window.wide-modal {
-    max-width: 650px;
-}
-
-.close-btn {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    background: transparent;
-    border: none;
-    color: #ffffff;
-    font-size: 1.2rem;
-    cursor: pointer;
-}
-
-.close-btn:hover { color: var(--pink-neon); }
-
-.modal-header {
-    font-size: 0.9rem;
-    font-weight: 800;
-    letter-spacing: 2px;
-    color: var(--pink-neon);
-    margin-bottom: 20px;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 12px;
-}
-
-.modal-body-content p {
-    font-size: 0.95rem;
-    line-height: 1.6;
-    color: #ffffff;
-    margin-bottom: 15px;
-}
-
-.modal-body-content p:last-child { margin-bottom: 0; }
-
-/* ==========================================================================
-   INTEGRATED APP MOCK SUBMODULE COMPONENTS
-   ========================================================================== */
-.deck-controls {
-    background: rgba(6, 4, 13, 0.6);
-    border: 1px dashed var(--border-color);
-    border-radius: 6px;
-    padding: 20px;
-    margin-bottom: 20px;
-}
-
-.now-playing-tag {
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: var(--blue-muted);
-    letter-spacing: 1px;
-    margin-bottom: 12px;
-}
-
-.progress-bar-container {
-    height: 4px;
-    background: rgba(149, 117, 205, 0.2);
-    border-radius: 2px;
-    margin-bottom: 20px;
-}
-
-.progress-bar-fill {
-    width: 35%;
-    height: 100%;
-    background: var(--pink-neon);
-    box-shadow: 0 0 8px var(--pink-glow);
-}
-
-.deck-btn-group { text-align: center; }
-
-.deck-btn {
-    background: transparent;
-    border: 1px solid var(--border-color);
-    color: #ffffff;
-    padding: 6px 16px;
-    font-size: 0.8rem;
-    font-weight: 700;
-    margin: 0 6px;
-    cursor: pointer;
-    border-radius: 4px;
-}
-
-.deck-btn.target-neon {
-    border-color: var(--pink-neon);
-    color: var(--pink-neon);
-    box-shadow: 0 0 8px var(--pink-glow);
-}
-
-.track-row {
-    padding: 12px;
-    border-bottom: 1px solid rgba(149, 117, 205, 0.1);
-    font-size: 0.85rem;
-    color: #ffffff;
-}
-
-.track-row span { color: var(--purple-muted); margin-right: 8px; }
-.track-row.active-track { color: var(--blue-muted); font-weight: 600; background: rgba(77, 208, 225, 0.04); }
-.track-time { float: right; }
-
-.telemetry-stats-grid { margin-bottom: 20px; }
-
-.stat-node {
-    display: inline-block;
-    width: 31%;
-    margin-right: 3.3%;
-    background: rgba(6, 4, 13, 0.5);
-    border: 1px solid var(--border-color);
-    padding: 12px;
-    border-radius: 6px;
-}
-
-.stat-node:last-child { margin-right: 0; }
-.stat-label { font-size: 0.65rem; font-weight: 700; color: #ffffff; letter-spacing: 1px; margin-bottom: 4px; display: block;}
-.stat-value { font-size: 1.1rem; font-weight: 800; }
-
-.text-blue { color: var(--blue-muted); }
-.text-pink { color: var(--pink-neon); text-shadow: 0 0 6px var(--pink-glow); }
-.text-purple { color: var(--purple-muted); }
-
-.script-terminal-box {
-    background: #020105;
-    border: 1px solid rgba(149, 117, 205, 0.2);
-    border-radius: 6px;
-    padding: 20px;
-    height: 160px;
-    overflow-y: auto;
-}
-
-.term-line {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 0.8rem;
-    color: #ffffff;
-    line-height: 1.5;
-    margin-bottom: 6px;
-}
-
-/* ==========================================================================
    MOBILE VIEWPORT ENGINEERING (SINGLE COLUMN)
    ========================================================================== */
 @media (max-width: 900px) {
@@ -452,7 +274,7 @@ body {
     }
 
     .workspace-wrapper {
-        padding: 0 15px 40px 15px; /* Maintains safe area for scrolling */
+        padding: 0 15px 40px 15px; 
     }
 
     .workspace-grid {
@@ -465,22 +287,5 @@ body {
         width: 100% !important;
         max-width: 100%;
         margin-bottom: 35px;
-    }
-
-    /* Modal behavior transitions to a bottom-up drawer layout */
-    .modal-overlay {
-        align-items: flex-end; /* Locks modal to bottom */
-    }
-
-    .modal-window {
-        width: 100%;
-        max-width: 100% !important;
-        border-radius: 16px 16px 0 0;
-        padding: 35px 20px 30px 20px;
-        transform: translateY(100%);
-    }
-
-    .modal-overlay.active .modal-window {
-        transform: translateY(0);
     }
 }
