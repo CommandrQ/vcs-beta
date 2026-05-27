@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>RADCLIFF CIVILIAN INDEX</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        /* --- SUBDIRECTORY LAYOUT RULES --- */
+        .civic-chassis {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
+            background: #000000;
+            border: 2px solid var(--purple-muted);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 0 25px rgba(149, 117, 205, 0.4);
+        }
+
+        .step-block {
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px dashed var(--border-color);
+        }
+
+        .step-block:last-of-type {
+            border-bottom: none;
+            margin-bottom: 12px;
+        }
+
+        .field-label {
+            font-size: 0.95rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: var(--blue-muted);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .field-query {
+            font-size: 0.85rem;
+            line-height: 1.4;
+            color: #ffffff;
+            margin-bottom: 12px;
+        }
+
+        .zip-input, .modal-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 12px;
+            color: #ffffff;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .zip-input:focus, .modal-input:focus {
+            border-color: var(--pink-neon);
+        }
+
+        /* Linear Slider Scale Array */
+        .slider-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 12px;
+            transition: opacity 0.2s ease;
+        }
+
+        .radio-node {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .radio-node input {
+            display: none;
+        }
+
+        .radio-node .node-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--purple-muted);
+            margin-bottom: 4px;
+        }
+
+        .radio-node .node-box {
+            width: 100%;
+            padding: 8px 0;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: #ffffff;
+            transition: all 0.2s ease;
+        }
+
+        .radio-node input:checked + .node-box {
+            background: var(--purple-glow);
+            border-color: var(--purple-glow);
+            color: #06040d;
+            box-shadow: 0 0 10px var(--purple-glow);
+        }
+
+        .na-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .na-checkbox {
+            accent-color: var(--pink-neon);
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .na-label {
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: var(--pink-neon);
+            cursor: pointer;
+            letter-spacing: 1px;
+        }
+
+        .disabled-scale {
+            opacity: 0.25;
+            pointer-events: none;
+        }
+
+        /* Gateway Overlay */
+        .gate-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(6, 4, 13, 0.9);
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .gate-modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .gate-modal-box {
+            background: #000000;
+            border: 2px solid var(--pink-neon);
+            border-radius: 12px;
+            padding: 24px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 0 30px var(--pink-glow);
+            text-align: center;
+        }
+
+        .gate-modal-box h3 {
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: #ffffff;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .gate-modal-box p {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+        }
+
+        .modal-field-group {
+            margin-bottom: 16px;
+            text-align: left;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        /* Processing Notification Layout */
+        .system-feedback {
+            display: none;
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .system-feedback h2 {
+            color: var(--blue-muted);
+            font-size: 1.4rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .system-feedback p {
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="starfield"><div class="stars"></div></div>
+    <div class="ambient-glow"></div>
+
+    <div class="hub-container">
+        <main class="civic-chassis" id="engine-chassis">
+            
+            <form id="index-survey-form" autocomplete="off">
+                
+                <section class="step-block">
+                    <label for="user-zip" class="field-label">01 // Zip Code Verification</label>
+                    <p class="field-query">Provide your 5-digit residency sector to isolate geographic reporting streams.</p>
+                    <input type="text" id="user-zip" class="zip-input" pattern="[0-9]{5}" maxlength="5" placeholder="Enter zip code..." required>
+                </section>
+
+                <section class="step-block">
+                    <span class="field-label">02 // Local Metrics Survey</span>
+                    
+                    <div class="metric-block" style="margin-top: 15px;" id="block-cat1">
+                        <p class="field-query"><strong>Starting Strong:</strong> Does your local school make it easy for the youngest kids to get ready and start learning?</p>
+                        <div class="slider-row" id="scale-cat1">
+                            <script>
+                                for(let i=1; i<=10; i++) {
+                                    document.write(`
+                                        <label class="radio-node">
+                                            <input type="radio" name="cat1" value="${i}" required>
+                                            <span class="node-box">${i}</span>
+                                        </label>
+                                    `);
+                                }
+                            </script>
+                        </div>
+                        <div class="na-row">
+                            <input type="checkbox" id="na-cat1" class="na-checkbox" data-target="cat1">
+                            <label for="na-cat1" class="na-label">N/A // OUTSIDE SECTOR</label>
+                        </div>
+                    </div>
+
+                    <div class="metric-block" style="margin-top: 25px;" id="block-cat2">
+                        <p class="field-query"><strong>The Middle School Slide:</strong> How well do you feel the school keeps kids from falling behind in reading and math as they get older?</p>
+                        <div class="slider-row" id="scale-cat2">
+                            <script>
+                                for(let i=1; i<=10; i++) {
+                                    document.write(`
+                                        <label class="radio-node">
+                                            <input type="radio" name="cat2" value="${i}" required>
+                                            <span class="node-box">${i}</span>
+                                        </label>
+                                    `);
+                                }
+                            </script>
+                        </div>
+                        <div class="na-row">
+                            <input type="checkbox" id="na-cat2" class="na-checkbox" data-target="cat2">
+                            <label for="na-cat2" class="na-label">N/A // OUTSIDE SECTOR</label>
+                        </div>
+                    </div>
+
+                    <div class="metric-block" style="margin-top: 25px;" id="block-cat3">
+                        <p class="field-query"><strong>The Diploma Dropout:</strong> When kids graduate, does the school give them a clear, real-world plan for college or a local career?</p>
+                        <div class="slider-row" id="scale-cat3">
+                            <script>
+                                for(let i=1; i<=10; i++) {
+                                    document.write(`
+                                        <label class="radio-node">
+                                            <input type="radio" name="cat3" value="${i}" required>
+                                            <span class="node-box">${i}</span>
+                                        </label>
+                                    `);
+                                }
+                            </script>
+                        </div>
+                        <div class="na-row">
+                            <input type="checkbox" id="na-cat3" class="na-checkbox" data-target="cat3">
+                            <label for="na-cat3" class="na-label">N/A // OUTSIDE SECTOR</label>
+                        </div>
+                    </div>
+
+                    <div class="metric-block" style="margin-top: 25px; margin-bottom: 10px;" id="block-cat4">
+                        <p class="field-query"><strong>The Good Job Gap:</strong> Are the schools teaching the actual technical skills and trades that local employers are hiring for right now?</p>
+                        <div class="slider-row" id="scale-cat4">
+                            <script>
+                                for(let i=1; i<=10; i++) {
+                                    document.write(`
+                                        <label class="radio-node">
+                                            <input type="radio" name="cat4" value="${i}" required>
+                                            <span class="node-box">${i}</span>
+                                        </label>
+                                    `);
+                                }
+                            </script>
+                        </div>
+                        <div class="na-row">
+                            <input type="checkbox" id="na-cat4" class="na-checkbox" data-target="cat4">
+                            <label for="na-cat4" class="na-label">N/A // OUTSIDE SECTOR</label>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="step-block" style="padding-top: 10px;">
+                    <button type="submit" class="mp4-btn" style="width:100%; font-size:0.85rem; padding:14px 0;">See Local Report</button>
+                </section>
+                
+            </form>
+        </main>
+
+        <div class="gate-modal-overlay" id="identity-modal">
+            <div class="gate-modal-box">
+                <h3>Account Access Required</h3>
+                <p>Create a free account to unlock the full Hardin County Report.</p>
+                
+                <form id="modal-gate-form">
+                    <div class="modal-field-group">
+                        <label for="auth-first-name" class="field-label" style="font-size:0.75rem;">First Name</label>
+                        <input type="text" id="auth-first-name" class="modal-input" placeholder="Enter first name..." required>
+                    </div>
+                    <div class="modal-field-group">
+                        <label for="auth-email" class="field-label" style="font-size:0.75rem;">Email Address</label>
+                        <input type="email" id="auth-email" class="modal-input" placeholder="name@domain.com" required>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="mp4-btn" id="modal-abort-btn" style="flex:1; border-color:var(--border-color); color:#ffffff; background:transparent; box-shadow:none;">Cancel</button>
+                        <button type="submit" class="mp4-btn" style="flex:1; border-color:var(--pink-neon); color:var(--pink-neon);">Unlock Index</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="civic-chassis system-feedback" id="success-screen">
+            <h2>Transmission Verified</h2>
+            <p>Your scores have been injected anonymously into the local datastream. Your account configuration framework has been synchronized successfully.</p>
+            <div style="margin-top: 25px; padding-top: 15px; border-top: 1px solid var(--border-color);">
+                <a href="../" class="dock-link" style="font-size: 0.8rem;">← Return to Control Deck</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="app.js"></script>
+</body>
+</html>
