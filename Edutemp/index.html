@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>RADCLIFF CIVILIAN INDEX</title>
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../style.css?v=2">
     <style>
-        /* --- SUBDIRECTORY LAYOUT RULES --- */
         .civic-chassis {
             display: flex;
             flex-direction: column;
@@ -64,7 +63,6 @@
             border-color: var(--pink-neon);
         }
 
-        /* Linear Slider Scale Array */
         .slider-row {
             display: flex;
             justify-content: space-between;
@@ -84,13 +82,6 @@
 
         .radio-node input {
             display: none;
-        }
-
-        .radio-node .node-label {
-            font-size: 0.7rem;
-            font-weight: 700;
-            color: var(--purple-muted);
-            margin-bottom: 4px;
         }
 
         .radio-node .node-box {
@@ -139,7 +130,6 @@
             pointer-events: none;
         }
 
-        /* Gateway Overlay */
         .gate-modal-overlay {
             position: fixed;
             top: 0;
@@ -199,7 +189,6 @@
             margin-top: 20px;
         }
 
-        /* Processing Notification Layout */
         .system-feedback {
             display: none;
             text-align: center;
@@ -359,6 +348,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../config.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
