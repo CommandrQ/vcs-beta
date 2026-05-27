@@ -3,50 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>My Story</title>
-    <link rel="stylesheet" href="../style.css">
+    <title>ABOUT ME</title>
+    <link rel="stylesheet" href="../style.css?v=2">
 </head>
 <body>
 
-    <div id="boot-screen"></div>
     <div id="starfield"><div class="stars"></div></div>
+    <div class="ambient-glow"></div>
 
     <div class="hub-container">
-        <h1 class="hub-title">About Me</h1>
+        
+        <header class="central-header">
+            <div class="monogram-outer">
+                <div class="monogram-inner">Q</div>
+            </div>
+            <h1 class="shimmer-title">About Me</h1>
+        </header>
 
         <main class="hub-card">
-            
-            <h2>My Story</h2>
-            
-            <p>
-                From the time I was a kid, I have always seen the real, unvarnished truth of how our world works. That perspective followed me into my time in the armed forces, where my deployment opened my eyes to a completely different side of the world.
-            </p>
 
-            <p>
-                After my military service, I went into the tech industry, working on operations and infrastructure with major teams at Best Buy and Apple.
-            </p>
-
-            <p style="margin-bottom: 20px;">
-                Today, I use all of those experiences to lead the Vanguard Knights. My mission now is to dive deep into our neighborhoods, listen to the people, and uncover the completely unique stories that make up our community.
-            </p>
-
-            <div style="text-align: center; margin-top: 35px;">
-                <a href="../home.html" class="hub-return-link">← Return to Control Deck</a>
+            <div class="core-statement-banner">
+                <p class="directive-tag">Operational Profile // Systems Architect</p>
             </div>
+
+            <div class="scroller-bay">
+                <div class="video-selection-grid" style="gap: 20px;">
+                    
+                    <h2>My Story</h2>
+                    
+                    <p class="directive-text" style="text-align: left;">
+                        From the time I was a kid, I have always seen the real, unvarnished truth of how our world works. That perspective followed me into my time in the armed forces, where my deployment opened my eyes to a completely different side of the world.
+                    </p>
+
+                    <p class="directive-text" style="text-align: left;">
+                        After my military service, I went into the tech industry, working on operations and infrastructure with major teams at Best Buy and Apple.
+                    </p>
+
+                    <p class="directive-text" style="text-align: left;">
+                        Today, I use all of those experiences to lead the Vanguard Knights. My mission now is to dive deep into our neighborhoods, listen to the people, and uncover the completely unique stories that make up our community.
+                    </p>
+
+                </div>
+            </div>
+
+            <footer class="channel-dock" style="border-top: 1px solid var(--border-color); padding-top: 15px;">
+                <a href="../" class="dock-link">← Return to Control Deck</a>
+            </footer>
+
         </main>
     </div>
 
-    <footer class="system-footer">
-        &copy; <span id="current-year"></span> Vanguard Citizen Services
-    </footer>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const yearSpan = document.getElementById('current-year');
-            if (yearSpan) {
-                yearSpan.innerText = new Date().getFullYear();
-            }
-        });
-    </script>
+    <script src="../app.js"></script>
 </body>
 </html>
