@@ -88,7 +88,7 @@ body {
 /* --- Top Centralized Identity Header Array --- */
 .central-header {
     width: 100%;
-    padding: 40px 0 10px 0; /* Expanded top buffer profile placement */
+    padding: 40px 0 10px 0; 
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -154,6 +154,7 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+    overflow: hidden; /* Prevents whole screen breakout scrolling */
 }
 
 .core-statement-banner {
@@ -301,7 +302,7 @@ body {
     border: 2px solid var(--blue-muted);
     box-shadow: 0 0 30px rgba(77, 208, 225, 0.25);
     border-radius: 12px;
-    padding: 45px 40px 40px 40px; /* Enhanced internal window top padding execution */
+    padding: 45px 40px 40px 40px; 
     width: 90%;
     max-width: 500px;
     position: absolute;
@@ -501,33 +502,59 @@ body {
 /* --- Mobile Viewport Engineering Adjustments --- */
 @media (max-width: 900px) {
     body {
-        overflow-y: auto;
+        overflow: hidden; /* Lock core screen mechanics from sliding up/down */
     }
 
     .app-interface {
-        display: block;
-        height: auto;
-        width: 100%;
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
     }
 
     .central-header {
-        padding: 30px 0 5px 0;
+        padding: 25px 0 5px 0;
+        flex-shrink: 0;
+        text-align: center;
     }
 
     .workspace-wrapper {
+        flex: 1;
+        width: 100%;
         padding: 0 15px;
+        overflow-y: auto; /* Scans only the inner workspace context blocks vertically */
+        -webkit-overflow-scrolling: touch;
+        display: block;
+    }
+
+    .core-statement-banner {
+        margin: 0 auto 25px auto;
+        text-align: center;
+    }
+
+    .directive-tag, .directive-text {
+        text-align: center !important;
     }
 
     .workspace-grid {
         flex-direction: column;
         align-items: center;
         gap: 0;
+        width: 100%;
     }
 
     .workspace-column {
         width: 100% !important;
         max-width: 100%;
         margin-bottom: 35px;
+    }
+
+    .channel-dock {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        z-index: 10;
+        flex-shrink: 0;
     }
 
     .modal-window {
