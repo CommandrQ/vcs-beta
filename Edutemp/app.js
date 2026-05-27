@@ -1,9 +1,7 @@
 /* ==========================================================================
-   SUPABASE SERVICE NODE INITIALIZATION CONFIGURATION
+   SUPABASE CLIENT INITIALIZATION LAYERS
    ========================================================================== */
-const SUPABASE_URL = "https://dvyjupytbwbrcoyouxpf.supabase.co"; 
-const SUPABASE_ANON_KEY = "sb_publishable_NFV734_yORRlbG4NUOWVjQ_E_7BWnJ6";
-
+// Credentials are pulled cleanly from global memory set by root config.js file
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 /* ==========================================================================
@@ -17,7 +15,7 @@ const engineChassis = document.getElementById('engine-chassis');
 const successScreen = document.getElementById('success-screen');
 
 /* ==========================================================================
-   DYNAMIC N/A TOGGLE INTERACTION LOGIC
+   DYNAMIC NOT APPLICABLE ELEMENT LOCKS
    ========================================================================== */
 document.querySelectorAll('.na-checkbox').forEach(checkbox => {
     checkbox.addEventListener('change', (e) => {
@@ -41,7 +39,7 @@ document.querySelectorAll('.na-checkbox').forEach(checkbox => {
 });
 
 /* ==========================================================================
-   SURVEY SUBMISSION AND GATE INTERCEPTION
+   FORM DISPATCH CAPTURE SYSTEM
    ========================================================================== */
 surveyForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -53,7 +51,7 @@ modalAbortBtn.addEventListener('click', () => {
 });
 
 /* ==========================================================================
-   THE DATA SPLIT EXECUTION ENGINE
+   THE DATA SPLIT PIPELINE DISPATCH ENGINE
    ========================================================================== */
 modalGateForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -74,7 +72,7 @@ modalGateForm.addEventListener('submit', async (e) => {
     const emailValue = document.getElementById('auth-email').value.trim();
 
     try {
-        // PIPELINE DELAY PARTITION A: Secure Authentication Generation Signups
+        // ROUTE 01: Process Secure Identity Signup Parameters
         const { data: authData, error: authError } = await supabase.auth.signUp({
             email: emailValue,
             password: Math.random().toString(36).slice(-12), 
@@ -87,7 +85,7 @@ modalGateForm.addEventListener('submit', async (e) => {
 
         if (authError) throw authError;
 
-        // PIPELINE DELAY PARTITION B: Total Anonymity Anonymous Database Mutations Injection
+        // ROUTE 02: Process Anonymous Public Survey Submissions To Database Table
         const { error: dbError } = await supabase
             .from('school_scores')
             .insert([
@@ -102,7 +100,7 @@ modalGateForm.addEventListener('submit', async (e) => {
 
         if (dbError) throw dbError;
 
-        // TERMINAL OPERATIONS SUCCESS TRANSITIONS
+        // UNLOCK AND RESET APPLICATION CONTAINER VIEWS
         identityModal.classList.remove('active');
         surveyForm.reset();
         modalGateForm.reset();
@@ -113,7 +111,7 @@ modalGateForm.addEventListener('submit', async (e) => {
         successScreen.style.display = 'block';
 
     } catch (err) {
-        console.error("System Matrix Transmission Fault:", err.message || err);
+        console.error("Data Split Execution Fault:", err.message || err);
         alert(`Transmission Error: ${err.message || 'Verification connection array baseline offline.'}`);
     }
 });
