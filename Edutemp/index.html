@@ -208,11 +208,7 @@
         .modal-field-group { margin-bottom: 15px; }
         .modal-actions { display: flex; gap: 15px; margin-top: 25px; }
 
-        /* --- RESPONSE FEEDBACK SCREEN --- */
-        .system-feedback { display: none; text-align: center; padding: 40px 20px; }
-        .system-feedback h2 { color: var(--gold); border-bottom: none; font-size: 1.5rem; margin-bottom: 15px; }
-
-        /* --- CENTERED SYSTEM FOOTER --- */
+        /* --- SYSTEM FOOTER --- */
         .footer-pad { margin-top: auto; width: 100%; display: flex; justify-content: center; align-items: center; }
         .system-footer { padding: 25px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: #ffffff; text-align: center; }
     </style>
@@ -233,17 +229,14 @@
                 
                 <div class="scroller-bay">
                     
-                    <!-- STEP 1: REGION CHECK -->
                     <h2>01 // Geographic Sector</h2>
                     <div style="margin-bottom: 25px;">
                         <label for="user-zip">Zip Code Verification</label>
                         <input type="text" id="user-zip" pattern="[0-9]{5}" maxlength="5" placeholder="Enter 5-digit zip code..." required>
                     </div>
 
-                    <!-- STEP 2: METRICS FORM -->
                     <h2>02 // Core Metrics</h2>
                     
-                    <!-- Category 1 -->
                     <div class="metric-block" id="block-cat1">
                         <p class="field-query"><strong>Starting Strong:</strong> Does your local school make it easy for the youngest kids to get ready and start learning?</p>
                         <div class="slider-row" id="scale-cat1">
@@ -264,7 +257,6 @@
                         </div>
                     </div>
 
-                    <!-- Category 2 -->
                     <div class="metric-block" id="block-cat2">
                         <p class="field-query"><strong>The Middle School Slide:</strong> How well do you feel the school keeps kids from falling behind in reading and math as they get older?</p>
                         <div class="slider-row" id="scale-cat2">
@@ -285,7 +277,6 @@
                         </div>
                     </div>
 
-                    <!-- Category 3 -->
                     <div class="metric-block" id="block-cat3">
                         <p class="field-query"><strong>The Diploma Dropout:</strong> When kids graduate, does the school give them a clear, real-world plan for college or a local career?</p>
                         <div class="slider-row" id="scale-cat3">
@@ -306,7 +297,6 @@
                         </div>
                     </div>
 
-                    <!-- Category 4 -->
                     <div class="metric-block" id="block-cat4">
                         <p class="field-query"><strong>The Good Job Gap:</strong> Are the schools teaching the actual technical skills and trades that local employers are hiring for right now?</p>
                         <div class="slider-row" id="scale-cat4">
@@ -336,12 +326,11 @@
             </form>
         </main>
 
-        <!-- STEP 3: GATEWAY POPUP -->
         <div class="modal-overlay" id="identity-modal">
             <div class="modal-window">
                 <button type="button" class="btn-close" id="modal-close-x">✕</button>
                 
-                <h2 style="border-none">Account Access Required</h2>
+                <h2 style="margin-top:0; border-bottom:none; padding-bottom:0;">Account Access Required</h2>
                 <p>Create a free account to unlock the full Hardin County Report.</p>
                 
                 <form id="modal-gate-form">
@@ -355,18 +344,9 @@
                     </div>
                     <div class="modal-actions">
                         <button type="button" class="action-btn" id="modal-abort-btn" style="background: transparent; border: 2px solid rgba(255,255,255,0.15); color: white; box-shadow: none;">Cancel</button>
-                        <button type="submit" class="action-btn" style="background: var(--white); color: #05040a;">Unlock Report</button>
+                        <button type="submit" id="final-submit-btn" class="action-btn" style="background: var(--white); color: #05040a;">Unlock Report</button>
                     </div>
                 </form>
-            </div>
-        </div>
-
-        <!-- SUCCESS SCREEN -->
-        <div class="module-card system-feedback" id="success-screen">
-            <h2>Transmission Verified</h2>
-            <p>Your scores have been submitted completely anonymously. Your free community dashboard access configuration framework has been synchronized successfully.</p>
-            <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--glass-border);">
-                <a href="../" class="shimmer-gold-link">← Return Home</a>
             </div>
         </div>
     </div>
@@ -378,7 +358,6 @@
     </div>
 
     <script>
-        /* --- COMET GENERATOR --- */
         function spawnComet() {
             const container = document.getElementById('environment');
             if (!container) return;
@@ -392,11 +371,126 @@
         setInterval(spawnComet, 3500);
         spawnComet();
 
-        /* --- DYNAMIC YEAR --- */
         const yearSpan = document.getElementById('current-year');
         if (yearSpan) yearSpan.innerText = new Date().getFullYear();
     </script>
+
     <script src="../config.js"></script>
-    <script src="app.js"></script>
+    <script>
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        const surveyForm = document.getElementById('index-survey-form');
+        const identityModal = document.getElementById('identity-modal');
+        const modalGateForm = document.getElementById('modal-gate-form');
+        const modalAbortBtn = document.getElementById('modal-abort-btn');
+        const modalCloseX = document.getElementById('modal-close-x');
+        const finalSubmitBtn = document.getElementById('final-submit-btn');
+
+        document.querySelectorAll('.na-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', (e) => {
+                const categoryName = e.target.getAttribute('data-target');
+                const targetScaleRow = document.getElementById(`scale-${categoryName}`);
+                const inputsInRow = targetScaleRow.querySelectorAll('input[type="radio"]');
+
+                if (e.target.checked) {
+                    targetScaleRow.classList.add('disabled-scale');
+                    inputsInRow.forEach(radio => {
+                        radio.checked = false;
+                        radio.required = false; 
+                    });
+                } else {
+                    targetScaleRow.classList.remove('disabled-scale');
+                    inputsInRow.forEach(radio => {
+                        radio.required = true;
+                    });
+                }
+            });
+        });
+
+        function toggleModal(open) {
+            if (open) {
+                identityModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            } else {
+                identityModal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        if (surveyForm) {
+            surveyForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                toggleModal(true);
+            });
+        }
+
+        if (modalAbortBtn) modalAbortBtn.addEventListener('click', () => toggleModal(false));
+        if (modalCloseX) modalCloseX.addEventListener('click', () => toggleModal(false));
+
+        if (modalGateForm) {
+            modalGateForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                finalSubmitBtn.disabled = true;
+                finalSubmitBtn.innerText = "Processing...";
+
+                const zipCodeValue = document.getElementById('user-zip').value.trim();
+                
+                const cat1Na = document.getElementById('na-cat1').checked;
+                const cat2Na = document.getElementById('na-cat2').checked;
+                const cat3Na = document.getElementById('na-cat3').checked;
+                const cat4Na = document.getElementById('na-cat4').checked;
+
+                const cat1Score = cat1Na ? null : parseInt(document.querySelector('input[name="cat1"]:checked')?.value || null);
+                const cat2Score = cat2Na ? null : parseInt(document.querySelector('input[name="cat2"]:checked')?.value || null);
+                const cat3Score = cat3Na ? null : parseInt(document.querySelector('input[name="cat3"]:checked')?.value || null);
+                const cat4Score = cat4Na ? null : parseInt(document.querySelector('input[name="cat4"]:checked')?.value || null);
+
+                const firstNameValue = document.getElementById('auth-first-name').value.trim();
+                const emailValue = document.getElementById('auth-email').value.trim();
+
+                try {
+                    const { data: authData, error: authError } = await supabaseClient.auth.signUp({
+                        email: emailValue,
+                        password: Math.random().toString(36).slice(-12), 
+                        options: {
+                            data: {
+                                first_name: firstNameValue
+                            }
+                        }
+                    });
+
+                    if (authError) throw authError;
+
+                    const { error: dbError } = await supabaseClient
+                        .from('school_scores')
+                        .insert([
+                            {
+                                zip_code: zipCodeValue,
+                                category_1: cat1Score,
+                                category_2: cat2Score,
+                                category_3: cat3Score,
+                                category_4: cat4Score
+                            }
+                        ]);
+
+                    if (dbError) throw dbError;
+
+                    toggleModal(false);
+                    surveyForm.reset();
+                    modalGateForm.reset();
+                    
+                    window.location.href = "results.html";
+
+                } catch (err) {
+                    console.error(err);
+                    alert(`Transmission Error: ${err.message || 'Offline'}`);
+                } finally {
+                    finalSubmitBtn.disabled = false;
+                    finalSubmitBtn.innerText = "Unlock Report";
+                }
+            });
+        }
+    </script>
 </body>
 </html>
