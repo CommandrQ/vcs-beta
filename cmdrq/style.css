@@ -28,7 +28,7 @@ body {
     position: relative;
 }
 
-/* --- High-Density Animated Sky Environment Background --- */
+/* --- Animated Sky Environment Background --- */
 .space-field {
     position: fixed;
     top: 0;
@@ -63,24 +63,6 @@ body {
     to { background-position: 400px 400px; }
 }
 
-/* Cosmic Comets */
-.comet {
-    position: absolute;
-    width: 3px;
-    height: 90px;
-    background: linear-gradient(to bottom, rgba(255, 64, 129, 1) 0%, rgba(77, 208, 225, 0.4) 50%, transparent 100%);
-    transform: rotate(-45deg);
-    opacity: 0;
-    animation: streakComet 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-    pointer-events: none;
-}
-
-@keyframes streakComet {
-    0% { transform: translate(0, 0) rotate(-45deg); opacity: 0; scale: 0.6; }
-    20% { opacity: 1; scale: 1; }
-    100% { transform: translate(-300px, 300px) rotate(-45deg); opacity: 0; scale: 1.1; }
-}
-
 .ambient-glow {
     position: fixed;
     top: 50%;
@@ -106,8 +88,12 @@ body {
 /* --- Top Centralized Identity Header Array --- */
 .central-header {
     width: 100%;
-    padding: 30px 0 10px 0;
+    padding: 40px 0 10px 0; /* Expanded top buffer profile placement */
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .monogram-outer {
@@ -117,7 +103,7 @@ body {
     background: transparent;
     border: 2px solid var(--blue-muted);
     box-shadow: 0 0 15px rgba(77, 208, 225, 0.3);
-    margin: 0 auto 15px auto;
+    margin-bottom: 15px;
     padding: 3px;
 }
 
@@ -136,10 +122,11 @@ body {
 }
 
 .shimmer-title {
+    width: 100%;
     font-size: 1.8rem;
     font-weight: 900;
     letter-spacing: 4px;
-    color: var(--blue-muted); /* Main text color updated to light blue */
+    color: var(--blue-muted); 
     text-transform: uppercase;
     text-align: center;
     animation: lightPurpleShimmer 3s infinite ease-in-out;
@@ -152,7 +139,7 @@ body {
     }
     50% {
         text-shadow: 0 0 18px var(--purple-glow), 0 0 28px var(--purple-glow);
-        color: #e1d5ff; /* Shifts color toward light purple at peak shimmer */
+        color: #e1d5ff; 
     }
 }
 
@@ -171,23 +158,32 @@ body {
 
 .core-statement-banner {
     text-align: center;
+    width: 100%;
     max-width: 750px;
-    margin-bottom: 35px;
+    margin: 0 auto 35px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .directive-tag {
+    width: 100%;
     font-size: 0.75rem;
     font-weight: 800;
     letter-spacing: 2px;
     color: var(--blue-muted);
     margin-bottom: 12px;
     text-transform: uppercase;
+    text-align: center;
 }
 
 .directive-text {
+    width: 100%;
     font-size: 1rem;
     line-height: 1.6;
     color: #ffffff;
+    text-align: center;
 }
 
 /* Panoramic Grid Centered Sub-Structure */
@@ -240,14 +236,6 @@ body {
     border-color: var(--pink-neon);
     box-shadow: 0 0 15px rgba(255, 64, 129, 0.2);
     transform: translateY(-2px);
-}
-
-.card-meta {
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    color: var(--blue-muted);
-    margin-bottom: 6px;
 }
 
 .action-card h3 {
@@ -313,7 +301,7 @@ body {
     border: 2px solid var(--blue-muted);
     box-shadow: 0 0 30px rgba(77, 208, 225, 0.25);
     border-radius: 12px;
-    padding: 40px;
+    padding: 45px 40px 40px 40px; /* Enhanced internal window top padding execution */
     width: 90%;
     max-width: 500px;
     position: absolute;
@@ -523,7 +511,7 @@ body {
     }
 
     .central-header {
-        padding: 25px 0 5px 0;
+        padding: 30px 0 5px 0;
     }
 
     .workspace-wrapper {
@@ -551,7 +539,7 @@ body {
         width: 100%;
         max-width: 100% !important;
         border-radius: 16px 16px 0 0;
-        padding: 30px 20px;
+        padding: 35px 20px 20px 20px;
         transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
