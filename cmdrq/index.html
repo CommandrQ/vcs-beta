@@ -5,6 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>COMMANDER Q</title>
     <link rel="stylesheet" href="style.css?v=2">
+    <style>
+        /* --- FADE TRANSITION STYLES --- */
+        body {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        body.fade-in {
+            opacity: 1;
+        }
+        body.fade-out {
+            opacity: 0;
+        }
+    </style>
 </head>
 <body>
 
@@ -92,5 +105,37 @@
     </div>
 
     <script src="app.js"></script>
+    <script>
+        /* --- AUTO REFRESH & FADE CONTROLLERS --- */
+        (function() {
+            const currentVersion = "2"; 
+            const storageKey = "hub_version_check";
+            const lastChecked = localStorage.getItem(storageKey);
+
+            if (lastChecked !== currentVersion) {
+                localStorage.setItem(storageKey, currentVersion);
+                window.location.reload(window.location.href.split('?')[0] + '?v=' + currentVersion);
+                return;
+            }
+
+            document.addEventListener("DOMContentLoaded", () => {
+                document.body.classList.add("fade-in");
+
+                document.querySelectorAll("a").forEach(link => {
+                    if (link.hostname === window.location.hostname && link.getAttribute("href") !== "#") {
+                        link.addEventListener("click", (e) => {
+                            e.preventDefault();
+                            const targetUrl = link.href;
+                            document.body.classList.remove("fade-in");
+                            document.body.classList.add("fade-out");
+                            setTimeout(() => {
+                                window.location.href = targetUrl;
+                            }, 500);
+                        });
+                    }
+                });
+            });
+        })();
+    </script>
 </body>
 </html>
