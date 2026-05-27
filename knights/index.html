@@ -33,26 +33,29 @@
             object-fit: contain;
         }
 
-        /* --- STABLE WINDOW CHASSIS HOUSING --- */
-        .tool-window-bay {
+        /* --- COMMUNITY TOOLS SCROLLING WINDOW --- */
+        .tools-window-scroller {
             width: 100%;
-            height: 420px;
-            background: rgba(15, 15, 20, 0.65);
-            backdrop-filter: blur(25px) saturate(150%);
-            -webkit-backdrop-filter: blur(25px) saturate(150%);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 24px;
-            padding: 25px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(255,255,255,0.05);
+            max-height: 200px;
             overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 10px;
             box-sizing: border-box;
-            margin-top: 20px;
+            margin-top: 10px;
+            -webkit-overflow-scrolling: touch;
         }
-
-        .tool-window-bay::-webkit-scrollbar { width: 4px; }
-        .tool-window-bay::-webkit-scrollbar-track { background: transparent; }
-        .tool-window-bay::-webkit-scrollbar-thumb { background: rgba(214, 175, 55, 0.3); border-radius: 10px; }
+        .tools-window-scroller::-webkit-scrollbar { width: 4px; }
+        .tools-window-scroller::-webkit-scrollbar-track { background: transparent; }
+        .tools-window-scroller::-webkit-scrollbar-thumb { background: rgba(214, 175, 55, 0.3); border-radius: 10px; }
+        
+        .tools-window-scroller .action-card {
+            margin-bottom: 10px;
+        }
+        .tools-window-scroller .action-card:last-of-type {
+            margin-bottom: 0;
+        }
     </style>
 </head>
 <body>
@@ -73,14 +76,12 @@
 
             <div class="core-statement-banner">
                 <p class="directive-tag">Chief Vision Officer of VCS // Captain Commander of the Vanguard Knights</p>
-                <p class="directive-text">I serve as a dedicated voice in our community and a strategic leader guiding a new perspective on coexistence. Explore the functional toolsets loaded below.</p>
+                <p class="directive-text">I serve as a dedicated voice in our community and a strategic leader guiding a new perspective on coexistence. Select a sector below to explore the work.</p>
             </div>
 
-            <!-- HOST WINDOW TERMINAL CONTAINER -->
-            <div class="tool-window-bay">
+            <div class="scroller-bay">
                 <div class="workspace-grid">
                     
-                    <!-- Phase 01: Empower Panel -->
                     <section class="workspace-column" id="col-empower">
                         <div class="column-header">
                             <span class="column-num">01</span>
@@ -94,7 +95,6 @@
                         </div>
                     </section>
 
-                    <!-- Phase 02: Educate Panel -->
                     <section class="workspace-column" id="col-educate">
                         <div class="column-header">
                             <span class="column-num">02</span>
@@ -105,14 +105,20 @@
                                 <h3>Team Chemistry Classes</h3>
                                 <p>Opens information about my mindset training and masterclasses for businesses.</p>
                             </a>
-                            <a href="#" class="action-card">
-                                <h3>Guides</h3>
-                                <p>Opens my shared operational files, transparency frameworks, and community playbooks.</p>
-                            </a>
+                            
+                            <div class="tools-window-scroller">
+                                <a href="../Edutemp/" class="action-card">
+                                    <h3>Civilian Index</h3>
+                                    <p>Opens the 60-second local education data check map stream tool.</p>
+                                </a>
+                                <a href="#" class="action-card">
+                                    <h3>Guides</h3>
+                                    <p>Opens my shared operational files, transparency frameworks, and community playbooks.</p>
+                                </a>
+                            </div>
                         </div>
                     </section>
 
-                    <!-- Phase 03: Elevate Panel -->
                     <section class="workspace-column" id="col-elevate">
                         <div class="column-header">
                             <span class="column-num">03</span>
