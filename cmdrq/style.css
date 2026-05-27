@@ -2,6 +2,7 @@
 :root {
     --bg-deep: #06040d;
     --purple-muted: #9575cd;
+    --purple-glow: #b388ff;
     --blue-muted: #4dd0e1;
     --pink-neon: #ff4081;
     --pink-glow: #ff0055;
@@ -25,10 +26,9 @@ body {
     min-height: 100vh;
     overflow: hidden;
     position: relative;
-    display: block;
 }
 
-/* --- Animated Cosmic Canvas Background --- */
+/* --- High-Density Animated Sky Environment Background --- */
 .space-field {
     position: fixed;
     top: 0;
@@ -40,58 +40,45 @@ body {
     background: radial-gradient(circle at center, #11092c 0%, var(--bg-deep) 100%);
 }
 
-/* Starfield Layers */
 .stars {
     position: absolute;
     width: 100%;
     height: 100%;
     background-image: 
-        radial-gradient(1px 1px at 10% 20%, #fff 100%, transparent),
-        radial-gradient(1.5px 1.5px at 40% 70%, var(--blue-muted) 100%, transparent),
-        radial-gradient(1px 1px at 80% 40%, var(--purple-muted) 100%, transparent),
-        radial-gradient(2px 2px at 90% 80%, #fff 100%, transparent);
-    background-size: 300px 300px;
-    animation: driftStars 120s linear infinite;
+        radial-gradient(1.5px 1.5px at 15% 10%, #fff 100%, transparent),
+        radial-gradient(1px 1px at 25% 35%, #fff 100%, transparent),
+        radial-gradient(2px 2px at 45% 20%, var(--blue-muted) 100%, transparent),
+        radial-gradient(1px 1px at 55% 65%, #fff 100%, transparent),
+        radial-gradient(1.5px 1.5px at 70% 45%, var(--purple-muted) 100%, transparent),
+        radial-gradient(1px 1px at 85% 15%, #fff 100%, transparent),
+        radial-gradient(2.5px 2.5px at 92% 75%, #fff 100%, transparent),
+        radial-gradient(1px 1px at 35% 85%, var(--purple-muted) 100%, transparent),
+        radial-gradient(1.5px 1.5px at 62% 90%, var(--blue-muted) 100%, transparent);
+    background-size: 400px 400px;
+    animation: driftStars 90s linear infinite;
 }
 
 @keyframes driftStars {
     from { background-position: 0 0; }
-    to { background-position: 300px 600px; }
-}
-
-/* Glass Shard Vector Shells */
-.glass-shard {
-    position: absolute;
-    background: linear-gradient(135deg, rgba(77, 208, 225, 0.15) 0%, rgba(149, 117, 205, 0.05) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(1px);
-    clip-path: polygon(30% 0%, 100% 40%, 70% 100%, 0% 70%);
-    animation: floatShard 25s infinite linear;
-}
-
-@keyframes floatShard {
-    0% { transform: translateY(110vh) rotate(0deg) scale(0.8); opacity: 0; }
-    10% { opacity: 1; }
-    90% { opacity: 1; }
-    100% { transform: translateY(-10vh) rotate(360deg) scale(1.2); opacity: 0; }
+    to { background-position: 400px 400px; }
 }
 
 /* Cosmic Comets */
 .comet {
     position: absolute;
-    width: 4px;
-    height: 120px;
-    background: linear-gradient(to bottom, rgba(255, 64, 129, 1) 0%, rgba(77, 208, 225, 0.6) 40%, transparent 100%);
+    width: 3px;
+    height: 90px;
+    background: linear-gradient(to bottom, rgba(255, 64, 129, 1) 0%, rgba(77, 208, 225, 0.4) 50%, transparent 100%);
     transform: rotate(-45deg);
     opacity: 0;
-    animation: streakComet 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    animation: streakComet 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
     pointer-events: none;
 }
 
 @keyframes streakComet {
-    0% { transform: translate(0, 0) rotate(-45deg); opacity: 0; scale: 0.5; }
+    0% { transform: translate(0, 0) rotate(-45deg); opacity: 0; scale: 0.6; }
     20% { opacity: 1; scale: 1; }
-    100% { transform: translate(-400px, 400px) rotate(-45deg); opacity: 0; scale: 1.2; }
+    100% { transform: translate(-300px, 300px) rotate(-45deg); opacity: 0; scale: 1.1; }
 }
 
 .ambient-glow {
@@ -106,136 +93,145 @@ body {
     pointer-events: none;
 }
 
-/* --- Fixed Screen App Frame Layout --- */
+/* --- Structural Application Layout Frame --- */
 .app-interface {
     position: relative;
     z-index: 3;
     width: 100vw;
     height: 100vh;
-    display: table;
-    table-layout: fixed;
+    display: flex;
+    flex-direction: column;
 }
 
-/* --- Universal HUD System Top Ribbon --- */
-.hud-header {
-    display: table-row;
-    height: 25px; 
-    background: transparent;
-}
-
-/* --- Panoramic Dashboard Columns Layout --- */
-.workspace-grid {
-    display: table-row;
-    height: calc(100vh - 75px); 
-}
-
-.workspace-column {
-    display: table-cell;
-    height: 100%;
-    vertical-align: top;
-    border-right: 1px solid var(--border-color);
-    padding: 40px 30px;
-    transition: background-color 0.3s ease;
-}
-
-.workspace-column:last-of-type {
-    border-right: none;
-}
-
-#col-core {
-    width: 32%;
-    vertical-align: middle;
+/* --- Top Centralized Identity Header Array --- */
+.central-header {
+    width: 100%;
+    padding: 30px 0 10px 0;
     text-align: center;
-}
-
-#col-empower, #col-educate, #col-elevate {
-    width: 22.6%;
-}
-
-/* --- Internal Core Engine Components --- */
-.center-engine {
-    max-width: 400px;
-    margin: 0 auto;
 }
 
 .monogram-outer {
-    width: 120px;
-    height: 120px;
+    width: 90px;
+    height: 90px;
     border-radius: 50%;
     background: transparent;
     border: 2px solid var(--blue-muted);
-    box-shadow: 0 0 20px rgba(77, 208, 225, 0.4);
-    margin: 0 auto 30px auto;
-    display: block;
-    padding: 4px;
+    box-shadow: 0 0 15px rgba(77, 208, 225, 0.3);
+    margin: 0 auto 15px auto;
+    padding: 3px;
 }
 
 .monogram-inner {
-    width: 108px;
-    height: 108px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
     background: rgba(14, 10, 26, 0.9);
     border: 1px dashed var(--purple-muted);
-    font-size: 3rem;
+    font-size: 2.3rem;
     font-weight: 900;
-    line-height: 108px;
+    line-height: 80px;
     color: var(--pink-neon);
-    text-shadow: 0 0 10px var(--pink-glow);
+    text-shadow: 0 0 8px var(--pink-glow);
     text-align: center;
 }
 
+.shimmer-title {
+    font-size: 1.8rem;
+    font-weight: 900;
+    letter-spacing: 4px;
+    color: #ffffff;
+    text-transform: uppercase;
+    animation: lightPurpleShimmer 3s infinite ease-in-out;
+}
+
+@keyframes lightPurpleShimmer {
+    0%, 100% {
+        text-shadow: 0 0 8px rgba(179, 136, 255, 0.4);
+        color: #ffffff;
+    }
+    50% {
+        text-shadow: 0 0 18px var(--purple-glow), 0 0 28px var(--purple-glow);
+        color: #e1d5ff;
+    }
+}
+
+/* --- Focused Core Workspace Frame --- */
+.workspace-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.core-statement-banner {
+    text-align: center;
+    max-width: 650px;
+    margin-bottom: 35px;
+}
+
 .directive-tag {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     font-weight: 800;
     letter-spacing: 3px;
     color: var(--blue-muted);
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 
 .directive-text {
-    font-size: 1rem;
-    line-height: 1.6;
-    color: var(--text-primary);
-    font-weight: 400;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #ffffff;
 }
 
-/* --- Segment Column Interface Header Blocks --- */
+/* Panoramic Grid Centered Sub-Structure */
+.workspace-grid {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 30px;
+    width: 100%;
+}
+
+.workspace-column {
+    flex: 1;
+    max-width: 340px;
+}
+
+/* --- Segment Column Headers --- */
 .column-header {
-    margin-bottom: 30px;
+    margin-bottom: 25px;
     border-left: 3px solid var(--blue-muted);
     padding-left: 12px;
 }
 
 .column-num {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     font-weight: 700;
     color: var(--pink-neon);
     display: block;
-    letter-spacing: 1px;
 }
 
 .column-header h2 {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     font-weight: 800;
     letter-spacing: 2px;
-    color: var(--text-primary);
-    margin-top: 2px;
+    margin-top: 1px;
 }
 
 /* --- High Performance Interaction Cards --- */
-.column-body {
-    display: block;
-}
-
 .action-card {
     background: var(--card-surface);
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    padding: 24px;
+    padding: 22px;
     margin-bottom: 20px;
     cursor: pointer;
     transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
-    text-align: left;
 }
 
 .action-card:hover {
@@ -245,41 +241,39 @@ body {
 }
 
 .card-meta {
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     font-weight: 700;
     letter-spacing: 1.5px;
     color: var(--blue-muted);
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 .action-card h3 {
-    font-size: 1.05rem;
+    font-size: 1rem;
     font-weight: 700;
-    margin-bottom: 8px;
-    color: var(--text-primary);
+    margin-bottom: 6px;
 }
 
 .action-card p {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     line-height: 1.4;
-    color: var(--text-dim);
+    color: #ffffff;
 }
 
-/* --- Universal Channel Dock Layout Footer --- */
+/* --- Centralized Channel Footer Dock --- */
 .channel-dock {
-    display: table-row;
-    height: 50px;
+    width: 100%;
+    height: 60px;
     background: rgba(6, 4, 13, 0.9);
     border-top: 1px solid var(--border-color);
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
 }
 
 .dock-link {
-    display: inline-block;
-    height: 50px;
-    line-height: 50px;
-    padding: 0 30px;
-    color: var(--text-dim);
+    color: #ffffff;
     text-decoration: none;
     font-size: 0.8rem;
     font-weight: 700;
@@ -287,19 +281,9 @@ body {
     transition: color 0.2s ease, text-shadow 0.2s ease;
 }
 
-.link-prefix {
-    color: rgba(149, 117, 205, 0.5);
-    font-weight: 400;
-    transition: color 0.2s ease;
-}
-
 .dock-link:hover {
     color: var(--pink-neon);
     text-shadow: 0 0 8px var(--pink-glow);
-}
-
-.dock-link:hover .link-prefix {
-    color: var(--blue-muted);
 }
 
 /* --- Global Popup Window Engine Architecture --- */
@@ -312,7 +296,6 @@ body {
     background: rgba(6, 4, 13, 0.8);
     backdrop-filter: blur(10px);
     z-index: 100;
-    display: block;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease;
@@ -352,10 +335,9 @@ body {
     right: 20px;
     background: transparent;
     border: none;
-    color: var(--text-dim);
+    color: #ffffff;
     font-size: 1.2rem;
     cursor: pointer;
-    transition: color 0.2s ease;
 }
 
 .close-btn:hover {
@@ -375,7 +357,7 @@ body {
 .modal-body-content p {
     font-size: 0.95rem;
     line-height: 1.6;
-    color: var(--text-primary);
+    color: #ffffff;
     margin-bottom: 15px;
 }
 
@@ -383,8 +365,7 @@ body {
     margin-bottom: 0;
 }
 
-/* --- Specialized Integrated Application Mock Systems --- */
-
+/* --- Specialized Integrated Submodules --- */
 .audio-deck-layout {
     display: block;
 }
@@ -428,14 +409,13 @@ body {
 .deck-btn {
     background: transparent;
     border: 1px solid var(--border-color);
-    color: var(--text-primary);
+    color: #ffffff;
     padding: 6px 16px;
     font-size: 0.8rem;
     font-weight: 700;
     margin: 0 6px;
     cursor: pointer;
     border-radius: 4px;
-    letter-spacing: 1px;
 }
 
 .deck-btn.target-neon {
@@ -452,12 +432,11 @@ body {
     padding: 12px;
     border-bottom: 1px solid rgba(149, 117, 205, 0.1);
     font-size: 0.85rem;
-    letter-spacing: 0.5px;
-    color: var(--text-dim);
+    color: #ffffff;
 }
 
 .track-row span {
-    color: rgba(149, 117, 205, 0.6);
+    color: var(--purple-muted);
     margin-right: 8px;
 }
 
@@ -469,7 +448,6 @@ body {
 
 .track-time {
     float: right;
-    color: var(--text-dim) !important;
 }
 
 .telemetry-layout {
@@ -499,7 +477,7 @@ body {
     display: block;
     font-size: 0.65rem;
     font-weight: 700;
-    color: var(--text-dim);
+    color: #ffffff;
     letter-spacing: 1px;
     margin-bottom: 4px;
 }
@@ -507,7 +485,6 @@ body {
 .stat-value {
     font-size: 1.1rem;
     font-weight: 800;
-    letter-spacing: 0.5px;
 }
 
 .text-blue { color: var(--blue-muted); }
@@ -526,10 +503,9 @@ body {
 .term-line {
     font-family: 'Courier New', Courier, monospace;
     font-size: 0.8rem;
-    color: var(--text-dim);
+    color: #ffffff;
     line-height: 1.5;
     margin-bottom: 6px;
-    letter-spacing: 0.5px;
 }
 
 /* --- Mobile Viewport Engineering Adjustments --- */
@@ -544,33 +520,24 @@ body {
         width: 100%;
     }
 
-    .hud-header {
-        display: none; 
+    .central-header {
+        padding: 25px 0 5px 0;
+    }
+
+    .workspace-wrapper {
+        padding: 0 15px;
     }
 
     .workspace-grid {
-        display: flex;
         flex-direction: column;
-        height: auto;
-        padding: 20px 15px;
+        align-items: center;
+        gap: 0;
     }
 
     .workspace-column {
-        display: block;
         width: 100% !important;
-        height: auto;
-        padding: 0;
-        border-right: none;
-        margin-bottom: 40px;
-    }
-
-    #col-core {
-        order: -1; 
-        margin-bottom: 40px;
-    }
-
-    .center-engine {
-        padding: 20px 0;
+        max-width: 100%;
+        margin-bottom: 35px;
     }
 
     .modal-window {
@@ -582,31 +549,11 @@ body {
         width: 100%;
         max-width: 100% !important;
         border-radius: 16px 16px 0 0;
-        border-right: none;
-        border-left: none;
-        border-bottom: none;
         padding: 30px 20px;
         transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .modal-overlay.active .modal-window {
         transform: translateY(0);
-    }
-
-    .channel-dock {
-        display: block;
-        height: auto;
-        padding: 15px 0;
-    }
-
-    .dock-link {
-        display: inline-block;
-        height: auto;
-        line-height: 1;
-        padding: 10px 15px;
-    }
-    
-    .link-prefix {
-        display: none; 
     }
 }
