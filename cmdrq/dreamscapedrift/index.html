@@ -12,7 +12,7 @@
         /* --- NATURAL FLOW RESETS --- */
         html, body {
             overflow-x: hidden !important;
-            overflow-y: auto !important; /* Allows natural native page scrolling */
+            overflow-y: auto !important; 
             height: auto !important;
             min-height: 100vh;
             margin: 0;
@@ -21,12 +21,12 @@
 
         /* --- STABLE MAIN GRID LAYOUT --- */
         .terminal-container {
-            max-width: 900px;
+            max-width: 600px; /* Reduced window size */
             width: 90%;
-            margin: 40px auto 120px auto; /* Centered with healthy scrolling breathing room */
+            margin: 40px auto; /* Centers the window on the page */
             display: flex;
             flex-direction: column;
-            gap: 24px;
+            gap: 20px;
             position: relative;
         }
 
@@ -45,7 +45,7 @@
             -webkit-backdrop-filter: blur(15px);
             border: 1px solid rgba(77, 208, 225, 0.4);
             border-radius: 24px;
-            padding: 2rem;
+            padding: 1.5rem; /* Reduced padding */
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
             position: relative;
             animation: customCyanGlow 5s ease-in-out infinite;
@@ -70,7 +70,7 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 14px;
             overflow: hidden;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
         }
 
         .mp4-screen-viewport iframe {
@@ -90,6 +90,7 @@
             margin: 0 0 1rem 0;
             border-bottom: 1px dashed rgba(77, 208, 225, 0.3);
             padding-bottom: 0.5rem;
+            text-align: center;
         }
 
         .video-selection-grid {
@@ -104,7 +105,7 @@
             background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0.3) 100%);
             border: 1px solid rgba(77, 208, 225, 0.3);
             border-radius: 12px; 
-            padding: 1.1rem 1.5rem;
+            padding: 1rem;
             text-align: left;
             color: #ffffff;
             font-weight: 700;
@@ -128,22 +129,6 @@
             color: #ffffff;
             border-color: #ffffff;
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-        }
-
-        /* --- FLOATING COCKPIT FOOTER --- */
-        .system-dock {
-            margin-top: 40px;
-            display: flex;
-            justify-content: center;
-            width: 100%;
-        }
-
-        /* --- DESKTOP GRID ADAPTATIONS --- */
-        @media (min-width: 768px) {
-            .video-selection-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1rem;
-            }
         }
     </style>
 </head>
@@ -169,18 +154,12 @@
                 <iframe id="main-drift-player" src="https://www.youtube.com/embed/videoseries?list=PLwX0pb3GErelnv2imByTWq5TmSSSSiosp&rel=0&modestbranding=1&vq=hd1080" allow="autoplay; encrypted-media" allowfullscreen></iframe>
             </div>
 
-            <h2 class="playlist-array-header">Sector Manifest Arrays</h2>
+            <h2 class="playlist-array-header">Videos</h2>
             <div id="video-menu-hook" class="video-selection-grid">
-                <div style="color: rgba(255,255,255,0.4); font-size: 0.9rem;">Initializing transmission manifest vectors...</div>
+                <div style="color: rgba(255,255,255,0.4); font-size: 0.9rem; text-align: center;">Loading menu...</div>
             </div>
 
         </section>
-
-        <footer class="system-dock">
-            <div class="center-logo-container">
-                <img src="../images/vklogo.png" alt="VK Logo" class="dock-logo">
-            </div>
-        </footer>
 
     </main>
 
@@ -188,7 +167,7 @@
         // --- BACKGROUND AMBIENCE LOGIC MATRIX ---
         document.addEventListener("DOMContentLoaded", () => {
             const starfield = document.getElementById('canvas-starfield-engine');
-            const totalStars = window.innerWidth > 1024 ? 120 : 50;
+            const totalStars = window.innerWidth > 1024 ? 100 : 40;
 
             for (let i = 0; i < totalStars; i++) {
                 const star = document.createElement('div');
@@ -249,12 +228,11 @@
                         idFound = urlStr;
                     }
                 } catch(e) {
-                    console.error("URL manipulation validation trap cleared.", e);
+                    console.error("URL error", e);
                 }
                 return idFound.trim();
             }
 
-            // Fetches matching stream files from your directory configuration asset
             fetch('videos.json')
                 .then(res => res.json())
                 .then(data => {
@@ -266,13 +244,11 @@
                         btn.innerText = item.title;
                         
                         const videoId = cleanYouTubeUrl(item.src);
-                        // Construct path embedding target item seamlessly with fallback playlist contexts
                         const safeBaseUrl = `https://www.youtube.com/embed/${videoId}?list=${playlistId}`;
                         const safeAutoplayUrl = `${safeBaseUrl}&autoplay=1&rel=0&modestbranding=1`;
                         
                         if (index === 0) {
                             btn.classList.add('active');
-                            // Prime initialization index 
                             mainPlayer.src = `${safeBaseUrl}&rel=0&modestbranding=1`; 
                         }
 
@@ -286,10 +262,9 @@
                     });
                 })
                 .catch(err => {
-                    // Fallback to generic playlist load sequence if video asset maps are unlinked
                     menuContainer.innerHTML = `
-                        <div class="video-thumb active" style="grid-column: 1 / -1; text-align: center;">
-                            LOAD COMPREHENSIVE STREAM ARCHIVE DIRECTLY
+                        <div class="video-thumb active" style="text-align: center;">
+                            Load full playlist directly
                         </div>`;
                     
                     menuContainer.querySelector('.video-thumb').addEventListener('click', () => {
