@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -11,13 +11,16 @@
 </head>
 <body>
 
+    <!-- VISUAL SCENE LAYER -->
     <div class="starfield-canvas" id="canvas-starfield-engine"></div>
     <div class="comet-canvas" id="canvas-comet-engine"></div>
     <div class="cyber-grid"></div>
     <div class="ambient-flare"></div>
 
+    <!-- PERSISTENT HUB CONTAINER -->
     <main class="terminal-container" id="main-scroller">
         
+        <!-- PROFILE IDENTITY BLOCK -->
         <header class="identity-module">
             <div class="hud-ring">
                 <img src="images/headshot.jpg" alt="Quincy Jones" class="avatar-img">
@@ -26,12 +29,14 @@
             <h2 class="commander-role">Chief Vision Officer</h2>
         </header>
 
+        <!-- DIRECTIVE PANEL -->
         <section class="glass-panel">
             <p class="intro-text">
                 Yo! I'm Quincy. Welcome to the dashboard! I build clean web tools, drop raw stories, and make things that help bring our communities closer together. Everything loops right back to my big blueprint through <span class="manifesto-trigger" id="cmd-manifesto">Project V</span>—a real-world experiment to pool local voices and fix actual gaps in our daily lives! Check out the active sectors below and jump in!
             </p>
         </section>
 
+        <!-- INTERACTIVE LINK MODULES -->
         <nav class="link-matrix">
             
             <a class="action-card" href="about/">
@@ -78,6 +83,7 @@
 
     </main>
 
+    <!-- MASTER COCKPIT FOOTER -->
     <footer class="system-dock">
         <div class="dock-social-row">
             <a href="https://music.apple.com" target="_blank" class="dock-btn">
@@ -92,14 +98,15 @@
         </div>
     </footer>
 
+    <!-- MANIFESTO OVERLAY -->
     <div class="overlay-screen" id="modal-manifesto">
         <header class="overlay-header">
-            <span class="overlay-title">Project V // Core Directive</span>
+            <span class="overlay-title">Project V // Core Messaging</span>
             <button class="overlay-close" id="btn-close-manifesto">✕</button>
         </header>
         <div class="overlay-body" id="manifesto-scroller">
             <div class="manifesto-content">
-                <h2>The Project V Manifesto</h2>
+                <h2>My Side of Starting Vanguard Citizen Services</h2>
                 <p>Project V started in the most honest way possible: <strong>I sat down and asked my kids and my family what their everyday lives were really like!</strong> What they told me was painful to hear. It made me realize how many daily struggles and quiet brick walls people hit just trying to get a decent education and build a life right here in their own towns!</p>
                 <p>When the structure around us breaks down, people end up completely cut off from each other. Project V is a straight-to-the-point experiment. We are using clean, anonymous digital tools to combine the true voices of a community. By cutting out the usual political red tape, we can map out exactly what people are feeling and experiencing in real time!</p>
                 <p><strong>The Goal:</strong> Take that data and put it directly in front of local leaders, business owners, and neighbors so we can make a clear, measurable change in how we live! We are starting with the everyday challenges of normal citizens—because a town can only move forward when its people are finally heard!</p>
@@ -110,6 +117,7 @@
         </div>
     </div>
 
+    <!-- ENGINE & CELESTIAL LOGIC -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             
