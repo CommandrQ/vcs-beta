@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>COMMANDER Q // PORTFOLIO</title>
-    <link rel="stylesheet" href="../style.css?v=2">
+    <title>COMMANDER Q</title>
+    <link rel="stylesheet" href="style.css">
     <style>
-        /* --- SYSTEM SCREEN INTERCEPT --- */
+        /* --- DYNAMIC GLASS CANVAS SYSTEM --- */
         html, body {
             overflow: hidden !important;
             height: 100dvh;
@@ -15,7 +15,6 @@
             padding: 0;
         }
 
-        /* --- FADE TRANSITION GRAPHICS --- */
         body {
             opacity: 0;
             transition: opacity 0.5s ease-in-out;
@@ -23,10 +22,9 @@
         body.fade-in { opacity: 1; }
         body.fade-out { opacity: 0; }
         
-        /* --- LOGO INTERFACE ARCHITECTURE --- */
         .brand-logo-container {
-            width: 70px;
-            height: 70px;
+            width: 65px;
+            height: 65px;
             margin: 0 auto 10px auto;
             display: flex;
             justify-content: center;
@@ -38,7 +36,7 @@
             object-fit: contain;
         }
 
-        /* --- LINK IN BIO CHASSIS WINDOW --- */
+        /* --- CONTEMPORARY ARCHITECTURE BLENDING VISUAL FIELDS --- */
         .hub-card {
             display: flex;
             flex-direction: column;
@@ -47,13 +45,13 @@
             height: auto;
             max-height: 85dvh; 
             margin: 0 auto;
-            background: rgba(15, 15, 20, 0.65);
-            backdrop-filter: blur(25px) saturate(150%);
-            -webkit-backdrop-filter: blur(25px) saturate(150%);
-            border: 2px solid var(--purple-muted, rgba(149, 117, 205, 0.2));
-            border-radius: 24px;
-            padding: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            background: rgba(10, 8, 18, 0.75);
+            backdrop-filter: blur(30px) saturate(160%);
+            -webkit-backdrop-filter: blur(30px) saturate(160%);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 28px;
+            padding: 24px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255,255,255,0.1);
             overflow: hidden;
             box-sizing: border-box;
         }
@@ -61,60 +59,102 @@
         .scroller-bay {
             overflow-y: auto;
             flex-grow: 1;
-            padding-right: 6px;
+            padding-right: 4px;
             -webkit-overflow-scrolling: touch;
         }
         .scroller-bay::-webkit-scrollbar { width: 4px; }
         .scroller-bay::-webkit-scrollbar-track { background: transparent; }
         .scroller-bay::-webkit-scrollbar-thumb { background: rgba(214, 175, 55, 0.3); border-radius: 10px; }
 
-        /* --- PORTFOLIO DOCK BUTTON LINKS --- */
+        /* --- INLINE LINKS AND INTERFACE TYPOGRAPHY --- */
+        .manifesto-trigger {
+            color: #D4AF37;
+            text-decoration: underline;
+            cursor: pointer;
+            font-weight: 700;
+            transition: color 0.2s ease;
+        }
+        .manifesto-trigger:hover {
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        }
+
+        /* --- CONTENT MATRIX CELLS (ASYMMETRIC GRID COEXISTENCE) --- */
         .bio-link-btn {
-            display: block;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(135deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.00) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 16px;
             padding: 16px;
             margin-bottom: 12px;
             text-decoration: none;
-            text-align: left;
-            transition: all 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .bio-link-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.04), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.5s ease;
+        }
+        .bio-link-btn:hover::before {
+            transform: translateX(100%);
         }
         .bio-link-btn:last-of-type { margin-bottom: 0; }
         .bio-link-btn:hover {
-            background: rgba(214, 175, 55, 0.05);
-            border-color: #D4AF37;
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(212, 175, 55, 0.4);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3), 0 0 15px rgba(212, 175, 55, 0.1);
             transform: translateY(-2px);
         }
 
         .bio-link-btn h3 {
             margin: 0 0 4px 0;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 800;
             color: #ffffff;
             letter-spacing: 1px;
             text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
+        .category-tag {
+            font-size: 0.65rem;
+            letter-spacing: 1px;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-weight: 700;
+        }
+        .tag-empower { background: rgba(187, 134, 252, 0.15); color: #bb86fc; border: 1px solid rgba(187, 134, 252, 0.3); }
+        .tag-educate { background: rgba(214, 175, 55, 0.15); color: #D4AF37; border: 1px solid rgba(214, 175, 55, 0.3); }
+        .tag-elevate { background: rgba(3, 169, 244, 0.15); color: #03a9f4; border: 1px solid rgba(3, 169, 244, 0.3); }
+
         .bio-link-btn p {
             margin: 0;
             font-size: 0.8rem;
             line-height: 1.4;
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(255, 255, 255, 0.65);
         }
 
-        /* --- INTEGRATED SANDBOX VIEWER SYSTEM --- */
+        /* --- POPUP MODAL ARCHITECTURE (SANDBOX & MANIFESTO) --- */
         .sandbox-overlay {
             position: fixed;
             inset: 0;
-            background: #000000;
+            background: rgba(3, 2, 7, 0.9);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             z-index: 1000;
             display: flex;
             flex-direction: column;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .sandbox-overlay.active {
             opacity: 1;
@@ -122,13 +162,13 @@
         }
 
         .sandbox-header {
-            height: 50px;
+            height: 55px;
             background: #06040d;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 16px;
+            padding: 0 20px;
             flex-shrink: 0;
         }
         .sandbox-title {
@@ -139,13 +179,19 @@
             text-transform: uppercase;
         }
         .sandbox-close {
-            background: transparent;
+            background: rgba(255,255,255,0.05);
             border: none;
             color: #ffffff;
-            font-size: 1.2rem;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
             cursor: pointer;
-            padding: 4px 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
         }
+        .sandbox-close:hover { background: rgba(255,255,255,0.15); color: #D4AF37; }
 
         .sandbox-frame {
             width: 100%;
@@ -154,6 +200,31 @@
             background: #000000;
             flex-grow: 1;
         }
+
+        /* --- MANIFESTO LAYOUT ENGINE --- */
+        .manifesto-body {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 40px 24px;
+            max-width: 650px;
+            margin: 0 auto;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+            line-height: 1.75;
+            -webkit-overflow-scrolling: touch;
+        }
+        .manifesto-body h2 {
+            color: #D4AF37;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 1px dashed rgba(212, 175, 55, 0.3);
+            padding-bottom: 10px;
+        }
+        .manifesto-body p { margin-bottom: 20px; }
+        .manifesto-body strong { color: #ffffff; font-weight: 700; }
     </style>
 </head>
 <body>
@@ -172,34 +243,44 @@
 
         <main class="hub-card">
 
+            <!-- FRIENDLY, DIRECT COMPLEMENTARY INTRODUCTORY FIELD -->
             <div class="core-statement-banner">
-                <p class="directive-tag">Chief Vision Officer of VCS // Captain Commander of the Vanguard Knights</p>
-                <p class="directive-text">I serve as a dedicated voice in our community and a strategic leader guiding a new perspective on coexistence. Explore my interests and projects directly below.</p>
+                <p class="directive-tag">Creative Studio Framework // Quincy Jones</p>
+                <p class="directive-text">
+                    Hey, I'm Quincy. Welcome to my creative engine. I focus on building tools, sharing experiences, and designing new ways for people in our communities to thrive together. Everything I do connects right back to my vision through <span class="manifesto-trigger" id="open-manifesto-btn">Project V</span>—an experiment to see if we can unite local voices to make a real, lasting impact on our everyday quality of life. Explore the sectors below to see how these different worlds collide.
+                </p>
             </div>
 
             <div class="scroller-bay">
                 
-                <div class="bio-link-btn" data-target="about/" data-title="About Me">
-                    <h3>About Me</h3>
-                    <p>Opens professional background, creative studio parameters, and military service summary.</p>
+                <!-- EMPOWER SECTOR CELL -->
+                <div class="bio-link-btn" data-target="about/" data-title="About Me Platform">
+                    <h3>About Me <span class="category-tag tag-empower">Empower</span></h3>
+                    <p>My background, military service values, and personal journey.</p>
                 </div>
 
+                <!-- EDUCATE SECTOR CELL -->
+                <div class="bio-link-btn" data-target="../knights/index.html" data-title="Vanguard Knights Workspace">
+                    <h3>The Collective Hub <span class="category-tag tag-educate">Educate</span></h3>
+                    <p>Our collaborative dashboard hosting active community reporting tools.</p>
+                </div>
                 <div class="bio-link-btn" data-target="#" data-title="Team Chemistry Classes">
-                    <h3>Team Chemistry Classes</h3>
-                    <p>Opens framework structures regarding custom mindset modules and leadership classes.</p>
-                </div>
-                <div class="bio-link-btn" data-target="../knights/index.html" data-title="Vanguard Knights Hub">
-                    <h3>The Collective Hub</h3>
-                    <p>Opens my active guild workspace dashboard hosting collaborative community software tools.</p>
+                    <h3>Mindset Classes <span class="category-tag tag-educate">Educate</span></h3>
+                    <p>Leadership modules and structured inquiry frameworks for teams.</p>
                 </div>
 
-                <div class="bio-link-btn" data-target="musicplayer/" data-title="Music Console">
-                    <h3>Music Player</h3>
-                    <p>Opens custom audio mashups, ambient design soundtracks, and production remixes.</p>
+                <!-- COEXISTENCE VARIETY TARGETS (CROSS-GENRE NARRATIVE FIELDS) -->
+                <div class="bio-link-btn" data-target="#" data-title="Chronicles of the Chasers">
+                    <h3>The Threat Tracking Log <span class="category-tag tag-elevate">Elevate</span></h3>
+                    <p>Early intelligence files on a multiversal danger capable of stealing quality of life forever.</p>
                 </div>
-                <div class="bio-link-btn" data-target="dreamscapedrift/" data-title="Dreamscape Drift">
-                    <h3>Dreamscape Drift</h3>
-                    <p>Opens track specifications, telemetry logging, and drifting performance specs.</p>
+                <div class="bio-link-btn" data-target="musicplayer/" data-title="Audio Console Architecture">
+                    <h3>Music Player <span class="category-tag tag-elevate">Elevate</span></h3>
+                    <p>Interactive dashboard playing custom track mashups and remixes.</p>
+                </div>
+                <div class="bio-link-btn" data-target="dreamscapedrift/" data-title="Dreamscape Telemetry Interface">
+                    <h3>Dreamscape Drift <span class="category-tag tag-elevate">Elevate</span></h3>
+                    <p>Physics spec sheets and tire tuning profiles for Forza logs.</p>
                 </div>
 
             </div>
@@ -212,6 +293,7 @@
         </main>
     </div>
 
+    <!-- INLINE HOVER CONSOLE SANDBOX VIEWER -->
     <div class="sandbox-overlay" id="sandbox-viewer">
         <header class="sandbox-header">
             <span class="sandbox-title" id="sandbox-title-display">System Explorer</span>
@@ -220,11 +302,28 @@
         <iframe src="about:blank" class="sandbox-frame" id="sandbox-iframe"></iframe>
     </div>
 
+    <!-- THE PROJECT V MANIFESTO POPUP CONSOLE -->
+    <div class="sandbox-overlay" id="manifesto-viewer">
+        <header class="sandbox-header">
+            <span class="sandbox-title">Project V // Core Directive</span>
+            <button class="sandbox-close" id="manifesto-close-btn">✕</button>
+        </header>
+        <div class="manifesto-body">
+            <h2>The Project V Manifesto</h2>
+            <p>Project V started in the most honest way possible: <strong>I sat down and asked my kids and my family what their everyday experiences were really like.</strong> What they told me was painful to hear. It laid bare the quiet friction, hurdles, and structural gaps that everyday Americans face just trying to learn, grow, and work in their own towns.</p>
+            <p>We realized that when communities breakdown, traditional communication lines leave neighbors isolated. Project V is a direct, active experiment to see if we can use clean, anonymous digital toolsets to unite the real voices within a community. By dropping the standard barriers, we map the actual "temperature" of what people are dealing with.</p>
+            <p><strong>The Objective:</strong> Turn shared data into undeniable visibility so local leaders, business owners, and citizens can make a measurable impact on our collective quality of life. We are starting by tackling the simple, daily challenges of everyday citizens—because a community can only move forward when its people are finally heard.</p>
+            <hr style="border:0; border-top:1px dashed rgba(212,175,55,0.2); margin:30px 0;">
+            <h2>The Coming Transmission</h2>
+            <p>This infrastructure is laying the groundwork for something bigger. Soon, we will be launching an interactive, community-driven narrative book. Readers will work directly alongside the <strong>Vanguard Knights</strong> to hunt and track a looming multiversal threat—a force with the terrifying ability to manipulate timelines and strip away human quality of life forever. Stay tuned. The coordinates are currently printing.</p>
+        </div>
+    </div>
+
     <script src="app.js"></script>
     <script>
         /* --- PORTFOLIO ACCESS AND INLINE VIEW ENGINE --- */
         (function() {
-            const currentVersion = "2"; 
+            const currentVersion = "3"; 
             const storageKey = "hub_version_check";
             const lastChecked = localStorage.getItem(storageKey);
 
@@ -237,12 +336,18 @@
             document.addEventListener("DOMContentLoaded", () => {
                 document.body.classList.add("fade-in");
 
+                // Sandbox Frame Viewers
                 const viewer = document.getElementById('sandbox-viewer');
                 const iframe = document.getElementById('sandbox-iframe');
                 const titleDisplay = document.getElementById('sandbox-title-display');
                 const closeBtn = document.getElementById('sandbox-close-btn');
 
-                // Intercepts link buttons to deploy tools completely inside an iframe wrapper layer
+                // Manifesto Popup Viewers
+                const manifestoViewer = document.getElementById('manifesto-viewer');
+                const openManifestoBtn = document.getElementById('open-manifesto-btn');
+                const closeManifestoBtn = document.getElementById('manifesto-close-btn');
+
+                // Sandboxed App Inline Frame Engine
                 document.querySelectorAll(".bio-link-btn").forEach(btn => {
                     btn.addEventListener("click", (e) => {
                         const targetUrl = btn.getAttribute('data-target');
@@ -260,6 +365,19 @@
                     closeBtn.addEventListener("click", () => {
                         viewer.classList.remove('active');
                         iframe.src = "about:blank"; 
+                    });
+                }
+
+                // Manifesto Core Modal Trigger
+                if (openManifestoBtn && manifestoViewer) {
+                    openManifestoBtn.addEventListener("click", () => {
+                        manifestoViewer.classList.add('active');
+                    });
+                }
+
+                if (closeManifestoBtn) {
+                    closeManifestoBtn.addEventListener("click", () => {
+                        manifestoViewer.classList.remove('active');
                     });
                 }
             });
