@@ -18,7 +18,7 @@ html, body {
     height: 100dvh;
     background: linear-gradient(180deg, #0b071a 0%, #160d29 50%, #06030d 100%);
     color: var(--text-main);
-    font-family: system-ui, -apple-system, sans-serif;
+    font-family: 'Cinzel', system-ui, -apple-system, sans-serif;
     overflow: hidden;
     position: relative;
 }
@@ -114,8 +114,8 @@ body::after {
     left: 50%;
     transform: translateX(-50%) translateY(30px);
     width: 90%;
-    max-width: 500px;
-    height: calc(100dvh - 150px); 
+    max-width: 540px;
+    height: calc(100dvh - 160px); 
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -138,6 +138,9 @@ body::after {
    04 // PROFILE IDENTITY BLOCK
    ========================================= */
 .identity-module {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
     position: relative;
     margin-top: 2rem;
@@ -181,8 +184,9 @@ body::after {
 
 .commander-title {
     margin: 0;
+    font-family: 'Cinzel', serif;
+    font-weight: 400;
     font-size: 2rem;
-    font-weight: 900;
     text-transform: uppercase;
     letter-spacing: 4px;
     color: #fff;
@@ -191,11 +195,12 @@ body::after {
 
 .commander-role {
     margin: 5px 0 0 0;
+    font-family: 'Cinzel', serif;
+    font-weight: 400;
     font-size: 0.85rem;
     color: var(--gold);
     text-transform: uppercase;
     letter-spacing: 2px;
-    font-weight: 700;
 }
 
 /* =========================================
@@ -385,3 +390,50 @@ body::after {
 
 .manifesto-content p { margin-bottom: 20px; }
 .manifesto-content strong { color: #fff; }
+
+/* =========================================
+   09 // RESPONSIVE ADAPTATION ENGINE
+   ========================================= */
+@media (min-width: 1024px) {
+    .terminal-container {
+        max-width: 650px;
+        height: calc(100dvh - 170px);
+        gap: 2rem;
+    }
+    .link-matrix {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.25rem;
+    }
+    .commander-title {
+        font-size: 2.5rem;
+        letter-spacing: 6px;
+    }
+}
+
+@media (min-width: 1920px) {
+    .terminal-container {
+        max-width: 800px;
+        height: calc(100dvh - 190px);
+    }
+    .intro-text {
+        font-size: 1.05rem;
+    }
+    .card-data h3 {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-height: 700px) {
+    .terminal-container {
+        transform: translateX(-50%) translateY(15px);
+        height: calc(100dvh - 130px);
+        gap: 1rem;
+    }
+    .identity-module {
+        margin-top: 0.5rem;
+    }
+    .hud-ring {
+        width: 85px;
+        height: 85px;
+    }
+}
