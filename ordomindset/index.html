@@ -114,30 +114,30 @@
     </div>
 
     <div id="quiet-modal" class="modal-overlay" onclick="if(event.target === this) toggleQuietForm(false)">
-        <div class="modal-window" style="max-width: 550px;">
+        <div class="modal-window text-center" style="max-width: 550px; display: flex; flex-direction: column; align-items: center;">
             <button class="btn-close" onclick="toggleQuietForm(false)">✕</button>
-            <h2 style="margin-top: 0;">Release Your Thoughts</h2>
-            <p style="font-size: 0.9rem; margin-bottom: 20px; color: rgba(255,255,255,0.7);">
+            <h2 style="margin-top: 0; text-align: center; width: 100%;">Release Your Thoughts</h2>
+            <p style="font-size: 0.9rem; margin-bottom: 20px; color: rgba(255,255,255,0.7); text-align: center;">
                 Write out whatever is holding you back. If you want us to reach out and support you through this process, optionally leave your contact email below. Otherwise, submit completely anonymously.
             </p>
             
-            <form id="quiet-space-form" onsubmit="handleQuietSubmit(event)">
-                <div style="margin-bottom: 15px; text-align: left;">
-                    <label style="display: block; font-size: 0.75rem; color: var(--gold); font-weight: bold; margin-bottom: 5px; text-transform: uppercase;">Your Private Message</label>
-                    <textarea id="quiet-message" rows="4" placeholder="Pour out whatever pains you or causes confusion here safely..." required style="text-align: left; font-size: 0.9rem;"></textarea>
+            <form id="quiet-space-form" onsubmit="handleQuietSubmit(event)" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+                <div style="margin-bottom: 15px; text-align: left; width: 100%;">
+                    <label style="display: block; font-size: 0.75rem; color: var(--gold); font-weight: bold; margin-bottom: 5px; text-transform: uppercase; text-align: center;">Your Private Message</label>
+                    <textarea id="quiet-message" rows="4" placeholder="Pour out whatever pains you or causes confusion here safely..." required style="text-align: center; font-size: 0.9rem; width: 100%;"></textarea>
                 </div>
                 
-                <div style="margin-bottom: 15px; text-align: left;">
-                    <label style="display: block; font-size: 0.75rem; color: var(--gold); font-weight: bold; margin-bottom: 5px; text-transform: uppercase;">Contact Email (Optional)</label>
+                <div style="margin-bottom: 15px; text-align: left; width: 100%;">
+                    <label style="display: block; font-size: 0.75rem; color: var(--gold); font-weight: bold; margin-bottom: 5px; text-transform: uppercase; text-align: center;">Contact Email (Optional)</label>
                     <input type="email" id="quiet-email" placeholder="Leave blank to remain completely anonymous" style="width: 100%; padding: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.5); color: white; text-align: center;">
                 </div>
 
-                <div style="margin-bottom: 20px; text-align: center;">
+                <div style="margin-bottom: 20px; text-align: center; width: 100%;">
                     <button type="button" class="text-trigger-link" onclick="toggleSupportCard()">View Kentucky Crisis & Support Resources</button>
                 </div>
 
-                <div id="state-resources-card" class="module-card resources-banner mini-resource-card" style="display: none; margin-bottom: 20px; padding: 20px;">
-                    <h4 style="color: var(--gold); font-size: 0.95rem; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; font-weight: 800;">Kentucky Crisis Resources</h4>
+                <div id="state-resources-card" class="module-card resources-banner mini-resource-card" style="display: none; margin-bottom: 20px; padding: 20px; width: 100%;">
+                    <h4 style="color: var(--gold); font-size: 0.95rem; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; font-weight: 800; text-align: center;">Kentucky Crisis Resources</h4>
                     <div style="display: flex; flex-direction: column; gap: 12px; text-align: left; font-size: 0.8rem; line-height: 1.5; color: rgba(255,255,255,0.85);">
                         <div><strong>National Lifeline:</strong> Call or text <strong>988</strong> inside the US. Completely free, anonymous, and available 24/7.</div>
                         <div><strong>Central Kentucky Line:</strong> Reach the regional <strong>Communicare Crisis Support Desk</strong> at <strong>1-800-641-4673</strong> for help in Hardin County footprint areas.</div>
@@ -145,9 +145,9 @@
                     </div>
                 </div>
 
-                <button type="submit" class="action-btn gold-variant" style="margin: 0 auto; max-width: 220px;">Submit Content</button>
+                <button type="submit" class="action-btn gold-variant" style="margin: 0 auto; max-width: 220px; display: block;">Submit Content</button>
             </form>
-            <div id="quiet-feedback" class="friendly-feedback" style="text-align: center;"></div>
+            <div id="quiet-feedback" class="friendly-feedback" style="text-align: center; width: 100%;"></div>
         </div>
     </div>
 
