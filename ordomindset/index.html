@@ -19,8 +19,8 @@
     <div id="achievement-banner" class="achievement-toast">
         <div class="achievement-icon">🛡️</div>
         <div class="achievement-text">
-            <h3>Vessel Awakened</h3>
-            <p>You have illuminated your Mind, Body, and Soul. Your journey of self-discovery has officially begun.</p>
+            <h3>A New Journey</h3>
+            <p>You have illuminated your Mind, Body, and Soul. Like Commander Q, your journey to total self-mastery has begun.</p>
         </div>
     </div>
 
@@ -39,7 +39,7 @@
             </div>
             
             <p class="highlight-text">
-                When the world around you feels completely overwhelming, you don't have to absorb the noise. You are <strong>Aon</strong>—a personal container meant to hold immense power, entirely driven by your own intentional focus.
+                When the world around you feels completely overwhelming, you don't have to absorb the noise. You are made of three distinct internal energies. Just like Commander Q, you have the raw power to study, control, and master these forces to bring true order to your reality.
             </p>
             <div style="margin-top: 20px;">
                 <a href="../knights/" class="action-btn return-btn">← Return to Knights Workspace</a>
@@ -94,35 +94,13 @@
             </div>
         </section>
 
-        <!-- QUIET SPACE & POPUP ACCESSIBLE OVERLAY MODULE -->
+        <!-- QUIET SPACE INITIALIZATION MODULE -->
         <section class="module-card text-center center-form-layout">
             <h2>The Quiet Space</h2>
             <p style="max-width: 550px; margin: 0 auto 20px auto;">
-                This space is completely yours. If something is causing you pain, heavy pressure, or mental fog, remember you don't have to keep it locked inside your container. 
+                This space is completely yours. If something is causing you pain, heavy pressure, or mental fog, remember you don't have to keep it locked inside. Let it out, find your footing, and keep moving forward.
             </p>
             <button class="action-btn gold-variant" style="max-width: 260px;" onclick="toggleQuietForm(true)">Share Thoughts</button>
-        </section>
-
-        <!-- STATE SUPPORT RESOURCE INDEX PANEL -->
-        <section class="module-card resources-banner">
-            <h2>Kentucky Mental Health & Crisis Support</h2>
-            <p style="text-align: center; font-size: 0.9rem; color: rgba(255,255,255,0.7); margin-bottom: 20px;">
-                If you or a loved one are going through an incredibly dark moment, please know you are never alone. Reach out to these free, confidential resources anytime.
-            </p>
-            <div class="resource-flex-grid">
-                <div class="resource-block">
-                    <h4>National Suicide & Crisis Lifeline</h4>
-                    <p>Call or text <strong>988</strong> inside the US. Available 24 hours a day, 7 days a week. Completely free and anonymous.</p>
-                </div>
-                <div class="resource-block">
-                    <h4>Kentucky Community Crisis Lines</h4>
-                    <p>Connect with the <strong>Communicare Crisis Line</strong> at <strong>1-800-641-4673</strong> for regional support across Central Kentucky and Hardin County footprint areas.</p>
-                </div>
-                <div class="resource-block">
-                    <h4>Crisis Text Line</h4>
-                    <p>Text <strong>HOME</strong> to <strong>741741</strong> to link instantly with a compassionate, trained crisis counselor over secure messaging streams.</p>
-                </div>
-            </div>
         </section>
 
         <!-- CONSULTING ATTACHMENT CARD -->
@@ -147,7 +125,7 @@
         </div>
     </div>
 
-    <!-- QUIET SPACE SYSTEM TRANSACTION MODAL WINDOW -->
+    <!-- QUIET SPACE SYSTEM TRANSMISSION MODAL WINDOW -->
     <div id="quiet-modal" class="modal-overlay" onclick="if(event.target === this) toggleQuietForm(false)">
         <div class="modal-window" style="max-width: 550px;">
             <button class="btn-close" onclick="toggleQuietForm(false)">✕</button>
@@ -162,9 +140,23 @@
                     <textarea id="quiet-message" rows="4" placeholder="Pour out whatever pains you or causes confusion here safely..." required style="text-align: left; font-size: 0.9rem;"></textarea>
                 </div>
                 
-                <div style="margin-bottom: 20px; text-align: left;">
+                <div style="margin-bottom: 15px; text-align: left;">
                     <label style="display: block; font-size: 0.75rem; color: var(--gold); font-weight: bold; margin-bottom: 5px; text-transform: uppercase;">Contact Email (Optional)</label>
                     <input type="email" id="quiet-email" placeholder="Leave blank to remain completely anonymous" style="width: 100%; padding: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.5); color: white; text-align: center;">
+                </div>
+
+                <div style="margin-bottom: 20px; text-align: center;">
+                    <button type="button" class="text-trigger-link" onclick="toggleSupportCard()">View Kentucky Crisis & Support Resources</button>
+                </div>
+
+                <!-- HIDDEN DROPDOWN STATE SUPPORT RESOURCE CARD -->
+                <div id="state-resources-card" class="module-card resources-banner mini-resource-card" style="display: none; margin-bottom: 20px; padding: 20px;">
+                    <h4 style="color: var(--gold); font-size: 0.95rem; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; font-weight: 800;">Kentucky Crisis Resources</h4>
+                    <div style="display: flex; flex-direction: column; gap: 12px; text-align: left; font-size: 0.8rem; line-height: 1.5; color: rgba(255,255,255,0.85);">
+                        <div><strong>National Lifeline:</strong> Call or text <strong>988</strong> inside the US. Completely free, anonymous, and available 24/7.</div>
+                        <div><strong>Central Kentucky Line:</strong> Reach the regional <strong>Communicare Crisis Support Desk</strong> at <strong>1-800-641-4673</strong> for help in Hardin County footprint areas.</div>
+                        <div><strong>Crisis Text Support:</strong> Send <strong>HOME</strong> via text message to <strong>741741</strong> to link securely with a trained counselor.</div>
+                    </div>
                 </div>
 
                 <button type="submit" class="action-btn gold-variant" style="margin: 0 auto; max-width: 220px;">Submit Content</button>
@@ -176,11 +168,11 @@
     <!-- FIXED IMMUTABLE GLOBAL FOOTER -->
     <div class="footer-pad">
         <footer class="system-footer">
-            &copy; <span id="current-year"></span> Powered by Vanguard Citizen Services
+            &copy; 2026 Powered by Vanguard Citizen Services
         </footer>
     </div>
 
-    <!-- DYNAMIC CORE ROUTINE JAVASCRIPT LAYER -->
+    <!-- DYNAMIC PLUGINS AND TRANSITIONS LAYER -->
     <script>
         /* --- COMET BACKGROUND SPEED ENGINE --- */
         function spawnComet() {
@@ -196,16 +188,13 @@
         setInterval(spawnComet, 5000);
         spawnComet();
 
-        document.getElementById('current-year').innerText = new Date().getFullYear();
-
-        /* --- TRINITY TRACKER & MOTIVATING RECORD DICTIONARY --- */
+        /* --- TRINITY DATA DESCRIPTION STORAGE --- */
         const insights = {
-            mind: "<h2>Mind // Mental Strength</h2><p>Your mind is the center of clear logic. When things feel overwhelming, stop trying to process everything at once. Use your intent to block out external noise, step away from negative thinking, and focus solely on the true facts of your immediate next task.</p>",
+            mind: "<h2>Mind // Mental Strength</h2><p>Your mind is the center of clear logic. When things feel overwhelming, stop trying to process everything at once. Use your intention to block out external noise, step away from negative thinking, and focus solely on the true facts of your immediate next task.</p>",
             body: "<h2>Body // Physical Wellness</h2><p>Your body is the engine that carries you through the world. True strength starts with simple physical choices. Drink clean water, stretch, move, and get adequate rest. When your body is fueled and cared for, your mind immediately clears up.</p>",
             soul: "<h2>Soul // Spiritual Strength</h2><p>Your soul is your inner peace and emotional wellness. It thrives when your actions match who you truly are. Protect your spirit by letting go of worries you can't change, keeping your intent pure, and remembering your ultimate worth.</p>"
         };
 
-        // Track node unlocks to dispatch the confidence milestone achievement
         let unlockedNodes = { mind: false, body: false, soul: false };
         let achievementDispatched = false;
 
@@ -238,7 +227,7 @@
             }
         }
 
-        /* --- FORM OVERLAY VISIBILITY CONTROL --- */
+        /* --- FORM OVERLAY CONTROLS --- */
         function toggleQuietForm(open) {
             const modal = document.getElementById('quiet-modal');
             if (open) {
@@ -248,10 +237,21 @@
                 modal.classList.remove('active');
                 document.body.style.overflow = '';
                 document.getElementById('quiet-feedback').style.opacity = "0";
+                document.getElementById('state-resources-card').style.display = "none"; // Reset drawer on close
             }
         }
 
-        /* --- SUPABASE CONNECT CONFIGURATION FOR USER ANXIETIES --- */
+        function toggleSupportCard() {
+            const card = document.getElementById('state-resources-card');
+            if (card.style.display === "none") {
+                card.style.display = "block";
+                card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } else {
+                card.style.display = "none";
+            }
+        }
+
+        /* --- SUPABASE CONNECT CONFIGURATION --- */
         const SB_URL = 'https://dvyjupytbwbrcoyouxpf.supabase.co';
         const SB_KEY = 'sb_publishable_wjgbPekKmodd5mSDXIeUeg_Wq73GzOk'; 
         const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
@@ -269,7 +269,6 @@
             submitBtn.innerText = "Releasing...";
 
             try {
-                // Post entries straight to your new secure cloud repository table
                 const { error } = await supabaseClient
                     .from('quietspace_log')
                     .insert([
@@ -281,7 +280,7 @@
 
                 if (error) throw error;
 
-                feedback.innerText = "Your burden has been let out. Take a deep breath. Your container is lighter now.";
+                feedback.innerText = "Your thoughts have been released. Take a deep breath. Your mind is lighter now.";
                 feedback.style.color = "var(--gold)";
                 feedback.style.opacity = "1";
                 event.target.reset();
@@ -289,8 +288,8 @@
                 setTimeout(() => { toggleQuietForm(false); }, 4000);
 
             } catch (err) {
-                console.error("Database submission error:", err);
-                feedback.innerText = "Connection dipped. Your thoughts are safe locally, please try submitting again in a moment.";
+                console.error(err);
+                feedback.innerText = "Connection dipped. Please try submitting again in a moment.";
                 feedback.style.color = "#ff4081";
                 feedback.style.opacity = "1";
             } finally {
