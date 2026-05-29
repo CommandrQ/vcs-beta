@@ -8,17 +8,17 @@
 </head>
 <body>
 
-    <!-- CALMING PURPLE SKY & STEADY COMETS -->
+    <!-- CALMING NIGHT SKY GRADIENT -->
     <div id="environment">
         <div class="starfield"></div>
     </div>
 
-    <!-- MAIN BENTO BOX SCROLL WRAPPER -->
+    <!-- MAIN SCROLL CONTAINER OPTIMIZED FOR DESKTOP & MOBILE -->
     <div class="app-container">
         
-        <!-- HEADER / HERO BENTO BOX -->
-        <header class="module-card bento-hero text-center">
-            <!-- Elegant Sacred Geometry Symbol -->
+        <!-- HERO CARD -->
+        <header class="module-card text-center">
+            <!-- Elegant Mindset Sacred Geometry -->
             <svg class="logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <polygon points="50,15 15,82 85,82" stroke="#D4AF37" stroke-width="3" fill="rgba(212,175,55,0.03)"/>
                 <circle cx="50" cy="56" r="16" stroke="#ffffff" stroke-width="2"/>
@@ -26,81 +26,86 @@
             </svg>
             <h1 class="page-title animate-word">Ordo</h1>
             <p class="highlight-text">
-                When the world feels heavy, messy, or completely unfair, you don't have to carry all that noise. <strong>Ordo</strong> is a simple, comforting way to clear the fog, protect your peace, and reclaim your personal balance.
+                When the world around you feels completely overwhelming, you don't have to absorb the noise. You are <strong>Aon</strong>—a personal container meant to hold immense power, entirely driven by your own intentional focus. 
             </p>
             <div style="margin-top: 25px;">
                 <a href="../knights/" class="action-btn return-btn">← Return to Knights Workspace</a>
             </div>
         </header>
 
-        <!-- THE THREE CORE VALUES BLOCKS (BENTO SYSTEM) -->
-        <section class="bento-triple-row">
+        <!-- HORIZONTAL DESKTOP / VERTICAL MOBILE ENGINE MATRIX -->
+        <section class="module-card text-center">
+            <h2>Ignite Your Internal Energy</h2>
+            <p style="max-width: 600px; margin: 0 auto 25px auto;">
+                Your system is currently resting in safety. Click each faded energy node below to channel your intent, light the flame, and discover its real-world rule.
+            </p>
             
-            <div class="module-card text-center component-card" onclick="revealInsight('vessel')">
-                <div class="card-number">01</div>
-                <h3>The Container</h3>
-                <p class="simple-desc">Think of your life as a safe, sealed room. You get to decide who enters, what drama gets left outside, and when to just turn off the noise to rest.</p>
-            </div>
+            <div class="energy-matrix">
+                <!-- MIND NODE -->
+                <div class="energy-node" id="node-mind" onclick="openInsight('mind')">
+                    <div class="node-spark"></div>
+                    <h3>Mind</h3>
+                    <span class="node-status">Tap to Ignite</span>
+                </div>
 
-            <div class="module-card text-center component-card" onclick="revealInsight('trinity')">
-                <div class="card-number">02</div>
-                <h3>Your Daily Fuel</h3>
-                <p class="simple-desc">You need three basic things to feel good: moving your physical body, keeping your thoughts kind and realistic, and remembering your worth.</p>
-            </div>
+                <!-- BODY NODE -->
+                <div class="energy-node" id="node-body" onclick="openInsight('body')">
+                    <div class="node-spark"></div>
+                    <h3>Body</h3>
+                    <span class="node-status">Tap to Ignite</span>
+                </div>
 
-            <div class="module-card text-center component-card" onclick="revealInsight('output')">
-                <div class="card-number">03</div>
-                <h3>Your Safe Space</h3>
-                <p class="simple-desc">When you focus on fixing your own habits first, you generate a quiet, steady confidence. Your calm energy naturally helps people around you relax.</p>
+                <!-- SOUL NODE -->
+                <div class="energy-node" id="node-soul" onclick="openInsight('soul')">
+                    <div class="node-spark"></div>
+                    <h3>Soul</h3>
+                    <span class="node-status">Tap to Ignite</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRACTICAL OBSERVATION REMINDERS -->
+        <section class="desktop-row">
+            
+            <div class="module-card">
+                <h3 class="gold-title text-center">👁️ Absolute Honesty</h3>
+                <p style="font-size: 0.95rem; line-height: 1.7; margin-bottom: 0;">
+                    When you look at toxic spaces or broken environments around you, don't waste your limited energy being angry at them. Take a deep breath and ask: <em>"What part of this situation can I actually control right now?"</em> Protect your peace by focusing strictly on the truth of your own choices.
+                </p>
+            </div>
+            
+            <div class="module-card">
+                <h3 class="gold-title text-center">⏳ Protecting Your Time</h3>
+                <p style="font-size: 0.95rem; line-height: 1.7; margin-bottom: 0;">
+                    Your time on this earth is a precious gift. Don't let negative or chaotic environments freeze you or steal your days. Every single second belongs entirely to you—spend it building your own path instead of fighting things you cannot change.
+                </p>
             </div>
 
         </section>
 
-        <!-- DYNAMIC INSIGHT VIEWER (SAVES SPACE, HIGHLIGHTS SELECTION) -->
-        <div id="fog-clearing-box" class="interactive-display-box text-center" style="display: none;"></div>
-
-        <!-- TWO CORE MINDFULNESS REMINDERS -->
-        <section class="bento-double-row">
-            
-            <div class="module-card text-center">
-                <h3 class="gold-title">👁️ Absolute Honesty</h3>
-                <p style="font-size: 0.95rem; line-height: 1.6; margin-bottom: 0;">
-                    When you look at toxic workspaces or broken rules around you, don't waste energy being angry at them. Take a deep breath and ask: <em>"What part of this can I actually control right now?"</em> Protect your energy by focusing strictly on the truth of your own next step.
-                </p>
-            </div>
-            
-            <div class="module-card text-center">
-                <h3 class="gold-title">⏳ Protecting Your Time</h3>
-                <p style="font-size: 0.95rem; line-height: 1.6; margin-bottom: 0;">
-                    Your time on this earth is a precious, limited gift. Don't let negative environments freeze you or steal your happy moments. Every second is yours to keep, spend it building up yourself instead of fighting the chaos.
-                </p>
-            </div>
-
-        </section>
-
-        <!-- CENTERED HEART-TO-HEART MESSAGE INPUT -->
+        <!-- CENTERED HEART-TO-HEART THOUGHT PROCESSOR -->
         <section class="module-card text-center center-form-layout">
             <h2>Your Quiet Space</h2>
             <p style="max-width: 550px; margin: 0 auto 15px auto;">
-                Did finding a sense of balance help you breathe a little easier today? Drop a thought or a goal below to clear it out of your head.
+                Did focusing on your path help you breathe a little easier today? Drop a thought or a single goal below to clear it out of your head.
             </p>
             
             <div class="centered-form-wrapper">
                 <textarea id="board-msg" rows="2" placeholder="Let out a thought, an action step, or a simple win here..."></textarea>
-                <button class="action-btn gold-variant" onclick="postToBoard()">Commit To Mind</button>
+                <button class="action-btn gold-variant" onclick="processFogRelief()">Commit To Mind</button>
                 <div id="comfort-response" class="friendly-feedback"></div>
             </div>
         </section>
 
-        <!-- TEAM CHEMISTRY UPGRADE CARD -->
+        <!-- LEADERSHIP CHEMISTRY UPGRADE CARD -->
         <section class="module-card consulting-banner text-center">
-            <div class="banner-highlight-badge">Let's Fix The Friction</div>
+            <div class="banner-highlight-badge">Workplace Culture Analysis</div>
             <h2 class="animate-word">Struggling to understand your team?</h2>
             <p style="max-width: 650px; margin: 0 auto 15px auto;">
-                When a team's communication breaks down, people stop talking, stress spikes, and confusion sets in. This heavy atmosphere quickly leads to regular team burnout and unexpected, expensive staff turnover.
+                When a team's communication breaks down, stress spikes, morale drops, and confusion sets in. This heavy atmosphere quickly leads to severe burnout and unexpected, expensive employee turnover.
             </p>
             <p style="font-size: 0.95rem; margin: 0 auto 25px auto; color: rgba(255, 255, 255, 0.75); max-width: 650px;">
-                Every surprise resignation stalls your business and drains your bank account. Let's look closely at your team chemistry, remove the friction points, and build a supportive environment where your staff feels confident and eager to stay.
+                Every surprise resignation stalls your business momentum and drains your financial resources. Let's look closely at your team dynamics, remove workplace stress points, and build a supportive environment where your staff feels confident and eager to stay.
             </p>
             
             <a href="consulting.html" class="action-btn consulting-btn" style="max-width: 320px; margin: 0 auto;">
@@ -110,16 +115,24 @@
         
     </div>
 
-    <!-- POWERED BY FOOTER LAYER -->
+    <!-- CLOSABLE INTERACTIVE INSIGHT OVERLAY WINDOW -->
+    <div id="insight-modal" class="modal-overlay" onclick="if(event.target === this) closeInsight()">
+        <div class="modal-window">
+            <button class="btn-close" onclick="closeInsight()">✕</button>
+            <div id="modal-content-area" class="text-center"></div>
+        </div>
+    </div>
+
+    <!-- SYSTEM FOOTER LAYER -->
     <div class="footer-pad">
         <footer class="system-footer">
             &copy; <span id="current-year"></span> Powered by Vanguard Citizen Services
         </footer>
     </div>
 
-    <!-- INTERACTIVE BEHAVIOR TRANSITIONS -->
+    <!-- INTERACTIVE RESPONSIVE FUNCTIONS -->
     <script>
-        /* --- COMETS DRIFT EVERY FEW SECONDS --- */
+        /* --- CALMING BACKGROUND DRIFT --- */
         function spawnComet() {
             const container = document.getElementById('environment');
             if (!container) return;
@@ -130,30 +143,39 @@
             container.appendChild(comet);
             setTimeout(() => comet.remove(), 2000);
         }
-        setInterval(spawnComet, 4500);
+        setInterval(spawnComet, 5000);
         spawnComet();
 
         document.getElementById('current-year').innerText = new Date().getFullYear();
 
-        /* --- SIMPLE EXPLANATION DICTIONARY --- */
+        /* --- SIMPLE TRINITY RESOURCE DICTIONARY --- */
         const insights = {
-            vessel: "✨ <strong>Your Boundary Rule:</strong> Think of this like turning off notifications on your phone. You have the right to ignore bad moods or gossip that isn't your business. Keep your space safe.",
-            trinity: "☀️ <strong>Your Fuel Checklist:</strong> If you feel down, check your balance: Have you eaten something nutritious? Have you taken a break from screens? Be gentle with yourself and fix the small physical basics first.",
-            output: "🌱 <strong>Your Influence Rule:</strong> You don't have to fix the whole company or the whole world today. Just focus on bringing a calm, organized attitude into the next room you walk into."
+            mind: "<h2>Mind // Mental Strength</h2><p>Your mind is the center of clear logic. When things feel overwhelming, stop trying to process everything at once. Use your intent to block out external noise, step away from negative thinking, and focus solely on the true facts of your immediate next task.</p>",
+            body: "<h2>Body // Physical Wellness</h2><p>Your body is the engine that carries you through the world. True strength starts with simple physical choices. Drink clean water, stretch, move, and get adequate rest. When your body is fueled and cared for, your mind immediately clears up.</p>",
+            soul: "<h2>Soul // Spiritual Strength</h2><p>Your soul is your inner peace and emotional wellness. It thrives when your actions match who you truly are. Protect your spirit by letting go of worries you can't change, keeping your intent pure, and remembering your ultimate worth.</p>"
         };
 
-        function revealInsight(key) {
-            const box = document.getElementById('fog-clearing-box');
-            box.innerHTML = insights[key];
-            box.style.display = 'block';
-            box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        function openInsight(key) {
+            // Light up the specific HTML node element
+            document.getElementById(`node-${key}`).classList.add('lit-up');
+            
+            // Build and launch the modal window overlay
+            const modal = document.getElementById('insight-modal');
+            const content = document.getElementById('modal-content-area');
+            content.innerHTML = insights[key];
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
 
-        /* --- HUMANLIKE FEEDBACK LOOP FOR BRAIN FOG --- */
-        function postToBoard() {
+        function closeInsight() {
+            const modal = document.getElementById('insight-modal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function processFogRelief() {
             const text = document.getElementById('board-msg').value.trim();
             const feedback = document.getElementById('comfort-response');
-            
             if(!text) return;
             
             feedback.innerText = "Good. You acknowledged it and let it out. Keep moving forward, you're doing great.";
