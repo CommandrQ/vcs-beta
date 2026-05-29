@@ -16,13 +16,14 @@
             width: 100vw;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
         .terminal-container {
             position: fixed;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -52%); /* Precision convergence focal centering point */
+            transform: translate(-50%, -50%); /* Strict grid locking vector */
             width: 90%;
             max-width: 420px; 
             height: auto !important;
@@ -32,11 +33,13 @@
             padding: 0 !important;
             margin: 0 !important;
             overflow: hidden !important;
+            box-sizing: border-box;
         }
 
         .identity-module {
-            margin: 0 0 0.25rem 0 !important;
+            margin: 0 !important;
             padding: 0 !important;
+            flex-shrink: 0;
         }
 
         /* --- PULSING PURPLE SURFACE CHASSIS --- */
@@ -52,6 +55,7 @@
             padding: 1.25rem;
             box-sizing: border-box;
             animation: purpleGlowPulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+            flex-shrink: 0;
         }
 
         @keyframes purpleGlowPulse {
@@ -74,6 +78,7 @@
             border-radius: 12px;
             overflow: hidden;
             flex-shrink: 0;
+            box-sizing: border-box;
         }
 
         .mp4-screen-viewport iframe {
@@ -86,6 +91,7 @@
         /* --- ADVANCED TEXT WRAPPING MATRIX --- */
         .mp4-metadata-deck {
             text-align: center;
+            padding-top: 1rem;
             padding-bottom: 1rem;
             border-bottom: 1px dashed rgba(147, 51, 234, 0.3);
             margin-bottom: 1rem;
@@ -96,15 +102,16 @@
             align-items: center;
             width: 100%;
             box-sizing: border-box;
+            overflow: hidden;
         }
 
         .mp4-track-title {
             font-size: 1.05rem; 
             font-weight: 700;
             color: #ffffff;
-            margin-bottom: 6px;
+            margin: 0 0 6px 0;
             width: 100%;
-            white-space: normal !important; /* Total release for extreme string layout warping values */
+            white-space: normal !important; 
             word-wrap: break-word !important;
             word-break: break-word !important;
             overflow: visible !important;
@@ -120,6 +127,7 @@
             color: #a855f7;
             text-transform: uppercase;
             width: 100%;
+            margin: 0;
             white-space: normal !important;
             word-wrap: break-word !important;
             word-break: break-word !important;
@@ -133,6 +141,7 @@
             align-items: center;
             gap: 0.75rem;
             width: 100%;
+            box-sizing: border-box;
         }
 
         .mp4-btn {
@@ -150,6 +159,7 @@
             flex: 1; 
             max-width: 110px;
             text-align: center;
+            box-sizing: border-box;
         }
 
         .mp4-btn:hover {
@@ -174,11 +184,10 @@
         /* --- DESKTOP SCALE CHASSIS ADAPTATIONS --- */
         @media (min-width: 1024px) {
             .terminal-container {
-                max-width: 680px; /* Expands terminal boundaries to support widescreen panel rules */
+                max-width: 680px; 
                 transform: translate(-50%, -50%);
             }
             .mp4-chassis {
-                max-width: 100%;
                 padding: 1.75rem;
             }
             .mp4-track-title {
@@ -196,7 +205,7 @@
 
         @media (min-width: 1920px) {
             .terminal-container {
-                max-width: 850px; /* Premium extreme expanse blueprint scale choice */
+                max-width: 850px; 
             }
             .mp4-chassis {
                 padding: 2rem;
@@ -205,9 +214,6 @@
                 min-height: 80px;
                 margin-bottom: 1.5rem;
                 padding-bottom: 1.5rem;
-            }
-            .mp4-screen-viewport {
-                margin-bottom: 1.5rem;
             }
             .mp4-track-title {
                 font-size: 1.4rem;
@@ -335,22 +341,21 @@
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('mp4-video-frame', {
                 events: {
-                    'onStateChange': onPlayerStateChange,
-                    'onReady': onPlayerReady
+                    'onStateChange': onPlayerStateChange
                 }
             });
         }
 
-        function onPlayerReady(event) {
-            // Ready verification loop completed
-        }
-
         function updateMetadataDisplay() {
             if (player && typeof player.getVideoData === 'function') {
-                const videoData = player.getVideoData();
-                if (videoData) {
-                    if (videoData.title) liveTitle.innerText = videoData.title.toUpperCase();
-                    if (videoData.author) liveAuthor.innerText = videoData.author.toUpperCase();
+                try {
+                    const videoData = player.getVideoData();
+                    if (videoData) {
+                        if (videoData.title) liveTitle.innerText = videoData.title.toUpperCase();
+                        if (videoData.author) liveAuthor.innerText = videoData.author.toUpperCase();
+                    }
+                } catch (e) {
+                    console.warn("Metadata collection tracking offset caught safely.");
                 }
             }
         }
