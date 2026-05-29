@@ -1,334 +1,222 @@
-/* ==========================================================================
-   STYLE TOKENS & SYSTEM VARIABLES
-   ========================================================================== */
-:root {
-    --bg-deep: #06040d;
-    --purple-muted: #9575cd;
-    --purple-glow: #b388ff;
-    --blue-muted: #4dd0e1;
-    --pink-neon: #ff4081;
-    --pink-glow: #ff0055;
-    --card-surface: rgba(14, 10, 26, 0.85);
-    --border-color: rgba(149, 117, 205, 0.3);
-    --text-primary: #f1ecfb;
-}
-
-*, *::before, *::after {
+/* ==========================================
+   1. CORE ARCHITECTURE & TYPOGRAPHY
+   ========================================== */
+* {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-/* --- Force Screen System Lock (Stop Layout Breakouts) --- */
-html, body {
-    overflow: hidden !important;
-    height: 100dvh;
-    width: 100vw;
-    background-color: var(--bg-deep);
-    color: var(--text-primary);
-    font-family: 'SF Pro Display', -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+body {
+    background-color: #000000;
+    color: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: clamp(1rem, 1.2vw + 0.8rem, 2rem);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+    position: relative;
+    transition: background-color 0.8s ease;
 }
 
-/* ==========================================================================
-   COSMIC ENVIRONMENT LAYER
-   ========================================================================== */
-.space-field {
-    position: fixed;
+/* ==========================================
+   2. SPACE ENVIRONMENT (BACKGROUND)
+   ========================================== */
+.space-bg {
+    position: absolute;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 1;
-    background: radial-gradient(circle at center, #11092c 0%, var(--bg-deep) 100%);
-    pointer-events: none;
-}
-
-.stars {
-    position: absolute;
     width: 100%;
     height: 100%;
+    z-index: 1;
+    overflow: hidden;
+    background: radial-gradient(circle at 50% 50%, #15002b 0%, #000000 80%);
+}
+
+.starfield {
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
     background-image: 
-        radial-gradient(1.5px 1.5px at 15% 10%, #fff 100%, transparent),
-        radial-gradient(1px 1px at 25% 35%, #fff 100%, transparent),
-        radial-gradient(2px 2px at 45% 20%, var(--blue-muted) 100%, transparent),
-        radial-gradient(1px 1px at 55% 65%, #fff 100%, transparent),
-        radial-gradient(1.5px 1.5px at 70% 45%, var(--purple-muted) 100%, transparent),
-        radial-gradient(1px 1px at 85% 15%, #fff 100%, transparent),
-        radial-gradient(2.5px 2.5px at 92% 75%, #fff 100%, transparent),
-        radial-gradient(1px 1px at 35% 85%, var(--purple-muted) 100%, transparent),
-        radial-gradient(1.5px 1.5px at 62% 90%, var(--blue-muted) 100%, transparent);
-    background-size: 400px 400px;
-    animation: driftStars 90s linear infinite;
+        radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+        radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
+        radial-gradient(#b388ff, rgba(179,136,255,.1) 3px, transparent 40px);
+    background-size: 550px 550px, 350px 350px, 450px 450px;
+    animation: starRise 25s linear infinite;
+    opacity: 0.8;
 }
 
-@keyframes driftStars {
-    from { background-position: 0 0; }
-    to { background-position: 400px 400px; }
-}
-
-.ambient-glow {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    width: 80vw;
-    height: 80vh;
-    background: radial-gradient(circle, rgba(149, 117, 205, 0.08) 0%, rgba(77, 208, 225, 0.03) 50%, transparent 100%);
-    transform: translate(-50%, -50%);
+.comet {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(179,136,255,0) 100%);
+    box-shadow: 0 0 10px #b388ff;
+    opacity: 0;
     z-index: 2;
-    pointer-events: none;
 }
 
-/* ==========================================================================
-   HUB CONTAINER PROFILE
-   ========================================================================== */
-.hub-container {
-    height: 100dvh;
-    max-height: 100dvh;
-    padding: 20px 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 92%; 
-    max-width: 500px;
-    margin: 0 auto;
-    transition: max-width 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+/* ==========================================
+   3. GLASSMORPHISM INTERFACE
+   ========================================== */
+.glass-window {
     position: relative;
     z-index: 3;
-}
-
-@media (min-width: 901px) {
-    .hub-container { 
-        max-width: 1100px !important; 
-    }
-}
-
-/* ==========================================================================
-   IDENTITY HEADER ARRAY
-   ========================================================================== */
-.central-header {
-    width: 100%;
-    padding: 10px 0 15px 0;
+    width: 90%;
+    max-width: 550px;
+    padding: 2.5rem 2rem;
     text-align: center;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    transition: opacity 0.8s ease, transform 0.8s ease;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
+    justify-content: space-between;
+    min-height: 480px;
 }
 
-.monogram-outer {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    border: 2px solid var(--blue-muted);
-    box-shadow: 0 0 15px rgba(77, 208, 225, 0.3);
-    margin-bottom: 12px;
-    padding: 3px;
+/* ==========================================
+   4. BRAND ELEMENTS & TABS
+   ========================================== */
+.logo {
+    width: 40%;
+    max-width: 140px;
+    height: auto;
+    margin: 0 auto 1rem auto;
+    display: block;
 }
 
-.monogram-inner {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background: rgba(14, 10, 26, 0.9);
-    border: 1px dashed var(--purple-muted);
-    font-size: 2rem;
-    font-weight: 900;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: var(--pink-neon);
-    text-shadow: 0 0 8px var(--pink-glow);
-}
-
-.shimmer-title {
-    font-size: 1.6rem;
-    font-weight: 900;
+.tagline {
+    font-size: 0.85em;
     letter-spacing: 4px;
     text-transform: uppercase;
-    text-align: center;
-    animation: lightPurpleShimmer 3s infinite ease-in-out;
+    margin-bottom: 1.5rem;
+    color: #ffeb3b;
+    font-weight: 600;
 }
 
-@keyframes lightPurpleShimmer {
-    0%, 100% { text-shadow: 0 0 8px rgba(77, 208, 225, 0.3); color: var(--blue-muted); }
-    50% { text-shadow: 0 0 18px var(--purple-glow), 0 0 28px var(--purple-glow); color: #e1d5ff; }
-}
-
-/* ==========================================================================
-   PULSING EDGE FRAME (THE HUB CARD ENGINE)
-   ========================================================================== */
-.hub-card {
+.tab-navigation {
     display: flex;
-    flex-direction: column;
-    height: auto;
-    max-height: 78dvh;
-    padding: 24px;
-    margin-bottom: 0;
-    overflow: hidden;
-    background: var(--card-surface);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 12px;
-    animation: borderGlowPulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-@keyframes borderGlowPulse {
-    0%, 100% {
-        border-color: rgba(255, 255, 255, 0.15);
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-    }
-    50% {
-        border-color: var(--blue-muted);
-        box-shadow: 0 20px 50px rgba(77, 208, 225, 0.15), 0 0 20px rgba(77, 208, 225, 0.2);
-    }
-}
-
-.core-statement-banner {
-    text-align: center;
-    width: 100%;
-    margin-bottom: 25px;
-    flex-shrink: 0;
-}
-
-.directive-tag {
-    font-size: 0.75rem;
-    font-weight: 800;
-    letter-spacing: 2px;
-    color: var(--blue-muted);
-    margin-bottom: 10px;
-    text-transform: uppercase;
-}
-
-.directive-text {
-    font-size: 0.95rem;
-    line-height: 1.5;
-    color: #ffffff;
-}
-
-/* ==========================================================================
-   INDEPENDENT SCROLLER SYSTEM BAY
-   ========================================================================== */
-.scroller-bay {
-    overflow-y: auto;
-    flex-grow: 1;
-    padding-right: 6px;
-    margin-bottom: 20px;
-    -webkit-overflow-scrolling: touch;
-}
-
-.scroller-bay::-webkit-scrollbar { width: 4px; }
-.scroller-bay::-webkit-scrollbar-track { background: transparent; }
-.scroller-bay::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 10px; }
-
-/* Workspace Matrix Configurations */
-.workspace-grid {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 24px;
-    width: 100%;
-}
-
-.workspace-column {
-    flex: 1;
-}
-
-.column-header {
-    margin-bottom: 20px;
-    border-left: 3px solid var(--blue-muted);
-    padding-left: 10px;
-}
-
-.column-num {
-    font-size: 0.7rem;
-    font-weight: 700;
-    color: var(--pink-neon);
-    display: block;
-}
-
-.column-header h2 {
-    font-size: 1.1rem;
-    font-weight: 800;
-    letter-spacing: 2px;
-    color: var(--text-primary);
-    text-transform: uppercase;
-    margin-top: 1px;
-}
-
-/* ==========================================================================
-   ACTION CARDS OVERRIDES (PROTECTED FROM LINKS RESET)
-   ========================================================================== */
-.action-card {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 15px;
-    cursor: pointer;
-    display: block;
-    text-decoration: none !important;
-    color: var(--text-primary) !important;
-    transition: all 0.2s ease;
-    text-align: left;
-}
-
-.action-card:hover {
-    background: rgba(255, 255, 255, 0.06);
-    border-color: var(--pink-neon);
-}
-
-.action-card h3 {
-    font-size: 0.95rem;
-    font-weight: 700;
-    margin-bottom: 6px;
-    letter-spacing: 0.5px;
-}
-
-.action-card p {
-    font-size: 0.8rem;
-    line-height: 1.4;
-    color: #ffffff;
-}
-
-/* ==========================================================================
-   FIXED FOOTER CHANNEL DOCK
-   ========================================================================== */
-.channel-dock {
-    flex-shrink: 0;
-    width: 100%;
-    padding-top: 15px;
-    border-top: 1px solid var(--border-color);
-    display: flex;
+    gap: 1.5rem;
     justify-content: center;
     align-items: center;
-    gap: 40px;
+    margin-bottom: 2rem;
+    width: 100%;
 }
 
-.dock-link {
-    color: #ffffff !important;
-    text-decoration: none !important;
-    font-size: 0.8rem;
-    font-weight: 700;
+.tab-link {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 0.75em;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 0.4rem 0.8rem;
+    transition: color 0.3s ease;
+}
+
+.tab-link:hover {
+    color: #ffeb3b;
+}
+
+/* ==========================================
+   5. LOADING ENGINE & INTERACTIVE GLOW
+   ========================================== */
+.progress-container {
+    width: 100%;
+    max-width: 300px;
+    height: 6px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid rgba(255, 235, 59, 0.2);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
+}
+
+.progress-bar {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #ffe082 0%, #ffb300 50%, #ffeb3b 100%);
+    box-shadow: 0 0 15px #ffd700, 0 0 30px #ffb300;
+    position: relative;
+}
+
+.progress-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+    animation: flashShimmer 1.5s infinite;
+}
+
+/* ==========================================
+   6. GLOBAL APP FOOTER
+   ========================================== */
+.site-footer {
+    width: 100%;
+    font-size: 0.65em;
+    text-transform: uppercase;
     letter-spacing: 2px;
-    transition: color 0.2s ease, text-shadow 0.2s ease;
+    color: #ffffff;
+    margin-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 1rem;
 }
 
-.dock-link:hover {
-    color: var(--pink-neon) !important;
-    text-shadow: 0 0 8px var(--pink-glow);
+/* ==========================================
+   7. TRANSITION ANIMATIONS
+   ========================================== */
+@keyframes starRise {
+    from { transform: translateY(0); }
+    to { transform: translateY(-50%); }
 }
 
-/* ==========================================================================
-   RESPONSIVE LAYOUT CONVERSIONS
-   ========================================================================== */
-@media (max-width: 900px) {
-    .workspace-grid {
-        flex-direction: column;
-        gap: 0;
+@keyframes streak {
+    0% {
+        transform: translate(0, 0) rotate(-15deg) scale(0);
+        opacity: 0;
     }
+    10% {
+        opacity: 0.8;
+        transform: translate(10vw, 3vh) rotate(-15deg) scale(1);
+    }
+    90% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translate(80vw, 24vh) rotate(-15deg) scale(0.5);
+        opacity: 0;
+    }
+}
 
-    .workspace-column {
-        width: 100%;
-        margin-bottom: 25px;
-    }
+@keyframes flashShimmer {
+    0% { left: -100%; }
+    100% { left: 200%; }
+}
+
+body.fade-out {
+    background-color: #000000;
+}
+
+body.fade-out .glass-window {
+    opacity: 0;
+    transform: scale(0.95);
+}
+
+body.fade-out .space-bg {
+    opacity: 0;
+    transition: opacity 0.8s ease;
 }
