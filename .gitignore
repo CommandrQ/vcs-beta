@@ -8,6 +8,10 @@ dist-ssr/
 .env
 .env.local
 .env.*.local
+config.js
+supabase-backup.sql
+*.bak
+*.conf
 
 # Operating System Garbage
 .DS_Store
@@ -21,4 +25,3 @@ Thumbs.db
 *.njsproj
 *.sln
 *.sw?
-config.js
