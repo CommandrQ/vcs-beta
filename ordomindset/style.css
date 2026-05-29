@@ -1,14 +1,13 @@
 /* ==========================================
-   1. BRANDING, SYSTEM ATTRIBUTES & TOKENS
+   1. CORE VARIABLES & SUPPORTIVE STYLE TOKENS
    ========================================== */
 :root {
     --gold: #D4AF37;
-    --gold-glow: rgba(212, 175, 55, 0.4);
+    --gold-glow: rgba(212, 175, 55, 0.35);
     --bg-black: #000000;
     --white: #ffffff;
-    --text-muted: rgba(255, 255, 255, 0.65);
-    --glass-bg: rgba(10, 8, 16, 0.88); /* Deep, solid back glass profile */
-    --glass-border: rgba(255, 255, 255, 0.09);
+    --glass-bg: rgba(12, 10, 20, 0.9); /* Solidified dark backing for deep read contrast */
+    --glass-border: rgba(255, 255, 255, 0.08);
     --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -18,23 +17,20 @@ html {
 }
 
 body {
-    background: linear-gradient(180deg, #03010a 0%, #0c081d 35%, #180d22 70%, #1c1404 100%);
+    background: linear-gradient(180deg, #04010d 0%, #0e0924 35%, #190e29 70%, #1e1503 100%);
     background-attachment: fixed;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
     margin: 0;
     padding: 0;
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     color: var(--white);
-    /* STRIKES SYSTEM RESTRICTIONS FOR PROPER VIEWPORT SCROLLING */
+    /* DISMISSES COMPACT SCREEN RESTRICTIONS - ENABLES NATIVE DOC SCROLLING */
     overflow-y: auto; 
     overflow-x: hidden; 
     -webkit-overflow-scrolling: touch; 
 }
 
 /* ==========================================
-   2. COSMIC WALLPAPER LAYER
+   2. STARRY COSMIC WALLPAPER EFFECT
    ========================================== */
 #environment { 
     position: fixed; 
@@ -55,8 +51,8 @@ body {
         radial-gradient(1px 1px at 75% 25%, #fff, transparent),
         radial-gradient(2.5px 2.5px at 55% 75%, var(--gold), transparent);
     background-size: 400px 400px;
-    animation: stellar-rotation 500s linear infinite;
-    opacity: 0.45;
+    animation: stellar-rotation 600s linear infinite;
+    opacity: 0.5;
 }
 
 @keyframes stellar-rotation { 
@@ -66,7 +62,7 @@ body {
 
 .comet {
     position: absolute; 
-    width: 150px; 
+    width: 140px; 
     height: 2px;
     background: linear-gradient(90deg, #ffffff 0%, var(--gold) 30%, transparent 100%);
     border-radius: 50%; 
@@ -82,7 +78,7 @@ body {
 }
 
 /* ==========================================
-   3. RESPONSIVE LAYOUT CONSTRAINTS
+   3. RESPONSIVE MATRIX ARCHITECTURE
    ========================================== */
 .app-container {
     width: 92%;
@@ -128,16 +124,16 @@ body {
 }
 
 /* ==========================================
-   4. GLASS SURFACE CARD ASSETS
+   4. FRIENDLY WORKSPACE WINDOW SURFACES
    ========================================== */
 .module-card {
     background: var(--glass-bg);
-    backdrop-filter: blur(25px) saturate(140%);
-    -webkit-backdrop-filter: blur(25px) saturate(140%);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
     border: 1px solid var(--glass-border);
     border-radius: 24px;
     padding: 30px 25px; 
-    box-shadow: 0 25px 50px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.02);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.01);
 }
 
 @media (min-width: 768px) {
@@ -145,7 +141,7 @@ body {
 }
 
 /* ==========================================
-   5. COMPONENT INTERACTION GRID SYSTEM
+   5. INTERACTIVE CONTENT GRID SYSTEM
    ========================================== */
 .matrix-grid { 
     display: grid; 
@@ -171,7 +167,7 @@ body {
 }
 
 .interactive-node:hover {
-    background: rgba(212, 175, 55, 0.04);
+    background: rgba(212, 175, 55, 0.05);
     border-color: var(--gold);
     transform: translateY(-2px);
 }
@@ -179,18 +175,17 @@ body {
 .interactive-display-box {
     margin-top: 20px;
     padding: 20px;
-    background: rgba(0,0,0,0.4);
+    background: rgba(0,0,0,0.3);
     border-left: 3px solid var(--gold);
-    border-radius: 8px;
-    font-size: 0.9rem;
+    border-radius: 12px;
+    font-size: 0.95rem;
     line-height: 1.6;
     animation: fadeIn 0.4s ease;
 }
 
 /* ==========================================
-   6. TYPOGRAPHY MATRIX
+   6. CENTERED PRESENTATION & TYPOGRAPHY
    ========================================== */
-.brand-center { text-align: center; }
 .text-center { text-align: center; }
 
 .page-title { 
@@ -210,11 +205,13 @@ body {
 }
 
 h2 { 
-    color: var(--gold); font-size: 1.25rem; font-weight: 800; margin-bottom: 18px; text-transform: uppercase; letter-spacing: 1.5px; 
+    color: var(--gold); font-size: 1.25rem; font-weight: 800; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1.5px; 
+    text-align: center; /* FULLY CENTERED CONTAINER TITLES */
 }
 
 h3 { 
     font-size: 0.95rem; color: var(--gold); margin-bottom: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; 
+    text-align: center;
 }
 
 p { 
@@ -222,25 +219,30 @@ p {
 }
 
 .highlight-text {
-    font-size: 1.15rem; color: var(--white); font-weight: 300; line-height: 1.6; text-align: center; margin-bottom: 0;
+    font-size: 1.15rem; color: var(--white); font-weight: 400; line-height: 1.6; text-align: center; margin-bottom: 0;
 }
 
 /* ==========================================
-   7. BRAND INTERACTION ELEMENTS & LINKS
+   7. CENTERED INTERACTION BUTTONS & INDICATORS
    ========================================== */
 .action-btn {
     width: 100%; padding: 16px; border-radius: 14px; border: none; 
     background: var(--white); color: #000000; font-weight: 800; font-size: 0.9rem;
     text-transform: uppercase; letter-spacing: 1.5px; cursor: pointer; display: flex;
-    justify-content: center; align-items: center; text-decoration: none;
+    justify-content: center; align-items: center; text-decoration: none; margin: 0 auto;
     transition: all 0.3s var(--ease-smooth);
 }
 
 .action-btn:hover { background: var(--gold); box-shadow: 0 0 20px var(--gold-glow); transform: translateY(-1px); }
 
+.action-btn.gold-variant {
+    background: transparent; border: 2px solid var(--gold); color: var(--gold);
+}
+.action-btn.gold-variant:hover { background: var(--gold); color: #000000; }
+
 .diagnostic-stat {
     font-size: 0.85rem; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
-    display: flex; justify-content: space-between; align-items: center; color: var(--text-muted);
+    display: flex; justify-content: space-between; align-items: center; color: rgba(255,255,255,0.7);
 }
 .diagnostic-stat:last-child { border-bottom: none; }
 
@@ -259,43 +261,50 @@ p {
 @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
 /* ==========================================
-   8. CONSULTING COMPONENT ADAPTATIONS
+   8. REAL-TIME COMMUNITY REFLECTION BOARD
+   ========================================== */
+textarea { 
+    width: 100%; padding: 14px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.4); color: white; font-family: inherit; font-size: 0.9rem; transition: all 0.3s ease; resize: none;
+}
+textarea:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 12px var(--gold-glow); }
+
+.msg-board-area {
+    margin-top: 25px; display: flex; flex-direction: column; gap: 15px; max-height: 250px; overflow-y: auto; padding-right: 5px;
+}
+.board-post {
+    background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 15px 18px; border-radius: 12px; text-align: left;
+}
+.post-text { font-size: 0.85rem; color: rgba(255,255,255,0.9); margin-bottom: 6px; font-style: italic; line-height: 1.5; }
+.post-time { font-size: 0.75rem; color: var(--gold); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* ==========================================
+   9. TEAM CHEMISTRY ADAPTATIONS
    ========================================== */
 .consulting-banner {
     border: 1px solid rgba(212, 175, 55, 0.25);
     background: linear-gradient(135deg, rgba(15,12,25,0.95) 0%, rgba(28,20,4,0.4) 100%);
-    position: relative;
-    overflow: hidden;
 }
 
 .banner-highlight-badge {
-    display: inline-block;
-    font-size: 0.7rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    background: rgba(212, 175, 55, 0.1);
-    color: var(--gold);
-    padding: 6px 14px;
-    border-radius: 30px;
-    border: 1px solid rgba(212, 175, 55, 0.2);
-    margin-bottom: 15px;
+    display: inline-block; font-size: 0.7rem; font-weight: 900; text-transform: uppercase; letter-spacing: 2px;
+    background: rgba(212, 175, 55, 0.1); color: var(--gold); padding: 6px 14px; border-radius: 30px;
+    border: 1px solid rgba(212, 175, 55, 0.2); margin-bottom: 15px; text-align: center;
 }
 
-.consulting-btn {
-    background: transparent;
-    border: 2px solid var(--gold);
-    color: var(--gold);
-    margin-top: 10px;
-}
-
-.consulting-btn:hover {
-    background: var(--gold);
-    color: #000000;
-}
+.consulting-btn { background: transparent; border: 2px solid var(--gold); color: var(--gold); }
+.consulting-btn:hover { background: var(--gold); color: #000000; }
 
 /* ==========================================
-   9. GLOBAL FOOTER DECK CHANNEL
+   10. SYSTEM FOOTER BRAND TUNING
    ========================================== */
 .footer-pad { margin-top: auto; width: 100%; display: flex; justify-content: center; z-index: 10; }
-.system-footer { padding: 30px; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; color: rgba(255, 255, 255, 0.4); }
+.system-footer { 
+    padding: 35px; 
+    font-size: 0.75rem; 
+    text-transform: uppercase; 
+    letter-spacing: 2px; 
+    color: #ffffff; /* LOCKED SHIFT FROM PLAIN GRAY TO WHITE */
+    text-align: center; 
+    font-weight: 500;
+}
