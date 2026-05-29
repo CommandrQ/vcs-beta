@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Team Chemistry Consultation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- CALMING PURPLE GRADIENT SKY -->
+    <div id="environment">
+        <div class="starfield"></div>
+    </div>
+
+    <!-- MAIN READING STREAM -->
+    <div class="app-container">
+        
+        <!-- HERO CARD -->
+        <header class="module-card text-center consulting-banner">
+            <div class="banner-highlight-badge">Human Chemistry // Consultation</div>
+            <h1 class="page-title animate-word">Bridges, Not Dashboards</h1>
+            <p class="highlight-text">
+                Most businesses try to fix team burnout by changing corporate software, staring at charts, or demanding higher speed. We look at something much simpler: <strong>how you connect with your people.</strong>
+            </p>
+            <div style="margin-top: 25px;">
+                <a href="index.html" class="action-btn return-btn">← Back to Ordo Path</a>
+            </div>
+        </header>
+
+        <!-- CORE CONSULTING PHILOSOPHY SECTION -->
+        <section class="module-card">
+            <h2>The Reality of Workplace Growth</h2>
+            <p>
+                When employees disengage, drop their focus, or ultimately hand in a surprise resignation letter, it rarely happens because they suddenly hate their trade. It happens because the space inside their container has been overwhelmed by isolation, confusion, or a lack of real guidance.
+            </p>
+            <p>
+                True workforce stability is built on two simple foundations:
+            </p>
+
+            <div class="desktop-row" style="margin-top: 25px;">
+                <div class="matrix-item" style="background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.05); padding: 25px; border-radius: 16px;">
+                    <h3 style="color: var(--gold); text-align: left; margin-bottom: 10px;">1. Proper Support & Skills</h3>
+                    <p style="font-size: 0.9rem; margin-bottom: 0; color: rgba(255,255,255,0.85); line-height: 1.6;">
+                        Efficiency isn't a measurement of character; it's a reflection of skill. True competence only scales when you provide clear, hands-on, on-the-job training. When a person feels genuinely supported to expand their skill set, their mental fog clears naturally.
+                    </p>
+                </div>
+                
+                <div class="matrix-item" style="background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.05); padding: 25px; border-radius: 16px;">
+                    <h3 style="color: var(--gold); text-align: left; margin-bottom: 10px;">2. Transparent Connection</h3>
+                    <p style="font-size: 0.9rem; margin-bottom: 0; color: rgba(255,255,255,0.85); line-height: 1.6;">
+                        People don't stay at a company for an abstract mission statement written on a wall. They stay because they feel seen, safely heard, and respected by the leaders navigating the ship with them.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- WHAT WE DO INSIDE A SESSION -->
+        <section class="module-card">
+            <h2>How We Re-Align Your Group</h2>
+            <p style="text-align: center; max-width: 600px; margin: 0 auto 25px auto;">
+                I do not bring generic corporate slide decks or cookie-cutter tracking apps. I sit down with you and your leadership to study the human gaps causing friction.
+            </p>
+
+            <div class="energy-matrix">
+                <div class="energy-node lit-up" style="opacity: 1; cursor: default;">
+                    <div class="node-spark"></div>
+                    <h3>Listen</h3>
+                    <p style="font-size: 0.8rem; line-height: 1.5; color: rgba(255,255,255,0.7); margin-top: 5px;">Uncovering where managers and staff are speaking past each other.</p>
+                </div>
+                <div class="energy-node lit-up" style="opacity: 1; cursor: default;">
+                    <div class="node-spark"></div>
+                    <h3>Support</h3>
+                    <p style="font-size: 0.8rem; line-height: 1.5; color: rgba(255,255,255,0.7); margin-top: 5px;">Building proper on-the-job mentoring pathways that remove self-doubt.</p>
+                </div>
+                <div class="energy-node lit-up" style="opacity: 1; cursor: default;">
+                    <div class="node-spark"></div>
+                    <h3>Retain</h3>
+                    <p style="font-size: 0.8rem; line-height: 1.5; color: rgba(255,255,255,0.7); margin-top: 5px;">Eliminating the underlying burnout that results in sudden resignations.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ENGAGING INTENT ONBOARDING FORM -->
+        <section class="module-card text-center center-form-layout">
+            <h2>Let's Start the Conversation</h2>
+            <p style="max-width: 550px; margin: 0 auto 20px auto;">
+                If you are ready to move past tracking software and want to genuinely learn how to connect with, support, and anchor your team, tell me a little bit about what you are seeing.
+            </p>
+            
+            <div class="centered-form-wrapper">
+                <form id="consult-form" onsubmit="handleConsultSubmit(event)">
+                    <div style="margin-bottom: 15px; text-align: left;">
+                        <label style="display: block; font-size: 0.75rem; color: var(--gold); font-weight: bold; margin-bottom: 5px; text-transform: uppercase;">Your Name or Organization</label>
+                        <input type="text" id="consult-name" placeholder="Who is reaching out?" required style="width: 100%; padding: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.5); color: white; text-align: center;">
+                    </div>
+                    
+                    <div style="margin-bottom: 15px; text-align: left;">
+                        <label style="display: block; font-size: 0.75rem; color: var(--gold); font-weight: bold; margin-bottom: 5px; text-transform: uppercase;">Contact Email</label>
+                        <input type="email" id="consult-email" placeholder="Where should I send my reply?" required style="width: 100%; padding: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.5); color: white; text-align: center;">
+                    </div>
+
+                    <div style="margin-bottom: 20px; text-align: left;">
+                        <label style="display: block; font-size: 0.75rem; color: var(--gold); font-weight: bold; margin-bottom: 5px; text-transform: uppercase;">What is the main point of friction your team is experiencing right now?</label>
+                        <textarea id="consult-notes" rows="4" placeholder="Tell me about the dynamic. Are people burning out? Is communication dropping? Share what you're comfortable with..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="action-btn gold-variant" style="max-width: 250px;">Request a Sit-Down</button>
+                </form>
+                <div id="consult-feedback" class="friendly-feedback"></div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- UNIVERSAL SYSTEM FOOTER -->
+    <div class="footer-pad">
+        <footer class="system-footer">
+            &copy; <span id="current-year"></span> Powered by Vanguard Citizen Services
+        </footer>
+    </div>
+
+    <!-- RESPONSIVE DECORATIVE SCRIPT RUNNERS -->
+    <script>
+        function spawnComet() {
+            const container = document.getElementById('environment');
+            if (!container) return;
+            const comet = document.createElement('div');
+            comet.classList.add('comet');
+            comet.style.top = `${Math.random() * 40}vh`;
+            comet.style.left = `${40 + (Math.random() * 50)}vw`;
+            container.appendChild(comet);
+            setTimeout(() => comet.remove(), 2000);
+        }
+        setInterval(spawnComet, 5000);
+        spawnComet();
+
+        document.getElementById('current-year').innerText = new Date().getFullYear();
+
+        function handleConsultSubmit(event) {
+            event.preventDefault();
+            const feedback = document.getElementById('consult-feedback');
+            
+            feedback.innerText = "Thank you. Your message has been safely committed. I will read your notes carefully and reach out soon.";
+            feedback.style.opacity = "1";
+            
+            document.getElementById('consult-form').reset();
+            setTimeout(() => { feedback.style.opacity = "0"; }, 7000);
+        }
+    </script>
+</body>
+</html>
