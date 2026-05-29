@@ -4,18 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>The Ordo Path</title>
+    <script src="../config.js"></script>
     <link rel="stylesheet" href="style.css">
-    <!-- Load Supabase to handle the safe space message routing -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
-    <!-- CALMING PURPLE SKY & STEADY COMETS -->
     <div id="environment">
         <div class="starfield"></div>
     </div>
 
-    <!-- UNLOCKED JOURNEY ACHIEVEMENT BANNER -->
     <div id="achievement-banner" class="achievement-toast">
         <div class="achievement-icon">🛡️</div>
         <div class="achievement-text">
@@ -24,10 +22,8 @@
         </div>
     </div>
 
-    <!-- MAIN SCROLL CONTEXT FOR DESKTOP -->
     <div class="app-container">
         
-        <!-- HERO CARD WITH REFINED INLINE LOGO -->
         <header class="module-card header-inline-layout text-center">
             <div class="brand-header-row">
                 <svg class="logo logo-shimmer" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -46,7 +42,6 @@
             </div>
         </header>
 
-        <!-- ENERGY MATRIX MATRIX ENGINE -->
         <section class="module-card text-center">
             <h2>Ignite Your Internal Energy</h2>
             <p style="max-width: 600px; margin: 0 auto 25px auto;">
@@ -54,21 +49,18 @@
             </p>
             
             <div class="energy-matrix">
-                <!-- MIND NODE (GLOWS BLUE) -->
                 <div class="energy-node" id="node-mind" onclick="openInsight('mind')">
                     <div class="node-spark blue-spark"></div>
                     <h3>Mind</h3>
                     <span class="node-status">Tap to Ignite</span>
                 </div>
 
-                <!-- BODY NODE (GLOWS RED) -->
                 <div class="energy-node" id="node-body" onclick="openInsight('body')">
                     <div class="node-spark red-spark"></div>
                     <h3>Body</h3>
                     <span class="node-status">Tap to Ignite</span>
                 </div>
 
-                <!-- SOUL NODE (GLOWS GOLD) -->
                 <div class="energy-node" id="node-soul" onclick="openInsight('soul')">
                     <div class="node-spark gold-spark"></div>
                     <h3>Soul</h3>
@@ -77,7 +69,6 @@
             </div>
         </section>
 
-        <!-- PRACTICAL OBSERVATION REMINDERS -->
         <section class="desktop-row">
             <div class="module-card">
                 <h3 class="gold-title text-center">Absolute Honesty</h3>
@@ -94,7 +85,6 @@
             </div>
         </section>
 
-        <!-- QUIET SPACE INITIALIZATION MODULE -->
         <section class="module-card text-center center-form-layout">
             <h2>The Quiet Space</h2>
             <p style="max-width: 550px; margin: 0 auto 20px auto;">
@@ -103,7 +93,6 @@
             <button class="action-btn gold-variant" style="max-width: 260px;" onclick="toggleQuietForm(true)">Share Thoughts</button>
         </section>
 
-        <!-- CONSULTING ATTACHMENT CARD -->
         <section class="module-card consulting-banner text-center">
             <div class="banner-highlight-badge">Workplace Culture Analysis</div>
             <h2>Struggling to understand your team?</h2>
@@ -117,7 +106,6 @@
         
     </div>
 
-    <!-- ENERGY DESCRIPTION CLOSABLE INSIGHT OVERLAY -->
     <div id="insight-modal" class="modal-overlay" onclick="if(event.target === this) closeInsight()">
         <div class="modal-window">
             <button class="btn-close" onclick="closeInsight()">✕</button>
@@ -125,7 +113,6 @@
         </div>
     </div>
 
-    <!-- QUIET SPACE SYSTEM TRANSMISSION MODAL WINDOW -->
     <div id="quiet-modal" class="modal-overlay" onclick="if(event.target === this) toggleQuietForm(false)">
         <div class="modal-window" style="max-width: 550px;">
             <button class="btn-close" onclick="toggleQuietForm(false)">✕</button>
@@ -149,7 +136,6 @@
                     <button type="button" class="text-trigger-link" onclick="toggleSupportCard()">View Kentucky Crisis & Support Resources</button>
                 </div>
 
-                <!-- HIDDEN DROPDOWN STATE SUPPORT RESOURCE CARD -->
                 <div id="state-resources-card" class="module-card resources-banner mini-resource-card" style="display: none; margin-bottom: 20px; padding: 20px;">
                     <h4 style="color: var(--gold); font-size: 0.95rem; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; font-weight: 800;">Kentucky Crisis Resources</h4>
                     <div style="display: flex; flex-direction: column; gap: 12px; text-align: left; font-size: 0.8rem; line-height: 1.5; color: rgba(255,255,255,0.85);">
@@ -165,16 +151,13 @@
         </div>
     </div>
 
-    <!-- FIXED IMMUTABLE GLOBAL FOOTER -->
     <div class="footer-pad">
         <footer class="system-footer">
             &copy; 2026 Powered by Vanguard Citizen Services
         </footer>
     </div>
 
-    <!-- DYNAMIC PLUGINS AND TRANSITIONS LAYER -->
     <script>
-        /* --- COMET BACKGROUND SPEED ENGINE --- */
         function spawnComet() {
             const container = document.getElementById('environment');
             if (!container) return;
@@ -188,7 +171,6 @@
         setInterval(spawnComet, 5000);
         spawnComet();
 
-        /* --- TRINITY DATA DESCRIPTION STORAGE --- */
         const insights = {
             mind: "<h2>Mind // Mental Strength</h2><p>Your mind is the center of clear logic. When things feel overwhelming, stop trying to process everything at once. Use your intention to block out external noise, step away from negative thinking, and focus solely on the true facts of your immediate next task.</p>",
             body: "<h2>Body // Physical Wellness</h2><p>Your body is the engine that carries you through the world. True strength starts with simple physical choices. Drink clean water, stretch, move, and get adequate rest. When your body is fueled and cared for, your mind immediately clears up.</p>",
@@ -227,7 +209,6 @@
             }
         }
 
-        /* --- FORM OVERLAY CONTROLS --- */
         function toggleQuietForm(open) {
             const modal = document.getElementById('quiet-modal');
             if (open) {
@@ -237,7 +218,7 @@
                 modal.classList.remove('active');
                 document.body.style.overflow = '';
                 document.getElementById('quiet-feedback').style.opacity = "0";
-                document.getElementById('state-resources-card').style.display = "none"; // Reset drawer on close
+                document.getElementById('state-resources-card').style.display = "none";
             }
         }
 
@@ -251,9 +232,13 @@
             }
         }
 
-        /* --- SUPABASE CONNECT CONFIGURATION --- */
-        const SB_URL = 'https://dvyjupytbwbrcoyouxpf.supabase.co';
-        const SB_KEY = 'sb_publishable_wjgbPekKmodd5mSDXIeUeg_Wq73GzOk'; 
+        const SB_URL = window.supabaseConfig?.URL || window.SB_URL;
+        const SB_KEY = window.supabaseConfig?.KEY || window.SB_KEY; 
+
+        if (!SB_URL || !SB_KEY) {
+            console.error("Ordo Configuration Error: Root config.js variables are missing.");
+        }
+
         const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
 
         async function handleQuietSubmit(event) {
