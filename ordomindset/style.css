@@ -1,5 +1,5 @@
 /* ==========================================
-   1. BRANDING, SYSTEMS & LOCAL TOKENS
+   1. BRANDING, SYSTEM ATTRIBUTES & TOKENS
    ========================================== */
 :root {
     --gold: #D4AF37;
@@ -7,13 +7,14 @@
     --bg-black: #000000;
     --white: #ffffff;
     --text-muted: rgba(255, 255, 255, 0.65);
-    --glass-bg: rgba(10, 8, 16, 0.85); /* Darkened solid backing profile */
+    --glass-bg: rgba(10, 8, 16, 0.88); /* Deep, solid back glass profile */
     --glass-border: rgba(255, 255, 255, 0.09);
     --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 html { 
-    scroll-behavior: smooth; 
+    scroll-behavior: smooth;
+    overflow-x: hidden;
 }
 
 body {
@@ -21,18 +22,19 @@ body {
     background-attachment: fixed;
     display: flex;
     flex-direction: column;
-    min-height: 100dvh;
+    min-height: 100vh;
     margin: 0;
     padding: 0;
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     color: var(--white);
-    overflow-x: hidden;
-    overflow-y: auto; /* System unlocked for healthy cross-device scrolling */
+    /* STRIKES SYSTEM RESTRICTIONS FOR PROPER VIEWPORT SCROLLING */
+    overflow-y: auto; 
+    overflow-x: hidden; 
     -webkit-overflow-scrolling: touch; 
 }
 
 /* ==========================================
-   2. COSMIC WALLPAPER BACKGROUND
+   2. COSMIC WALLPAPER LAYER
    ========================================== */
 #environment { 
     position: fixed; 
@@ -80,7 +82,7 @@ body {
 }
 
 /* ==========================================
-   3. RESPONSIVE CONTAINER MASTER ENGINE
+   3. RESPONSIVE LAYOUT CONSTRAINTS
    ========================================== */
 .app-container {
     width: 92%;
@@ -101,7 +103,6 @@ body {
     }
 }
 
-/* --- THE STICKY SIDEBAR SYSTEM --- */
 .sidebar {
     display: flex;
     flex-direction: column;
@@ -127,7 +128,7 @@ body {
 }
 
 /* ==========================================
-   4. MODULAR GLASS SYSTEM WINDOW CARDS
+   4. GLASS SURFACE CARD ASSETS
    ========================================== */
 .module-card {
     background: var(--glass-bg);
@@ -144,7 +145,7 @@ body {
 }
 
 /* ==========================================
-   5. INTERACTIVE MATRIX COMPONENT GRID
+   5. COMPONENT INTERACTION GRID SYSTEM
    ========================================== */
 .matrix-grid { 
     display: grid; 
@@ -209,7 +210,7 @@ body {
 }
 
 h2 { 
-    color: var(--gold); font-size: 1.2rem; font-weight: 800; margin-bottom: 18px; text-transform: uppercase; letter-spacing: 1.5px; 
+    color: var(--gold); font-size: 1.25rem; font-weight: 800; margin-bottom: 18px; text-transform: uppercase; letter-spacing: 1.5px; 
 }
 
 h3 { 
@@ -224,47 +225,18 @@ p {
     font-size: 1.15rem; color: var(--white); font-weight: 300; line-height: 1.6; text-align: center; margin-bottom: 0;
 }
 
-.gold-accent { color: var(--gold); font-weight: bold; }
-
 /* ==========================================
-   7. INPUT SYSTEMS & CRUCIBLE ENGINE
-   ========================================== */
-.crucible-engine {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-label { 
-    display: block; font-weight: 700; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 10px;
-}
-
-input, textarea { 
-    width: 100%; padding: 15px; border-radius: 12px; 
-    border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(0, 0, 0, 0.5); color: white; 
-    font-family: inherit; font-size: 0.9rem; transition: all 0.3s ease;
-}
-
-input:focus, textarea:focus { 
-    outline: none; border-color: var(--gold); box-shadow: 0 0 12px var(--gold-glow); background: rgba(0, 0, 0, 0.7); 
-}
-
-/* ==========================================
-   8. INTERACTIVE BUTTONS & DIAGNOSTICS
+   7. BRAND INTERACTION ELEMENTS & LINKS
    ========================================== */
 .action-btn {
     width: 100%; padding: 16px; border-radius: 14px; border: none; 
     background: var(--white); color: #000000; font-weight: 800; font-size: 0.9rem;
-    text-transform: uppercase; letter-spacing: 1.5px; cursor: pointer; transition: all 0.3s var(--ease-smooth);
+    text-transform: uppercase; letter-spacing: 1.5px; cursor: pointer; display: flex;
+    justify-content: center; align-items: center; text-decoration: none;
+    transition: all 0.3s var(--ease-smooth);
 }
 
 .action-btn:hover { background: var(--gold); box-shadow: 0 0 20px var(--gold-glow); transform: translateY(-1px); }
-
-.action-btn.gold-variant {
-    background: transparent; border: 2px solid var(--gold); color: var(--gold);
-}
-.action-btn.gold-variant:hover { background: var(--gold); color: #000; }
 
 .diagnostic-stat {
     font-size: 0.85rem; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
@@ -274,42 +246,56 @@ input:focus, textarea:focus {
 
 .status-indicator { font-size: 0.75rem; font-weight: bold; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; }
 .status-indicator.ready { background: rgba(214,175,55,0.1); color: var(--gold); border: 1px solid rgba(214,175,55,0.2); }
-.status-indicator.pulsing { animation: pulse 2s infinite alternate; }
+.status-indicator.pulsing { animation: pulse 2s infinite alternate; color: #2ecc71; background: rgba(46,204,113,0.1); border: 1px solid rgba(46,204,113,0.2); }
 
 .shimmer-gold-link {
     font-size: 0.8rem; font-weight: 700; text-decoration: none; text-transform: uppercase; letter-spacing: 2px;
     background: linear-gradient(to right, #D4AF37 20%, #ffffff 50%, #D4AF37 80%); background-size: 200% auto;
-    color: transparent; -webkit-background-clip: text; animation: goldShine 3s linear infinite; display: inline-block; margin-top: 15px;
+    color: transparent; -webkit-background-clip: text; animation: goldShine 3s linear infinite; display: inline-block;
 }
 
 @keyframes goldShine { to { background-position: 200% center; } }
-@keyframes pulse { 0% { opacity: 0.6; } 100% { opacity: 1; text-shadow: 0 0 10px var(--gold); } }
+@keyframes pulse { 0% { opacity: 0.7; } 100% { opacity: 1; } }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
 /* ==========================================
-   9. DATA LEDGER STREAM TABLE
+   8. CONSULTING COMPONENT ADAPTATIONS
    ========================================== */
-.ledger-scroll-area {
-    width: 100%; overflow-x: auto; border: 1px solid var(--glass-border);
-    border-radius: 16px; background: rgba(0, 0, 0, 0.4); margin-top: 25px;
+.consulting-banner {
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    background: linear-gradient(135deg, rgba(15,12,25,0.95) 0%, rgba(28,20,4,0.4) 100%);
+    position: relative;
+    overflow: hidden;
 }
 
-.citizen-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; min-width: 500px; }
-.citizen-table th {
-    background: rgba(255, 255, 255, 0.03); color: var(--gold); padding: 12px;
-    font-weight: 600; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid var(--glass-border); text-align: left;
-}
-.citizen-table td {
-    padding: 14px 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.04); color: rgba(255, 255, 255, 0.9); vertical-align: top;
+.banner-highlight-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: rgba(212, 175, 55, 0.1);
+    color: var(--gold);
+    padding: 6px 14px;
+    border-radius: 30px;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    margin-bottom: 15px;
 }
 
-.badge-action {
-    background: rgba(255,255,255,0.06); color: #fff; border: 1px solid rgba(255,255,255,0.1);
-    padding: 4px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 500; display: inline-block;
+.consulting-btn {
+    background: transparent;
+    border: 2px solid var(--gold);
+    color: var(--gold);
+    margin-top: 10px;
+}
+
+.consulting-btn:hover {
+    background: var(--gold);
+    color: #000000;
 }
 
 /* ==========================================
-   10. SYSTEM FOOTER ARCHITECTURE
+   9. GLOBAL FOOTER DECK CHANNEL
    ========================================== */
 .footer-pad { margin-top: auto; width: 100%; display: flex; justify-content: center; z-index: 10; }
 .system-footer { padding: 30px; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; color: rgba(255, 255, 255, 0.4); }
