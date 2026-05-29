@@ -30,12 +30,8 @@
             background-color: #030207 !important;
             color: var(--text-main) !important;
             font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif !important;
-            
-            /* Kills external horizontal drift */
             overflow-x: hidden !important;
             overflow-y: auto !important;
-            
-            /* Forces absolute dead-center alignment on all screens */
             display: flex !important;
             justify-content: center !important;
             align-items: center !important;
@@ -109,11 +105,8 @@
             border-radius: 28px !important;
             padding: 24px !important;
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
-            
             width: 100% !important;
             max-width: 460px !important;
-            
-            /* Concrete positioning resets to completely neutralize external CSS displacement */
             position: relative !important;
             left: 0 !important;
             right: 0 !important;
@@ -121,7 +114,6 @@
             transform: none !important;
             float: none !important;
             clear: both !important;
-            
             display: flex !important;
             flex-direction: column !important;
             gap: 1.5rem !important;
@@ -368,13 +360,6 @@
             width: 100% !important;
             background: #000000 !important;
         }
-        
-        .sandbox-iframe {
-            width: 100% !important;
-            height: 100% !important;
-            border: none !important;
-            display: block !important;
-        }
 
         .manifesto-prose-bay {
             max-width: 580px !important;
@@ -424,50 +409,8 @@
             </p>
         </section>
 
-        <!-- LINK MATRIX ENTRIES -->
-        <nav class="matrix-grid">
-            
-            <div class="matrix-cell client-route" data-url="about/" data-title="About Me">
-                <div class="cell-info">
-                    <h3>About Me</h3>
-                    <p>Core background, military service values, and personal journey.</p>
-                </div>
-                <div class="cell-vector">→</div>
-            </div>
-
-            <div class="matrix-cell client-route" data-url="../knights/index.html" data-title="Active Projects">
-                <div class="cell-info">
-                    <h3>Active Projects</h3>
-                    <p>Our collaborative hub layout hosting custom community reporting tools.</p>
-                </div>
-                <div class="cell-vector">→</div>
-            </div>
-
-            <div class="matrix-cell client-route" data-url="ordo/" data-title="Ordo">
-                <div class="cell-info">
-                    <h3>Ordo</h3>
-                    <p>Brutal self-questioning frameworks and performance philosophy for teams.</p>
-                </div>
-                <div class="cell-vector">→</div>
-            </div>
-
-            <div class="matrix-cell client-route" data-url="musicplayer/" data-title="Music Player">
-                <div class="cell-info">
-                    <h3>Music Player</h3>
-                    <p>Custom audio mashups, ambient design loops, and production remixes.</p>
-                </div>
-                <div class="cell-vector">→</div>
-            </div>
-
-            <div class="matrix-cell client-route" data-url="dreamscapedrift/" data-title="Dreamscape Drift">
-                <div class="cell-info">
-                    <h3>Dreamscape Drift</h3>
-                    <p>Physics spec sheets and tire tuning profiles for Forza builds.</p>
-                </div>
-                <div class="cell-vector">→</div>
-            </div>
-
-        </nav>
+        <!-- LINK MATRIX ENTRIES (Injected via JS config array) -->
+        <nav class="matrix-grid" id="link-container"></nav>
 
         <!-- CLOSED LINK INTEGRATED FOOTER DOCK -->
         <footer class="internal-dock">
@@ -479,21 +422,6 @@
         </footer>
 
     </main>
-
-    <!-- =========================================
-         SYSTEM OVERLAYS & OVERLAYS
-         ========================================= -->
-
-    <!-- TOOL SANDBOX VIEWPORT -->
-    <div class="system-overlay" id="sandbox-overlay">
-        <header class="overlay-navbar">
-            <span class="overlay-caption" id="sandbox-caption">Loading Stream...</span>
-            <button class="overlay-terminal-exit" id="close-sandbox">Close Window</button>
-        </header>
-        <div class="overlay-frame-host">
-            <iframe src="about:blank" class="sandbox-iframe" id="sandbox-iframe"></iframe>
-        </div>
-    </div>
 
     <!-- NARRATIVE MANIFESTO CONSOLE -->
     <div class="system-overlay" id="manifesto-overlay">
@@ -519,53 +447,73 @@
          ========================================= -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const routes = document.querySelectorAll('.client-route');
-            const sandboxOverlay = document.getElementById('sandbox-overlay');
-            const sandboxIframe = document.getElementById('sandbox-iframe');
-            const sandboxCaption = document.getElementById('sandbox-caption');
-            const closeSandboxBtn = document.getElementById('close-sandbox');
+            
+            /* =========================================
+               LINK CONFIGURATION MANAGEMENT ARRAY
+               Add, remove, or modify links right here.
+               ========================================= */
+            const linksConfig = [
+                {
+                    title: "About Me",
+                    description: "Core background, military service values, and personal journey.",
+                    url: "about/"
+                },
+                {
+                    title: "Active Projects",
+                    description: "Our collaborative hub layout hosting custom community reporting tools.",
+                    url: "../knights/index.html"
+                },
+                {
+                    title: "Ordo",
+                    description: "Brutal self-questioning frameworks and performance philosophy for teams.",
+                    url: "ordo/"
+                },
+                {
+                    title: "Music Player",
+                    description: "Custom audio mashups, ambient design loops, and production remixes.",
+                    url: "musicplayer/"
+                },
+                {
+                    title: "Dreamscape Drift",
+                    description: "Physics spec sheets and tire tuning profiles for Forza builds.",
+                    url: "dreamscapedrift/"
+                }
+            ];
 
+            // Render navigation matrix dynamically
+            const container = document.getElementById('link-container');
+            if (container) {
+                container.innerHTML = linksConfig.map(link => `
+                    <a href="${link.url}" class="matrix-cell">
+                        <div class="cell-info">
+                            <h3>${link.title}</h3>
+                            <p>${link.description}</p>
+                        </div>
+                        <div class="cell-vector">→</div>
+                    </a>
+                `).join('');
+            }
+
+            // Manifesto Overlay Management
             const openManifestoBtn = document.getElementById('trigger-manifesto');
             const manifestoOverlay = document.getElementById('manifesto-overlay');
             const closeManifestoBtn = document.getElementById('close-manifesto');
 
-            routes.forEach(cell => {
-                cell.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const targetUrl = cell.getAttribute('data-url');
-                    const targetTitle = cell.getAttribute('data-title');
-                    
-                    if (targetUrl && targetUrl !== '#') {
-                        sandboxCaption.innerText = targetTitle;
-                        sandboxIframe.src = targetUrl;
-                        document.body.style.overflow = 'hidden'; 
-                        sandboxOverlay.classList.add('active');
-                    }
-                });
-            });
-
-            if (closeSandboxBtn) {
-                closeSandboxBtn.addEventListener('click', () => {
-                    sandboxOverlay.classList.remove('active');
-                    document.body.style.overflow = ''; 
-                    setTimeout(() => { sandboxIframe.src = 'about:blank'; }, 350);
-                });
-            }
-
-            if (openManifestoBtn) {
+            if (openManifestoBtn && manifestoOverlay) {
                 openManifestoBtn.addEventListener('click', () => {
                     document.body.style.overflow = 'hidden';
                     manifestoOverlay.classList.add('active');
                 });
             }
 
-            if (closeManifestoBtn) {
+            if (closeManifestoBtn && manifestoOverlay) {
                 closeManifestoBtn.addEventListener('click', () => {
                     manifestoOverlay.classList.remove('active');
                     document.body.style.overflow = '';
                 });
             }
 
+            // Cache Busting Protocol
             const currentVersion = "13"; 
             const storageKey = "hub_version_check";
             if (localStorage.getItem(storageKey) !== currentVersion) {
