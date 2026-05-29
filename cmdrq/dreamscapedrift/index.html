@@ -4,273 +4,400 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dreamscape Drift</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style.css?v=8">
     <style>
-        /* --- NATURAL FLOW RESETS --- */
-        html, body {
-            overflow-x: hidden !important;
-            overflow-y: auto !important; 
-            height: auto !important;
-            min-height: 100vh;
+        /* ==========================================================================
+           VARIABLES & RESETS
+           ========================================================================== */
+        :root {
+            --neon-cyan: #00f2fe;
+            --space-bg: #03030c;
+            --chassis-bg: rgba(10, 10, 25, 0.85);
+            --text-main: #f0f4f8;
+            --text-dim: #7a889b;
+        }
+
+        body {
             margin: 0;
             padding: 0;
+            background-color: var(--space-bg);
+            color: var(--text-main);
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            min-height: 100vh;
+            overflow-y: auto !important;
         }
 
-        /* --- STABLE MAIN GRID LAYOUT --- */
-        .terminal-container {
-            max-width: 600px; /* Reduced window size */
-            width: 90%;
-            margin: 40px auto; /* Centers the window on the page */
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            position: relative;
+        /* ==========================================================================
+           AMBIENT BACKGROUND CANVAS
+           ========================================================================== */
+        #ambient-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
         }
 
-        .player-header {
-            text-align: center;
-            margin-bottom: 8px;
-        }
-
-        /* --- THE CYAN GLOW DISPLAY CHASSIS --- */
+        /* ==========================================================================
+           LAYOUT & CHASSIS
+           ========================================================================== */
         .mp4-chassis {
+            max-width: 600px;
+            margin: 40px auto;
+            background: var(--chassis-bg);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.15);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 242, 254, 0.2);
+            animation: pulse-glow 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse-glow {
+            0% {
+                box-shadow: 0 0 20px rgba(0, 242, 254, 0.15);
+                border-color: rgba(0, 242, 254, 0.2);
+            }
+            100% {
+                box-shadow: 0 0 35px rgba(0, 242, 254, 0.35);
+                border-color: rgba(0, 242, 254, 0.5);
+            }
+        }
+
+        /* ==========================================================================
+           HEADER BLOCK
+           ========================================================================== */
+        .player-header {
             display: flex;
-            flex-direction: column;
-            width: 100%;
-            background: rgba(6, 11, 20, 0.85);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(77, 208, 225, 0.4);
-            border-radius: 24px;
-            padding: 1.5rem; /* Reduced padding */
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .player-header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            background: linear-gradient(45deg, #fff, var(--neon-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .back-link {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .back-link:hover {
+            color: var(--neon-cyan);
+        }
+
+        /* ==========================================================================
+           VIDEO VIEWPORT (16:9)
+           ========================================================================== */
+        .video-viewport {
             position: relative;
-            animation: customCyanGlow 5s ease-in-out infinite;
-        }
-
-        @keyframes customCyanGlow {
-            0%, 100% {
-                border-color: rgba(77, 208, 225, 0.4);
-                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(77, 208, 225, 0.1);
-            }
-            50% {
-                border-color: rgba(34, 211, 238, 0.8);
-                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(34, 211, 238, 0.4);
-            }
-        }
-
-        /* --- THE VIDEO PRESENTATION RACK --- */
-        .mp4-screen-viewport {
             width: 100%;
-            aspect-ratio: 16 / 9;
-            background: #000000;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 14px;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            background: #000;
+            border-radius: 8px;
             overflow: hidden;
-            margin-bottom: 1.2rem;
+            margin-bottom: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .mp4-screen-viewport iframe {
+        .video-viewport iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             border: 0;
-            display: block;
         }
 
-        /* --- PLAYLIST PLAYBACK ARRAY GRID --- */
-        .playlist-array-header {
-            font-family: 'Cinzel', serif;
-            font-size: 1.1rem;
-            letter-spacing: 2px;
-            color: #22d3ee;
-            text-transform: uppercase;
-            margin: 0 0 1rem 0;
-            border-bottom: 1px dashed rgba(77, 208, 225, 0.3);
-            padding-bottom: 0.5rem;
-            text-align: center;
+        /* ==========================================================================
+           SELECTOR MANIFEST MATRIX
+           ========================================================================== */
+        .manifest-matrix {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 4px;
         }
 
-        .video-selection-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 0.75rem;
-            width: 100%;
+        .manifest-matrix::-webkit-scrollbar {
+            width: 6px;
         }
 
-        /* --- MENU BUTTON SELECTIONS --- */
-        .video-thumb {
-            background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0.3) 100%);
-            border: 1px solid rgba(77, 208, 225, 0.3);
-            border-radius: 12px; 
-            padding: 1rem;
+        .manifest-matrix::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 3px;
+        }
+
+        .manifest-matrix::-webkit-scrollbar-thumb {
+            background: rgba(0, 242, 254, 0.3);
+            border-radius: 3px;
+        }
+
+        .manifest-matrix::-webkit-scrollbar-thumb:hover {
+            background: var(--neon-cyan);
+        }
+
+        .track-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-main);
+            padding: 14px 18px;
             text-align: left;
-            color: #ffffff;
-            font-weight: 700;
-            font-size: 0.95rem;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.2s ease-in-out;
-            width: 100%;
-            white-space: normal;
-            word-wrap: break-word;
+            font-size: 0.95rem;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        .video-thumb:hover {
-            transform: translateY(-2px);
-            border-color: #22d3ee;
-            box-shadow: 0 5px 15px rgba(77, 208, 225, 0.25);
-            background: rgba(77, 208, 225, 0.05);
+        .track-btn:hover {
+            background: rgba(0, 242, 254, 0.08);
+            border-color: rgba(0, 242, 254, 0.4);
+            color: #fff;
+            transform: translateX(4px);
         }
 
-        .video-thumb.active {
-            background: rgba(255, 255, 255, 0.08);
-            color: #ffffff;
-            border-color: #ffffff;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        .track-btn.active {
+            background: rgba(0, 242, 254, 0.15);
+            border-color: var(--neon-cyan);
+            color: #fff;
+            box-shadow: inset 0 0 8px rgba(0, 242, 254, 0.2);
         }
     </style>
 </head>
 <body>
 
-    <div class="starfield-canvas" id="canvas-starfield-engine"></div>
-    <div class="comet-canvas" id="canvas-comet-engine"></div>
-    <div class="cyber-grid"></div>
-    <div class="ambient-flare"></div>
+    <canvas id="ambient-canvas"></canvas>
 
-    <main class="terminal-container">
-        
+    <main class="mp4-chassis">
         <header class="player-header">
-            <h1 class="commander-title">Dreamscape Drift</h1>
-            <a class="commander-role" href="../" style="text-decoration: none; border-bottom: 1px dashed var(--gold); transition: all 0.3s ease;">
-                ← Back to Control Deck
-            </a>
+            <h1>Dreamscape Drift</h1>
+            <a href="../" class="back-link">← Back</a>
         </header>
 
-        <section class="mp4-chassis">
-
-            <div class="mp4-screen-viewport">
-                <iframe id="main-drift-player" src="https://www.youtube.com/embed/videoseries?list=PLwX0pb3GErelnv2imByTWq5TmSSSSiosp&rel=0&modestbranding=1&vq=hd1080" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-            </div>
-
-            <h2 class="playlist-array-header">Videos</h2>
-            <div id="video-menu-hook" class="video-selection-grid">
-                <div style="color: rgba(255,255,255,0.4); font-size: 0.9rem; text-align: center;">Loading menu...</div>
-            </div>
-
+        <section class="video-viewport">
+            <iframe 
+                id="main-player"
+                src="https://www.youtube.com/embed/videoseries?list=PLwX0pb3GErelnv2imByTWq5TmSSSSiosp&rel=0&modestbranding=1&vq=hd1080"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+            </iframe>
         </section>
 
+        <nav class="manifest-matrix" id="track-manifest" aria-label="Playlist tracks"></nav>
     </main>
 
     <script>
-        // --- BACKGROUND AMBIENCE LOGIC MATRIX ---
-        document.addEventListener("DOMContentLoaded", () => {
-            const starfield = document.getElementById('canvas-starfield-engine');
-            const totalStars = window.innerWidth > 1024 ? 100 : 40;
-
-            for (let i = 0; i < totalStars; i++) {
-                const star = document.createElement('div');
-                star.classList.add('star');
-                const speed = Math.random() * 30 + 20;
-                const size = Math.random() * 1.5 + 0.5;
-                
-                star.style.width = `${size}px`;
-                star.style.height = `${size}px`;
-                star.style.left = `${Math.random() * 100}vw`;
-                star.style.top = `${Math.random() * 100}vh`;
-                star.style.opacity = Math.random() * 0.7 + 0.3;
-                star.style.animation = `starDrift ${speed}s linear infinite`;
-                star.style.animationDelay = `-${Math.random() * speed}s`;
-                
-                starfield.appendChild(star);
-            }
-
-            const canvas = document.getElementById('canvas-comet-engine');
-            function launchComet() {
-                const comet = document.createElement('div');
-                comet.classList.add('comet');
-                const startX = Math.random() * (window.innerWidth * 0.4) + (window.innerWidth * 0.6);
-                const startY = Math.random() * (window.innerHeight * 0.4);
-                
-                comet.style.left = `${startX}px`;
-                comet.style.top = `${startY}px`;
-                const duration = Math.random() * 0.8 + 0.6; 
-                comet.style.animation = `streak ${duration}s cubic-bezier(0.25, 1, 0.5, 1) forwards`;
-                
-                canvas.appendChild(comet);
-                setTimeout(() => { comet.remove(); }, duration * 1000);
-            }
-
-            function queueNextComet() {
-                setTimeout(() => {
-                    launchComet();
-                    queueNextComet();
-                }, Math.random() * 4000 + 2000);
-            }
-            queueNextComet();
-
-            // --- VIDEO ARRAYS SELECTION ENGINE ---
-            const menuContainer = document.getElementById('video-menu-hook');
-            const mainPlayer = document.getElementById('main-drift-player');
-            const playlistId = "PLwX0pb3GErelnv2imByTWq5TmSSSSiosp";
-
-            function cleanYouTubeUrl(urlStr) {
-                let idFound = "";
-                try {
-                    if (urlStr.includes("youtube.com/embed/")) {
-                        idFound = urlStr.split("youtube.com/embed/")[1].split("?")[0];
-                    } else if (urlStr.includes("youtu.be/")) {
-                        idFound = urlStr.split("youtu.be/")[1].split("?")[0];
-                    } else if (urlStr.includes("v=")) {
-                        idFound = urlStr.split("v=")[1].split("&")[0];
-                    } else {
-                        idFound = urlStr;
-                    }
-                } catch(e) {
-                    console.error("URL error", e);
+        /* ==========================================================================
+           GLOBAL CONFIGURATION
+           ========================================================================== */
+        const PLAYLIST_ID = 'PLwX0pb3GErelnv2imByTWq5TmSSSSiosp';
+        const CONFIG = {
+            selectors: {
+                player: '#main-player',
+                manifest: '#track-manifest',
+                canvas: '#ambient-canvas'
+            },
+            endpoints: {
+                data: 'videos.json'
+            },
+            states: {
+                activeClass: 'active',
+                toggles: {
+                    autoplayClick: 'on'
                 }
-                return idFound.trim();
+            }
+        };
+
+        /* ==========================================================================
+           UTILITIES & UTILS ENGINE
+           ========================================================================== */
+        function extractVideoToken(urlStr) {
+            if (!urlStr) return '';
+            const cleanStr = urlStr.trim();
+            
+            // Handle embed paths or standard watch queries
+            if (cleanStr.includes('embed/')) {
+                return cleanStr.split('embed/')[1].split('?')[0];
+            }
+            if (cleanStr.includes('v=')) {
+                return cleanStr.split('v=')[1].split('&')[0];
+            }
+            if (cleanStr.includes('youtu.be/')) {
+                return cleanStr.split('youtu.be/')[1].split('?')[0];
+            }
+            return cleanStr; // Fallback assumes raw token
+        }
+
+        /* ==========================================================================
+           AMBIENT VISUAL CANVAS ENGINE
+           ========================================================================== */
+        class AmbientEngine {
+            constructor(canvasId) {
+                this.canvas = document.querySelector(canvasId);
+                if (!this.canvas) return;
+                this.ctx = this.canvas.getContext('2d');
+                this.stars = [];
+                this.comets = [];
+                this.init();
             }
 
-            fetch('videos.json')
-                .then(res => res.json())
-                .then(data => {
-                    menuContainer.innerHTML = '';
-                    
-                    data.forEach((item, index) => {
-                        const btn = document.createElement('div');
-                        btn.className = 'video-thumb';
-                        btn.innerText = item.title;
-                        
-                        const videoId = cleanYouTubeUrl(item.src);
-                        const safeBaseUrl = `https://www.youtube.com/embed/${videoId}?list=${playlistId}`;
-                        const safeAutoplayUrl = `${safeBaseUrl}&autoplay=1&rel=0&modestbranding=1`;
-                        
-                        if (index === 0) {
-                            btn.classList.add('active');
-                            mainPlayer.src = `${safeBaseUrl}&rel=0&modestbranding=1`; 
-                        }
-
-                        btn.addEventListener('click', () => {
-                            document.querySelectorAll('.video-thumb').forEach(t => t.classList.remove('active'));
-                            btn.classList.add('active');
-                            mainPlayer.src = safeAutoplayUrl;
-                        });
-
-                        menuContainer.appendChild(btn);
+            init() {
+                this.resize();
+                window.addEventListener('resize', () => this.resize());
+                
+                // Populate initial starfield
+                for (let i = 0; i < 120; i++) {
+                    this.stars.push({
+                        x: Math.random() * this.canvas.width,
+                        y: Math.random() * this.canvas.height,
+                        size: Math.random() * 1.5,
+                        speed: Math.random() * 0.15 + 0.05
                     });
-                })
-                .catch(err => {
-                    menuContainer.innerHTML = `
-                        <div class="video-thumb active" style="text-align: center;">
-                            Load full playlist directly
-                        </div>`;
-                    
-                    menuContainer.querySelector('.video-thumb').addEventListener('click', () => {
-                        mainPlayer.src = `https://www.youtube.com/embed/videoseries?list=${playlistId}&autoplay=1&rel=0&modestbranding=1`;
-                    });
+                }
+                this.animate();
+            }
+
+            resize() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+            }
+
+            animate() {
+                this.ctx.fillStyle = '#03030c';
+                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+                // Render & Update Drift Stars
+                this.ctx.fillStyle = '#ffffff';
+                this.stars.forEach(star => {
+                    this.ctx.beginPath();
+                    this.ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                    this.ctx.fill();
+
+                    star.y += star.speed;
+                    if (star.y > this.canvas.height) {
+                        star.y = 0;
+                        star.x = Math.random() * this.canvas.width;
+                    }
                 });
+
+                // Spawn and Render Passing Comets
+                if (Math.random() < 0.003 && this.comets.length < 2) {
+                    this.comets.push({
+                        x: Math.random() * this.canvas.width,
+                        y: -50,
+                        length: Math.random() * 80 + 40,
+                        speedX: Math.random() * 4 + 2,
+                        speedY: Math.random() * 3 + 2,
+                        alpha: 1
+                    });
+                }
+
+                this.comets.forEach((comet, index) => {
+                    this.ctx.strokeStyle = `rgba(0, 242, 254, ${comet.alpha})`;
+                    this.ctx.lineWidth = 1.5;
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(comet.x, comet.y);
+                    this.ctx.lineTo(comet.x - comet.length, comet.y - (comet.length * 0.6));
+                    this.ctx.stroke();
+
+                    comet.x += comet.speedX;
+                    comet.y += comet.speedY;
+                    comet.alpha -= 0.005;
+
+                    if (comet.y > this.canvas.height || comet.x > this.canvas.width || comet.alpha <= 0) {
+                        this.comets.splice(index, 1);
+                    }
+                });
+
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+
+        /* ==========================================================================
+           PLAYBACK & DATA FLOW ENGINE
+           ========================================================================== */
+        class PlaybackEngine {
+            constructor() {
+                this.playerFrame = document.querySelector(CONFIG.selectors.player);
+                this.manifestContainer = document.querySelector(CONFIG.selectors.manifest);
+                this.tracks = [];
+            }
+
+            async initialize() {
+                try {
+                    const response = await fetch(CONFIG.endpoints.data);
+                    if (!response.ok) throw new Error('Network payload execution failure');
+                    this.tracks = await response.json();
+                    this.renderManifest();
+                } catch (error) {
+                    this.manifestContainer.innerHTML = `<div style="color: var(--neon-cyan); padding: 10px;">Failed to initialize tracks portfolio data mapping.</div>`;
+                }
+            }
+
+            renderManifest() {
+                this.manifestContainer.innerHTML = '';
+                if (!Array.isArray(this.tracks)) return;
+
+                this.tracks.forEach((track, index) => {
+                    const button = document.createElement('button');
+                    button.type = 'button';
+                    button.className = 'track-btn';
+                    button.textContent = track.title || `Track ${index + 1}`;
+                    button.dataset.index = index;
+
+                    button.addEventListener('click', () => this.handleTrackSelection(track, button));
+                    this.manifestContainer.appendChild(button);
+                });
+            }
+
+            handleTrackSelection(track, selectedButton) {
+                const videoToken = extractVideoToken(track.video_url || track.url || track.id);
+                if (!videoToken) return;
+
+                // Clear previous actives
+                this.manifestContainer.querySelectorAll('.track-btn').forEach(btn => {
+                    btn.classList.remove(CONFIG.states.activeClass);
+                });
+                selectedButton.classList.add(CONFIG.states.activeClass);
+
+                // Build modern isolated context url targets
+                let targetSrc = `https://www.youtube.com/embed/${videoToken}?list=${PLAYLIST_ID}&rel=0&modestbranding=1&vq=hd1080`;
+                
+                if (CONFIG.states.toggles.autoplayClick === 'on') {
+                    targetSrc += '&autoplay=1';
+                }
+
+                this.playerFrame.setAttribute('src', targetSrc);
+            }
+        }
+
+        /* ==========================================================================
+           EXECUTION LOOP INITIALIZATION
+           ========================================================================== */
+        document.addEventListener('DOMContentLoaded', () => {
+            new AmbientEngine(CONFIG.selectors.canvas);
+            const playerInstance = new PlaybackEngine();
+            playerInstance.initialize();
         });
     </script>
 </body>
