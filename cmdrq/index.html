@@ -3,479 +3,570 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>COMMANDER Q // SYSTEM TERMINAL</title>
-    <link rel="stylesheet" href="style.css?v=9">
+    <title>QUINCY JONES // HUB</title>
+    <link rel="stylesheet" href="style.css?v=13">
     <style>
         /* =========================================
-           01 // CORE ENVIRONMENT & SCROLL FIXES
+           01 // AGGRESSIVE CENTERING & RESET OVERRIDES
            ========================================= */
         :root {
             --gold: #D4AF37;
-            --gold-glow: rgba(212, 175, 55, 0.6);
-            --bg-deep: #05040a;
-            --glass-bg: rgba(12, 10, 18, 0.5);
-            --glass-border: rgba(212, 175, 55, 0.2);
+            --gold-glow: rgba(212, 175, 55, 0.4);
+            --glass-bg: rgba(10, 8, 18, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.08);
             --text-main: #ffffff;
             --text-muted: rgba(255, 255, 255, 0.65);
         }
 
-        html, body {
+        *, *::before, *::after {
+            box-sizing: border-box !important;
             margin: 0;
             padding: 0;
-            width: 100vw; /* Strict boundary constraint */
-            min-height: 100dvh;
-            background-color: var(--bg-deep);
-            color: var(--text-main);
-            font-family: system-ui, -apple-system, sans-serif;
-            
-            /* Enforces perfectly clean vertical-only movement */
-            overflow-x: hidden !important; 
-            overflow-y: auto;
-            
-            padding-bottom: 100px; 
-            box-sizing: border-box;
         }
 
-        /* Enforces box calculation parameters universally to stop side overflow */
-        *, *::before, *::after {
-            box-sizing: border-box;
+        html, body {
+            width: 100% !important;
+            min-height: 100dvh !important;
+            background-color: #030207 !important;
+            color: var(--text-main) !important;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif !important;
+            
+            /* Kills external horizontal drift */
+            overflow-x: hidden !important;
+            overflow-y: auto !important;
+            
+            /* Forces absolute dead-center alignment on all screens */
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            padding: 20px 12px !important;
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body::after {
             content: "";
             position: fixed;
             inset: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-            background-size: 100% 2px, 3px 100%;
-            z-index: 9999;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.2) 50%);
+            background-size: 100% 3px;
+            z-index: 999;
             pointer-events: none;
-            opacity: 0.3;
+            opacity: 0.4;
         }
 
         /* =========================================
-           02 // ANIMATED BACKGROUND
+           02 // STABILIZED STARFIELD ENVIRONMENT
            ========================================= */
-        .cyber-grid {
+        #environment {
             position: fixed;
-            inset: -50%;
-            width: 200vw;
-            height: 200vh;
-            background-image: 
-                linear-gradient(rgba(212, 175, 55, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(212, 175, 55, 0.05) 1px, transparent 1px);
-            background-size: 40px 40px;
-            transform: perspective(500px) rotateX(60deg) translateY(0) translateZ(-200px);
-            animation: gridMove 20s linear infinite;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
             z-index: -2;
             pointer-events: none;
+            overflow: hidden;
+            background: radial-gradient(circle at 50% 50%, #110b22 0%, #030207 90%);
         }
 
-        @keyframes gridMove {
-            0% { transform: perspective(500px) rotateX(60deg) translateY(0) translateZ(-200px); }
-            100% { transform: perspective(500px) rotateX(60deg) translateY(40px) translateZ(-200px); }
+        .starfield {
+            position: absolute;
+            width: 200vw;
+            height: 200vh;
+            top: -50%;
+            left: -50%;
+            background-image: 
+                radial-gradient(1.5px 1.5px at 15% 20%, #ffffff, transparent),
+                radial-gradient(2px 2px at 45% 65%, var(--gold), transparent),
+                radial-gradient(1px 1px at 75% 35%, #ffffff, transparent),
+                radial-gradient(2.5px 2.5px at 85% 85%, var(--gold), transparent);
+            background-size: 300px 300px;
+            animation: cosmicRotation 300s linear infinite;
+            opacity: 0.6;
         }
 
-        .ambient-flare {
+        @keyframes cosmicRotation {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .ambient-glow {
             position: fixed;
-            top: -10%; left: 50%;
-            transform: translateX(-50%);
-            width: 100vw; height: 50vh;
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
+            inset: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
             z-index: -1;
             pointer-events: none;
         }
 
         /* =========================================
-           03 // MASTER LAYOUT CHASSIS
+           03 // CENTRA-LOCK CORE WINDOW CHASSIS
            ========================================= */
-        .terminal-container {
-            width: 100%;
-            max-width: 460px; /* Snug width ceiling prevents box bursting */
-            margin: 2rem auto 0 auto;
-            padding: 0 16px; /* Inset cushions elements from the screen edges */
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            animation: bootUp 1s ease-out forwards;
-            opacity: 0;
-            transform: translateY(30px);
+        .glass-window-chassis {
+            background: var(--glass-bg) !important;
+            backdrop-filter: blur(25px) saturate(140%) !important;
+            -webkit-backdrop-filter: blur(25px) saturate(140%) !important;
+            border: 1px solid var(--glass-border) !important;
+            border-radius: 28px !important;
+            padding: 24px !important;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+            
+            width: 100% !important;
+            max-width: 460px !important;
+            
+            /* Concrete positioning resets to completely neutralize external CSS displacement */
+            position: relative !important;
+            left: 0 !important;
+            right: 0 !important;
+            margin: 0 auto !important;
+            transform: none !important;
+            float: none !important;
+            clear: both !important;
+            
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 1.5rem !important;
+            z-index: 10 !important;
+            animation: windowBoot 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        @keyframes bootUp {
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes windowBoot {
+            from { opacity: 0; transform: scale(0.96) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
         /* =========================================
-           04 // PROFILE IDENTITY BLOCK
+           04 // PROFILE CONTROLLER NODE
            ========================================= */
-        .identity-module {
-            text-align: center;
-            position: relative;
-            width: 100%;
+        .profile-card {
+            text-align: center !important;
+            width: 100% !important;
         }
 
-        .hud-ring {
-            width: 110px; height: 110px;
-            margin: 0 auto 1rem auto;
-            position: relative;
-            display: flex; justify-content: center; align-items: center;
+        .avatar-frame {
+            width: 105px;
+            height: 105px;
+            margin: 0 auto 1rem auto !important;
+            position: relative !important;
         }
-        .hud-ring::before {
-            content: ''; position: absolute; inset: -5px;
+
+        .avatar-frame::before {
+            content: '';
+            position: absolute;
+            inset: -6px;
             border-radius: 50%;
             border: 2px dashed var(--gold);
-            animation: spinDash 10s linear infinite;
-            opacity: 0.5;
-        }
-        .hud-ring::after {
-            content: ''; position: absolute; inset: -10px;
-            border-radius: 50%;
-            border: 1px solid var(--gold-glow);
-            animation: spinDash 15s linear infinite reverse;
+            animation: structuralSpin 30s linear infinite;
             opacity: 0.3;
         }
-        
-        @keyframes spinDash { to { transform: rotate(360deg); } }
+
+        @keyframes structuralSpin { to { transform: rotate(360deg); } }
 
         .avatar-img {
-            width: 100%; height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--gold);
-            box-shadow: 0 0 20px var(--gold-glow);
-            position: relative;
-            z-index: 2;
+            width: 100% !important;
+            height: 100% !important;
+            border-radius: 50% !important;
+            object-fit: cover !important;
+            border: 2px solid var(--gold) !important;
+            box-shadow: 0 0 20px var(--gold-glow) !important;
         }
 
-        .commander-title {
-            margin: 0;
-            font-size: 2rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            color: #fff;
-            text-shadow: 0 0 10px var(--gold-glow);
+        .identity-title {
+            font-size: 1.7rem !important;
+            font-weight: 900 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 3px !important;
+            color: #ffffff !important;
+            line-height: 1.2 !important;
         }
 
-        .commander-role {
-            margin: 5px 0 0 0;
-            font-size: 0.85rem;
-            color: var(--gold);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 700;
-        }
-
-        /* =========================================
-           05 // DIRECTIVE PANEL
-           ========================================= */
-        .glass-panel {
-            background: var(--glass-bg);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 1.5rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            position: relative;
-            width: 100%;
-        }
-
-        .glass-panel::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 30%; height: 2px;
-            background: var(--gold);
-            box-shadow: 0 0 10px var(--gold);
-        }
-
-        .intro-text {
-            font-size: 0.95rem; line-height: 1.6; margin: 0; color: rgba(255,255,255,0.9);
-        }
-
-        .manifesto-trigger {
-            color: var(--gold); font-weight: 800; cursor: pointer; text-decoration: none;
-            border-bottom: 1px solid transparent; transition: all 0.3s ease;
-        }
-        .manifesto-trigger:hover {
-            border-bottom-color: var(--gold);
-            text-shadow: 0 0 8px var(--gold-glow);
+        .identity-subtitle {
+            font-size: 0.8rem !important;
+            color: var(--gold) !important;
+            text-transform: uppercase !important;
+            letter-spacing: 2px !important;
+            font-weight: 700 !important;
+            margin-top: 4px !important;
+            line-height: 1 !important;
         }
 
         /* =========================================
-           06 // INTERACTIVE LINK MODULES
+           05 // PROSE TEXT LOGIC
            ========================================= */
-        .link-matrix {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            width: 100%;
+        .prose-text {
+            font-size: 0.95rem !important;
+            line-height: 1.6 !important;
+            color: rgba(255, 255, 255, 0.9) !important;
+            text-align: left !important;
         }
 
-        .action-card {
-            background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.2) 100%);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 16px;
-            padding: 1.2rem;
-            text-decoration: none;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-            width: 100%;
+        .manifesto-link {
+            color: var(--gold) !important;
+            font-weight: 800 !important;
+            cursor: pointer !important;
+            text-decoration: underline !important;
+        }
+        .manifesto-link:hover {
+            color: #ffffff !important;
+            text-shadow: 0 0 8px var(--gold-glow) !important;
         }
 
-        .action-card::after {
-            content: ''; position: absolute; inset: 0;
-            background: radial-gradient(circle at center, var(--gold-glow) 0%, transparent 70%);
-            opacity: 0; transition: opacity 0.3s ease;
-            z-index: 1; pointer-events: none;
+        /* =========================================
+           06 // LINK MATRIX ARCHITECTURE
+           ========================================= */
+        .matrix-grid {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 0.8rem !important;
+            width: 100% !important;
         }
 
-        .action-card:hover {
-            transform: translateY(-4px) scale(1.01);
-            border-color: var(--gold);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.4), 0 0 15px rgba(212, 175, 55, 0.2);
+        .matrix-cell {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%) !important;
+            border: 1px solid rgba(255, 255, 255, 0.08) !important;
+            border-radius: 16px !important;
+            padding: 1.1rem !important;
+            text-decoration: none !important;
+            color: #ffffff !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            transition: all 0.2s ease !important;
+            cursor: pointer !important;
+            width: 100% !important;
         }
-        .action-card:hover::after { opacity: 0.15; }
 
-        .card-data { z-index: 2; position: relative; max-width: 85%; }
+        .matrix-cell:hover {
+            border-color: var(--gold) !important;
+            background: rgba(212, 175, 55, 0.04) !important;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4) !important;
+            transform: translateY(-2px) !important;
+        }
+
+        .cell-info {
+            max-width: 85% !important;
+            text-align: left !important;
+        }
+
+        .cell-info h3 {
+            font-size: 0.95rem !important;
+            font-weight: 800 !important;
+            letter-spacing: 1px !important;
+            text-transform: uppercase !important;
+            margin-bottom: 2px !important;
+            color: #ffffff !important;
+        }
+
+        .cell-info p {
+            font-size: 0.8rem !important;
+            color: var(--text-muted) !important;
+            line-height: 1.4 !important;
+        }
+
+        .cell-vector {
+            color: var(--gold) !important;
+            font-size: 1.2rem !important;
+        }
+
+        /* =========================================
+           07 // CONSOLIDATED WINDOW FOOTER (INTERNAL DOCK)
+           ========================================= */
+        .internal-dock {
+            margin-top: 0.5rem !important;
+            padding-top: 1.2rem !important;
+            border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            gap: 2rem !important;
+            width: 100% !important;
+        }
+
+        .dock-element {
+            color: rgba(255, 255, 255, 0.6) !important;
+            text-decoration: none !important;
+            font-size: 0.75rem !important;
+            font-weight: 800 !important;
+            letter-spacing: 1.5px !important;
+            text-transform: uppercase !important;
+            transition: color 0.2s ease !important;
+        }
+        .dock-element:hover {
+            color: var(--gold) !important;
+        }
+
+        .dock-badge {
+            width: 28px !important;
+            height: 28px !important;
+            opacity: 0.7 !important;
+            display: block !important;
+        }
+        .dock-element:hover .dock-badge {
+            opacity: 1 !important;
+            filter: drop-shadow(0 0 6px var(--gold));
+        }
+
+        /* =========================================
+           08 // MODAL CONTAINER SYSTEMS
+           ========================================= */
+        .system-overlay {
+            position: fixed !important;
+            inset: 0 !important;
+            z-index: 9000 !important;
+            background: #020105 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            transform: translateY(100%) !important;
+            opacity: 0 !important;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease !important;
+            width: 100vw !important;
+            height: 100dvh !important;
+        }
+        .system-overlay.active {
+            transform: translateY(0) !important;
+            opacity: 1 !important;
+        }
+
+        .overlay-navbar {
+            height: 60px !important;
+            background: #07060b !important;
+            border-bottom: 1px solid var(--gold) !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            padding: 0 16px !important;
+            flex-shrink: 0 !important;
+            width: 100% !important;
+        }
+        .overlay-caption {
+            color: var(--gold) !important;
+            font-size: 0.85rem !important;
+            font-weight: 800 !important;
+            letter-spacing: 2px !important;
+            text-transform: uppercase !important;
+        }
         
-        .card-data h3 {
-            margin: 0 0 0.2rem 0; font-size: 1rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
+        .overlay-terminal-exit {
+            background: rgba(255, 255, 255, 0.04) !important;
+            border: 1px solid rgba(212, 175, 55, 0.2) !important;
+            color: #ffffff !important;
+            padding: 6px 16px !important;
+            border-radius: 20px !important;
+            font-size: 0.75rem !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            cursor: pointer !important;
         }
-        .card-data p {
-            margin: 0; font-size: 0.8rem; color: var(--text-muted); line-height: 1.4;
-        }
-
-        .card-icon {
-            z-index: 2; position: relative;
-            color: var(--gold); font-size: 1.5rem; font-weight: 300;
-            transition: transform 0.3s ease;
-        }
-        .action-card:hover .card-icon { transform: translateX(5px); }
-
-        /* =========================================
-           07 // ALWAYS-ON BOTTOM DOCK (FOOTER)
-           ========================================= */
-        .system-dock {
-            position: fixed;
-            bottom: 0; left: 0; width: 100vw; height: 75px;
-            background: rgba(5, 4, 10, 0.85);
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border-top: 1px solid var(--glass-border);
-            display: flex; justify-content: center; align-items: center; gap: 2rem;
-            z-index: 100;
-            padding-bottom: env(safe-area-inset-bottom);
+        .overlay-terminal-exit:hover {
+            background: var(--gold) !important;
+            color: #020105 !important;
         }
 
-        .dock-btn {
-            color: rgba(255,255,255,0.7); text-decoration: none;
-            font-size: 0.75rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
-            display: flex; flex-direction: column; align-items: center; gap: 4px;
-            transition: all 0.3s ease;
+        .overlay-frame-host {
+            flex-grow: 1 !important;
+            overflow-y: auto !important;
+            -webkit-overflow-scrolling: touch !important;
+            width: 100% !important;
+            background: #000000 !important;
         }
-        .dock-btn:hover { color: var(--gold); transform: translateY(-2px); }
-
-        .dock-logo { width: 30px; height: 30px; opacity: 0.8; transition: 0.3s; }
-        .dock-btn:hover .dock-logo { opacity: 1; filter: drop-shadow(0 0 5px var(--gold)); }
-
-        /* =========================================
-           08 // DYNAMIC MODAL SYSTEMS
-           ========================================= */
-        .overlay-screen {
-            position: fixed; inset: 0; z-index: 9000;
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            display: flex; flex-direction: column;
-            transform: translateY(100%); opacity: 0;
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
-            width: 100vw;
-        }
-        .overlay-screen.active { transform: translateY(0); opacity: 1; }
-
-        .overlay-header {
-            height: 60px; background: #05040a; border-bottom: 1px solid var(--gold);
-            display: flex; align-items: center; justify-content: space-between; padding: 0 20px; flex-shrink: 0;
-            width: 100%;
-        }
-        .overlay-title { color: var(--gold); font-size: 0.85rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; }
         
-        .overlay-close {
-            background: rgba(255,255,255,0.05); border: 1px solid transparent; color: #fff;
-            width: 35px; height: 35px; border-radius: 50%; display: flex; justify-content: center; align-items: center;
-            cursor: pointer; transition: 0.2s; font-size: 1.2rem;
+        .sandbox-iframe {
+            width: 100% !important;
+            height: 100% !important;
+            border: none !important;
+            display: block !important;
         }
-        .overlay-close:hover { background: rgba(212, 175, 55, 0.1); border-color: var(--gold); color: var(--gold); }
 
-        .overlay-body { flex-grow: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; background: #000; width: 100%; }
-        
-        .system-iframe { width: 100%; height: 100%; border: none; display: block; }
-
-        .manifesto-content {
-            max-width: 600px; margin: 0 auto; padding: 40px 20px;
-            color: rgba(255,255,255,0.9); font-size: 1.05rem; line-height: 1.7;
+        .manifesto-prose-bay {
+            max-width: 580px !important;
+            margin: 0 auto !important;
+            padding: 40px 20px !important;
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-size: 1.05rem !important;
+            line-height: 1.75 !important;
+            text-align: left !important;
         }
-        .manifesto-content h2 {
-            color: var(--gold); font-size: 1.4rem; text-transform: uppercase; letter-spacing: 2px;
-            margin-top: 0; margin-bottom: 15px; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px;
+        .manifesto-prose-bay h2 {
+            color: var(--gold) !important;
+            font-size: 1.35rem !important;
+            text-transform: uppercase !important;
+            letter-spacing: 2px !important;
+            margin-top: 0 !important;
+            margin-bottom: 15px !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+            padding-bottom: 8px !important;
         }
-        .manifesto-content p { margin-bottom: 20px; }
-        .manifesto-content strong { color: #fff; }
+        .manifesto-prose-bay p { margin-bottom: 20px !important; }
+        .manifesto-prose-bay strong { color: #ffffff !important; }
     </style>
 </head>
 <body>
 
+    <!-- VISUAL SCENE CONTROLLERS -->
     <div id="environment"><div class="starfield"></div></div>
-    <div class="ambient-flare"></div>
+    <div class="ambient-glow"></div>
 
-    <div class="terminal-container">
+    <!-- MASTER WINDOW CHASSIS CONTAINER -->
+    <main class="glass-window-chassis">
         
-        <header class="identity-module">
-            <div class="hud-ring">
+        <!-- IDENTITY SEGMENT -->
+        <header class="profile-card">
+            <div class="avatar-frame">
                 <img src="images/headshot.jpg" alt="Quincy Jones" class="avatar-img">
             </div>
-            <h1 class="commander-title">Commander Q</h1>
-            <h2 class="commander-role">Chief Vision Officer</h2>
+            <h1 class="identity-title">Quincy Jones</h1>
+            <h2 class="identity-subtitle">Chief Vision Officer</h2>
         </header>
 
-        <section class="glass-panel">
-            <p class="intro-text">
-                Hey, I'm Quincy. Welcome to my creative dashboard. I build custom web tools, share raw human experiences, and design frameworks to help our communities work closer together. Everything I make loops directly back to my blueprint through <span class="manifesto-trigger" id="cmd-manifesto">Project V</span>—a real-world experiment to pool local voices together to fix real gaps in our daily quality of life. Explore the active workspaces below.
+        <!-- DESCRIPTION DESCRIPTION -->
+        <section style="width: 100%;">
+            <p class="prose-text">
+                Hey, I'm Quincy. Welcome to my creative dashboard. I build custom web tools, share raw human experiences, and design frameworks to help our communities work closer together. Everything I make loops directly back to my blueprint through <span class="manifesto-link" id="trigger-manifesto">Project V</span>—a real-world experiment to pool local voices together to fix real gaps in our daily quality of life. Explore the active workspaces below.
             </p>
         </section>
 
-        <nav class="link-matrix">
-            <a class="action-card sys-launcher" data-url="about/" data-title="About Me">
-                <div class="card-data">
+        <!-- LINK MATRIX ENTRIES -->
+        <nav class="matrix-grid">
+            
+            <div class="matrix-cell client-route" data-url="about/" data-title="About Me">
+                <div class="cell-info">
                     <h3>About Me</h3>
                     <p>Core background, military service values, and personal journey.</p>
                 </div>
-                <div class="card-icon">→</div>
-            </a>
+                <div class="cell-vector">→</div>
+            </div>
 
-            <a class="action-card sys-launcher" data-url="../knights/index.html" data-title="Active Projects">
-                <div class="card-data">
+            <div class="matrix-cell client-route" data-url="../knights/index.html" data-title="Active Projects">
+                <div class="cell-info">
                     <h3>Active Projects</h3>
-                    <p>Collaborative hub hosting custom community reporting tools.</p>
+                    <p>Our collaborative hub layout hosting custom community reporting tools.</p>
                 </div>
-                <div class="card-icon">→</div>
-            </a>
+                <div class="cell-vector">→</div>
+            </div>
 
-            <a class="action-card sys-launcher" data-url="ordo/" data-title="Ordo">
-                <div class="card-data">
+            <div class="matrix-cell client-route" data-url="ordo/" data-title="Ordo">
+                <div class="cell-info">
                     <h3>Ordo</h3>
-                    <p>Brutal self-questioning frameworks and performance philosophy.</p>
+                    <p>Brutal self-questioning frameworks and performance philosophy for teams.</p>
                 </div>
-                <div class="card-icon">→</div>
-            </a>
+                <div class="cell-vector">→</div>
+            </div>
 
-            <a class="action-card sys-launcher" data-url="musicplayer/" data-title="Music Player">
-                <div class="card-data">
+            <div class="matrix-cell client-route" data-url="musicplayer/" data-title="Music Player">
+                <div class="cell-info">
                     <h3>Music Player</h3>
-                    <p>Custom audio mashups, ambient design loops, and remixes.</p>
+                    <p>Custom audio mashups, ambient design loops, and production remixes.</p>
                 </div>
-                <div class="card-icon">→</div>
-            </a>
+                <div class="cell-vector">→</div>
+            </div>
 
-            <a class="action-card sys-launcher" data-url="dreamscapedrift/" data-title="Dreamscape Drift">
-                <div class="card-data">
+            <div class="matrix-cell client-route" data-url="dreamscapedrift/" data-title="Dreamscape Drift">
+                <div class="cell-info">
                     <h3>Dreamscape Drift</h3>
-                    <p>Physics spec sheets and telemetry logs for Forza builds.</p>
+                    <p>Physics spec sheets and tire tuning profiles for Forza builds.</p>
                 </div>
-                <div class="card-icon">→</div>
-            </a>
+                <div class="cell-vector">→</div>
+            </div>
+
         </nav>
 
+        <!-- CLOSED LINK INTEGRATED FOOTER DOCK -->
+        <footer class="internal-dock">
+            <a href="https://music.apple.com" target="_blank" class="dock-element">Apple Music</a>
+            <div class="dock-element" style="cursor: default;">
+                <img src="images/vklogo.png" alt="VK Badge Logo" class="dock-badge">
+            </div>
+            <a href="https://tiktok.com" target="_blank" class="dock-element">TikTok</a>
+        </footer>
+
+    </main>
+
+    <!-- =========================================
+         SYSTEM OVERLAYS & OVERLAYS
+         ========================================= -->
+
+    <!-- TOOL SANDBOX VIEWPORT -->
+    <div class="system-overlay" id="sandbox-overlay">
+        <header class="overlay-navbar">
+            <span class="overlay-caption" id="sandbox-caption">Loading Stream...</span>
+            <button class="overlay-terminal-exit" id="close-sandbox">Close Window</button>
+        </header>
+        <div class="overlay-frame-host">
+            <iframe src="about:blank" class="sandbox-iframe" id="sandbox-iframe"></iframe>
+        </div>
     </div>
 
-    <footer class="system-dock">
-        <a href="https://music.apple.com" target="_blank" class="dock-btn">
-            <span>Apple Music</span>
-        </a>
-        <div class="dock-btn" style="cursor: default;">
-            <img src="images/vklogo.png" alt="VK Logo" class="dock-logo">
-        </div>
-        <a href="https://tiktok.com" target="_blank" class="dock-btn">
-            <span>TikTok</span>
-        </a>
-    </footer>
-
-    <div class="overlay-screen" id="modal-sandbox">
-        <header class="overlay-header">
-            <span class="overlay-title" id="sandbox-header-title">System Loading...</span>
-            <button class="overlay-close" id="btn-close-sandbox">✕</button>
+    <!-- NARRATIVE MANIFESTO CONSOLE -->
+    <div class="system-overlay" id="manifesto-overlay">
+        <header class="overlay-navbar">
+            <span class="overlay-caption">Project V // Core Directive</span>
+            <button class="overlay-terminal-exit" id="close-manifesto">Close Window</button>
         </header>
-        <div class="overlay-body">
-            <iframe src="about:blank" class="system-iframe" id="sandbox-iframe"></iframe>
-        </div>
-    </div>
-
-    <div class="overlay-screen" id="modal-manifesto">
-        <header class="overlay-header">
-            <span class="overlay-title">Project V // Core Directive</span>
-            <button class="overlay-close" id="btn-close-manifesto">✕</button>
-        </header>
-        <div class="overlay-body">
-            <div class="manifesto-content">
+        <div class="overlay-frame-host">
+            <div class="manifesto-prose-bay">
                 <h2>The Project V Manifesto</h2>
                 <p>Project V started in the most honest way possible: <strong>I sat down and asked my kids and my family what their everyday lives were really like.</strong> What they told me was painful to hear. It made me realize how many daily struggles and quiet brick walls people hit just trying to get a decent education and build a life right here in their own towns.</p>
                 <p>When the structure around us breaks down, people end up completely cut off from each other. Project V is a straight-to-the-point experiment. We are using clean, anonymous digital tools to combine the true voices of a community. By cutting out the usual political red tape, we can map out exactly what people are feeling and experiencing in real time.</p>
                 <p><strong>The Goal:</strong> Take that data and put it directly in front of local leaders, business owners, and neighbors so we can make a clear, measurable change in how we live. We are starting with the everyday challenges of normal citizens—because a town can only move forward when its people are finally heard.</p>
-                <hr style="border:0; border-top:1px dashed rgba(212,175,55,0.3); margin:35px 0;">
+                <hr style="border:0; border-top:1px dashed rgba(255, 255, 255, 0.08); margin:25px 0;">
                 <h2>What We Are Building Next</h2>
                 <p>This tracking infrastructure is laying the ground rules for something much larger. Soon, we are launching an interactive, community-driven book project. Readers will team up directly with the <strong>Vanguard Knights</strong> to hunt down a massive threat—a force that actively changes timelines to strip away human quality of life forever. Stay tuned. The coordinates are printing now.</p>
             </div>
         </div>
     </div>
 
+    <!-- =========================================
+         DISPATCH PROTOCOLS
+         ========================================= -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            
-            const appLinks = document.querySelectorAll('.sys-launcher');
-            const sandboxModal = document.getElementById('modal-sandbox');
+            const routes = document.querySelectorAll('.client-route');
+            const sandboxOverlay = document.getElementById('sandbox-overlay');
             const sandboxIframe = document.getElementById('sandbox-iframe');
-            const sandboxTitle = document.getElementById('sandbox-header-title');
-            const closeSandbox = document.getElementById('btn-close-sandbox');
+            const sandboxCaption = document.getElementById('sandbox-caption');
+            const closeSandboxBtn = document.getElementById('close-sandbox');
 
-            const btnManifesto = document.getElementById('cmd-manifesto');
-            const manifestoModal = document.getElementById('modal-manifesto');
-            const closeManifesto = document.getElementById('btn-close-manifesto');
+            const openManifestoBtn = document.getElementById('trigger-manifesto');
+            const manifestoOverlay = document.getElementById('manifesto-overlay');
+            const closeManifestoBtn = document.getElementById('close-manifesto');
 
-            appLinks.forEach(link => {
-                link.addEventListener('click', (e) => {
+            routes.forEach(cell => {
+                cell.addEventListener('click', (e) => {
                     e.preventDefault();
-                    const url = link.getAttribute('data-url');
-                    const title = link.getAttribute('data-title');
+                    const targetUrl = cell.getAttribute('data-url');
+                    const targetTitle = cell.getAttribute('data-title');
                     
-                    if (url) {
-                        sandboxTitle.innerText = title;
-                        sandboxIframe.src = url;
+                    if (targetUrl && targetUrl !== '#') {
+                        sandboxCaption.innerText = targetTitle;
+                        sandboxIframe.src = targetUrl;
                         document.body.style.overflow = 'hidden'; 
-                        sandboxModal.classList.add('active');
+                        sandboxOverlay.classList.add('active');
                     }
                 });
             });
 
-            closeSandbox.addEventListener('click', () => {
-                sandboxModal.classList.remove('active');
-                document.body.style.overflow = ''; 
-                setTimeout(() => { sandboxIframe.src = 'about:blank'; }, 400); 
-            });
+            if (closeSandboxBtn) {
+                closeSandboxBtn.addEventListener('click', () => {
+                    sandboxOverlay.classList.remove('active');
+                    document.body.style.overflow = ''; 
+                    setTimeout(() => { sandboxIframe.src = 'about:blank'; }, 350);
+                });
+            }
 
-            btnManifesto.addEventListener('click', () => {
-                document.body.style.overflow = 'hidden';
-                manifestoModal.classList.add('active');
-            });
+            if (openManifestoBtn) {
+                openManifestoBtn.addEventListener('click', () => {
+                    document.body.style.overflow = 'hidden';
+                    manifestoOverlay.classList.add('active');
+                });
+            }
 
-            closeManifesto.addEventListener('click', () => {
-                manifestoModal.classList.remove('active');
-                document.body.style.overflow = '';
-            });
+            if (closeManifestoBtn) {
+                closeManifestoBtn.addEventListener('click', () => {
+                    manifestoOverlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            }
 
-            const currentVersion = "9"; 
+            const currentVersion = "13"; 
             const storageKey = "hub_version_check";
             if (localStorage.getItem(storageKey) !== currentVersion) {
                 localStorage.setItem(storageKey, currentVersion);
