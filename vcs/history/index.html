@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vanguard Citizen Services | Creative Studio</title>
+    <title>Vanguard Citizen Services | Our History</title>
     <link rel="stylesheet" href="style.css">
     <style>
         /* ==========================================
@@ -33,200 +33,9 @@
            ========================================== */
         .top-nav-panel {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            justify-content: flex-start;
             width: 100%;
             margin-bottom: 1.5rem;
-        }
-
-        .history-btn {
-            background: transparent;
-            border: 1px solid rgba(179, 136, 255, 0.4);
-            color: #ffffff;
-            text-decoration: none;
-            font-size: 0.75em;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            padding: 0.4rem 1rem;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-        }
-
-        .history-btn:hover {
-            border-color: #ffeb3b;
-            color: #ffeb3b;
-            box-shadow: 0 0 10px rgba(255, 235, 59, 0.2);
-        }
-
-        /* ==========================================
-           2. STREAMLINED SECTIONS
-           ========================================== */
-        .studio-section {
-            width: 100%;
-            text-align: center;
-            margin-bottom: 2rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .section-title {
-            color: #ffeb3b;
-            font-size: 1.3em;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-            border-bottom: 2px solid rgba(179, 136, 255, 0.3);
-            padding-bottom: 0.3rem;
-            width: fit-content;
-        }
-
-        .section-text {
-            line-height: 1.5;
-            font-size: 0.95em;
-            max-width: 600px;
-            margin-bottom: 1rem;
-        }
-
-        /* ==========================================
-           3. THREE PILLARS ROW
-           ========================================== */
-        .mission-row {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
-            width: 100%;
-            margin: 1rem 0;
-        }
-
-        .pillar-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(179, 136, 255, 0.2);
-            border-radius: 8px;
-            padding: 1rem;
-        }
-
-        .pillar-name {
-            color: #ffeb3b;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 0.9em;
-            margin-bottom: 0.25rem;
-        }
-
-        .pillar-text {
-            font-size: 0.85em;
-            line-height: 1.4;
-        }
-
-        /* ==========================================
-           4. INTERACTIVE PROJECT SLIDER
-           ========================================== */
-        .slider-box {
-            width: 100%;
-            max-width: 550px;
-            background: rgba(255, 255, 255, 0.01);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-top: 0.5rem;
-            position: relative;
-        }
-
-        .slide {
-            display: none;
-            animation: fadeIn 0.4s ease;
-        }
-
-        .slide.active {
-            display: block;
-        }
-
-        .project-tag {
-            font-size: 0.7em;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #b388ff;
-            font-weight: 600;
-        }
-
-        .project-name {
-            font-size: 1.1em;
-            font-weight: 700;
-            margin: 0.3rem 0;
-            color: #ffffff;
-        }
-
-        .project-summary {
-            font-size: 0.85em;
-            line-height: 1.5;
-            margin-bottom: 1.2rem;
-            min-height: 4.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .slider-controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            margin-top: 0.5rem;
-        }
-
-        .nav-btn {
-            background: transparent;
-            border: 1px solid rgba(255, 235, 59, 0.4);
-            color: #ffeb3b;
-            font-size: 1.2rem;
-            padding: 0.3rem 1rem;
-            cursor: pointer;
-            border-radius: 4px;
-            transition: all 0.2s ease;
-        }
-
-        .nav-btn:hover {
-            background: #ffeb3b;
-            color: #000000;
-            box-shadow: 0 0 10px #ffeb3b;
-        }
-
-        /* ==========================================
-           5. ACTION BUTTON & NAV LINKS
-           ========================================== */
-        .action-btn {
-            display: inline-block;
-            background: linear-gradient(90deg, #ffe082 0%, #ffb300 50%, #ffeb3b 100%);
-            color: #000000;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 0.8em;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            padding: 0.7rem 1.5rem;
-            border-radius: 6px;
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
-            position: relative;
-            overflow: hidden;
-            transition: box-shadow 0.3s ease;
-        }
-
-        .action-btn:hover {
-            box-shadow: 0 0 25px #ffd700, 0 0 10px rgba(179, 136, 255, 0.5);
-        }
-
-        .action-btn::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
-            animation: flashShimmer 2s infinite;
         }
 
         .back-nav {
@@ -242,127 +51,119 @@
             color: #ffeb3b;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.98); }
-            to { opacity: 1; transform: scale(1); }
+        /* ==========================================
+           2. STREAMLINED SECTIONS
+           ========================================== */
+        .studio-section {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .section-title {
+            color: #ffeb3b;
+            font-size: 1.3em;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid rgba(179, 136, 255, 0.3);
+            padding-bottom: 0.3rem;
+            width: fit-content;
         }
 
         /* ==========================================
-           6. RESPONSIVE DESKTOP EXPANSION
+           3. CHRONOLOGICAL TIMELINE STACK
            ========================================== */
-        @media (min-width: 700px) {
-            .mission-row {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 0.8rem;
-            }
+        .timeline-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 600px;
+            margin: 1rem 0;
+        }
+
+        .timeline-card {
+            background: rgba(255, 255, 255, 0.02);
+            border-left: 3px solid #ffeb3b;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 0 8px 8px 0;
+            padding: 1.2rem;
+            text-align: left;
+        }
+
+        .timeline-era {
+            font-size: 0.75em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #b388ff;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .timeline-text {
+            font-size: 0.9em;
+            line-height: 1.5;
+            color: #ffffff;
         }
     </style>
 </head>
 <body>
 
-    <!-- VISUAL ENVIRONMENT -->
     <div class="space-bg">
         <div class="starfield"></div>
     </div>
 
-    <!-- MAIN INTERFACE -->
     <div class="glass-window">
-        
-        <!-- TOP PANEL LAYOUT -->
-        <div class="top-nav-panel">
-            <a href="../home/index.html" class="back-nav">← Back</a>
-            <a href="history/index.html" class="history-btn">Our History</a>
-        </div>
+    
+    <div class="top-nav-panel">
+        <a href="../index.html" class="back-nav">← Back</a>
+    </div>
 
-        <img src="../images/vanguardorglogo.png" alt="Vanguard Citizen Services Logo" class="logo">
-        <div class="tagline" style="margin-bottom: 1.5rem;">Creative Studio</div>
+    <img src="vanguardorglogo.png" alt="Vanguard Citizen Services Logo" class="logo">
+    <div class="tagline" style="margin-bottom: 1.5rem;">Our History</div>
         
-        <!-- ORIGINS & PILLARS -->
         <section class="studio-section">
-            <h2 class="section-title">Our Vision</h2>
-            <p class="section-text">
-                Vanguard Citizen Services is a creative workshop. We share human stories to provoke deep thought and help shape our world toward positive coexistence.
-            </p>
+            <h2 class="section-title">The Origin</h2>
             
-            <div class="mission-row">
-                <div class="pillar-card">
-                    <div class="pillar-name">Empower</div>
-                    <div class="pillar-text">Giving voice to stories that inspire action.</div>
+            <div class="timeline-container">
+                <div class="timeline-card">
+                    <div class="timeline-era">The Foundation</div>
+                    <p class="timeline-text">
+                        Vanguard was founded by two friends pulling from a deeply shared background rooted in technology and operations within the Armed Forces.
+                    </p>
                 </div>
-                <div class="pillar-card">
-                    <div class="pillar-name">Educate</div>
-                    <div class="pillar-text">Unpacking deep topics for shared insight.</div>
+                
+                <div class="timeline-card">
+                    <div class="timeline-era">The Transition</div>
+                    <p class="timeline-text">
+                        Upon returning home and integrating back into civilian life, they quickly recognized a distinct, growing disconnect within local community frameworks.
+                    </p>
                 </div>
-                <div class="pillar-card">
-                    <div class="pillar-name">Elevate</div>
-                    <div class="pillar-text">Lifting up human spirit and connection.</div>
+
+                <div class="timeline-card">
+                    <div class="timeline-era">The Guild Code</div>
+                    <p class="timeline-text">
+                        Answering that call, they built a dedicated guild designed to unite the unique talents of local citizens and forge a strong, successful community narrative.
+                    </p>
                 </div>
             </div>
         </section>
 
-        <!-- PORTAL INTERACTIVE SHOWCASE -->
-        <section class="studio-section">
-            <h2 class="section-title">Our Showcases</h2>
-            
-            <div class="slider-box">
-                <!-- PROJECT 1: REGIONAL CIVIC UTILITY -->
-                <div class="slide active">
-                    <span class="project-tag">Civic Utility</span>
-                    <h3 class="project-name">Hardin County Community Voice Box</h3>
-                    <p class="project-summary">A shared platform for residents to submit local county issues, discover nearby resources, and learn about our community.</p>
-                    <a href="../communityvoicebox/index.html" class="action-btn">Launch Utility</a>
-                </div>
-
-                <!-- CAROUSEL TRACK CONTROLS -->
-                <div class="slider-controls">
-                    <button class="nav-btn" id="prev-slide">←</button>
-                    <button class="nav-btn" id="next-slide">→</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- CENTERED HELP NAVIGATION POINT -->
-        <div style="margin-top: 1.5rem; text-align: center; width: 100%;">
-            <a href="../support/index.html" style="color: #ffffff; text-decoration: none; font-size: 0.75em; text-transform: uppercase; letter-spacing: 2px; border: 1px solid rgba(255,255,255,0.15); padding: 0.5rem 1.4rem; border-radius: 4px; transition: all 0.3s ease;" onmouseover="this.style.borderColor='#ffeb3b'; this.style.color='#ffeb3b'; this.style.boxShadow='0 0 10px rgba(255, 235, 59, 0.1)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.15)'; this.style.color='#ffffff'; this.style.boxShadow='none';">Need Help?</a>
-        </div>
-
-        <!-- SITE FOOTER -->
         <footer class="site-footer">
             <div class="footer-text">&copy; 2026 Vanguard Citizen Services. All Rights Reserved.</div>
         </footer>
 
     </div>
 
-    <!-- LOGIC SYSTEM ENGINES -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            // 1. DYNAMIC AUTO-SCALING CAROUSEL ENGINE
-            const slides = document.querySelectorAll(".slide");
-            const prevBtn = document.getElementById("prev-slide");
-            const nextBtn = document.getElementById("next-slide");
-            const controls = document.querySelector(".slider-controls");
-            let currentIndex = 0;
-
-            if (slides.length <= 1) {
-                controls.style.display = "none";
-            }
-
-            function updateSlider(index) {
-                slides.forEach(slide => slide.classList.remove("active"));
-                slides[index].classList.add("active");
-            }
-
-            prevBtn.addEventListener("click", () => {
-                currentIndex = (currentIndex === 0) ? slides.length - 1 : currentIndex - 1;
-                updateSlider(currentIndex);
-            });
-
-            nextBtn.addEventListener("click", () => {
-                currentIndex = (currentIndex === slides.length - 1) ? 0 : currentIndex + 1;
-                updateSlider(currentIndex);
-            });
-
-            // 2. COMET SPAWNER ENGINE
             const spaceBg = document.querySelector(".space-bg");
 
             function launchComet() {
