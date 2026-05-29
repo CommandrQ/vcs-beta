@@ -5,321 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>COMMANDER Q // SYSTEM TERMINAL</title>
     <link rel="stylesheet" href="style.css?v=8">
-    <style>
-        /* =========================================
-           01 // CORE ENVIRONMENT & NATIVE SCROLL
-           ========================================= */
-        :root {
-            --gold: #D4AF37;
-            --gold-glow: rgba(212, 175, 55, 0.6);
-            --bg-deep: #05040a;
-            --glass-bg: rgba(12, 10, 18, 0.5);
-            --glass-border: rgba(212, 175, 55, 0.2);
-            --text-main: #ffffff;
-            --text-muted: rgba(255, 255, 255, 0.65);
-        }
-
-        html, body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            min-height: 100dvh;
-            background-color: var(--bg-deep);
-            color: var(--text-main);
-            font-family: system-ui, -apple-system, sans-serif;
-            overflow-x: hidden;
-            /* Bottom padding ensures the fixed dock never hides the last piece of content */
-            padding-bottom: 90px; 
-        }
-
-        /* Scanline Overlay Effect */
-        body::after {
-            content: "";
-            position: fixed;
-            inset: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-            background-size: 100% 2px, 3px 100%;
-            z-index: 9999;
-            pointer-events: none;
-            opacity: 0.3;
-        }
-
-        /* =========================================
-           02 // ANIMATED BACKGROUND
-           ========================================= */
-        .cyber-grid {
-            position: fixed;
-            inset: -50%;
-            width: 200vw;
-            height: 200vh;
-            background-image: 
-                linear-gradient(rgba(212, 175, 55, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(212, 175, 55, 0.05) 1px, transparent 1px);
-            background-size: 40px 40px;
-            transform: perspective(500px) rotateX(60deg) translateY(-100px) translateZ(-200px);
-            animation: gridMove 20s linear infinite;
-            z-index: -2;
-            pointer-events: none;
-        }
-
-        @keyframes gridMove {
-            0% { transform: perspective(500px) rotateX(60deg) translateY(0) translateZ(-200px); }
-            100% { transform: perspective(500px) rotateX(60deg) translateY(40px) translateZ(-200px); }
-        }
-
-        .ambient-flare {
-            position: fixed;
-            top: -10%; left: 50%;
-            transform: translateX(-50%);
-            width: 80vw; height: 50vh;
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        /* =========================================
-           03 // MASTER LAYOUT CHASSIS
-           ========================================= */
-        .terminal-container {
-            width: 90%;
-            max-width: 500px;
-            margin: 2rem auto 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            animation: bootUp 1s ease-out forwards;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        @keyframes bootUp {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* =========================================
-           04 // PROFILE IDENTITY BLOCK
-           ========================================= */
-        .identity-module {
-            text-align: center;
-            position: relative;
-        }
-
-        .hud-ring {
-            width: 110px; height: 110px;
-            margin: 0 auto 1rem auto;
-            position: relative;
-            display: flex; justify-content: center; align-items: center;
-        }
-        .hud-ring::before {
-            content: ''; position: absolute; inset: -5px;
-            border-radius: 50%;
-            border: 2px dashed var(--gold);
-            animation: spinDash 10s linear infinite;
-            opacity: 0.5;
-        }
-        .hud-ring::after {
-            content: ''; position: absolute; inset: -10px;
-            border-radius: 50%;
-            border: 1px solid var(--gold-glow);
-            animation: spinDash 15s linear infinite reverse;
-            opacity: 0.3;
-        }
-        
-        @keyframes spinDash { to { transform: rotate(360deg); } }
-
-        .avatar-img {
-            width: 100%; height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--gold);
-            box-shadow: 0 0 20px var(--gold-glow);
-            position: relative;
-            z-index: 2;
-        }
-
-        .commander-title {
-            margin: 0;
-            font-size: 2rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            color: #fff;
-            text-shadow: 0 0 10px var(--gold-glow);
-        }
-
-        .commander-role {
-            margin: 5px 0 0 0;
-            font-size: 0.85rem;
-            color: var(--gold);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 700;
-        }
-
-        /* =========================================
-           05 // DIRECTIVE PANEL
-           ========================================= */
-        .glass-panel {
-            background: var(--glass-bg);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 1.5rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            position: relative;
-        }
-
-        .glass-panel::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 30%; height: 2px;
-            background: var(--gold);
-            box-shadow: 0 0 10px var(--gold);
-        }
-
-        .intro-text {
-            font-size: 0.95rem; line-height: 1.6; margin: 0; color: rgba(255,255,255,0.9);
-        }
-
-        .manifesto-trigger {
-            color: var(--gold); font-weight: 800; cursor: pointer; text-decoration: none;
-            border-bottom: 1px solid transparent; transition: all 0.3s ease;
-        }
-        .manifesto-trigger:hover {
-            border-bottom-color: var(--gold);
-            text-shadow: 0 0 8px var(--gold-glow);
-        }
-
-        /* =========================================
-           06 // INTERACTIVE LINK MODULES
-           ========================================= */
-        .link-matrix {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
-        }
-
-        .action-card {
-            background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.2) 100%);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 16px;
-            padding: 1.2rem;
-            text-decoration: none;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        .action-card::after {
-            content: ''; position: absolute; inset: 0;
-            background: radial-gradient(circle at center, var(--gold-glow) 0%, transparent 70%);
-            opacity: 0; transition: opacity 0.3s ease;
-            z-index: 1; pointer-events: none;
-        }
-
-        .action-card:hover {
-            transform: translateY(-4px) scale(1.02);
-            border-color: var(--gold);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.4), 0 0 15px rgba(212, 175, 55, 0.2);
-        }
-        .action-card:hover::after { opacity: 0.15; }
-
-        .card-data { z-index: 2; position: relative; }
-        
-        .card-data h3 {
-            margin: 0 0 0.2rem 0; font-size: 1rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
-        }
-        .card-data p {
-            margin: 0; font-size: 0.8rem; color: var(--text-muted); line-height: 1.4;
-        }
-
-        .card-icon {
-            z-index: 2; position: relative;
-            color: var(--gold); font-size: 1.5rem; font-weight: 300;
-            transition: transform 0.3s ease;
-        }
-        .action-card:hover .card-icon { transform: translateX(5px); }
-
-        /* =========================================
-           07 // ALWAYS-ON BOTTOM DOCK (FOOTER)
-           ========================================= */
-        .system-dock {
-            position: fixed;
-            bottom: 0; left: 0; width: 100%; height: 75px;
-            background: rgba(5, 4, 10, 0.85);
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border-top: 1px solid var(--glass-border);
-            display: flex; justify-content: center; align-items: center; gap: 2rem;
-            z-index: 100;
-            padding-bottom: env(safe-area-inset-bottom);
-        }
-
-        .dock-btn {
-            color: rgba(255,255,255,0.7); text-decoration: none;
-            font-size: 0.75rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
-            display: flex; flex-direction: column; align-items: center; gap: 4px;
-            transition: all 0.3s ease;
-        }
-        .dock-btn:hover { color: var(--gold); transform: translateY(-2px); }
-
-        .dock-logo { width: 30px; height: 30px; opacity: 0.8; transition: 0.3s; }
-        .dock-btn:hover .dock-logo { opacity: 1; filter: drop-shadow(0 0 5px var(--gold)); }
-
-        /* =========================================
-           08 // DYNAMIC MODAL SYSTEMS
-           ========================================= */
-        .overlay-screen {
-            position: fixed; inset: 0; z-index: 9000;
-            background: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            display: flex; flex-direction: column;
-            transform: translateY(100%); opacity: 0;
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
-        }
-        .overlay-screen.active { transform: translateY(0); opacity: 1; }
-
-        .overlay-header {
-            height: 60px; background: #05040a; border-bottom: 1px solid var(--gold);
-            display: flex; align-items: center; justify-content: space-between; padding: 0 20px; flex-shrink: 0;
-        }
-        .overlay-title { color: var(--gold); font-size: 0.85rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; }
-        
-        .overlay-close {
-            background: rgba(255,255,255,0.05); border: 1px solid transparent; color: #fff;
-            width: 35px; height: 35px; border-radius: 50%; display: flex; justify-content: center; align-items: center;
-            cursor: pointer; transition: 0.2s; font-size: 1.2rem;
-        }
-        .overlay-close:hover { background: rgba(212, 175, 55, 0.1); border-color: var(--gold); color: var(--gold); }
-
-        .overlay-body { flex-grow: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; background: #000; }
-        
-        /* Iframe specifics */
-        .system-iframe { width: 100%; height: 100%; border: none; display: block; }
-
-        /* Manifesto specifics */
-        .manifesto-content {
-            max-width: 600px; margin: 0 auto; padding: 40px 20px;
-            color: rgba(255,255,255,0.9); font-size: 1.05rem; line-height: 1.7;
-        }
-        .manifesto-content h2 {
-            color: var(--gold); font-size: 1.4rem; text-transform: uppercase; letter-spacing: 2px;
-            margin-top: 0; margin-bottom: 15px; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px;
-        }
-        .manifesto-content p { margin-bottom: 20px; }
-        .manifesto-content strong { color: #fff; }
-    </style>
 </head>
 <body>
 
-    <!-- VISUAL SCENE -->
+    <div class="comet-canvas" id="canvas-comet-engine"></div>
     <div class="cyber-grid"></div>
     <div class="ambient-flare"></div>
 
-    <!-- MAIN INTERFACE -->
     <main class="terminal-container">
         
         <header class="identity-module">
@@ -380,24 +72,20 @@
 
     </main>
 
-    <!-- FIXED APP DOCK (ALWAYS VISIBLE FOOTER) -->
     <footer class="system-dock">
-        <a href="https://music.apple.com" target="_blank" class="dock-btn">
-            <span>Apple Music</span>
-        </a>
-        <div class="dock-btn" style="cursor: default;">
+        <div class="dock-social-row">
+            <a href="https://music.apple.com" target="_blank" class="dock-btn">
+                <span>Apple Music</span>
+            </a>
+            <a href="https://tiktok.com" target="_blank" class="dock-btn">
+                <span>TikTok</span>
+            </a>
+        </div>
+        <div class="center-logo-container">
             <img src="images/vklogo.png" alt="VK Logo" class="dock-logo">
         </div>
-        <a href="https://tiktok.com" target="_blank" class="dock-btn">
-            <span>TikTok</span>
-        </a>
     </footer>
 
-    <!-- =========================================
-         SYSTEM OVERLAYS
-         ========================================= -->
-
-    <!-- TOOL SANDBOX -->
     <div class="overlay-screen" id="modal-sandbox">
         <header class="overlay-header">
             <span class="overlay-title" id="sandbox-header-title">System Loading...</span>
@@ -408,7 +96,6 @@
         </div>
     </div>
 
-    <!-- MANIFESTO -->
     <div class="overlay-screen" id="modal-manifesto">
         <header class="overlay-header">
             <span class="overlay-title">Project V // Core Directive</span>
@@ -427,13 +114,10 @@
         </div>
     </div>
 
-    <!-- =========================================
-         ENGINE LOGIC
-         ========================================= -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             
-            // UI Elements
+            // UI ELEMENTS
             const appLinks = document.querySelectorAll('.sys-launcher');
             const sandboxModal = document.getElementById('modal-sandbox');
             const sandboxIframe = document.getElementById('sandbox-iframe');
@@ -444,7 +128,39 @@
             const manifestoModal = document.getElementById('modal-manifesto');
             const closeManifesto = document.getElementById('btn-close-manifesto');
 
-            // Handle App Launches
+            // DYNAMIC COMET ENGINE
+            const canvas = document.getElementById('canvas-comet-engine');
+            
+            function launchComet() {
+                const comet = document.createElement('div');
+                comet.classList.add('comet');
+                
+                const startX = Math.random() * (window.innerWidth * 0.4) + (window.innerWidth * 0.6);
+                const startY = Math.random() * (window.innerHeight * 0.4);
+                
+                comet.style.left = `${startX}px`;
+                comet.style.top = `${startY}px`;
+                
+                const duration = Math.random() * 0.8 + 0.6; 
+                comet.style.animation = `streak ${duration}s cubic-bezier(0.25, 1, 0.5, 1) forwards`;
+                
+                canvas.appendChild(comet);
+                
+                setTimeout(() => {
+                    comet.remove();
+                }, duration * 1000);
+            }
+
+            function queueNextComet() {
+                const nextSpawnDelay = Math.random() * 4000 + 2000;
+                setTimeout(() => {
+                    launchComet();
+                    queueNextComet();
+                }, nextSpawnDelay);
+            }
+            queueNextComet();
+
+            // APP LAUNCH LOGIC
             appLinks.forEach(link => {
                 link.addEventListener('click', (e) => {
                     e.preventDefault();
@@ -454,32 +170,26 @@
                     if (url) {
                         sandboxTitle.innerText = title;
                         sandboxIframe.src = url;
-                        document.body.style.overflow = 'hidden'; // Lock background scroll
                         sandboxModal.classList.add('active');
                     }
                 });
             });
 
-            // Close App Sandbox
             closeSandbox.addEventListener('click', () => {
                 sandboxModal.classList.remove('active');
-                document.body.style.overflow = ''; 
                 setTimeout(() => { sandboxIframe.src = 'about:blank'; }, 400); 
             });
 
-            // Open Manifesto
+            // MODAL SYSTEM LOGIC
             btnManifesto.addEventListener('click', () => {
-                document.body.style.overflow = 'hidden';
                 manifestoModal.classList.add('active');
             });
 
-            // Close Manifesto
             closeManifesto.addEventListener('click', () => {
                 manifestoModal.classList.remove('active');
-                document.body.style.overflow = '';
             });
 
-            // Version Control Force Refresh
+            // VERSION CONTROL ENGINE
             const currentVersion = "8"; 
             const storageKey = "hub_version_check";
             if (localStorage.getItem(storageKey) !== currentVersion) {
