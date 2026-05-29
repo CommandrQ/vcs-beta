@@ -6,19 +6,19 @@
     <title>Music Player | CMDRQ</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style.css?v=8">
     <style>
         /* =========================================
-           01 // CORE CANVAS SETUP & SCROLL LOCK
+           01 // VIEWPORT LOCKOUT (SCROLL IMMUNITY)
            ========================================= */
         html, body {
             margin: 0;
             padding: 0;
             width: 100vw;
             height: 100dvh; 
-            overflow: hidden !important; /* Disables page scrolling entirely */
-            background-color: #05020c;
+            overflow: hidden !important; 
+            background-color: #06030e;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -31,18 +31,18 @@
         }
 
         /* =========================================
-           02 // HARD LOCK CONTAINER CENTERING
+           02 // CORE ALIGNMENT FRAMEWORK
            ========================================= */
         .terminal-container {
             position: fixed;
-            top: 46%; /* Adjusted to center perfectly including layout constraints */
+            top: 48%;
             left: 50%;
             transform: translate(-50%, -50%);
             width: 90%;
-            max-width: 400px; /* Mobile hardware profile width */
+            max-width: 440px; 
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 1.25rem;
             padding: 0 !important;
             margin: 0 !important;
         }
@@ -61,7 +61,7 @@
             text-transform: uppercase;
             letter-spacing: 4px;
             color: #fff;
-            text-shadow: 0 0 10px rgba(147, 51, 234, 0.6);
+            text-shadow: 0 0 10px rgba(168, 85, 247, 0.6);
         }
 
         .commander-role {
@@ -83,45 +83,58 @@
         }
 
         /* =========================================
-           03 // PULSING PURPLE CHASSIS
+           03 // VANGUARD CYBERCHASSIS CONFIG
            ========================================= */
         .mp4-chassis {
             display: flex;
             flex-direction: column;
             width: 100%;
-            background: rgba(8, 4, 16, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 2px solid rgba(147, 51, 234, 0.5);
-            border-radius: 24px;
-            padding: 1.25rem;
+            background: linear-gradient(145deg, rgba(14, 8, 28, 0.9) 0%, rgba(6, 3, 14, 0.95) 100%);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 2px solid rgba(147, 51, 234, 0.4);
+            border-radius: 28px;
+            padding: 1.5rem;
             z-index: 10;
-            animation: purpleGlowPulse 4s ease-in-out infinite;
+            position: relative;
+            animation: tacticalGlowPulse 4s ease-in-out infinite;
         }
 
-        @keyframes purpleGlowPulse {
+        @keyframes tacticalGlowPulse {
             0%, 100% {
-                border-color: rgba(147, 51, 234, 0.4);
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(147, 51, 234, 0.2);
+                border-color: rgba(147, 51, 234, 0.35);
+                box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9), 0 0 20px rgba(147, 51, 234, 0.1);
             }
             50% {
-                border-color: rgba(168, 85, 247, 0.9);
-                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9), 0 0 35px rgba(168, 85, 247, 0.6);
+                border-color: rgba(168, 85, 247, 0.85);
+                box-shadow: 0 15px 45px rgba(0, 0, 0, 0.95), 0 0 30px rgba(168, 85, 247, 0.45);
             }
+        }
+
+        /* Top Corner Aesthetic Line Accent */
+        .mp4-chassis::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 10%;
+            width: 30%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #a855f7, transparent);
         }
 
         /* =========================================
-           04 // VIEWPORT SCALER
+           04 // HARDWARE VIEWPORT
            ========================================= */
         .mp4-screen-viewport {
             width: 100%;
             aspect-ratio: 16 / 9;
-            background: #000;
-            border: 1px solid rgba(168, 85, 247, 0.3);
-            border-radius: 12px;
+            background: #000000;
+            border: 1px solid rgba(168, 85, 247, 0.25);
+            border-radius: 16px;
             overflow: hidden;
-            margin-bottom: 1rem;
-            flex-shrink: 0;
+            margin-bottom: 1.25rem;
+            position: relative;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
         }
 
         .mp4-screen-viewport iframe {
@@ -132,39 +145,48 @@
         }
 
         /* =========================================
-           05 // TICKER MARQUEE ENGINE (ZERO SHIFT)
+           05 // DYNAMIC MARQUEE TICKER HUD
            ========================================= */
         .mp4-metadata-deck {
-            text-align: center;
-            padding-bottom: 1rem;
-            border-bottom: 1px dashed rgba(147, 51, 234, 0.4);
-            margin-bottom: 1rem;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(147, 51, 234, 0.2);
+            border-radius: 14px;
+            padding: 0.75rem 1rem;
+            margin-bottom: 1.25rem;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: center;
-            height: 64px; /* Hard lock height constraints to prevent vertical pushing */
+            height: 68px; /* Strict dimensional constraint */
             width: 100%;
             overflow: hidden;
-            position: relative;
         }
 
-        /* Masking boundary to wrap text smoothly inside window walls */
         .marquee-window {
             width: 100%;
             overflow: hidden;
             position: relative;
             white-space: nowrap;
-            height: 28px;
         }
 
         .mp4-track-title {
             display: inline-block;
-            font-size: 1.1rem; 
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1.15rem; 
             font-weight: 700;
             color: #ffffff;
-            padding-left: 100%; /* Delays enter loop cleanly */
-            animation: marqueeTicker 15s linear infinite;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        /* Dynamic classes activated securely via JS logic loops */
+        .animate-marquee {
+            padding-left: 100%;
+            animation: marqueeTicker 14s linear infinite;
+        }
+
+        .static-center {
+            width: 100%;
+            text-align: center;
         }
 
         @keyframes marqueeTicker {
@@ -173,56 +195,68 @@
         }
 
         .mp4-track-author {
+            font-family: 'Share Tech Mono', monospace;
             font-size: 0.75rem; 
             font-weight: 700;
-            letter-spacing: 2px;
+            letter-spacing: 1.5px;
             color: #a855f7;
             text-transform: uppercase;
-            margin-top: 2px;
+            margin-top: 4px;
             width: 100%;
+            text-align: center;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+            opacity: 0.85;
         }
 
         /* =========================================
-           06 // HARDWARE CONTROLS
+           06 // COCKPIT HARDWARE CONTROLS
            ========================================= */
         .mp4-controls-wheel {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.85rem;
             width: 100%;
         }
 
         .mp4-btn {
-            background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.5) 100%);
-            border: 1px solid rgba(147, 51, 234, 0.4);
-            color: #ffffff;
+            background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0.4) 100%);
+            border: 1px solid rgba(147, 51, 234, 0.35);
+            color: #e2d8f0;
             padding: 12px 10px;
-            font-size: 0.75rem;
-            font-weight: 800;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.8rem;
+            font-weight: 700;
             cursor: pointer;
-            border-radius: 12px;
-            letter-spacing: 1px;
+            border-radius: 14px;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
-            transition: all 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             flex: 1; 
             text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
         }
 
         .mp4-btn:hover {
             transform: translateY(-2px);
             border-color: #a855f7;
-            background: rgba(147, 51, 234, 0.1);
-            box-shadow: 0 5px 15px rgba(147, 51, 234, 0.4);
+            background: rgba(147, 51, 234, 0.15);
+            color: #ffffff;
+            box-shadow: 0 5px 15px rgba(147, 51, 234, 0.35);
+        }
+
+        .mp4-btn:active {
+            transform: translateY(0);
         }
 
         .mp4-btn.active-play {
-            border-color: #fff;
-            color: #fff;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+            border-color: #ffffff;
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+            text-shadow: 0 0 4px #fff;
         }
 
         /* =========================================
@@ -239,67 +273,74 @@
         .dock-logo { 
             width: 32px; 
             height: 32px; 
-            opacity: 0.6; 
-            transition: 0.3s; 
+            opacity: 0.5; 
+            transition: 0.3s ease; 
             filter: drop-shadow(0 0 2px rgba(212,175,55,0.2));
         }
 
         .dock-logo:hover { 
-            opacity: 1; 
+            opacity: 0.9; 
             filter: drop-shadow(0 0 8px var(--gold, #D4AF37)); 
         }
 
         /* =========================================
-           08 // WORKSTATION SCALE VARIATIONS
+           08 // WIDESCREEN WORKSTATION SPECIFICATIONS
            ========================================= */
         @media (min-width: 1024px) {
             .terminal-container {
-                max-width: 580px; /* Perfectly wider footprint on desktop layouts */
+                max-width: 620px; /* Enhanced wide visual balance profile */
                 top: 50%;
             }
             .mp4-chassis {
-                padding: 1.75rem;
+                padding: 2rem;
+                border-radius: 36px;
             }
             .mp4-metadata-deck {
-                height: 72px;
+                height: 76px;
+                padding: 1rem 1.5rem;
+                margin-bottom: 1.5rem;
             }
             .mp4-track-title {
-                font-size: 1.25rem;
+                font-size: 1.35rem;
+            }
+            .mp4-track-author {
+                font-size: 0.85rem;
+                margin-top: 6px;
             }
             .mp4-btn {
                 padding: 14px 20px;
-                font-size: 0.85rem;
+                font-size: 0.9rem;
+                border-radius: 16px;
+            }
+            .commander-title {
+                font-size: 2.4rem;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- VISUAL SCENE LAYER -->
     <div class="starfield-canvas" id="canvas-starfield-engine" style="position:fixed; inset:0; z-index:1; pointer-events:none;"></div>
     <div class="comet-canvas" id="canvas-comet-engine" style="position:fixed; inset:0; z-index:2; pointer-events:none;"></div>
-    <div style="position:fixed; top:-10%; left:50%; transform:translateX(-50%); width:90vw; height:60vh; background:radial-gradient(circle, rgba(147,51,234,0.15) 0%, transparent 70%); z-index:3; pointer-events:none;"></div>
+    <div style="position:fixed; top:-10%; left:50%; transform:translateX(-50%); width:90vw; height:60vh; background:radial-gradient(circle, rgba(147,51,234,0.12) 0%, transparent 70%); z-index:3; pointer-events:none;"></div>
 
     <main class="terminal-container">
-        <!-- HEADER MODULE -->
         <header class="player-header">
             <h1 class="commander-title">Music Player</h1>
             <a class="commander-role" href="../">← Back to Control Deck</a>
         </header>
 
-        <!-- HARDWARE RIG -->
         <section class="mp4-chassis">
 
             <div class="mp4-screen-viewport">
                 <iframe id="mp4-video-frame" src="https://www.youtube.com/embed/videoseries?listType=playlist&list=PLwX0pb3GErenzxXjayWA-U4A_GKKnMsgP&enablejsapi=1&rel=0&modestbranding=1&vq=hd1080" allow="autoplay; encrypted-media" allowfullscreen></iframe>
             </div>
 
-            <!-- SCROLLING MARQUEE AREA -->
             <div class="mp4-metadata-deck">
-                <div class="marquee-window">
-                    <div id="live-title" class="mp4-track-title">PLAYLIST STANDING BY</div>
+                <div class="marquee-window" id="marquee-win-element">
+                    <div id="live-title" class="mp4-track-title static-center">PLAYLIST STANDING BY</div>
                 </div>
-                <div id="live-author" class="mp4-track-author">AWAITING LOAD</div>
+                <div id="live-author" class="mp4-track-author">AWAITING SYSTEM LOAD</div>
             </div>
 
             <div class="mp4-controls-wheel">
@@ -311,12 +352,10 @@
         </section>
     </main>
 
-    <!-- FOOTER FRAME -->
     <footer class="system-dock">
         <img src="../images/vklogo.png" alt="VK Logo" class="dock-logo">
     </footer>
 
-    <!-- ENGINE CODE WIRE-UP -->
     <script src="https://www.youtube.com/iframe_api"></script>
     <script>
         // --- CELESTIAL CANVAS ENGINE ---
@@ -372,11 +411,12 @@
             queueNextComet();
         });
 
-        // --- HARDWARE TELEMETRY ENGINE ---
+        // --- INTELLIGENT HARDWARE HUD ENGINE ---
         let player;
         const playToggleBtn = document.getElementById('mp4-play-toggle');
         const liveTitle = document.getElementById('live-title');
         const liveAuthor = document.getElementById('live-author');
+        const marqueeWindow = document.getElementById('marquee-win-element');
         
         let isPlaying = false;
         let isLoaded = false;
@@ -389,23 +429,35 @@
             });
         }
 
-        function extractMetadata() {
+        function computeMarqueeDynamics() {
             try {
                 const videoData = player.playerInfo.videoData; 
                 if (videoData && videoData.title) {
-                    const rawTitle = videoData.title.toUpperCase();
-                    liveTitle.innerText = rawTitle;
-                    liveAuthor.innerText = videoData.author ? videoData.author.toUpperCase() : "YOUTUBE AUDIO";
+                    const cleanTitle = videoData.title.toUpperCase();
                     
-                    // Dynamic conditional speed adjustment based on length metrics
-                    if(rawTitle.length > 24) {
-                        liveTitle.style.animationDuration = '12s';
+                    // Temporarily wipe out active animations to reset geometry maps cleanly
+                    liveTitle.className = "mp4-track-title";
+                    liveTitle.innerText = cleanTitle;
+                    liveAuthor.innerText = videoData.author ? videoData.author.toUpperCase() : "YOUTUBE AUDIO LAYER";
+
+                    // Smart evaluation: Does text width exceed its structural chassis boundaries?
+                    const windowWidth = marqueeWindow.offsetWidth;
+                    const textWidth = liveTitle.scrollWidth;
+
+                    if (textWidth > windowWidth) {
+                        // Length overflow detected. Initialize left-scrolling ticker engine.
+                        liveTitle.classList.add('animate-marquee');
+                        
+                        // Adaptive speed balancing based on physical title density
+                        const scrollVelocityFactor = Math.max(10, Math.min(24, textWidth / 25));
+                        liveTitle.style.animationDuration = `${scrollVelocityFactor}s`;
                     } else {
-                        liveTitle.style.animationDuration = '20s';
+                        // Title fits safely. Lock text inside center alignment profiles.
+                        liveTitle.classList.add('static-center');
                     }
                 }
             } catch (error) {
-                liveTitle.innerText = "STREAM TRACKING LINE ACTIVE";
+                console.log("HUD metadata telemetry refresh cycle intercepted.");
             }
         }
 
@@ -414,7 +466,7 @@
                 isPlaying = true;
                 playToggleBtn.innerText = "Pause";
                 playToggleBtn.classList.add('active-play');
-                extractMetadata();
+                computeMarqueeDynamics();
             } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
                 isPlaying = false;
                 playToggleBtn.innerText = "Play";
@@ -422,13 +474,14 @@
             }
         }
 
+        // Hardware Chassis Core Action Wireup
         playToggleBtn.addEventListener('click', () => {
             if (!player) return; 
 
             if (!isLoaded) {
                 player.playVideo();
                 isLoaded = true;
-                playToggleBtn.innerText = "Loading...";
+                playToggleBtn.innerText = "Connecting...";
                 return;
             }
 
@@ -445,6 +498,11 @@
 
         document.getElementById('mp4-prev').addEventListener('click', () => {
             if (player && isLoaded) player.previousVideo();
+        });
+
+        // Recalculate layout rules dynamically if device rotates or shifts boundaries
+        window.addEventListener('resize', () => {
+            if (isPlaying) computeMarqueeDynamics();
         });
     </script>
 </body>
