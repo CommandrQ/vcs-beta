@@ -1,38 +1,38 @@
 /* ==========================================
-   1. BRANDING & LOCAL VARIABLES
+   1. BRANDING, SYSTEMS & LOCAL TOKENS
    ========================================== */
 :root {
     --gold: #D4AF37;
     --gold-glow: rgba(212, 175, 55, 0.4);
-    --bg-dark: #05040a;
+    --bg-black: #000000;
     --white: #ffffff;
-    --text-muted: rgba(255, 255, 255, 0.7);
-    --glass-bg: rgba(12, 9, 23, 0.65);
-    --glass-border: rgba(255, 255, 255, 0.08);
+    --text-muted: rgba(255, 255, 255, 0.65);
+    --glass-bg: rgba(10, 8, 16, 0.85); /* Darkened solid backing profile */
+    --glass-border: rgba(255, 255, 255, 0.09);
     --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 html { 
     scroll-behavior: smooth; 
-    overflow-x: hidden;
 }
 
 body {
-    background: linear-gradient(180deg, #020108 0%, #060410 40%, #170d1c 75%, #D4AF37 130%);
+    background: linear-gradient(180deg, #03010a 0%, #0c081d 35%, #180d22 70%, #1c1404 100%);
     background-attachment: fixed;
     display: flex;
     flex-direction: column;
     min-height: 100dvh;
     margin: 0;
     padding: 0;
-    overflow-y: auto; 
-    overflow-x: hidden; 
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--white);
+    overflow-x: hidden;
+    overflow-y: auto; /* System unlocked for healthy cross-device scrolling */
     -webkit-overflow-scrolling: touch; 
 }
 
 /* ==========================================
-   2. BACKGROUND ENVIRONMENT
+   2. COSMIC WALLPAPER BACKGROUND
    ========================================== */
 #environment { 
     position: fixed; 
@@ -48,25 +48,25 @@ body {
     top: -50%; 
     left: -50%;
     background-image: 
-        radial-gradient(1.5px 1.5px at 10% 10%, #fff, transparent),
-        radial-gradient(2px 2px at 30% 40%, #b388ff, transparent),
-        radial-gradient(1px 1px at 80% 20%, #fff, transparent),
-        radial-gradient(2.5px 2.5px at 50% 80%, var(--gold), transparent);
-    background-size: 350px 350px;
-    animation: stellar-drift 400s linear infinite;
-    opacity: 0.4;
+        radial-gradient(1.5px 1.5px at 15% 15%, #fff, transparent),
+        radial-gradient(2px 2px at 35% 45%, #b388ff, transparent),
+        radial-gradient(1px 1px at 75% 25%, #fff, transparent),
+        radial-gradient(2.5px 2.5px at 55% 75%, var(--gold), transparent);
+    background-size: 400px 400px;
+    animation: stellar-rotation 500s linear infinite;
+    opacity: 0.45;
 }
 
-@keyframes stellar-drift { 
+@keyframes stellar-rotation { 
     from { transform: rotate(0deg); } 
     to { transform: rotate(360deg); } 
 }
 
 .comet {
     position: absolute; 
-    width: 120px; 
+    width: 150px; 
     height: 2px;
-    background: linear-gradient(90deg, #fff 0%, var(--gold) 20%, transparent 100%);
+    background: linear-gradient(90deg, #ffffff 0%, var(--gold) 30%, transparent 100%);
     border-radius: 50%; 
     box-shadow: 0 0 15px var(--gold-glow);
     animation: comet-strike 2s var(--ease-smooth) forwards; 
@@ -75,17 +75,17 @@ body {
 }
 
 @keyframes comet-strike {
-    0% { transform: translate(0, 0) rotate(-35deg); opacity: 1; }
-    100% { transform: translate(-1000px, 600px) rotate(-35deg); opacity: 0; }
+    0% { transform: translate(0, 0) rotate(-25deg); opacity: 1; }
+    100% { transform: translate(-800px, 400px) rotate(-25deg); opacity: 0; }
 }
 
 /* ==========================================
-   3. MASTER LAYOUT STRUCTURE
+   3. RESPONSIVE CONTAINER MASTER ENGINE
    ========================================== */
 .app-container {
     width: 92%;
     max-width: 1100px;
-    margin: 40px auto 20px;
+    margin: 40px auto;
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -101,7 +101,7 @@ body {
     }
 }
 
-/* --- SIDEBAR PANEL --- */
+/* --- THE STICKY SIDEBAR SYSTEM --- */
 .sidebar {
     display: flex;
     flex-direction: column;
@@ -118,7 +118,6 @@ body {
     }
 }
 
-/* --- MAIN WORKSPACE PANEL --- */
 .main-content {
     display: flex;
     flex-direction: column;
@@ -128,17 +127,16 @@ body {
 }
 
 /* ==========================================
-   4. MODULAR GLASS SYSTEM CARDS
+   4. MODULAR GLASS SYSTEM WINDOW CARDS
    ========================================== */
 .module-card {
     background: var(--glass-bg);
-    backdrop-filter: blur(25px) saturate(150%);
-    -webkit-backdrop-filter: blur(25px) saturate(150%);
+    backdrop-filter: blur(25px) saturate(140%);
+    -webkit-backdrop-filter: blur(25px) saturate(140%);
     border: 1px solid var(--glass-border);
     border-radius: 24px;
     padding: 30px 25px; 
-    box-shadow: 0 20px 40px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.03);
-    text-align: left;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.02);
 }
 
 @media (min-width: 768px) {
@@ -146,90 +144,7 @@ body {
 }
 
 /* ==========================================
-   5. TYPOGRAPHY ARRAY
-   ========================================== */
-.page-header { text-align: center; margin-bottom: 10px; }
-
-.page-title { 
-    font-size: clamp(2.2rem, 6vw, 2.8rem); 
-    font-weight: 900; 
-    letter-spacing: 4px; 
-    text-transform: uppercase;
-    background: linear-gradient(180deg, #ffffff 0%, var(--gold) 100%);
-    -webkit-background-clip: text; 
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.2));
-    margin-bottom: 5px;
-    line-height: 1.1;
-}
-
-.page-subtitle { 
-    color: var(--gold); 
-    font-size: 0.85rem; 
-    letter-spacing: 3px; 
-    text-transform: uppercase; 
-    font-weight: 700; 
-}
-
-h2 { 
-    color: var(--gold); 
-    font-size: 1.25rem; 
-    font-weight: 800; 
-    margin-bottom: 18px; 
-    text-transform: uppercase; 
-    letter-spacing: 1.5px; 
-}
-
-p { 
-    color: rgba(255, 255, 255, 0.9); 
-    font-size: 0.95rem; 
-    line-height: 1.7; 
-    margin-bottom: 20px; 
-}
-
-p:last-child {
-    margin-bottom: 0;
-}
-
-.highlight-text {
-    font-size: 1.15rem; 
-    color: var(--white); 
-    font-weight: 400; 
-    line-height: 1.6; 
-    text-align: center; 
-    margin-bottom: 0;
-}
-
-/* ==========================================
-   6. SHIMMER LINK COMPONENT
-   ========================================== */
-.shimmer-gold-link {
-    font-size: 0.85rem;
-    font-weight: 700;
-    text-decoration: none;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    background: linear-gradient(to right, #D4AF37 20%, #ffffff 50%, #D4AF37 80%);
-    background-size: 200% auto;
-    color: transparent;
-    -webkit-background-clip: text;
-    background-clip: text;
-    animation: goldShine 3s linear infinite;
-    display: inline-block;
-    transition: transform 0.3s ease, filter 0.3s ease;
-}
-
-.shimmer-gold-link:hover {
-    transform: scale(1.03);
-    filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.4));
-}
-
-@keyframes goldShine {
-    to { background-position: 200% center; }
-}
-
-/* ==========================================
-   7. THE METAPHYSICS GRID BLOCKS
+   5. INTERACTIVE MATRIX COMPONENT GRID
    ========================================== */
 .matrix-grid { 
     display: grid; 
@@ -244,45 +159,157 @@ p:last-child {
 
 .matrix-item {
     background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.05);
     padding: 22px 18px;
     border-radius: 16px;
-    text-align: center;
+    transition: all 0.3s var(--ease-smooth);
 }
 
-.matrix-item h3 { 
-    font-size: 0.95rem; 
-    color: var(--gold); 
-    margin-bottom: 10px; 
-    font-weight: 700; 
-    text-transform: uppercase; 
-    letter-spacing: 0.5px; 
+.interactive-node {
+    cursor: pointer;
 }
 
-.matrix-item p { 
-    font-size: 0.85rem; 
-    margin-bottom: 0; 
-    color: var(--text-muted); 
-    line-height: 1.5; 
+.interactive-node:hover {
+    background: rgba(212, 175, 55, 0.04);
+    border-color: var(--gold);
+    transform: translateY(-2px);
+}
+
+.interactive-display-box {
+    margin-top: 20px;
+    padding: 20px;
+    background: rgba(0,0,0,0.4);
+    border-left: 3px solid var(--gold);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    animation: fadeIn 0.4s ease;
 }
 
 /* ==========================================
-   8. FIXED SYSTEM FOOTER DECK
+   6. TYPOGRAPHY MATRIX
    ========================================== */
-.footer-pad { 
-    margin-top: auto; 
-    width: 100%; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10;
+.brand-center { text-align: center; }
+.text-center { text-align: center; }
+
+.page-title { 
+    font-size: clamp(2.2rem, 5vw, 2.8rem); 
+    font-weight: 900; 
+    letter-spacing: 5px; 
+    text-transform: uppercase;
+    background: linear-gradient(180deg, #ffffff 0%, var(--gold) 100%);
+    -webkit-background-clip: text; 
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.2));
+    margin-bottom: 5px;
 }
 
-.system-footer {
-    padding: 30px;
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: rgba(255, 255, 255, 0.5);
-    text-align: center;
+.page-subtitle { 
+    color: var(--gold); font-size: 0.8rem; letter-spacing: 4px; text-transform: uppercase; font-weight: 700; 
 }
+
+h2 { 
+    color: var(--gold); font-size: 1.2rem; font-weight: 800; margin-bottom: 18px; text-transform: uppercase; letter-spacing: 1.5px; 
+}
+
+h3 { 
+    font-size: 0.95rem; color: var(--gold); margin-bottom: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; 
+}
+
+p { 
+    color: rgba(255, 255, 255, 0.85); font-size: 0.95rem; line-height: 1.7; margin-bottom: 15px; 
+}
+
+.highlight-text {
+    font-size: 1.15rem; color: var(--white); font-weight: 300; line-height: 1.6; text-align: center; margin-bottom: 0;
+}
+
+.gold-accent { color: var(--gold); font-weight: bold; }
+
+/* ==========================================
+   7. INPUT SYSTEMS & CRUCIBLE ENGINE
+   ========================================== */
+.crucible-engine {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+label { 
+    display: block; font-weight: 700; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 10px;
+}
+
+input, textarea { 
+    width: 100%; padding: 15px; border-radius: 12px; 
+    border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(0, 0, 0, 0.5); color: white; 
+    font-family: inherit; font-size: 0.9rem; transition: all 0.3s ease;
+}
+
+input:focus, textarea:focus { 
+    outline: none; border-color: var(--gold); box-shadow: 0 0 12px var(--gold-glow); background: rgba(0, 0, 0, 0.7); 
+}
+
+/* ==========================================
+   8. INTERACTIVE BUTTONS & DIAGNOSTICS
+   ========================================== */
+.action-btn {
+    width: 100%; padding: 16px; border-radius: 14px; border: none; 
+    background: var(--white); color: #000000; font-weight: 800; font-size: 0.9rem;
+    text-transform: uppercase; letter-spacing: 1.5px; cursor: pointer; transition: all 0.3s var(--ease-smooth);
+}
+
+.action-btn:hover { background: var(--gold); box-shadow: 0 0 20px var(--gold-glow); transform: translateY(-1px); }
+
+.action-btn.gold-variant {
+    background: transparent; border: 2px solid var(--gold); color: var(--gold);
+}
+.action-btn.gold-variant:hover { background: var(--gold); color: #000; }
+
+.diagnostic-stat {
+    font-size: 0.85rem; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+    display: flex; justify-content: space-between; align-items: center; color: var(--text-muted);
+}
+.diagnostic-stat:last-child { border-bottom: none; }
+
+.status-indicator { font-size: 0.75rem; font-weight: bold; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; }
+.status-indicator.ready { background: rgba(214,175,55,0.1); color: var(--gold); border: 1px solid rgba(214,175,55,0.2); }
+.status-indicator.pulsing { animation: pulse 2s infinite alternate; }
+
+.shimmer-gold-link {
+    font-size: 0.8rem; font-weight: 700; text-decoration: none; text-transform: uppercase; letter-spacing: 2px;
+    background: linear-gradient(to right, #D4AF37 20%, #ffffff 50%, #D4AF37 80%); background-size: 200% auto;
+    color: transparent; -webkit-background-clip: text; animation: goldShine 3s linear infinite; display: inline-block; margin-top: 15px;
+}
+
+@keyframes goldShine { to { background-position: 200% center; } }
+@keyframes pulse { 0% { opacity: 0.6; } 100% { opacity: 1; text-shadow: 0 0 10px var(--gold); } }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ==========================================
+   9. DATA LEDGER STREAM TABLE
+   ========================================== */
+.ledger-scroll-area {
+    width: 100%; overflow-x: auto; border: 1px solid var(--glass-border);
+    border-radius: 16px; background: rgba(0, 0, 0, 0.4); margin-top: 25px;
+}
+
+.citizen-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; min-width: 500px; }
+.citizen-table th {
+    background: rgba(255, 255, 255, 0.03); color: var(--gold); padding: 12px;
+    font-weight: 600; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid var(--glass-border); text-align: left;
+}
+.citizen-table td {
+    padding: 14px 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.04); color: rgba(255, 255, 255, 0.9); vertical-align: top;
+}
+
+.badge-action {
+    background: rgba(255,255,255,0.06); color: #fff; border: 1px solid rgba(255,255,255,0.1);
+    padding: 4px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 500; display: inline-block;
+}
+
+/* ==========================================
+   10. SYSTEM FOOTER ARCHITECTURE
+   ========================================== */
+.footer-pad { margin-top: auto; width: 100%; display: flex; justify-content: center; z-index: 10; }
+.system-footer { padding: 30px; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; color: rgba(255, 255, 255, 0.4); }
