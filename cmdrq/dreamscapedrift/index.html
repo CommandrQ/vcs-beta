@@ -4,99 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Dreamscape Drift</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../style.css?v=2">
-    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css?v=8">
     <style>
-        /* --- FORCE SYSTEM SCREEN LOCK --- */
-        html, body {
-            overflow: hidden !important;
-            height: 100dvh;
-            width: 100vw;
-            background-color: var(--bg-deep, #06040d);
-            color: var(--text-primary, #f1ecfb);
-            font-family: 'SF Pro Display', -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
-        }
-
-        .hub-container {
-            height: 100dvh;
-            max-height: 100dvh;
-            padding: 20px 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            width: 92%; 
-            max-width: 500px;
-            margin: 0 auto;
-            transition: max-width 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-            position: relative;
-            z-index: 3;
-        }
-
-        /* --- DESKTOP SCALE ADJUSTMENTS --- */
-        @media (min-width: 768px) {
-            .hub-container { 
-                max-width: 700px !important; 
-            }
-        }
-
-        .hub-title {
-            font-size: 1.6rem;
-            font-weight: 900;
-            letter-spacing: 4px;
-            color: var(--blue-muted, #4dd0e1);
-            text-transform: uppercase;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        h2 {
-            font-size: 1.1rem;
-            font-weight: 800;
-            letter-spacing: 2px;
-            color: var(--pink-neon, #ff4081);
-            text-transform: uppercase;
-            border-bottom: 1px solid var(--border-color, rgba(149, 117, 205, 0.3));
-            padding-bottom: 8px;
-            margin-bottom: 15px;
-        }
-
         /* --- PULSING EDGE FRAME --- */
         .hub-card {
             display: flex;
             flex-direction: column;
-            height: auto;
-            max-height: 85dvh;
-            padding: 20px;
-            margin-bottom: 0;
-            overflow: hidden;
-            background: var(--card-surface, rgba(14, 10, 26, 0.85));
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 12px;
-            animation: borderGlowPulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+            width: 100%;
+            background: rgba(12, 10, 18, 0.65);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
         }
 
-        @keyframes borderGlowPulse {
-            0%, 100% {
-                border-color: rgba(255, 255, 255, 0.15);
-                box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-            }
-            50% {
-                border-color: var(--blue-muted, #4dd0e1);
-                box-shadow: 0 20px 50px rgba(77, 208, 225, 0.15), 0 0 20px rgba(77, 208, 225, 0.2);
-            }
+        .hub-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 30%; height: 2px;
+            background: var(--gold);
+            box-shadow: 0 0 10px var(--gold);
         }
 
-        /* --- PLAYER VIEWPORT FRAME (REDUCED HEIGHT SPECIFICATIONS) --- */
+        /* --- PLAYER VIEWPORT FRAME --- */
         .player-viewport {
             width: 100%;
-            max-width: 480px; /* Constrains expansion blowout on desktop rigs */
-            margin: 0 auto 20px auto;
-            background: #000000;
-            border: 1px solid var(--border-color, rgba(149, 117, 205, 0.3));
-            border-radius: 8px;
-            overflow: hidden;
             aspect-ratio: 16 / 9;
+            background: #000000;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
             flex-shrink: 0;
         }
 
@@ -107,116 +49,213 @@
             display: block;
         }
 
-        /* --- INDEPENDENT SCROLLER FOR VIDEO SELECTIONS --- */
+        /* --- INDEPENDENT SCROLLER FOR SELECTIONS --- */
         .scroller-bay {
             overflow-y: auto;
             flex-grow: 1;
-            padding-right: 6px;
-            margin-bottom: 15px;
-            -webkit-overflow-scrolling: touch;
+            margin-bottom: 0.5rem;
         }
 
-        .scroller-bay::-webkit-scrollbar { width: 4px; }
-        .scroller-bay::-webkit-scrollbar-track { background: transparent; }
-        .scroller-bay::-webkit-scrollbar-thumb { background: var(--border-color, rgba(149, 117, 205, 0.3)); border-radius: 10px; }
+        .scroller-bay::-webkit-scrollbar {
+            width: 6px;
+        }
+        .scroller-bay::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .scroller-bay::-webkit-scrollbar-thumb {
+            background: transparent;
+            border-radius: 3px;
+            transition: background 0.3s ease;
+        }
+        .scroller-bay.scrolling::-webkit-scrollbar-thumb {
+            background: rgba(212, 175, 55, 0.7);
+            box-shadow: 0 0 6px var(--gold);
+        }
 
         .video-selection-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
             width: 100%;
+            padding-right: 2px;
         }
 
-        /* --- MENU BUTTON SHAPES WITH TEXT WRAPPING RULES --- */
+        /* --- MENU BUTTON SHAPES --- */
         .video-thumb {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border-color, rgba(149, 117, 205, 0.3));
-            border-radius: 8px; 
-            padding: 14px 20px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0.3) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px; 
+            padding: 1.2rem;
             text-align: left;
             color: #ffffff;
             font-weight: 700;
-            font-size: 0.85rem;
-            letter-spacing: 0.5px;
+            font-size: 1rem;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             width: 100%;
-            flex-shrink: 0;
-
+            box-sizing: border-box;
             white-space: normal;
             word-wrap: break-word;
-            overflow: visible;
-            text-overflow: clip;
         }
 
         .video-thumb:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: var(--pink-neon, #ff4081);
+            transform: translateY(-2px);
+            border-color: var(--gold);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.2);
+            color: var(--gold);
         }
 
         .video-thumb.active {
-            background: rgba(149, 117, 205, 0.1);
+            border-color: #ffffff;
             color: #ffffff;
-            border-color: var(--purple-glow, #b388ff);
-            box-shadow: 0 0 10px rgba(149, 117, 205, 0.2);
-            text-shadow: 0 0 8px var(--purple-glow, #b388ff);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
         }
 
-        .hub-return-container {
-            text-align: center;
-            margin-top: 5px;
-            flex-shrink: 0;
-            padding-top: 15px;
-            border-top: 1px solid var(--border-color, rgba(149, 117, 205, 0.3));
+        /* --- DESKTOP GRID ADAPTATIONS --- */
+        @media (min-width: 1024px) {
+            .video-selection-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
-        .hub-return-link {
-            color: #ffffff !important;
-            text-decoration: none !important;
-            font-size: 0.8rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            transition: color 0.2s ease, text-shadow 0.2s ease;
-            display: inline-block;
-        }
-
-        .hub-return-link:hover {
-            color: var(--pink-neon, #ff4081) !important;
-            text-shadow: 0 0 8px var(--pink-glow, #ff0055);
+        @media (min-width: 1920px) {
+            .video-selection-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
     </style>
 </head>
 <body>
 
-    <div id="starfield"><div class="stars"></div></div>
-    <div class="ambient-glow"></div>
+    <div class="starfield-canvas" id="canvas-starfield-engine"></div>
+    <div class="comet-canvas" id="canvas-comet-engine"></div>
+    <div class="cyber-grid"></div>
+    <div class="ambient-flare"></div>
 
-    <div class="hub-container">
-        <h1 class="hub-title">Dreamscape Drift</h1>
+    <main class="terminal-container" id="main-scroller">
+        
+        <header class="identity-module">
+            <div class="hud-ring">
+                <img src="../images/headshot.jpg" alt="Quincy Jones" class="avatar-img">
+            </div>
+            <h1 class="commander-title">Dreamscape Drift</h1>
+            <a class="commander-role" href="../" style="text-decoration: none; border-bottom: 1px dashed var(--gold); transition: all 0.3s ease;">
+                ← Back to Control Deck
+            </a>
+        </header>
 
-        <main class="hub-card">
+        <section class="hub-card">
 
             <div class="player-viewport">
                 <iframe id="main-drift-player" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
             </div>
 
-            <div class="scroller-bay">
-                <h2>Video Menu</h2>
+            <div class="scroller-bay" id="bay-scroller">
                 <div id="video-menu-hook" class="video-selection-grid"></div>
             </div>
 
-            <div class="hub-return-container">
-                <a href="../" class="hub-return-link">← Return to Control Deck</a>
-            </div>
-        </main>
-    </div>
+        </section>
+
+    </main>
+
+    <footer class="system-dock">
+        <div class="dock-social-row">
+            <a href="https://music.apple.com/profile/cmdrq_music" target="_blank" class="dock-btn">
+                <span>Apple Music</span>
+            </a>
+            <a href="https://www.tiktok.com/@commandr_q" target="_blank" class="dock-btn">
+                <span>TikTok</span>
+            </a>
+        </div>
+        <div class="center-logo-container">
+            <img src="../images/vklogo.png" alt="VK Logo" class="dock-logo">
+        </div>
+    </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            
             const menuContainer = document.getElementById('video-menu-hook');
             const mainPlayer = document.getElementById('main-drift-player');
+            const mainScroller = document.getElementById('main-scroller');
+            const bayScroller = document.getElementById('bay-scroller');
 
+            // FADE-IN SCROLLBAR ENGINE
+            let mainScrollTimeout;
+            let bayScrollTimeout;
+
+            function triggerScrollbar(element, timeoutRef) {
+                element.classList.add('scrolling');
+                clearTimeout(timeoutRef);
+                return setTimeout(() => {
+                    element.classList.remove('scrolling');
+                }, 1000);
+            }
+
+            mainScroller.addEventListener('scroll', () => {
+                mainScrollTimeout = triggerScrollbar(mainScroller, mainScrollTimeout);
+            });
+
+            bayScroller.addEventListener('scroll', () => {
+                bayScrollTimeout = triggerScrollbar(bayScroller, bayScrollTimeout);
+            });
+
+            // STARFIELD DRIFT ENGINE
+            const starfield = document.getElementById('canvas-starfield-engine');
+            const totalStars = window.innerWidth > 1024 ? 120 : 50;
+
+            for (let i = 0; i < totalStars; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                const speed = Math.random() * 30 + 20;
+                const size = Math.random() * 1.5 + 0.5;
+                
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.left = `${Math.random() * 100}vw`;
+                star.style.top = `${Math.random() * 100}vh`;
+                star.style.opacity = Math.random() * 0.7 + 0.3;
+                star.style.animation = `starDrift ${speed}s linear infinite`;
+                star.style.animationDelay = `-${Math.random() * speed}s`;
+                
+                starfield.appendChild(star);
+            }
+
+            // DYNAMIC COMET ENGINE
+            const canvas = document.getElementById('canvas-comet-engine');
+            
+            function launchComet() {
+                const comet = document.createElement('div');
+                comet.classList.add('comet');
+                
+                const startX = Math.random() * (window.innerWidth * 0.4) + (window.innerWidth * 0.6);
+                const startY = Math.random() * (window.innerHeight * 0.4);
+                
+                comet.style.left = `${startX}px`;
+                comet.style.top = `${startY}px`;
+                
+                const duration = Math.random() * 0.8 + 0.6; 
+                comet.style.animation = `streak ${duration}s cubic-bezier(0.25, 1, 0.5, 1) forwards`;
+                
+                canvas.appendChild(comet);
+                
+                setTimeout(() => {
+                    comet.remove();
+                }, duration * 1000);
+            }
+
+            function queueNextComet() {
+                const nextSpawnDelay = Math.random() * 4000 + 2000;
+                setTimeout(() => {
+                    launchComet();
+                    queueNextComet();
+                }, nextSpawnDelay);
+            }
+            queueNextComet();
+
+            // DATA ENGINE ARRAY PROCESSING
             function cleanYouTubeUrl(urlStr) {
                 let idFound = "";
                 
@@ -231,7 +270,7 @@
                         idFound = urlStr;
                     }
                 } catch(e) {
-                    console.error("URL string parsing error", e);
+                    console.error("URL processing failure", e);
                 }
                 
                 return "https://www.youtube.com/embed/" + idFound.trim();
@@ -265,7 +304,7 @@
                     });
                 })
                 .catch(err => {
-                    menuContainer.innerHTML = '<div style="color:#ffffff; font-size:0.8rem; text-align:center; width:100%;">Configuration stream offline.</div>';
+                    menuContainer.innerHTML = '<div style="color:#ffffff; font-size:1rem; text-align:center; width:100%; font-weight:700;">Configuration stream offline.</div>';
                 });
         });
     </script>
