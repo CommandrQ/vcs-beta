@@ -17,7 +17,7 @@
             padding: 0;
             width: 100vw;
             height: 100dvh; 
-            overflow: hidden !important; 
+            overflow: hidden !important; /* Total page scroll lock */
             background-color: #05020c;
             display: flex;
             flex-direction: column;
@@ -33,14 +33,37 @@
         /* =========================================
            02 // HEADER & NAVIGATION
            ========================================= */
+        .terminal-container {
+            position: fixed;
+            top: 44%; /* Nudged upwards for mobile */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 420px; 
+            max-height: 90dvh; /* Safety boundary */
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding: 0 !important;
+            margin: 0 !important;
+            overflow-y: auto; /* Internal scroll ONLY if the screen is microscopic */
+            scrollbar-width: none;
+        }
+
+        .terminal-container::-webkit-scrollbar {
+            display: none;
+        }
+
         .player-header {
             text-align: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 0.5rem;
             z-index: 10;
+            flex-shrink: 0;
         }
 
         .commander-title {
-            margin: 0 0 8px 0;
+            margin: 0 0 6px 0;
             font-family: 'Cinzel', serif;
             font-weight: 700;
             font-size: 2rem;
@@ -74,8 +97,7 @@
         .mp4-chassis {
             display: flex;
             flex-direction: column;
-            width: 90%;
-            max-width: 400px; 
+            width: 100%;
             background: rgba(8, 4, 16, 0.85);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
@@ -84,6 +106,7 @@
             padding: 1.25rem;
             z-index: 10;
             animation: purpleGlowPulse 4s ease-in-out infinite;
+            flex-shrink: 0;
         }
 
         @keyframes purpleGlowPulse {
@@ -102,12 +125,15 @@
            ========================================= */
         .mp4-screen-viewport {
             width: 100%;
+            max-width: calc(40vh * 16 / 9); /* Mathematical lock to prevent height blowout */
+            max-height: 40vh; /* Limits max height so buttons are never pushed off screen */
             aspect-ratio: 16 / 9;
             background: #000;
             border: 1px solid rgba(168, 85, 247, 0.3);
             border-radius: 12px;
             overflow: hidden;
-            margin-bottom: 1rem;
+            margin: 0 auto 1rem auto;
+            flex-shrink: 0;
         }
 
         .mp4-screen-viewport iframe {
@@ -126,8 +152,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 80px; /* STRICT HEIGHT LOCK: Prevents layout shift when text changes */
-            overflow: hidden; /* Clips anything that tries to push past the height */
+            min-height: 60px;
         }
 
         .mp4-track-title {
@@ -222,12 +247,16 @@
            07 // DESKTOP RESPONSIVE RESIZING
            ========================================= */
         @media (min-width: 1024px) {
+            .terminal-container {
+                top: 50%; /* Back to true center on larger screens */
+                max-width: 680px; 
+            }
             .mp4-chassis {
-                max-width: 600px;
                 padding: 2rem;
             }
-            .mp4-metadata-deck {
-                height: 90px; /* Scaled up fixed height for desktop */
+            .mp4-screen-viewport {
+                max-height: 50vh; /* Scaled up safely for desktop */
+                max-width: calc(50vh * 16 / 9);
             }
             .mp4-track-title {
                 font-size: 1.3rem;
@@ -236,6 +265,22 @@
                 padding: 14px 20px;
                 font-size: 0.85rem;
                 max-width: 140px;
+            }
+        }
+
+        @media (min-width: 1920px) {
+            .terminal-container {
+                max-width: 800px;
+            }
+            .mp4-chassis {
+                padding: 2.5rem;
+            }
+            .mp4-screen-viewport {
+                max-height: 55vh;
+                max-width: calc(55vh * 16 / 9);
+            }
+            .mp4-track-title {
+                font-size: 1.5rem;
             }
         }
     </style>
@@ -247,29 +292,31 @@
     
     <div style="position:fixed; top:-10%; left:50%; transform:translateX(-50%); width:90vw; height:60vh; background:radial-gradient(circle, rgba(147,51,234,0.15) 0%, transparent 70%); z-index:3; pointer-events:none;"></div>
 
-    <header class="player-header">
-        <h1 class="commander-title">Music Player</h1>
-        <a class="commander-role" href="../">← Back to Control Deck</a>
-    </header>
+    <main class="terminal-container">
+        <header class="player-header">
+            <h1 class="commander-title">Music Player</h1>
+            <a class="commander-role" href="../">← Back to Control Deck</a>
+        </header>
 
-    <section class="mp4-chassis">
+        <section class="mp4-chassis">
 
-        <div class="mp4-screen-viewport">
-            <iframe id="mp4-video-frame" src="https://www.youtube.com/embed/videoseries?listType=playlist&list=PLwX0pb3GErenzxXjayWA-U4A_GKKnMsgP&enablejsapi=1&rel=0&modestbranding=1&vq=hd1080" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-        </div>
+            <div class="mp4-screen-viewport">
+                <iframe id="mp4-video-frame" src="https://www.youtube.com/embed/videoseries?listType=playlist&list=PLwX0pb3GErenzxXjayWA-U4A_GKKnMsgP&enablejsapi=1&rel=0&modestbranding=1&vq=hd1080" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
 
-        <div class="mp4-metadata-deck">
-            <div id="live-title" class="mp4-track-title">Playlist Standing By</div>
-            <div id="live-author" class="mp4-track-author">Awaiting Load</div>
-        </div>
+            <div class="mp4-metadata-deck">
+                <div id="live-title" class="mp4-track-title">Playlist Standing By</div>
+                <div id="live-author" class="mp4-track-author">Awaiting Load</div>
+            </div>
 
-        <div class="mp4-controls-wheel">
-            <button class="mp4-btn" id="mp4-prev">Prev</button>
-            <button class="mp4-btn" id="mp4-play-toggle">Load</button>
-            <button class="mp4-btn" id="mp4-next">Next</button>
-        </div>
+            <div class="mp4-controls-wheel">
+                <button class="mp4-btn" id="mp4-prev">Prev</button>
+                <button class="mp4-btn" id="mp4-play-toggle">Load</button>
+                <button class="mp4-btn" id="mp4-next">Next</button>
+            </div>
 
-    </section>
+        </section>
+    </main>
 
     <footer class="system-dock">
         <img src="../images/vklogo.png" alt="VK Logo" class="dock-logo">
