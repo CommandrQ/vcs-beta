@@ -2,305 +2,200 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Dreamscape Drift | CMDRQ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dreamscape Drift</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style.css?v=8">
     <style>
-        /* =========================================
-           01 // TOTAL SCROLL LOCKOUT
-           ========================================= */
+        /* --- NATURAL FLOW RESETS --- */
         html, body {
-            overflow: hidden !important;
-            height: 100dvh;
-            width: 100vw;
+            overflow-x: hidden !important;
+            overflow-y: auto !important; /* Allows natural native page scrolling */
+            height: auto !important;
+            min-height: 100vh;
             margin: 0;
             padding: 0;
-            background-color: #05020c;
-            box-sizing: border-box;
         }
 
-        * {
-            box-sizing: border-box;
-        }
-
-        /* =========================================
-           02 // MASTER CHASSIS & FLEX ALIGNMENT
-           ========================================= */
+        /* --- STABLE MAIN GRID LAYOUT --- */
         .terminal-container {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            max-width: 900px;
             width: 90%;
-            max-width: 500px;
-            height: 85dvh; /* Strict height lock to prevent page push */
+            margin: 40px auto 120px auto; /* Centered with healthy scrolling breathing room */
             display: flex;
             flex-direction: column;
-            padding: 0 !important;
-            margin: 0 !important;
-            overflow: hidden !important;
+            gap: 24px;
+            position: relative;
         }
 
-        .identity-module {
+        .player-header {
             text-align: center;
-            flex-shrink: 0;
-            margin-bottom: 1rem;
+            margin-bottom: 8px;
         }
 
-        .commander-title {
-            margin: 0 0 8px 0;
-            font-family: 'Cinzel', serif;
-            font-weight: 700;
-            font-size: 2rem;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            color: #fff;
-            text-shadow: 0 0 10px rgba(77, 208, 225, 0.6);
-        }
-
-        .commander-role {
-            font-family: 'Cinzel', serif;
-            font-weight: 700;
-            font-size: 0.85rem;
-            color: var(--gold, #D4AF37);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-decoration: none;
-            border-bottom: 1px dashed var(--gold, #D4AF37);
-            transition: all 0.3s ease;
-        }
-
-        .commander-role:hover {
-            color: #fff;
-            border-color: #fff;
-            text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
-        }
-
-        /* =========================================
-           03 // DRIFT INTERFACE CONTAINER
-           ========================================= */
-        .hub-card {
-            flex-grow: 1; /* Absorbs exact remaining height */
+        /* --- THE CYAN GLOW DISPLAY CHASSIS --- */
+        .mp4-chassis {
             display: flex;
             flex-direction: column;
-            min-height: 0; /* Crucial for child flex scrolling */
             width: 100%;
-            background: rgba(8, 4, 16, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 2px solid rgba(77, 208, 225, 0.4);
+            background: rgba(6, 11, 20, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(77, 208, 225, 0.4);
             border-radius: 24px;
-            padding: 1.25rem;
-            animation: cyanGlowPulse 4s ease-in-out infinite;
-            overflow: hidden; /* Locks out external bleeding */
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            position: relative;
+            animation: customCyanGlow 5s ease-in-out infinite;
         }
 
-        @keyframes cyanGlowPulse {
+        @keyframes customCyanGlow {
             0%, 100% {
-                border-color: rgba(77, 208, 225, 0.3);
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(77, 208, 225, 0.1);
+                border-color: rgba(77, 208, 225, 0.4);
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(77, 208, 225, 0.1);
             }
             50% {
-                border-color: rgba(77, 208, 225, 0.8);
-                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9), 0 0 25px rgba(77, 208, 225, 0.4);
+                border-color: rgba(34, 211, 238, 0.8);
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(34, 211, 238, 0.4);
             }
         }
 
-        /* =========================================
-           04 // VIDEO VIEWPORT
-           ========================================= */
-        .player-viewport {
+        /* --- THE VIDEO PRESENTATION RACK --- */
+        .mp4-screen-viewport {
             width: 100%;
             aspect-ratio: 16 / 9;
-            background: #000;
-            border: 1px solid rgba(77, 208, 225, 0.4);
-            border-radius: 12px;
+            background: #000000;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
             overflow: hidden;
-            margin-bottom: 1rem;
-            flex-shrink: 0; /* Prevents squishing when scrolling */
+            margin-bottom: 1.5rem;
         }
 
-        .player-viewport iframe {
+        .mp4-screen-viewport iframe {
             width: 100%;
             height: 100%;
             border: 0;
             display: block;
         }
 
-        /* =========================================
-           05 // INTERNAL SCROLLER BAY
-           ========================================= */
-        .scroller-bay {
-            flex-grow: 1;
-            overflow-y: auto;
-            min-height: 0;
-            padding-right: 6px;
-            /* Smooth internal scroll physics */
-            -webkit-overflow-scrolling: touch; 
-        }
-
-        .scroller-bay::-webkit-scrollbar {
-            width: 6px;
-        }
-        .scroller-bay::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        .scroller-bay::-webkit-scrollbar-thumb {
-            background: rgba(77, 208, 225, 0.5);
-            border-radius: 3px;
+        /* --- PLAYLIST PLAYBACK ARRAY GRID --- */
+        .playlist-array-header {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            color: #22d3ee;
+            text-transform: uppercase;
+            margin: 0 0 1rem 0;
+            border-bottom: 1px dashed rgba(77, 208, 225, 0.3);
+            padding-bottom: 0.5rem;
         }
 
         .video-selection-grid {
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: 1fr;
             gap: 0.75rem;
             width: 100%;
-            padding-bottom: 10px;
         }
 
+        /* --- MENU BUTTON SELECTIONS --- */
         .video-thumb {
-            background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.5) 100%);
+            background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0.3) 100%);
             border: 1px solid rgba(77, 208, 225, 0.3);
             border-radius: 12px; 
-            padding: 1rem;
+            padding: 1.1rem 1.5rem;
             text-align: left;
             color: #ffffff;
             font-weight: 700;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.2s ease-in-out;
             width: 100%;
-            flex-shrink: 0;
             white-space: normal;
             word-wrap: break-word;
         }
 
         .video-thumb:hover {
-            border-color: #4dd0e1;
-            background: rgba(77, 208, 225, 0.1);
             transform: translateY(-2px);
+            border-color: #22d3ee;
+            box-shadow: 0 5px 15px rgba(77, 208, 225, 0.25);
+            background: rgba(77, 208, 225, 0.05);
         }
 
         .video-thumb.active {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.08);
             color: #ffffff;
             border-color: #ffffff;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
         }
 
-        /* =========================================
-           06 // FOOTER LOGO
-           ========================================= */
+        /* --- FLOATING COCKPIT FOOTER --- */
         .system-dock {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10;
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            width: 100%;
         }
 
-        .dock-logo { 
-            width: 32px; 
-            height: 32px; 
-            opacity: 0.6; 
-            transition: 0.3s; 
-            filter: drop-shadow(0 0 2px rgba(212,175,55,0.2));
-        }
-
-        .dock-logo:hover { 
-            opacity: 1; 
-            filter: drop-shadow(0 0 8px var(--gold, #D4AF37)); 
-        }
-
-        /* =========================================
-           07 // DESKTOP & MEDIUM PLAYER LOGIC
-           ========================================= */
-        @media (min-width: 1024px) {
-            .terminal-container {
-                max-width: 800px; /* Expands parent footprint */
-            }
-            .hub-card {
-                padding: 1.5rem;
-            }
-            .player-viewport {
-                max-width: 480px; /* Forces a medium size player on desktop */
-                margin: 0 auto 1.5rem auto; /* Centers the medium player perfectly */
-            }
+        /* --- DESKTOP GRID ADAPTATIONS --- */
+        @media (min-width: 768px) {
             .video-selection-grid {
-                display: grid;
                 grid-template-columns: repeat(2, 1fr);
                 gap: 1rem;
-            }
-            .video-thumb {
-                font-size: 1rem;
-                padding: 1.25rem;
-            }
-            .commander-title {
-                font-size: 2.5rem;
-            }
-        }
-
-        @media (min-width: 1920px) {
-            .terminal-container {
-                max-width: 1000px; 
-            }
-            .player-viewport {
-                max-width: 560px; /* Keeps it medium scaled for ultra-wide */
-            }
-            .video-selection-grid {
-                grid-template-columns: repeat(3, 1fr);
             }
         }
     </style>
 </head>
 <body>
 
-    <div class="starfield-canvas" id="canvas-starfield-engine" style="position:fixed; inset:0; z-index:1; pointer-events:none;"></div>
-    <div class="comet-canvas" id="canvas-comet-engine" style="position:fixed; inset:0; z-index:2; pointer-events:none;"></div>
-    <div style="position:fixed; top:-10%; left:50%; transform:translateX(-50%); width:90vw; height:60vh; background:radial-gradient(circle, rgba(77,208,225,0.15) 0%, transparent 70%); z-index:3; pointer-events:none;"></div>
+    <div class="starfield-canvas" id="canvas-starfield-engine"></div>
+    <div class="comet-canvas" id="canvas-comet-engine"></div>
+    <div class="cyber-grid"></div>
+    <div class="ambient-flare"></div>
 
     <main class="terminal-container">
         
-        <header class="identity-module">
+        <header class="player-header">
             <h1 class="commander-title">Dreamscape Drift</h1>
-            <a class="commander-role" href="../">← Back to Control Deck</a>
+            <a class="commander-role" href="../" style="text-decoration: none; border-bottom: 1px dashed var(--gold); transition: all 0.3s ease;">
+                ← Back to Control Deck
+            </a>
         </header>
 
-        <section class="hub-card">
+        <section class="mp4-chassis">
 
-            <div class="player-viewport">
-                <iframe id="main-drift-player" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            <div class="mp4-screen-viewport">
+                <iframe id="main-drift-player" src="https://www.youtube.com/embed/videoseries?list=PLwX0pb3GErelnv2imByTWq5TmSSSSiosp&rel=0&modestbranding=1&vq=hd1080" allow="autoplay; encrypted-media" allowfullscreen></iframe>
             </div>
 
-            <div class="scroller-bay" id="bay-scroller">
-                <div id="video-menu-hook" class="video-selection-grid"></div>
+            <h2 class="playlist-array-header">Sector Manifest Arrays</h2>
+            <div id="video-menu-hook" class="video-selection-grid">
+                <div style="color: rgba(255,255,255,0.4); font-size: 0.9rem;">Initializing transmission manifest vectors...</div>
             </div>
 
         </section>
 
+        <footer class="system-dock">
+            <div class="center-logo-container">
+                <img src="../images/vklogo.png" alt="VK Logo" class="dock-logo">
+            </div>
+        </footer>
+
     </main>
 
-    <footer class="system-dock">
-        <img src="../images/vklogo.png" alt="VK Logo" class="dock-logo">
-    </footer>
-
     <script>
+        // --- BACKGROUND AMBIENCE LOGIC MATRIX ---
         document.addEventListener("DOMContentLoaded", () => {
-            // --- VISUAL BACKGROUND ENGINE ---
             const starfield = document.getElementById('canvas-starfield-engine');
-            const totalStars = window.innerWidth > 1024 ? 100 : 40;
+            const totalStars = window.innerWidth > 1024 ? 120 : 50;
 
             for (let i = 0; i < totalStars; i++) {
                 const star = document.createElement('div');
+                star.classList.add('star');
                 const speed = Math.random() * 30 + 20;
                 const size = Math.random() * 1.5 + 0.5;
                 
-                star.style.position = 'absolute';
-                star.style.background = '#fff';
-                star.style.borderRadius = '50%';
                 star.style.width = `${size}px`;
                 star.style.height = `${size}px`;
                 star.style.left = `${Math.random() * 100}vw`;
@@ -315,17 +210,13 @@
             const canvas = document.getElementById('canvas-comet-engine');
             function launchComet() {
                 const comet = document.createElement('div');
+                comet.classList.add('comet');
                 const startX = Math.random() * (window.innerWidth * 0.4) + (window.innerWidth * 0.6);
                 const startY = Math.random() * (window.innerHeight * 0.4);
-                const duration = Math.random() * 0.8 + 0.6; 
                 
-                comet.style.position = 'absolute';
-                comet.style.width = '2px';
-                comet.style.height = '2px';
-                comet.style.background = '#fff';
-                comet.style.boxShadow = '0 0 8px #fff, 0 0 15px rgba(77, 208, 225, 0.8)';
                 comet.style.left = `${startX}px`;
                 comet.style.top = `${startY}px`;
+                const duration = Math.random() * 0.8 + 0.6; 
                 comet.style.animation = `streak ${duration}s cubic-bezier(0.25, 1, 0.5, 1) forwards`;
                 
                 canvas.appendChild(comet);
@@ -340,9 +231,10 @@
             }
             queueNextComet();
 
-            // --- VIDEO DATA LOADING ---
+            // --- VIDEO ARRAYS SELECTION ENGINE ---
             const menuContainer = document.getElementById('video-menu-hook');
             const mainPlayer = document.getElementById('main-drift-player');
+            const playlistId = "PLwX0pb3GErelnv2imByTWq5TmSSSSiosp";
 
             function cleanYouTubeUrl(urlStr) {
                 let idFound = "";
@@ -357,11 +249,12 @@
                         idFound = urlStr;
                     }
                 } catch(e) {
-                    console.error("URL processing failure", e);
+                    console.error("URL manipulation validation trap cleared.", e);
                 }
-                return "https://www.youtube.com/embed/" + idFound.trim();
+                return idFound.trim();
             }
 
+            // Fetches matching stream files from your directory configuration asset
             fetch('videos.json')
                 .then(res => res.json())
                 .then(data => {
@@ -372,12 +265,15 @@
                         btn.className = 'video-thumb';
                         btn.innerText = item.title;
                         
-                        const safeBaseUrl = cleanYouTubeUrl(item.src);
-                        const safeAutoplayUrl = safeBaseUrl + "?autoplay=1&rel=0&modestbranding=1";
+                        const videoId = cleanYouTubeUrl(item.src);
+                        // Construct path embedding target item seamlessly with fallback playlist contexts
+                        const safeBaseUrl = `https://www.youtube.com/embed/${videoId}?list=${playlistId}`;
+                        const safeAutoplayUrl = `${safeBaseUrl}&autoplay=1&rel=0&modestbranding=1`;
                         
                         if (index === 0) {
                             btn.classList.add('active');
-                            mainPlayer.src = safeBaseUrl + "?rel=0&modestbranding=1"; 
+                            // Prime initialization index 
+                            mainPlayer.src = `${safeBaseUrl}&rel=0&modestbranding=1`; 
                         }
 
                         btn.addEventListener('click', () => {
@@ -390,7 +286,15 @@
                     });
                 })
                 .catch(err => {
-                    menuContainer.innerHTML = '<div style="color:#ffffff; font-size:1rem; text-align:center; width:100%; font-weight:700;">Configuration stream offline.</div>';
+                    // Fallback to generic playlist load sequence if video asset maps are unlinked
+                    menuContainer.innerHTML = `
+                        <div class="video-thumb active" style="grid-column: 1 / -1; text-align: center;">
+                            LOAD COMPREHENSIVE STREAM ARCHIVE DIRECTLY
+                        </div>`;
+                    
+                    menuContainer.querySelector('.video-thumb').addEventListener('click', () => {
+                        mainPlayer.src = `https://www.youtube.com/embed/videoseries?list=${playlistId}&autoplay=1&rel=0&modestbranding=1`;
+                    });
                 });
         });
     </script>
