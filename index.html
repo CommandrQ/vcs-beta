@@ -4,11 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>QUINCY JONES // HUB</title>
-    <link rel="stylesheet" href="style.css?v=10">
+    <link rel="stylesheet" href="style.css?v=11">
     <style>
-        /* =========================================
-           01 // UNIVERSAL ARCHITECTURE & SCREEN OPTIMIZATION
-           ========================================= */
+        /* --- BRANDING & PAGE PARAMETERS --- */
         :root {
             --gold: #D4AF37;
             --gold-glow: rgba(212, 175, 55, 0.4);
@@ -30,18 +28,13 @@
             background-color: #030207;
             color: var(--text-main);
             font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-            
-            /* Enforces flawless vertical scrolling and kills horizontal drifting */
             overflow-x: hidden !important;
             overflow-y: auto !important;
-            
-            /* Inset padding secures safe clearance over the absolute navigation dock */
             padding-bottom: 120px;
             -webkit-text-size-adjust: 100%;
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* Scanline Overlay Grid Overlay */
         body::after {
             content: "";
             position: fixed;
@@ -53,9 +46,7 @@
             opacity: 0.4;
         }
 
-        /* =========================================
-           02 // STABILIZED STARFIELD ENVIRONMENT
-           ========================================= */
+        /* --- STABILIZED BACKGROUND ENVIRONMENT --- */
         #environment {
             position: fixed;
             inset: 0;
@@ -100,12 +91,10 @@
             pointer-events: none;
         }
 
-        /* =========================================
-           03 // CENTRIFUGAL LAYOUT ENGINE
-           ========================================= */
+        /* --- SCREEN ARCHITECTURE LAYOUT --- */
         .terminal-layout {
             width: 100%;
-            max-width: 480px; /* Locked constraint limits layout stretching on wide desktops */
+            max-width: 480px;
             margin: 0 auto;
             padding: 2.5rem 16px 0 16px;
             display: flex;
@@ -119,9 +108,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* =========================================
-           04 // PROFILE HUB CONTROLLER
-           ========================================= */
+        /* --- PROFILE IDENTITY BLOCK --- */
         .profile-card {
             text-align: center;
             width: 100%;
@@ -161,7 +148,6 @@
             text-transform: uppercase;
             letter-spacing: 3px;
             color: #ffffff;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
         }
 
         .identity-subtitle {
@@ -173,9 +159,7 @@
             margin-top: 4px;
         }
 
-        /* =========================================
-           05 // GLASS WORKSPACE COMPONENT
-           ========================================= */
+        /* --- GLASS CHASSIS BIO CARD --- */
         .glass-chassis {
             background: var(--glass-bg);
             backdrop-filter: blur(20px) saturate(140%);
@@ -204,9 +188,7 @@
             text-shadow: 0 0 8px var(--gold-glow);
         }
 
-        /* =========================================
-           06 // LINK MATRIX CELLS (DYNAMIC HOVER)
-           ========================================= */
+        /* --- LINK MATRIX --- */
         .matrix-grid {
             display: flex;
             flex-direction: column;
@@ -263,9 +245,7 @@
             transform: translateX(4px);
         }
 
-        /* =========================================
-           07 // PERSISTENT INTERFACE DOCK (FOOTER)
-           ========================================= */
+        /* --- SYSTEM APP DOCK --- */
         .app-dock {
             position: fixed;
             bottom: 0;
@@ -308,9 +288,7 @@
             filter: drop-shadow(0 0 8px var(--gold));
         }
 
-        /* =========================================
-           08 // INTERACTIVE OVERLAY MATRIX
-           ========================================= */
+        /* --- OVERLAY SYSTEMS --- */
         .system-overlay {
             position: fixed;
             inset: 0;
@@ -380,7 +358,6 @@
             display: block;
         }
 
-        /* Manifesto Content Architecture */
         .manifesto-prose-bay {
             max-width: 580px;
             margin: 0 auto;
@@ -418,7 +395,7 @@
             <div class="avatar-frame">
                 <img src="images/headshot.jpg" alt="Quincy Jones" class="avatar-img">
             </div>
-            <h1 class="identity-title">Commander Q</h1>
+            <h1 class="identity-title">Quincy Jones</h1>
             <h2 class="identity-subtitle">Chief Vision Officer</h2>
         </header>
 
@@ -441,7 +418,7 @@
             <div class="matrix-cell client-route" data-url="../knights/index.html" data-title="Active Projects">
                 <div class="cell-info">
                     <h3>Active Projects</h3>
-                    <p>Collaborative hub layout hosting custom community reporting tools.</p>
+                    <p>Our collaborative hub layout hosting custom community reporting tools.</p>
                 </div>
                 <div class="cell-vector">→</div>
             </div>
@@ -512,8 +489,6 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            
-            // Core DOM Pipeline Selectors
             const routes = document.querySelectorAll('.client-route');
             const sandboxOverlay = document.getElementById('sandbox-overlay');
             const sandboxIframe = document.getElementById('sandbox-iframe');
@@ -524,7 +499,6 @@
             const manifestoOverlay = document.getElementById('manifesto-overlay');
             const closeManifestoBtn = document.getElementById('close-manifesto');
 
-            // Inline App Frame Transmissions
             routes.forEach(cell => {
                 cell.addEventListener('click', (e) => {
                     e.preventDefault();
@@ -534,22 +508,20 @@
                     if (targetUrl && targetUrl !== '#') {
                         sandboxCaption.innerText = targetTitle;
                         sandboxIframe.src = targetUrl;
-                        document.body.style.overflow = 'hidden'; // Halt background node tracking
+                        document.body.style.overflow = 'hidden'; 
                         sandboxOverlay.classList.add('active');
                     }
                 });
             });
 
-            // Safe Sandbox Clearance Terminal Execution
             if (closeSandboxBtn) {
                 closeSandboxBtn.addEventListener('click', () => {
                     sandboxOverlay.classList.remove('active');
-                    document.body.style.overflow = ''; // Release parent viewport block
+                    document.body.style.overflow = ''; 
                     setTimeout(() => { sandboxIframe.src = 'about:blank'; }, 350);
                 });
             }
 
-            // Manifesto Core System Toggles
             if (openManifestoBtn) {
                 openManifestoBtn.addEventListener('click', () => {
                     document.body.style.overflow = 'hidden';
@@ -564,8 +536,7 @@
                 });
             }
 
-            // Cache Busting Protocol Integration
-            const currentVersion = "10"; 
+            const currentVersion = "11"; 
             const storageKey = "hub_version_check";
             if (localStorage.getItem(storageKey) !== currentVersion) {
                 localStorage.setItem(storageKey, currentVersion);
