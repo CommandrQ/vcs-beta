@@ -197,7 +197,7 @@
         <section class="video-viewport">
             <iframe 
                 id="main-player"
-                src="https://www.youtube.com/embed/videoseries?list=PLwX0pb3GErelnv2imByTWq5TmSSSSiosp&rel=0&modestbranding=1&vq=hd1080"
+                src="about:blank"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                 allowfullscreen>
             </iframe>
@@ -235,7 +235,6 @@
             if (!urlStr) return '';
             const cleanStr = urlStr.trim();
             
-            // Handle embed paths or standard watch queries
             if (cleanStr.includes('embed/')) {
                 return cleanStr.split('embed/')[1].split('?')[0];
             }
@@ -245,7 +244,7 @@
             if (cleanStr.includes('youtu.be/')) {
                 return cleanStr.split('youtu.be/')[1].split('?')[0];
             }
-            return cleanStr; // Fallback assumes raw token
+            return cleanStr;
         }
 
         /* ==========================================================================
@@ -265,7 +264,6 @@
                 this.resize();
                 window.addEventListener('resize', () => this.resize());
                 
-                // Populate initial starfield
                 for (let i = 0; i < 120; i++) {
                     this.stars.push({
                         x: Math.random() * this.canvas.width,
@@ -286,7 +284,6 @@
                 this.ctx.fillStyle = '#03030c';
                 this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-                // Render & Update Drift Stars
                 this.ctx.fillStyle = '#ffffff';
                 this.stars.forEach(star => {
                     this.ctx.beginPath();
@@ -300,7 +297,6 @@
                     }
                 });
 
-                // Spawn and Render Passing Comets
                 if (Math.random() < 0.003 && this.comets.length < 2) {
                     this.comets.push({
                         x: Math.random() * this.canvas.width,
@@ -349,6 +345,12 @@
                     if (!response.ok) throw new Error('Network payload execution failure');
                     this.tracks = await response.json();
                     this.renderManifest();
+                    
+                    // Auto-load first asset from json map silently if records exist
+                    if (this.tracks.length > 0) {
+                        const firstBtn = this.manifestContainer.querySelector('.track-btn');
+                        this.handleTrackSelection(this.tracks[0], firstBtn, 'off');
+                    }
                 } catch (error) {
                     this.manifestContainer.innerHTML = `<div style="color: var(--neon-cyan); padding: 10px;">Failed to initialize tracks portfolio data mapping.</div>`;
                 }
@@ -365,25 +367,25 @@
                     button.textContent = track.title || `Track ${index + 1}`;
                     button.dataset.index = index;
 
-                    button.addEventListener('click', () => this.handleTrackSelection(track, button));
+                    button.addEventListener('click', () => this.handleTrackSelection(track, button, 'on'));
                     this.manifestContainer.appendChild(button);
                 });
             }
 
-            handleTrackSelection(track, selectedButton) {
+            handleTrackSelection(track, selectedButton, forceAutoplay) {
                 const videoToken = extractVideoToken(track.video_url || track.url || track.id);
                 if (!videoToken) return;
 
-                // Clear previous actives
-                this.manifestContainer.querySelectorAll('.track-btn').forEach(btn => {
-                    btn.classList.remove(CONFIG.states.activeClass);
-                });
-                selectedButton.classList.add(CONFIG.states.activeClass);
+                if (selectedButton) {
+                    this.manifestContainer.querySelectorAll('.track-btn').forEach(btn => {
+                        btn.classList.remove(CONFIG.states.activeClass);
+                    });
+                    selectedButton.classList.add(CONFIG.states.activeClass);
+                }
 
-                // Build modern isolated context url targets
                 let targetSrc = `https://www.youtube.com/embed/${videoToken}?list=${PLAYLIST_ID}&rel=0&modestbranding=1&vq=hd1080`;
                 
-                if (CONFIG.states.toggles.autoplayClick === 'on') {
+                if (forceAutoplay === 'on' && CONFIG.states.toggles.autoplayClick === 'on') {
                     targetSrc += '&autoplay=1';
                 }
 
