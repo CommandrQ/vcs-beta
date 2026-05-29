@@ -8,15 +8,19 @@
 </head>
 <body>
 
+    <!-- BACKGROUND ENVIRONMENT LAYER -->
     <div id="environment">
         <div class="starfield"></div>
     </div>
 
+    <!-- MASTER SCROLL CONTAINER -->
     <div class="app-container">
         
+        <!-- SIDEBAR PANEL -->
         <aside class="sidebar">
             <div class="module-card brand-center">
                 <header class="page-header">
+                    <!-- Sacred Geometry Matrix SVG -->
                     <svg class="logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <polygon points="50,12 12,82 88,82" stroke="#D4AF37" stroke-width="3" fill="rgba(212,175,55,0.03)"/>
                         <circle cx="50" cy="56" r="16" stroke="#ffffff" stroke-width="2"/>
@@ -27,97 +31,106 @@
                     <div class="page-subtitle">The Laws of Aon</div>
                 </header>
                 
-                <div class="action-zone">
-                    <button class="action-btn" onclick="initiateSelfDiscovery()">Assess Your Alignment</button>
+                <div class="action-zone" style="margin-top: 20px;">
                     <a href="https://github.com" target="_blank" class="shimmer-gold-link">Repository Archive →</a>
                 </div>
             </div>
 
+            <!-- SYSTEM METRICS PANEL -->
             <div class="module-card text-center">
                 <h2>Vessel Diagnostics</h2>
-                <div class="diagnostic-stat">Current Era: <span id="clock-display" class="gold-accent">--:--</span></div>
-                <div class="diagnostic-stat">Aon Status: <span class="status-indicator ready">Constructed</span></div>
-                <div class="diagnostic-stat">Ordo Resonance: <span class="status-indicator pulsing" id="resonance-level">100%</span></div>
+                <div class="diagnostic-stat">System Status: <span class="status-indicator ready">Constructed</span></div>
+                <div class="diagnostic-stat">Operational Sync: <span class="status-indicator pulsing">Active</span></div>
             </div>
         </aside>
 
+        <!-- MAIN WORKSPACE CONTENT LAYER -->
         <main class="main-content">
             
+            <!-- CORE STATEMENT BANNER -->
             <section class="module-card">
                 <p class="highlight-text">
-                    The external world contains no cohesive rules, predictability, or built-in order. Ordo is the discipline of creating absolute structure inside your internal vessel to survive and master exterior chaos.
+                    The external world contains no built-in rules, consistency, or structure. <strong>Ordo</strong> is the discipline of engineering absolute order inside yourself so you can confidently control chaos instead of reacting to it.
                 </p>
             </section>
 
+            <!-- EXPLORATIVE METAPHYSICS LINK MATRIX -->
             <section class="module-card">
                 <h2>01. Metaphysics of Self-Discovery</h2>
                 <p>
-                    Analyze how your system partitions itself from external environments. Click each core node to read the blueprint instructions:
+                    How your energy operates when translated into daily real-world scenarios. Click each element to read its operational law:
                 </p>
                 <div class="matrix-grid">
                     <div class="matrix-item interactive-node" onclick="showNodeDetail('vessel')">
                         <h3>Aon / The Vessel</h3>
-                        <p>Your sealed physical framework. The boundary line separating outer decay from your inner focus.</p>
+                        <p>Your boundary fortress. Protecting your time, focus, and energy from being hijacked by outside drama.</p>
                     </div>
                     <div class="matrix-item interactive-node" onclick="showNodeDetail('trinity')">
                         <h3>The Trinity / Fuel</h3>
-                        <p>Three engine streams constantly supplying power: Your Body, Mind, and Soul.</p>
+                        <p>Three essential life streams: Your physical body, your logical mind, and your core spirit.</p>
                     </div>
                     <div class="matrix-item interactive-node" onclick="showNodeDetail('output')">
                         <h3>Ordo / The Output</h3>
-                        <p>The total harmonic product of your Trinity. Your personal law projected outwards.</p>
+                        <p>Your personal law. The focused power you generate when your actions match your beliefs.</p>
                     </div>
                 </div>
                 <div id="node-reader" class="interactive-display-box" style="display: none;"></div>
             </section>
 
+            <!-- PRACTICAL MINDSET ANCHORS EXPLAINED -->
             <section class="module-card">
-                <h2>02. The Crucible (Brutal Questioning Engine)</h2>
+                <h2>02. Real-World Mindset Anchors</h2>
                 <p>
-                    Test your logic. Why do people choose comfort over reality? Why do they refuse to heed signs? Dissect a chaotic pattern you observed today without using excuses.
+                    Use these specific tools to navigate broken or unpredictable environments safely:
                 </p>
                 
-                <div class="crucible-engine">
-                    <label for="crucible-input">Observe & Strip Excuses via the All-Seeing Eye:</label>
-                    <textarea id="crucible-input" rows="4" placeholder="Enter a human failure pattern or a choice you made today. Strip comfort until only raw facts remain..."></textarea>
+                <div class="matrix-grid" style="grid-template-columns: 1fr; gap: 20px;">
+                    <div class="matrix-item" style="text-align: left; padding: 25px;">
+                        <h3 style="color: #ffffff; font-size: 1.05rem; margin-bottom: 8px;">👁️ The All-Seeing Eye // Radical Evaluation</h3>
+                        <p style="font-size: 0.9rem; margin-bottom: 0; color: rgba(255,255,255,0.8);">
+                            Stop hiding behind excuses. When you see an office or a community ignoring clear warning signs, don't ask why *they* are broken—use your observation to dissect the pattern objectively. Apply brutal questioning to find the raw root truth of how things are running.
+                        </p>
+                    </div>
                     
-                    <label for="action-commit">The Hourglass Action (What will you execute before time runs out?)</label>
-                    <input type="text" id="action-commit" placeholder="Name one immediate task to restore order to your Body, Mind, or Soul tomorrow.">
-                    
-                    <button class="action-btn gold-variant" style="margin-top: 15px;" onclick="processCrucibleEntry()">Commit to Ledger</button>
+                    <div class="matrix-item" style="text-align: left; padding: 25px;">
+                        <h3 style="color: #ffffff; font-size: 1.05rem; margin-bottom: 8px;">⏳ The Hourglass of Fate // High Stakes Urgency</h3>
+                        <p style="font-size: 0.9rem; margin-bottom: 0; color: rgba(255,255,255,0.8);">
+                            Your life and window of impact are strictly limited. Time is a dropping element. If you tolerate toxic spaces or freeze because an environment is chaotic, you are burning your own capital. Action must be taken instantly.
+                        </p>
+                    </div>
                 </div>
+            </section>
 
-                <div class="ledger-scroll-area">
-                    <table class="citizen-table">
-                        <thead>
-                            <tr>
-                                <th style="width: 25%;">Cycle Time</th>
-                                <th style="width: 45%;">The Observed Truth</th>
-                                <th style="width: 30%;">Ordo Action Command</th>
-                            </tr>
-                        </thead>
-                        <tbody id="local-ledger-hook">
-                            <tr>
-                                <td colspan="3" style="color: rgba(255,255,255,0.4); padding: 30px; font-style: italic;">
-                                    Awaiting raw logic inputs...
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+            <!-- ENTERPRISE ONBOARDING CTA WINDOW -->
+            <section class="module-card consulting-banner">
+                <div class="banner-highlight-badge">Enterprise Consultation</div>
+                <h2>Fix the Chemistry of Your Team</h2>
+                <p>
+                    Unorganized organizational chemistry creates friction, high-stress environments, and operational decay. When your team's structural alignment matches an unbalanced vessel, it surfaces directly as high turnover, quiet quitting, and extreme burnout.
+                </p>
+                <p style="font-size: 0.95rem; margin-bottom: 25px; color: rgba(255, 255, 255, 0.75);">
+                    Every single unexpected resignation is an unbacked, preventable financial drain. Let's trace the human chemistry gaps across your group dynamics, re-establish baseline communication structures, and protect your bottom-line capital from walking out the door.
+                </p>
+                
+                <!-- Redirect link button to external tracking channel or onboarding portfolio link -->
+                <a href="consulting.html" class="action-btn consulting-btn">
+                    Analyze Team Chemistry
+                </a>
             </section>
             
         </main>
     </div>
 
+    <!-- CENTERED SYSTEM FOOTER -->
     <div class="footer-pad">
         <footer class="system-footer">
-            &copy; <span id="current-year"></span> Ordo Framework // Dynamic Self Guide
+            &copy; <span id="current-year"></span> Ordo Mindset Framework // All Rights Reserved
         </footer>
     </div>
 
+    <!-- EFFECT LAYERS AND DISPLAY SCRIPTS -->
     <script>
-        /* --- BACKGROUND STREAMING COMETS --- */
+        /* --- COMET EVENT DISPATCH GENERATOR --- */
         function spawnComet() {
             const container = document.getElementById('environment');
             if (!container) return;
@@ -131,22 +144,14 @@
         setInterval(spawnComet, 3500);
         spawnComet();
 
-        /* --- RUNTIME DATA MANAGEMENT --- */
         const yearSpan = document.getElementById('current-year');
         if (yearSpan) yearSpan.innerText = new Date().getFullYear();
 
-        function updateClock() {
-            const now = new Date();
-            document.getElementById('clock-display').innerText = now.toTimeString().split(' ')[0];
-        }
-        setInterval(updateClock, 1000);
-        updateClock();
-
-        /* --- INTERACTIVE BLUEPRINT SELECTOR --- */
+        /* --- DYNAMIC DATA DESCRIPTIONS LOOP --- */
         const nodeData = {
-            vessel: "<strong>Aon Vessel Laws:</strong> Outer systems will try to bleed your energy dry. Treat your skin, your time, and your boundaries as an iron gate. If you let outside noise dictate your mood, your vessel has breached.",
-            trinity: "<strong>Trinity Laws:</strong> Body, Mind, and Soul are interdependent gears. If you neglect physical clean nutrition, your logic functions slow down. If your purpose breaks, your bodily endurance fails. Keep them fueled evenly.",
-            output: "<strong>Ordo Energy Output:</strong> True power is not reactive; it is active. When you step into an unorganized workspace or group, do not match their confusion. project your internal principles out onto the space to shape it."
+            vessel: "<strong>Aon Vessel Laws:</strong> Think of this like setting solid boundaries. If your peers or environment are chaotic, you don't absorb their stress. Your container stays solid so your personal productivity doesn't get derailed.",
+            trinity: "<strong>Trinity Baseline:</strong> Think of this like simple maintenance. Your body requires physical stamina, your mind requires sharp focus, and your soul requires a real reason for doing the work. Neglecting one causes immediate burnout across the others.",
+            output: "<strong>Ordo Application:</strong> This is where you transform intent into real actions. Instead of showing up to a broken project or disorganized room and complaining about it, you project clear structure and set the standard for everyone else to follow."
         };
 
         function showNodeDetail(key) {
@@ -154,46 +159,6 @@
             reader.innerHTML = nodeData[key];
             reader.style.display = 'block';
             reader.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
-
-        /* --- LOCAL LEDGER STORAGE ENGINE --- */
-        function processCrucibleEntry() {
-            const inputVal = document.getElementById('crucible-input').value.trim();
-            const actionVal = document.getElementById('action-commit').value.trim();
-            const ledgerHook = document.getElementById('local-ledger-hook');
-
-            if (!inputVal || !actionVal) {
-                alert("The All-Seeing Eye demands absolute completeness. Supply both inputs.");
-                return;
-            }
-
-            if (ledgerHook.innerText.includes("Awaiting raw logic inputs")) {
-                ledgerHook.innerHTML = '';
-            }
-
-            const row = document.createElement('tr');
-            const stamp = new Date().toLocaleTimeString();
-
-            row.innerHTML = `
-                <td style="font-family: monospace; color: var(--gold); font-size:0.85rem;">${stamp}</td>
-                <td style="font-size:0.85rem;">${inputVal}</td>
-                <td><span class="badge-action">${actionVal}</span></td>
-            `;
-
-            ledgerHook.insertBefore(row, ledgerHook.firstChild);
-            
-            // Clear inputs and pulse resonance values
-            document.getElementById('crucible-input').value = '';
-            document.getElementById('action-commit').value = '';
-            
-            const res = document.getElementById('resonance-level');
-            res.innerText = "Resonant";
-            res.style.color = "#ffffff";
-            setTimeout(() => { res.innerText = "100%"; res.style.color = "var(--gold)"; }, 2000);
-        }
-
-        function initiateSelfDiscovery() {
-            alert("Assess yourself:\n\n1. Did your body move today?\n2. Did your mind stay sharp and focused?\n3. Did your soul operate with clean intent?\n\nIf any answer is no, apply Brutal Questioning inside the Crucible below.");
         }
     </script>
 </body>
