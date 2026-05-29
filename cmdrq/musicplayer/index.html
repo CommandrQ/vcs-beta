@@ -3,106 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Music Player</title>
+    <title>Music Player | CMDRQ</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style.css?v=8">
     <style>
-        /* --- SYSTEM LOCK VIEWPORT --- */
+        /* =========================================
+           01 // CORE LOCKOUT & FLEX ALIGNMENT
+           ========================================= */
         html, body {
-            overflow: hidden !important;
-            height: 100dvh;
-            width: 100vw;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-
-        /* --- CONTAINER CENTERING RIG --- */
-        .terminal-container {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%); /* Locks absolute pixel center coordinates */
-            width: 90%;
-            max-width: 420px;
-            height: auto !important;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            padding: 0 !important;
-            margin: 0 !important;
-            overflow: hidden !important;
-            box-sizing: border-box;
-        }
-
-        /* --- MARGIN COLLAPSE RECOVERY PACK --- */
-        .identity-module {
-            margin: 0 !important;
-            padding: 0 !important;
+            width: 100vw;
+            height: 100dvh; /* Strict viewport height */
+            overflow: hidden !important; /* Total scroll lock */
+            background-color: #05020c;
             display: flex;
             flex-direction: column;
             align-items: center;
-            flex-shrink: 0;
+            justify-content: center;
+            box-sizing: border-box;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        /* =========================================
+           02 // HEADER & NAVIGATION
+           ========================================= */
+        .player-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            z-index: 10;
         }
 
         .commander-title {
-            margin: 0 0 4px 0 !important; /* Forces strict reset on default header tracking pushes */
+            margin: 0 0 8px 0;
             font-family: 'Cinzel', serif;
             font-weight: 700;
             font-size: 2rem;
             text-transform: uppercase;
             letter-spacing: 4px;
             color: #fff;
+            text-shadow: 0 0 10px rgba(147, 51, 234, 0.6);
         }
 
         .commander-role {
-            margin: 0 !important;
             font-family: 'Cinzel', serif;
             font-weight: 700;
             font-size: 0.85rem;
-            color: var(--gold);
+            color: var(--gold, #D4AF37);
             text-transform: uppercase;
             letter-spacing: 2px;
+            text-decoration: none;
+            border-bottom: 1px dashed var(--gold, #D4AF37);
+            transition: all 0.3s ease;
         }
 
-        /* --- PULSING CHASSIS --- */
+        .commander-role:hover {
+            color: #fff;
+            border-color: #fff;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+        }
+
+        /* =========================================
+           03 // PULSING PURPLE CHASSIS
+           ========================================= */
         .mp4-chassis {
             display: flex;
             flex-direction: column;
-            width: 100%;
+            width: 90%;
+            max-width: 400px; 
             background: rgba(8, 4, 16, 0.85);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 2px solid rgba(147, 51, 234, 0.4);
+            border: 2px solid rgba(147, 51, 234, 0.5);
             border-radius: 24px;
             padding: 1.25rem;
-            box-sizing: border-box;
-            animation: purpleGlowPulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-            flex-shrink: 0;
+            z-index: 10;
+            animation: purpleGlowPulse 4s ease-in-out infinite;
         }
 
         @keyframes purpleGlowPulse {
             0%, 100% {
                 border-color: rgba(147, 51, 234, 0.4);
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 15px rgba(147, 51, 234, 0.1);
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(147, 51, 234, 0.2);
             }
             50% {
-                border-color: rgba(168, 85, 247, 0.8);
-                box-shadow: 0 10px 40px rgba(147, 51, 234, 0.3), 0 0 25px rgba(168, 85, 247, 0.5);
+                border-color: rgba(168, 85, 247, 0.9);
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9), 0 0 35px rgba(168, 85, 247, 0.6);
             }
         }
 
+        /* =========================================
+           04 // VIEWPORT & METADATA
+           ========================================= */
         .mp4-screen-viewport {
             width: 100%;
             aspect-ratio: 16 / 9;
-            background: #000000;
-            border: 1px solid rgba(147, 51, 234, 0.3);
+            background: #000;
+            border: 1px solid rgba(168, 85, 247, 0.3);
             border-radius: 12px;
             overflow: hidden;
-            flex-shrink: 0;
-            box-sizing: border-box;
+            margin-bottom: 1rem;
         }
 
         .mp4-screen-viewport iframe {
@@ -114,187 +119,173 @@
 
         .mp4-metadata-deck {
             text-align: center;
-            padding-top: 1rem;
             padding-bottom: 1rem;
-            border-bottom: 1px dashed rgba(147, 51, 234, 0.3);
+            border-bottom: 1px dashed rgba(147, 51, 234, 0.4);
             margin-bottom: 1rem;
-            min-height: 68px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            width: 100%;
-            box-sizing: border-box;
-            overflow: hidden;
+            min-height: 60px;
         }
 
         .mp4-track-title {
-            font-size: 1.05rem;
+            font-size: 1.1rem; 
             font-weight: 700;
             color: #ffffff;
-            margin: 0 0 6px 0;
+            margin: 0 0 4px 0;
             width: 100%;
             white-space: normal;
             word-wrap: break-word;
-            word-break: break-word;
-            line-height: 1.4;
+            word-break: break-word; /* Forces long unbroken strings to wrap */
+            line-height: 1.3;
         }
 
         .mp4-track-author {
-            font-size: 0.75rem;
+            font-size: 0.75rem; 
             font-weight: 700;
             letter-spacing: 2px;
             color: #a855f7;
             text-transform: uppercase;
-            width: 100%;
             margin: 0;
+            width: 100%;
             white-space: normal;
             word-wrap: break-word;
-            word-break: break-word;
         }
 
+        /* =========================================
+           05 // CONTROL WHEEL
+           ========================================= */
         .mp4-controls-wheel {
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 0.75rem;
             width: 100%;
-            box-sizing: border-box;
         }
 
         .mp4-btn {
-            background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0.4) 100%);
-            border: 1px solid rgba(147, 51, 234, 0.3);
+            background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.5) 100%);
+            border: 1px solid rgba(147, 51, 234, 0.4);
             color: #ffffff;
-            padding: 10px 16px;
+            padding: 12px 10px;
             font-size: 0.75rem;
             font-weight: 800;
             cursor: pointer;
             border-radius: 12px;
             letter-spacing: 1px;
             text-transform: uppercase;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            flex: 1;
-            max-width: 110px;
+            transition: all 0.2s ease;
+            flex: 1; 
             text-align: center;
-            box-sizing: border-box;
         }
 
         .mp4-btn:hover {
             transform: translateY(-2px);
             border-color: #a855f7;
-            box-shadow: 0 5px 15px rgba(147, 51, 234, 0.3);
-            color: #a855f7;
-        }
-
-        .mp4-btn.active-load {
-            border-color: #a855f7;
-            color: #a855f7;
-            box-shadow: 0 0 10px rgba(147, 51, 234, 0.3);
+            background: rgba(147, 51, 234, 0.1);
+            box-shadow: 0 5px 15px rgba(147, 51, 234, 0.4);
         }
 
         .mp4-btn.active-play {
-            border-color: #ffffff;
-            color: #ffffff;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+            border-color: #fff;
+            color: #fff;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
         }
 
-        /* --- DESKTOP GRID ADAPTATIONS --- */
+        /* =========================================
+           06 // FOOTER LOGO
+           ========================================= */
+        .system-dock {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+
+        .dock-logo { 
+            width: 32px; 
+            height: 32px; 
+            opacity: 0.6; 
+            transition: 0.3s; 
+            filter: drop-shadow(0 0 2px rgba(212,175,55,0.2));
+        }
+
+        .dock-logo:hover { 
+            opacity: 1; 
+            filter: drop-shadow(0 0 8px var(--gold, #D4AF37)); 
+        }
+
+        /* =========================================
+           07 // DESKTOP RESPONSIVE RESIZING
+           ========================================= */
         @media (min-width: 1024px) {
-            .terminal-container {
-                max-width: 680px;
-            }
             .mp4-chassis {
-                padding: 1.75rem;
-            }
-            .mp4-track-title {
-                font-size: 1.25rem;
-            }
-            .mp4-track-author {
-                font-size: 0.85rem;
-            }
-            .mp4-btn {
-                padding: 12px 24px;
-                font-size: 0.8rem;
-                max-width: 130px;
-            }
-        }
-
-        @media (min-width: 1920px) {
-            .terminal-container {
-                max-width: 850px;
-            }
-            .mp4-chassis {
+                max-width: 600px; /* Wider footprint on desktop */
                 padding: 2rem;
             }
-            .mp4-metadata-deck {
-                min-height: 80px;
-                margin-bottom: 1.5rem;
-                padding-bottom: 1.5rem;
-            }
             .mp4-track-title {
-                font-size: 1.4rem;
+                font-size: 1.3rem;
+            }
+            .mp4-btn {
+                padding: 14px 20px;
+                font-size: 0.85rem;
+                max-width: 140px;
             }
         }
     </style>
 </head>
 <body>
 
-    <div class="starfield-canvas" id="canvas-starfield-engine"></div>
-    <div class="comet-canvas" id="canvas-comet-engine"></div>
-    <div class="cyber-grid"></div>
-    <div class="ambient-flare"></div>
+    <div class="starfield-canvas" id="canvas-starfield-engine" style="position:fixed; inset:0; z-index:1; pointer-events:none;"></div>
+    <div class="comet-canvas" id="canvas-comet-engine" style="position:fixed; inset:0; z-index:2; pointer-events:none;"></div>
+    
+    <div style="position:fixed; top:-10%; left:50%; transform:translateX(-50%); width:90vw; height:60vh; background:radial-gradient(circle, rgba(147,51,234,0.15) 0%, transparent 70%); z-index:3; pointer-events:none;"></div>
 
-    <main class="terminal-container">
-        
-        <header class="identity-module">
-            <h1 class="commander-title">Music Player</h1>
-            <a class="commander-role" href="../" style="text-decoration: none; border-bottom: 1px dashed var(--gold); transition: all 0.3s ease;">
-                ← Back to Control Deck
-            </a>
-        </header>
+    <header class="player-header">
+        <h1 class="commander-title">Music Player</h1>
+        <a class="commander-role" href="../">← Back to Control Deck</a>
+    </header>
 
-        <section class="mp4-chassis">
+    <section class="mp4-chassis">
 
-            <div class="mp4-screen-viewport">
-                <iframe id="mp4-video-frame" src="https://www.youtube.com/embed/videoseries?listType=playlist&list=PLwX0pb3GErenzxXjayWA-U4A_GKKnMsgP&enablejsapi=1&rel=0&modestbranding=1&vq=hd1080" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-            </div>
+        <div class="mp4-screen-viewport">
+            <iframe id="mp4-video-frame" src="https://www.youtube.com/embed/videoseries?listType=playlist&list=PLwX0pb3GErenzxXjayWA-U4A_GKKnMsgP&enablejsapi=1&rel=0&modestbranding=1&vq=hd1080" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
 
-            <div class="mp4-metadata-deck">
-                <div id="live-title" class="mp4-track-title">YOUTUBE PLAYLIST LOADING</div>
-                <div id="live-author" class="mp4-track-author">Tap Load Array</div>
-            </div>
+        <div class="mp4-metadata-deck">
+            <div id="live-title" class="mp4-track-title">Playlist Standing By</div>
+            <div id="live-author" class="mp4-track-author">Awaiting Load</div>
+        </div>
 
-            <div class="mp4-controls-wheel">
-                <button class="mp4-btn" id="mp4-prev">Prev</button>
-                <button class="mp4-btn active-load" id="mp4-play-toggle">Load</button>
-                <button class="mp4-btn" id="mp4-next">Next</button>
-            </div>
+        <div class="mp4-controls-wheel">
+            <button class="mp4-btn" id="mp4-prev">Prev</button>
+            <button class="mp4-btn" id="mp4-play-toggle">Load</button>
+            <button class="mp4-btn" id="mp4-next">Next</button>
+        </div>
 
-        </section>
-
-    </main>
+    </section>
 
     <footer class="system-dock">
-        <div class="center-logo-container">
-            <img src="../images/vklogo.png" alt="VK Logo" class="dock-logo">
-        </div>
+        <img src="../images/vklogo.png" alt="VK Logo" class="dock-logo">
     </footer>
 
     <script src="https://www.youtube.com/iframe_api"></script>
     <script>
+        // --- VISUAL BACKGROUND ENGINE ---
         document.addEventListener("DOMContentLoaded", () => {
-            
-            // STARFIELD ENGINE
             const starfield = document.getElementById('canvas-starfield-engine');
-            const totalStars = window.innerWidth > 1024 ? 120 : 50;
+            const totalStars = window.innerWidth > 1024 ? 100 : 40;
 
             for (let i = 0; i < totalStars; i++) {
                 const star = document.createElement('div');
-                star.classList.add('star');
                 const speed = Math.random() * 30 + 20;
                 const size = Math.random() * 1.5 + 0.5;
                 
+                star.style.position = 'absolute';
+                star.style.background = '#fff';
+                star.style.borderRadius = '50%';
                 star.style.width = `${size}px`;
                 star.style.height = `${size}px`;
                 star.style.left = `${Math.random() * 100}vw`;
@@ -306,18 +297,20 @@
                 starfield.appendChild(star);
             }
 
-            // COMET ENGINE
             const canvas = document.getElementById('canvas-comet-engine');
-            
             function launchComet() {
                 const comet = document.createElement('div');
-                comet.classList.add('comet');
                 const startX = Math.random() * (window.innerWidth * 0.4) + (window.innerWidth * 0.6);
                 const startY = Math.random() * (window.innerHeight * 0.4);
+                const duration = Math.random() * 0.8 + 0.6; 
                 
+                comet.style.position = 'absolute';
+                comet.style.width = '2px';
+                comet.style.height = '2px';
+                comet.style.background = '#fff';
+                comet.style.boxShadow = '0 0 8px #fff, 0 0 15px rgba(147, 51, 234, 0.8)';
                 comet.style.left = `${startX}px`;
                 comet.style.top = `${startY}px`;
-                const duration = Math.random() * 0.8 + 0.6; 
                 comet.style.animation = `streak ${duration}s cubic-bezier(0.25, 1, 0.5, 1) forwards`;
                 
                 canvas.appendChild(comet);
@@ -333,14 +326,14 @@
             queueNextComet();
         });
 
-        // PLAYER ENGINE WIRE-UP
+        // --- YOUTUBE PLAYER LOGIC ---
         let player;
         const playToggleBtn = document.getElementById('mp4-play-toggle');
         const liveTitle = document.getElementById('live-title');
         const liveAuthor = document.getElementById('live-author');
         
-        let hasInitialized = false;
         let isPlaying = false;
+        let isLoaded = false;
 
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('mp4-video-frame', {
@@ -350,40 +343,47 @@
             });
         }
 
-        function updateMetadataDisplay() {
-            if (player && typeof player.getVideoData === 'function') {
-                try {
-                    const videoData = player.getVideoData();
-                    if (videoData && videoData.title) {
-                        liveTitle.innerText = videoData.title.toUpperCase();
-                        liveAuthor.innerText = videoData.author ? videoData.author.toUpperCase() : 'YOUTUBE STREAM';
-                    }
-                } catch (e) {
-                    console.log("Stream tracking metadata handshake buffered.");
+        function extractMetadata() {
+            try {
+                // Safely grab metadata using playerInfo to bypass deprecated console warnings
+                const videoData = player.playerInfo.videoData; 
+                if (videoData && videoData.title) {
+                    liveTitle.innerText = videoData.title.toUpperCase();
+                    liveAuthor.innerText = videoData.author ? videoData.author.toUpperCase() : "YOUTUBE AUDIO";
+                } else {
+                    liveTitle.innerText = "TRACK PLAYING";
+                    liveAuthor.innerText = "YOUTUBE MIX";
                 }
+            } catch (error) {
+                liveTitle.innerText = "TRACK PLAYING";
+                liveAuthor.innerText = "YOUTUBE MIX";
             }
         }
 
         function onPlayerStateChange(event) {
-            if (event.data == YT.PlayerState.PLAYING) {
-                updateMetadataDisplay();
+            if (event.data === YT.PlayerState.PLAYING) {
                 isPlaying = true;
                 playToggleBtn.innerText = "Pause";
-                playToggleBtn.classList.remove('active-load');
                 playToggleBtn.classList.add('active-play');
-            } else if (event.data == YT.PlayerState.PAUSED || event.data == YT.PlayerState.ENDED) {
+                extractMetadata();
+            } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
                 isPlaying = false;
                 playToggleBtn.innerText = "Play";
                 playToggleBtn.classList.remove('active-play');
             }
         }
 
+        // Hardware Button Listeners
         playToggleBtn.addEventListener('click', () => {
-            if (!hasInitialized) {
+            if (!player) return; // API not ready yet
+
+            if (!isLoaded) {
                 player.playVideo();
-                hasInitialized = true;
+                isLoaded = true;
+                playToggleBtn.innerText = "Loading...";
                 return;
             }
+
             if (isPlaying) {
                 player.pauseVideo();
             } else {
@@ -392,11 +392,15 @@
         });
 
         document.getElementById('mp4-next').addEventListener('click', () => {
-            if (player && hasInitialized) player.nextVideo();
+            if (player && isLoaded) {
+                player.nextVideo();
+            }
         });
 
         document.getElementById('mp4-prev').addEventListener('click', () => {
-            if (player && hasInitialized) player.previousVideo();
+            if (player && isLoaded) {
+                player.previousVideo();
+            }
         });
     </script>
 </body>
