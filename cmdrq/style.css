@@ -134,10 +134,10 @@ body::after {
     position: fixed;
     top: 0;
     left: 50%;
-    transform: translateX(-50%) translateY(30px);
+    transform: translateX(-50%) translateY(5px); /* Dropped from 30px to hug the absolute top ceiling */
     width: 90%;
     max-width: 540px;
-    height: calc(100dvh - 160px); 
+    height: calc(100dvh - 125px); /* Extended height range to reclaim safe screen real estate base */
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -178,7 +178,7 @@ body::after {
     align-items: center;
     text-align: center;
     position: relative;
-    margin-top: 2rem;
+    margin-top: 0.25rem; /* Crushed structural padding space above elements */
     flex-shrink: 0;
 }
 
@@ -451,7 +451,8 @@ body::after {
 @media (min-width: 1024px) {
     .terminal-container {
         max-width: 1000px; 
-        height: calc(100dvh - 180px);
+        transform: translateX(-50%) translateY(5px);
+        height: calc(100dvh - 135px);
         gap: 2.5rem;
         padding-left: 30px;
         padding-right: 30px;
@@ -467,12 +468,16 @@ body::after {
     .intro-text {
         font-size: 1.05rem;
     }
+    .identity-module {
+        margin-top: 0.1rem;
+    }
 }
 
 @media (min-width: 1920px) {
     .terminal-container {
         max-width: 1400px; 
-        height: calc(100dvh - 200px);
+        transform: translateX(-50%) translateY(5px);
+        height: calc(100dvh - 145px);
         gap: 3rem;
     }
     .link-matrix {
@@ -493,16 +498,19 @@ body::after {
     .card-data p {
         font-size: 0.95rem;
     }
+    .identity-module {
+        margin-top: 0rem;
+    }
 }
 
 @media (max-height: 700px) {
     .terminal-container {
-        transform: translateX(-50%) translateY(15px);
-        height: calc(100dvh - 130px);
+        transform: translateX(-50%) translateY(5px);
+        height: calc(100dvh - 115px);
         gap: 1rem;
     }
     .identity-module {
-        margin-top: 0.5rem;
+        margin-top: 0rem;
     }
     .hud-ring {
         width: 85px;
