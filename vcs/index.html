@@ -2,577 +2,387 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>QUINCY JONES // HUB</title>
-    <link rel="stylesheet" href="style.css?v=13">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vanguard Citizen Services | Creative Studio</title>
+    <link rel="stylesheet" href="style.css">
     <style>
-        /* =========================================
-           01 // AGGRESSIVE CENTERING & RESET OVERRIDES
-           ========================================= */
-        :root {
-            --gold: #D4AF37;
-            --gold-glow: rgba(212, 175, 55, 0.4);
-            --glass-bg: rgba(10, 8, 18, 0.85);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --text-main: #ffffff;
-            --text-muted: rgba(255, 255, 255, 0.65);
+        /* ==========================================
+           1. COMPACT ARCHITECTURE
+           ========================================== */
+        body {
+            overflow-y: auto;
+            padding: 1.5rem 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
 
-        *, *::before, *::after {
-            box-sizing: border-box !important;
-            margin: 0;
-            padding: 0;
+        .glass-window {
+            max-width: 800px;
+            width: 100%;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
-        html, body {
-            width: 100% !important;
-            min-height: 100dvh !important;
-            background-color: #030207 !important;
-            color: var(--text-main) !important;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif !important;
-            
-            /* Kills external horizontal drift */
-            overflow-x: hidden !important;
-            overflow-y: auto !important;
-            
-            /* Forces absolute dead-center alignment on all screens */
-            display: flex !important;
-            justify-content: center !important;
-            align-items: center !important;
-            padding: 20px 12px !important;
-            -webkit-text-size-adjust: 100%;
-            -webkit-tap-highlight-color: transparent;
+        /* ==========================================
+           1a. TOP PANEL NAVIGATION STRUCTURE
+           ========================================== */
+        .top-nav-panel {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 1.5rem;
         }
 
-        body::after {
-            content: "";
-            position: fixed;
-            inset: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.2) 50%);
-            background-size: 100% 3px;
-            z-index: 999;
-            pointer-events: none;
-            opacity: 0.4;
+        .history-btn {
+            background: transparent;
+            border: 1px solid rgba(179, 136, 255, 0.4);
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.75em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 0.4rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
         }
 
-        /* =========================================
-           02 // STABILIZED STARFIELD ENVIRONMENT
-           ========================================= */
-        #environment {
-            position: fixed;
-            inset: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -2;
-            pointer-events: none;
+        .history-btn:hover {
+            border-color: #ffeb3b;
+            color: #ffeb3b;
+            box-shadow: 0 0 10px rgba(255, 235, 59, 0.2);
+        }
+
+        /* ==========================================
+           2. STREAMLINED SECTIONS
+           ========================================== */
+        .studio-section {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .section-title {
+            color: #ffeb3b;
+            font-size: 1.3em;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid rgba(179, 136, 255, 0.3);
+            padding-bottom: 0.3rem;
+            width: fit-content;
+        }
+
+        .section-text {
+            line-height: 1.5;
+            font-size: 0.95em;
+            max-width: 600px;
+            margin-bottom: 1rem;
+        }
+
+        /* ==========================================
+           3. THREE PILLARS ROW
+           ========================================== */
+        .mission-row {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            width: 100%;
+            margin: 1rem 0;
+        }
+
+        .pillar-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(179, 136, 255, 0.2);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        .pillar-name {
+            color: #ffeb3b;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9em;
+            margin-bottom: 0.25rem;
+        }
+
+        .pillar-text {
+            font-size: 0.85em;
+            line-height: 1.4;
+        }
+
+        /* ==========================================
+           4. INTERACTIVE PROJECT SLIDER
+           ========================================== */
+        .slider-box {
+            width: 100%;
+            max-width: 550px;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 0.5rem;
+            position: relative;
+        }
+
+        .slide {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        .project-tag {
+            font-size: 0.7em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #b388ff;
+            font-weight: 600;
+        }
+
+        .project-name {
+            font-size: 1.1em;
+            font-weight: 700;
+            margin: 0.3rem 0;
+            color: #ffffff;
+        }
+
+        .project-summary {
+            font-size: 0.85em;
+            line-height: 1.5;
+            margin-bottom: 1.2rem;
+            min-height: 4.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slider-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 235, 59, 0.4);
+            color: #ffeb3b;
+            font-size: 1.2rem;
+            padding: 0.3rem 1rem;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-btn:hover {
+            background: #ffeb3b;
+            color: #000000;
+            box-shadow: 0 0 10px #ffeb3b;
+        }
+
+        /* ==========================================
+           5. ACTION BUTTON & NAV LINKS
+           ========================================== */
+        .action-btn {
+            display: inline-block;
+            background: linear-gradient(90deg, #ffe082 0%, #ffb300 50%, #ffeb3b 100%);
+            color: #000000;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 0.7rem 1.5rem;
+            border-radius: 6px;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+            position: relative;
             overflow: hidden;
-            background: radial-gradient(circle at 50% 50%, #110b22 0%, #030207 90%);
+            transition: box-shadow 0.3s ease;
         }
 
-        .starfield {
-            position: absolute;
-            width: 200vw;
-            height: 200vh;
-            top: -50%;
-            left: -50%;
-            background-image: 
-                radial-gradient(1.5px 1.5px at 15% 20%, #ffffff, transparent),
-                radial-gradient(2px 2px at 45% 65%, var(--gold), transparent),
-                radial-gradient(1px 1px at 75% 35%, #ffffff, transparent),
-                radial-gradient(2.5px 2.5px at 85% 85%, var(--gold), transparent);
-            background-size: 300px 300px;
-            animation: cosmicRotation 300s linear infinite;
-            opacity: 0.6;
+        .action-btn:hover {
+            box-shadow: 0 0 25px #ffd700, 0 0 10px rgba(179, 136, 255, 0.5);
         }
 
-        @keyframes cosmicRotation {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .ambient-glow {
-            position: fixed;
-            inset: 0;
-            background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        /* =========================================
-           03 // CENTRA-LOCK CORE WINDOW CHASSIS
-           ========================================= */
-        .glass-window-chassis {
-            background: var(--glass-bg) !important;
-            backdrop-filter: blur(25px) saturate(140%) !important;
-            -webkit-backdrop-filter: blur(25px) saturate(140%) !important;
-            border: 1px solid var(--glass-border) !important;
-            border-radius: 28px !important;
-            padding: 24px !important;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
-            
-            width: 100% !important;
-            max-width: 460px !important;
-            
-            /* Concrete positioning resets to completely neutralize external CSS displacement */
-            position: relative !important;
-            left: 0 !important;
-            right: 0 !important;
-            margin: 0 auto !important;
-            transform: none !important;
-            float: none !important;
-            clear: both !important;
-            
-            display: flex !important;
-            flex-direction: column !important;
-            gap: 1.5rem !important;
-            z-index: 10 !important;
-            animation: windowBoot 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        @keyframes windowBoot {
-            from { opacity: 0; transform: scale(0.96) translateY(10px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
-        }
-
-        /* =========================================
-           04 // PROFILE CONTROLLER NODE
-           ========================================= */
-        .profile-card {
-            text-align: center !important;
-            width: 100% !important;
-        }
-
-        .avatar-frame {
-            width: 105px;
-            height: 105px;
-            margin: 0 auto 1rem auto !important;
-            position: relative !important;
-        }
-
-        .avatar-frame::before {
+        .action-btn::after {
             content: '';
             position: absolute;
-            inset: -6px;
-            border-radius: 50%;
-            border: 2px dashed var(--gold);
-            animation: structuralSpin 30s linear infinite;
-            opacity: 0.3;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+            animation: flashShimmer 2s infinite;
         }
 
-        @keyframes structuralSpin { to { transform: rotate(360deg); } }
-
-        .avatar-img {
-            width: 100% !important;
-            height: 100% !important;
-            border-radius: 50% !important;
-            object-fit: cover !important;
-            border: 2px solid var(--gold) !important;
-            box-shadow: 0 0 20px var(--gold-glow) !important;
+        .back-nav {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.75em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: color 0.3s ease;
         }
 
-        .identity-title {
-            font-size: 1.7rem !important;
-            font-weight: 900 !important;
-            text-transform: uppercase !important;
-            letter-spacing: 3px !important;
-            color: #ffffff !important;
-            line-height: 1.2 !important;
+        .back-nav:hover {
+            color: #ffeb3b;
         }
 
-        .identity-subtitle {
-            font-size: 0.8rem !important;
-            color: var(--gold) !important;
-            text-transform: uppercase !important;
-            letter-spacing: 2px !important;
-            font-weight: 700 !important;
-            margin-top: 4px !important;
-            line-height: 1 !important;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
         }
 
-        /* =========================================
-           05 // PROSE TEXT LOGIC
-           ========================================= */
-        .prose-text {
-            font-size: 0.95rem !important;
-            line-height: 1.6 !important;
-            color: rgba(255, 255, 255, 0.9) !important;
-            text-align: left !important;
+        /* ==========================================
+           6. RESPONSIVE DESKTOP EXPANSION
+           ========================================== */
+        @media (min-width: 700px) {
+            .mission-row {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 0.8rem;
+            }
         }
-
-        .manifesto-link {
-            color: var(--gold) !important;
-            font-weight: 800 !important;
-            cursor: pointer !important;
-            text-decoration: underline !important;
-        }
-        .manifesto-link:hover {
-            color: #ffffff !important;
-            text-shadow: 0 0 8px var(--gold-glow) !important;
-        }
-
-        /* =========================================
-           06 // LINK MATRIX ARCHITECTURE
-           ========================================= */
-        .matrix-grid {
-            display: flex !important;
-            flex-direction: column !important;
-            gap: 0.8rem !important;
-            width: 100% !important;
-        }
-
-        .matrix-cell {
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%) !important;
-            border: 1px solid rgba(255, 255, 255, 0.08) !important;
-            border-radius: 16px !important;
-            padding: 1.1rem !important;
-            text-decoration: none !important;
-            color: #ffffff !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: space-between !important;
-            transition: all 0.2s ease !important;
-            cursor: pointer !important;
-            width: 100% !important;
-        }
-
-        .matrix-cell:hover {
-            border-color: var(--gold) !important;
-            background: rgba(212, 175, 55, 0.04) !important;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4) !important;
-            transform: translateY(-2px) !important;
-        }
-
-        .cell-info {
-            max-width: 85% !important;
-            text-align: left !important;
-        }
-
-        .cell-info h3 {
-            font-size: 0.95rem !important;
-            font-weight: 800 !important;
-            letter-spacing: 1px !important;
-            text-transform: uppercase !important;
-            margin-bottom: 2px !important;
-            color: #ffffff !important;
-        }
-
-        .cell-info p {
-            font-size: 0.8rem !important;
-            color: var(--text-muted) !important;
-            line-height: 1.4 !important;
-        }
-
-        .cell-vector {
-            color: var(--gold) !important;
-            font-size: 1.2rem !important;
-        }
-
-        /* =========================================
-           07 // CONSOLIDATED WINDOW FOOTER (INTERNAL DOCK)
-           ========================================= */
-        .internal-dock {
-            margin-top: 0.5rem !important;
-            padding-top: 1.2rem !important;
-            border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
-            display: flex !important;
-            justify-content: center !important;
-            align-items: center !important;
-            gap: 2rem !important;
-            width: 100% !important;
-        }
-
-        .dock-element {
-            color: rgba(255, 255, 255, 0.6) !important;
-            text-decoration: none !important;
-            font-size: 0.75rem !important;
-            font-weight: 800 !important;
-            letter-spacing: 1.5px !important;
-            text-transform: uppercase !important;
-            transition: color 0.2s ease !important;
-        }
-        .dock-element:hover {
-            color: var(--gold) !important;
-        }
-
-        .dock-badge {
-            width: 28px !important;
-            height: 28px !important;
-            opacity: 0.7 !important;
-            display: block !important;
-        }
-        .dock-element:hover .dock-badge {
-            opacity: 1 !important;
-            filter: drop-shadow(0 0 6px var(--gold));
-        }
-
-        /* =========================================
-           08 // MODAL CONTAINER SYSTEMS
-           ========================================= */
-        .system-overlay {
-            position: fixed !important;
-            inset: 0 !important;
-            z-index: 9000 !important;
-            background: #020105 !important;
-            display: flex !important;
-            flex-direction: column !important;
-            transform: translateY(100%) !important;
-            opacity: 0 !important;
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease !important;
-            width: 100vw !important;
-            height: 100dvh !important;
-        }
-        .system-overlay.active {
-            transform: translateY(0) !important;
-            opacity: 1 !important;
-        }
-
-        .overlay-navbar {
-            height: 60px !important;
-            background: #07060b !important;
-            border-bottom: 1px solid var(--gold) !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: space-between !important;
-            padding: 0 16px !important;
-            flex-shrink: 0 !important;
-            width: 100% !important;
-        }
-        .overlay-caption {
-            color: var(--gold) !important;
-            font-size: 0.85rem !important;
-            font-weight: 800 !important;
-            letter-spacing: 2px !important;
-            text-transform: uppercase !important;
-        }
-        
-        .overlay-terminal-exit {
-            background: rgba(255, 255, 255, 0.04) !important;
-            border: 1px solid rgba(212, 175, 55, 0.2) !important;
-            color: #ffffff !important;
-            padding: 6px 16px !important;
-            border-radius: 20px !important;
-            font-size: 0.75rem !important;
-            font-weight: 700 !important;
-            text-transform: uppercase !important;
-            cursor: pointer !important;
-        }
-        .overlay-terminal-exit:hover {
-            background: var(--gold) !important;
-            color: #020105 !important;
-        }
-
-        .overlay-frame-host {
-            flex-grow: 1 !important;
-            overflow-y: auto !important;
-            -webkit-overflow-scrolling: touch !important;
-            width: 100% !important;
-            background: #000000 !important;
-        }
-        
-        .sandbox-iframe {
-            width: 100% !important;
-            height: 100% !important;
-            border: none !important;
-            display: block !important;
-        }
-
-        .manifesto-prose-bay {
-            max-width: 580px !important;
-            margin: 0 auto !important;
-            padding: 40px 20px !important;
-            color: rgba(255, 255, 255, 0.9) !important;
-            font-size: 1.05rem !important;
-            line-height: 1.75 !important;
-            text-align: left !important;
-        }
-        .manifesto-prose-bay h2 {
-            color: var(--gold) !important;
-            font-size: 1.35rem !important;
-            text-transform: uppercase !important;
-            letter-spacing: 2px !important;
-            margin-top: 0 !important;
-            margin-bottom: 15px !important;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-            padding-bottom: 8px !important;
-        }
-        .manifesto-prose-bay p { margin-bottom: 20px !important; }
-        .manifesto-prose-bay strong { color: #ffffff !important; }
     </style>
 </head>
 <body>
 
-    <!-- VISUAL SCENE CONTROLLERS -->
-    <div id="environment"><div class="starfield"></div></div>
-    <div class="ambient-glow"></div>
+    <!-- VISUAL ENVIRONMENT -->
+    <div class="space-bg">
+        <div class="starfield"></div>
+    </div>
 
-    <!-- MASTER WINDOW CHASSIS CONTAINER -->
-    <main class="glass-window-chassis">
+    <!-- MAIN INTERFACE -->
+    <div class="glass-window">
         
-        <!-- IDENTITY SEGMENT -->
-        <header class="profile-card">
-            <div class="avatar-frame">
-                <img src="images/headshot.jpg" alt="Quincy Jones" class="avatar-img">
-            </div>
-            <h1 class="identity-title">Quincy Jones</h1>
-            <h2 class="identity-subtitle">Chief Vision Officer</h2>
-        </header>
+        <!-- TOP PANEL LAYOUT -->
+        <div class="top-nav-panel">
+            <a href="../home/index.html" class="back-nav">← Back</a>
+            <a href="history/index.html" class="history-btn">Our History</a>
+        </div>
 
-        <!-- DESCRIPTION DESCRIPTION -->
-        <section style="width: 100%;">
-            <p class="prose-text">
-                Hey, I'm Quincy. Welcome to my creative dashboard. I build custom web tools, share raw human experiences, and design frameworks to help our communities work closer together. Everything I make loops directly back to my blueprint through <span class="manifesto-link" id="trigger-manifesto">Project V</span>—a real-world experiment to pool local voices together to fix real gaps in our daily quality of life. Explore the active workspaces below.
+        <img src="../images/vanguardorglogo.png" alt="Vanguard Citizen Services Logo" class="logo">
+        <div class="tagline" style="margin-bottom: 1.5rem;">Creative Studio</div>
+        
+        <!-- ORIGINS & PILLARS -->
+        <section class="studio-section">
+            <h2 class="section-title">Our Vision</h2>
+            <p class="section-text">
+                Vanguard Citizen Services is a creative workshop. We share human stories to provoke deep thought and help shape our world toward positive coexistence.
             </p>
+            
+            <div class="mission-row">
+                <div class="pillar-card">
+                    <div class="pillar-name">Empower</div>
+                    <div class="pillar-text">Giving voice to stories that inspire action.</div>
+                </div>
+                <div class="pillar-card">
+                    <div class="pillar-name">Educate</div>
+                    <div class="pillar-text">Unpacking deep topics for shared insight.</div>
+                </div>
+                <div class="pillar-card">
+                    <div class="pillar-name">Elevate</div>
+                    <div class="pillar-text">Lifting up human spirit and connection.</div>
+                </div>
+            </div>
         </section>
 
-        <!-- LINK MATRIX ENTRIES -->
-        <nav class="matrix-grid">
+        <!-- PORTAL INTERACTIVE SHOWCASE -->
+        <section class="studio-section">
+            <h2 class="section-title">Our Showcases</h2>
             
-            <div class="matrix-cell client-route" data-url="about/" data-title="About Me">
-                <div class="cell-info">
-                    <h3>About Me</h3>
-                    <p>Core background, military service values, and personal journey.</p>
+            <div class="slider-box">
+                <!-- PROJECT 1: REGIONAL CIVIC UTILITY -->
+                <div class="slide active">
+                    <span class="project-tag">Civic Utility</span>
+                    <h3 class="project-name">Hardin County Community Voice Box</h3>
+                    <p class="project-summary">A shared platform for residents to submit local county issues, discover nearby resources, and learn about our community.</p>
+                    <a href="../communityvoicebox/index.html" class="action-btn">Launch Utility</a>
                 </div>
-                <div class="cell-vector">→</div>
-            </div>
 
-            <div class="matrix-cell client-route" data-url="../knights/index.html" data-title="Active Projects">
-                <div class="cell-info">
-                    <h3>Active Projects</h3>
-                    <p>Our collaborative hub layout hosting custom community reporting tools.</p>
+                <!-- CAROUSEL TRACK CONTROLS -->
+                <div class="slider-controls">
+                    <button class="nav-btn" id="prev-slide">←</button>
+                    <button class="nav-btn" id="next-slide">→</button>
                 </div>
-                <div class="cell-vector">→</div>
             </div>
+        </section>
 
-            <div class="matrix-cell client-route" data-url="ordo/" data-title="Ordo">
-                <div class="cell-info">
-                    <h3>Ordo</h3>
-                    <p>Brutal self-questioning frameworks and performance philosophy for teams.</p>
-                </div>
-                <div class="cell-vector">→</div>
-            </div>
+        <!-- CENTERED HELP NAVIGATION POINT -->
+        <div style="margin-top: 1.5rem; text-align: center; width: 100%;">
+            <a href="../support/index.html" style="color: #ffffff; text-decoration: none; font-size: 0.75em; text-transform: uppercase; letter-spacing: 2px; border: 1px solid rgba(255,255,255,0.15); padding: 0.5rem 1.4rem; border-radius: 4px; transition: all 0.3s ease;" onmouseover="this.style.borderColor='#ffeb3b'; this.style.color='#ffeb3b'; this.style.boxShadow='0 0 10px rgba(255, 235, 59, 0.1)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.15)'; this.style.color='#ffffff'; this.style.boxShadow='none';">Need Help?</a>
+        </div>
 
-            <div class="matrix-cell client-route" data-url="musicplayer/" data-title="Music Player">
-                <div class="cell-info">
-                    <h3>Music Player</h3>
-                    <p>Custom audio mashups, ambient design loops, and production remixes.</p>
-                </div>
-                <div class="cell-vector">→</div>
-            </div>
-
-            <div class="matrix-cell client-route" data-url="dreamscapedrift/" data-title="Dreamscape Drift">
-                <div class="cell-info">
-                    <h3>Dreamscape Drift</h3>
-                    <p>Physics spec sheets and tire tuning profiles for Forza builds.</p>
-                </div>
-                <div class="cell-vector">→</div>
-            </div>
-
-        </nav>
-
-        <!-- CLOSED LINK INTEGRATED FOOTER DOCK -->
-        <footer class="internal-dock">
-            <a href="https://music.apple.com" target="_blank" class="dock-element">Apple Music</a>
-            <div class="dock-element" style="cursor: default;">
-                <img src="images/vklogo.png" alt="VK Badge Logo" class="dock-badge">
-            </div>
-            <a href="https://tiktok.com" target="_blank" class="dock-element">TikTok</a>
+        <!-- SITE FOOTER -->
+        <footer class="site-footer">
+            <div class="footer-text">&copy; 2026 Vanguard Citizen Services. All Rights Reserved.</div>
         </footer>
 
-    </main>
-
-    <!-- =========================================
-         SYSTEM OVERLAYS & OVERLAYS
-         ========================================= -->
-
-    <!-- TOOL SANDBOX VIEWPORT -->
-    <div class="system-overlay" id="sandbox-overlay">
-        <header class="overlay-navbar">
-            <span class="overlay-caption" id="sandbox-caption">Loading Stream...</span>
-            <button class="overlay-terminal-exit" id="close-sandbox">Close Window</button>
-        </header>
-        <div class="overlay-frame-host">
-            <iframe src="about:blank" class="sandbox-iframe" id="sandbox-iframe"></iframe>
-        </div>
     </div>
 
-    <!-- NARRATIVE MANIFESTO CONSOLE -->
-    <div class="system-overlay" id="manifesto-overlay">
-        <header class="overlay-navbar">
-            <span class="overlay-caption">Project V // Core Directive</span>
-            <button class="overlay-terminal-exit" id="close-manifesto">Close Window</button>
-        </header>
-        <div class="overlay-frame-host">
-            <div class="manifesto-prose-bay">
-                <h2>The Project V Manifesto</h2>
-                <p>Project V started in the most honest way possible: <strong>I sat down and asked my kids and my family what their everyday lives were really like.</strong> What they told me was painful to hear. It made me realize how many daily struggles and quiet brick walls people hit just trying to get a decent education and build a life right here in their own towns.</p>
-                <p>When the structure around us breaks down, people end up completely cut off from each other. Project V is a straight-to-the-point experiment. We are using clean, anonymous digital tools to combine the true voices of a community. By cutting out the usual political red tape, we can map out exactly what people are feeling and experiencing in real time.</p>
-                <p><strong>The Goal:</strong> Take that data and put it directly in front of local leaders, business owners, and neighbors so we can make a clear, measurable change in how we live. We are starting with the everyday challenges of normal citizens—because a town can only move forward when its people are finally heard.</p>
-                <hr style="border:0; border-top:1px dashed rgba(255, 255, 255, 0.08); margin:25px 0;">
-                <h2>What We Are Building Next</h2>
-                <p>This tracking infrastructure is laying the ground rules for something much larger. Soon, we are launching an interactive, community-driven book project. Readers will team up directly with the <strong>Vanguard Knights</strong> to hunt down a massive threat—a force that actively changes timelines to strip away human quality of life forever. Stay tuned. The coordinates are printing now.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- =========================================
-         DISPATCH PROTOCOLS
-         ========================================= -->
+    <!-- LOGIC SYSTEM ENGINES -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const routes = document.querySelectorAll('.client-route');
-            const sandboxOverlay = document.getElementById('sandbox-overlay');
-            const sandboxIframe = document.getElementById('sandbox-iframe');
-            const sandboxCaption = document.getElementById('sandbox-caption');
-            const closeSandboxBtn = document.getElementById('close-sandbox');
+            // 1. DYNAMIC AUTO-SCALING CAROUSEL ENGINE
+            const slides = document.querySelectorAll(".slide");
+            const prevBtn = document.getElementById("prev-slide");
+            const nextBtn = document.getElementById("next-slide");
+            const controls = document.querySelector(".slider-controls");
+            let currentIndex = 0;
 
-            const openManifestoBtn = document.getElementById('trigger-manifesto');
-            const manifestoOverlay = document.getElementById('manifesto-overlay');
-            const closeManifestoBtn = document.getElementById('close-manifesto');
+            if (slides.length <= 1) {
+                controls.style.display = "none";
+            }
 
-            routes.forEach(cell => {
-                cell.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const targetUrl = cell.getAttribute('data-url');
-                    const targetTitle = cell.getAttribute('data-title');
-                    
-                    if (targetUrl && targetUrl !== '#') {
-                        sandboxCaption.innerText = targetTitle;
-                        sandboxIframe.src = targetUrl;
-                        document.body.style.overflow = 'hidden'; 
-                        sandboxOverlay.classList.add('active');
-                    }
-                });
+            function updateSlider(index) {
+                slides.forEach(slide => slide.classList.remove("active"));
+                slides[index].classList.add("active");
+            }
+
+            prevBtn.addEventListener("click", () => {
+                currentIndex = (currentIndex === 0) ? slides.length - 1 : currentIndex - 1;
+                updateSlider(currentIndex);
             });
 
-            if (closeSandboxBtn) {
-                closeSandboxBtn.addEventListener('click', () => {
-                    sandboxOverlay.classList.remove('active');
-                    document.body.style.overflow = ''; 
-                    setTimeout(() => { sandboxIframe.src = 'about:blank'; }, 350);
-                });
+            nextBtn.addEventListener("click", () => {
+                currentIndex = (currentIndex === slides.length - 1) ? 0 : currentIndex + 1;
+                updateSlider(currentIndex);
+            });
+
+            // 2. COMET SPAWNER ENGINE
+            const spaceBg = document.querySelector(".space-bg");
+
+            function launchComet() {
+                const comet = document.createElement("div");
+                comet.classList.add("comet");
+                const startTop = Math.random() * 40; 
+                const startLeft = Math.random() * 20;
+                
+                comet.style.top = `${startTop}vh`;
+                comet.style.left = `${startLeft}vw`;
+                comet.style.animation = "streak 3.2s cubic-bezier(0.25, 1, 0.5, 1) forwards";
+                
+                spaceBg.appendChild(comet);
+                setTimeout(() => comet.remove(), 3300);
             }
 
-            if (openManifestoBtn) {
-                openManifestoBtn.addEventListener('click', () => {
-                    document.body.style.overflow = 'hidden';
-                    manifestoOverlay.classList.add('active');
-                });
-            }
-
-            if (closeManifestoBtn) {
-                closeManifestoBtn.addEventListener('click', () => {
-                    manifestoOverlay.classList.remove('active');
-                    document.body.style.overflow = '';
-                });
-            }
-
-            const currentVersion = "13"; 
-            const storageKey = "hub_version_check";
-            if (localStorage.getItem(storageKey) !== currentVersion) {
-                localStorage.setItem(storageKey, currentVersion);
-                window.location.reload(window.location.href.split('?')[0] + '?v=' + currentVersion);
-            }
+            setInterval(launchComet, 4000);
+            setTimeout(launchComet, 500);
         });
     </script>
+
 </body>
 </html>
