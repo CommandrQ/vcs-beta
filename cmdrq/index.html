@@ -3,26 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>COMMANDER Q</title>
-    <link rel="stylesheet" href="style.css?v=2">
+    <title>COMMANDER Q // PORTFOLIO</title>
+    <link rel="stylesheet" href="../style.css?v=2">
     <style>
-        /* --- FADE TRANSITION STYLES --- */
+        /* --- SYSTEM SCREEN INTERCEPT --- */
+        html, body {
+            overflow: hidden !important;
+            height: 100dvh;
+            width: 100vw;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* --- FADE TRANSITION GRAPHICS --- */
         body {
             opacity: 0;
             transition: opacity 0.5s ease-in-out;
         }
-        body.fade-in {
-            opacity: 1;
-        }
-        body.fade-out {
-            opacity: 0;
-        }
+        body.fade-in { opacity: 1; }
+        body.fade-out { opacity: 0; }
         
-        /* --- BRAND LOGO LAYOUT --- */
+        /* --- LOGO INTERFACE ARCHITECTURE --- */
         .brand-logo-container {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 15px auto;
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 10px auto;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -31,6 +36,123 @@
             width: 100%;
             height: 100%;
             object-fit: contain;
+        }
+
+        /* --- LINK IN BIO CHASSIS WINDOW --- */
+        .hub-card {
+            display: flex;
+            flex-direction: column;
+            width: 92%;
+            max-width: 480px;
+            height: auto;
+            max-height: 85dvh; 
+            margin: 0 auto;
+            background: rgba(15, 15, 20, 0.65);
+            backdrop-filter: blur(25px) saturate(150%);
+            -webkit-backdrop-filter: blur(25px) saturate(150%);
+            border: 2px solid var(--purple-muted, rgba(149, 117, 205, 0.2));
+            border-radius: 24px;
+            padding: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        .scroller-bay {
+            overflow-y: auto;
+            flex-grow: 1;
+            padding-right: 6px;
+            -webkit-overflow-scrolling: touch;
+        }
+        .scroller-bay::-webkit-scrollbar { width: 4px; }
+        .scroller-bay::-webkit-scrollbar-track { background: transparent; }
+        .scroller-bay::-webkit-scrollbar-thumb { background: rgba(214, 175, 55, 0.3); border-radius: 10px; }
+
+        /* --- PORTFOLIO DOCK BUTTON LINKS --- */
+        .bio-link-btn {
+            display: block;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 12px;
+            text-decoration: none;
+            text-align: left;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .bio-link-btn:last-of-type { margin-bottom: 0; }
+        .bio-link-btn:hover {
+            background: rgba(214, 175, 55, 0.05);
+            border-color: #D4AF37;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .bio-link-btn h3 {
+            margin: 0 0 4px 0;
+            font-size: 1rem;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .bio-link-btn p {
+            margin: 0;
+            font-size: 0.8rem;
+            line-height: 1.4;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* --- INTEGRATED SANDBOX VIEWER SYSTEM --- */
+        .sandbox-overlay {
+            position: fixed;
+            inset: 0;
+            background: #000000;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .sandbox-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .sandbox-header {
+            height: 50px;
+            background: #06040d;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 16px;
+            flex-shrink: 0;
+        }
+        .sandbox-title {
+            color: #D4AF37;
+            font-size: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .sandbox-close {
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 4px 8px;
+        }
+
+        .sandbox-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #000000;
+            flex-grow: 1;
         }
     </style>
 </head>
@@ -52,66 +174,37 @@
 
             <div class="core-statement-banner">
                 <p class="directive-tag">Chief Vision Officer of VCS // Captain Commander of the Vanguard Knights</p>
-                <p class="directive-text">I serve as a dedicated voice in our community and a strategic leader guiding a new perspective on coexistence. Select a sector below to explore the work.</p>
+                <p class="directive-text">I serve as a dedicated voice in our community and a strategic leader guiding a new perspective on coexistence. Explore my interests and projects directly below.</p>
             </div>
 
             <div class="scroller-bay">
-                <div class="workspace-grid">
-                    
-                    <!-- Phase 01: Empower Panel -->
-                    <section class="workspace-column" id="col-empower">
-                        <div class="column-header">
-                            <span class="column-num">01</span>
-                            <h2>EMPOWER</h2>
-                        </div>
-                        <div class="column-body">
-                            <a href="about/" class="action-card">
-                                <h3>About Me</h3>
-                                <p>Opens my professional background, creative experience, and military service summary.</p>
-                            </a>
-                        </div>
-                    </section>
-
-                    <!-- Phase 02: Educate Panel -->
-                    <section class="workspace-column" id="col-educate">
-                        <div class="column-header">
-                            <span class="column-num">02</span>
-                            <h2>EDUCATE</h2>
-                        </div>
-                        <div class="column-body">
-                            <a href="#" class="action-card">
-                                <h3>Team Chemistry Classes</h3>
-                                <p>Opens information about my mindset training and masterclasses for businesses.</p>
-                            </a>
-                            <a href="#" class="action-card">
-                                <h3>Guides</h3>
-                                <p>Opens my shared operational files, transparency frameworks, and community playbooks.</p>
-                            </a>
-                        </div>
-                    </section>
-
-                    <!-- Phase 03: Elevate Panel -->
-                    <section class="workspace-column" id="col-elevate">
-                        <div class="column-header">
-                            <span class="column-num">03</span>
-                            <h2>ELEVATE</h2>
-                        </div>
-                        <div class="column-body">
-                            <a href="musicplayer/" class="action-card">
-                                <h3>Music Player</h3>
-                                <p>Opens an interactive music console containing my custom track mashups and remixes.</p>
-                            </a>
-                            <a href="dreamscapedrift/" class="action-card">
-                                <h3>Dreamscape Drift</h3>
-                                <p>Opens my physics telemetry logs, tuning specs, and video media for Forza Horizon 6.</p>
-                            </a>
-                        </div>
-                    </section>
-
+                
+                <div class="bio-link-btn" data-target="about/" data-title="About Me">
+                    <h3>About Me</h3>
+                    <p>Opens professional background, creative studio parameters, and military service summary.</p>
                 </div>
+
+                <div class="bio-link-btn" data-target="#" data-title="Team Chemistry Classes">
+                    <h3>Team Chemistry Classes</h3>
+                    <p>Opens framework structures regarding custom mindset modules and leadership classes.</p>
+                </div>
+                <div class="bio-link-btn" data-target="../knights/index.html" data-title="Vanguard Knights Hub">
+                    <h3>The Collective Hub</h3>
+                    <p>Opens my active guild workspace dashboard hosting collaborative community software tools.</p>
+                </div>
+
+                <div class="bio-link-btn" data-target="musicplayer/" data-title="Music Console">
+                    <h3>Music Player</h3>
+                    <p>Opens custom audio mashups, ambient design soundtracks, and production remixes.</p>
+                </div>
+                <div class="bio-link-btn" data-target="dreamscapedrift/" data-title="Dreamscape Drift">
+                    <h3>Dreamscape Drift</h3>
+                    <p>Opens track specifications, telemetry logging, and drifting performance specs.</p>
+                </div>
+
             </div>
 
-            <footer class="channel-dock">
+            <footer class="channel-dock" style="margin-top: 15px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.05);">
                 <a href="https://music.apple.com" target="_blank" class="dock-link">APPLE_MUSIC</a>
                 <a href="https://tiktok.com" target="_blank" class="dock-link">TIKTOK</a>
             </footer>
@@ -119,9 +212,17 @@
         </main>
     </div>
 
+    <div class="sandbox-overlay" id="sandbox-viewer">
+        <header class="sandbox-header">
+            <span class="sandbox-title" id="sandbox-title-display">System Explorer</span>
+            <button class="sandbox-close" id="sandbox-close-btn">✕</button>
+        </header>
+        <iframe src="about:blank" class="sandbox-frame" id="sandbox-iframe"></iframe>
+    </div>
+
     <script src="app.js"></script>
     <script>
-        /* --- AUTO REFRESH & FADE CONTROLLERS --- */
+        /* --- PORTFOLIO ACCESS AND INLINE VIEW ENGINE --- */
         (function() {
             const currentVersion = "2"; 
             const storageKey = "hub_version_check";
@@ -136,19 +237,31 @@
             document.addEventListener("DOMContentLoaded", () => {
                 document.body.classList.add("fade-in");
 
-                document.querySelectorAll("a").forEach(link => {
-                    if (link.hostname === window.location.hostname && link.getAttribute("href") !== "#") {
-                        link.addEventListener("click", (e) => {
-                            e.preventDefault();
-                            const targetUrl = link.href;
-                            document.body.classList.remove("fade-in");
-                            document.body.classList.add("fade-out");
-                            setTimeout(() => {
-                                window.location.href = targetUrl;
-                            }, 500);
-                        });
-                    }
+                const viewer = document.getElementById('sandbox-viewer');
+                const iframe = document.getElementById('sandbox-iframe');
+                const titleDisplay = document.getElementById('sandbox-title-display');
+                const closeBtn = document.getElementById('sandbox-close-btn');
+
+                // Intercepts link buttons to deploy tools completely inside an iframe wrapper layer
+                document.querySelectorAll(".bio-link-btn").forEach(btn => {
+                    btn.addEventListener("click", (e) => {
+                        const targetUrl = btn.getAttribute('data-target');
+                        const targetTitle = btn.getAttribute('data-title');
+
+                        if (targetUrl && targetUrl !== '#') {
+                            titleDisplay.innerText = targetTitle;
+                            iframe.src = targetUrl;
+                            viewer.classList.add('active');
+                        }
+                    });
                 });
+
+                if (closeBtn) {
+                    closeBtn.addEventListener("click", () => {
+                        viewer.classList.remove('active');
+                        iframe.src = "about:blank"; 
+                    });
+                }
             });
         })();
     </script>
