@@ -11,16 +11,13 @@
 </head>
 <body>
 
-    <!-- VISUAL SCENE LAYER -->
     <div class="starfield-canvas" id="canvas-starfield-engine"></div>
     <div class="comet-canvas" id="canvas-comet-engine"></div>
     <div class="cyber-grid"></div>
     <div class="ambient-flare"></div>
 
-    <!-- PERSISTENT HUB CONTAINER -->
-    <main class="terminal-container">
+    <main class="terminal-container" id="main-scroller">
         
-        <!-- PROFILE IDENTITY BLOCK -->
         <header class="identity-module">
             <div class="hud-ring">
                 <img src="images/headshot.jpg" alt="Quincy Jones" class="avatar-img">
@@ -29,59 +26,58 @@
             <h2 class="commander-role">Chief Vision Officer</h2>
         </header>
 
-        <!-- DIRECTIVE PANEL -->
         <section class="glass-panel">
             <p class="intro-text">
-                Hey, I'm Quincy. Welcome to my creative dashboard. I build custom web tools, share raw human experiences, and design frameworks to help our communities work closer together. Everything I make loops directly back to my blueprint through <span class="manifesto-trigger" id="cmd-manifesto">Project V</span>—a real-world experiment to pool local voices together to fix real gaps in our daily quality of life. Explore the active sectors below.
+                Yo! I'm Quincy. Welcome to the dashboard! I build clean web tools, drop raw stories, and make things that help bring our communities closer together. Everything loops right back to my big blueprint through <span class="manifesto-trigger" id="cmd-manifesto">Project V</span>—a real-world experiment to pool local voices and fix actual gaps in our daily lives! Check out the active sectors below and jump in!
             </p>
         </section>
 
-        <!-- INTERACTIVE LINK MODULES -->
         <nav class="link-matrix">
-            <a class="action-card sys-launcher" data-url="about/" data-title="About Me">
+            
+            <a class="action-card" href="about/">
                 <div class="card-data">
                     <h3>About Me</h3>
-                    <p>Core background, military service values, and personal journey.</p>
+                    <p>My background, military roots, and life journey.</p>
                 </div>
                 <div class="card-icon">→</div>
             </a>
 
-            <a class="action-card sys-launcher" data-url="../knights/index.html" data-title="Active Projects">
+            <a class="action-card" href="../knights/index.html">
                 <div class="card-data">
                     <h3>Active Projects</h3>
-                    <p>Collaborative hub hosting custom community reporting tools.</p>
+                    <p>Community hub with custom neighborhood reporting tools.</p>
                 </div>
                 <div class="card-icon">→</div>
             </a>
 
-            <a class="action-card sys-launcher" data-url="ordo/" data-title="Ordo">
+            <a class="action-card" href="ordo/">
                 <div class="card-data">
                     <h3>Ordo</h3>
-                    <p>Brutal self-questioning frameworks and performance philosophy.</p>
+                    <p>Brutal reality checks and ways to get things done.</p>
                 </div>
                 <div class="card-icon">→</div>
             </a>
 
-            <a class="action-card sys-launcher" data-url="musicplayer/" data-title="Music Player">
+            <a class="action-card" href="musicplayer/">
                 <div class="card-data">
                     <h3>Music Player</h3>
-                    <p>Custom audio mashups, ambient design loops, and remixes.</p>
+                    <p>Custom sound mashups, beats, and heavy remixes.</p>
                 </div>
                 <div class="card-icon">→</div>
             </a>
 
-            <a class="action-card sys-launcher" data-url="dreamscapedrift/" data-title="Dreamscape Drift">
+            <a class="action-card" href="dreamscapedrift/">
                 <div class="card-data">
                     <h3>Dreamscape Drift</h3>
-                    <p>Physics spec sheets and telemetry logs for Forza builds.</p>
+                    <p>Specs, car setups, and telemetry logs for Forza builds.</p>
                 </div>
                 <div class="card-icon">→</div>
             </a>
+
         </nav>
 
     </main>
 
-    <!-- MASTER COCKPIT FOOTER & LOGO CHASSIS -->
     <footer class="system-dock">
         <div class="dock-social-row">
             <a href="https://music.apple.com" target="_blank" class="dock-btn">
@@ -96,54 +92,58 @@
         </div>
     </footer>
 
-    <!-- TOOL SANDBOX OVERLAY -->
-    <div class="overlay-screen" id="modal-sandbox">
-        <header class="overlay-header">
-            <span class="overlay-title" id="sandbox-header-title">System Loading...</span>
-            <button class="overlay-close" id="btn-close-sandbox">✕</button>
-        </header>
-        <div class="overlay-body">
-            <iframe src="about:blank" class="system-iframe" id="sandbox-iframe"></iframe>
-        </div>
-    </div>
-
-    <!-- MANIFESTO OVERLAY -->
     <div class="overlay-screen" id="modal-manifesto">
         <header class="overlay-header">
             <span class="overlay-title">Project V // Core Directive</span>
             <button class="overlay-close" id="btn-close-manifesto">✕</button>
         </header>
-        <div class="overlay-body">
+        <div class="overlay-body" id="manifesto-scroller">
             <div class="manifesto-content">
                 <h2>The Project V Manifesto</h2>
-                <p>Project V started in the most honest way possible: <strong>I sat down and asked my kids and my family what their everyday lives were really like.</strong> What they told me was painful to hear. It made me realize how many daily struggles and quiet brick walls people hit just trying to get a decent education and build a life right here in their own towns.</p>
-                <p>When the structure around us breaks down, people end up completely cut off from each other. Project V is a straight-to-the-point experiment. We are using clean, anonymous digital tools to combine the true voices of a community. By cutting out the usual political red tape, we can map out exactly what people are feeling and experiencing in real time.</p>
-                <p><strong>The Goal:</strong> Take that data and put it directly in front of local leaders, business owners, and neighbors so we can make a clear, measurable change in how we live. We are starting with the everyday challenges of normal citizens—because a town can only move forward when its people are finally heard.</p>
+                <p>Project V started in the most honest way possible: <strong>I sat down and asked my kids and my family what their everyday lives were really like!</strong> What they told me was painful to hear. It made me realize how many daily struggles and quiet brick walls people hit just trying to get a decent education and build a life right here in their own towns!</p>
+                <p>When the structure around us breaks down, people end up completely cut off from each other. Project V is a straight-to-the-point experiment. We are using clean, anonymous digital tools to combine the true voices of a community. By cutting out the usual political red tape, we can map out exactly what people are feeling and experiencing in real time!</p>
+                <p><strong>The Goal:</strong> Take that data and put it directly in front of local leaders, business owners, and neighbors so we can make a clear, measurable change in how we live! We are starting with the everyday challenges of normal citizens—because a town can only move forward when its people are finally heard!</p>
                 <hr style="border:0; border-top:1px dashed rgba(212,175,55,0.3); margin:30px 0;">
                 <h2>What We Are Building Next</h2>
-                <p>This tracking infrastructure is laying the ground rules for something much larger. Soon, we are launching an interactive, community-driven book project. Readers will team up directly with the <strong>Vanguard Knights</strong> to hunt down a massive threat—a force that actively changes timelines to strip away human quality of life forever. Stay tuned. The coordinates are printing now.</p>
+                <p>This tracking setup is laying the ground rules for something much larger. Soon, we are launching an interactive, community-driven book project! Readers will team up directly with the <strong>Vanguard Knights</strong> to hunt down a massive threat—a force that actively changes timelines to strip away human quality of life forever! Stay tuned! The coordinates are printing now!</p>
             </div>
         </div>
     </div>
 
-    <!-- ENGINE & CELESTIAL LOGIC -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             
             // UI ELEMENTS
-            const appLinks = document.querySelectorAll('.sys-launcher');
-            const sandboxModal = document.getElementById('modal-sandbox');
-            const sandboxIframe = document.getElementById('sandbox-iframe');
-            const sandboxTitle = document.getElementById('sandbox-header-title');
-            const closeSandbox = document.getElementById('btn-close-sandbox');
-
             const btnManifesto = document.getElementById('cmd-manifesto');
             const manifestoModal = document.getElementById('modal-manifesto');
             const closeManifesto = document.getElementById('btn-close-manifesto');
+            
+            const mainScroller = document.getElementById('main-scroller');
+            const manifestoScroller = document.getElementById('manifesto-scroller');
+
+            // FADE-IN SCROLLBAR ENGINE
+            let mainScrollTimeout;
+            let manifestoScrollTimeout;
+
+            function triggerScrollbar(element, timeoutRef) {
+                element.classList.add('scrolling');
+                clearTimeout(timeoutRef);
+                return setTimeout(() => {
+                    element.classList.remove('scrolling');
+                }, 1000);
+            }
+
+            mainScroller.addEventListener('scroll', () => {
+                mainScrollTimeout = triggerScrollbar(mainScroller, mainScrollTimeout);
+            });
+
+            manifestoScroller.addEventListener('scroll', () => {
+                manifestoScrollTimeout = triggerScrollbar(manifestoScroller, manifestoScrollTimeout);
+            });
 
             // STARFIELD DRIFT ENGINE
             const starfield = document.getElementById('canvas-starfield-engine');
-            const totalStars = window.innerWidth > 1024 ? 80 : 40;
+            const totalStars = window.innerWidth > 1024 ? 120 : 50;
 
             for (let i = 0; i < totalStars; i++) {
                 const star = document.createElement('div');
@@ -194,26 +194,6 @@
                 }, nextSpawnDelay);
             }
             queueNextComet();
-
-            // APP LAUNCH LOGIC
-            appLinks.forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const url = link.getAttribute('data-url');
-                    const title = link.getAttribute('data-title');
-                    
-                    if (url) {
-                        sandboxTitle.innerText = title;
-                        sandboxIframe.src = url;
-                        sandboxModal.classList.add('active');
-                    }
-                });
-            });
-
-            closeSandbox.addEventListener('click', () => {
-                sandboxModal.classList.remove('active');
-                setTimeout(() => { sandboxIframe.src = 'about:blank'; }, 400); 
-            });
 
             // MODAL SYSTEM LOGIC
             btnManifesto.addEventListener('click', () => {
