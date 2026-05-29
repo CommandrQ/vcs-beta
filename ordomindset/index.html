@@ -8,188 +8,159 @@
 </head>
 <body>
 
-    <!-- STARRY PURPLE & COMET LAYER -->
+    <!-- CALMING PURPLE SKY & STEADY COMETS -->
     <div id="environment">
         <div class="starfield"></div>
     </div>
 
-    <!-- MAIN COMFORTABLE SCROLL WRAPPER -->
+    <!-- MAIN BENTO BOX SCROLL WRAPPER -->
     <div class="app-container">
         
-        <!-- SIDEBAR PANEL -->
-        <aside class="sidebar">
-            <div class="module-card brand-center text-center">
-                <header class="page-header">
-                    <!-- Elegant Sacred Geometry SVG -->
-                    <svg class="logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 70px; height: 70px; margin: 0 auto 15px auto; display: block;">
-                        <polygon points="50,12 12,82 88,82" stroke="#D4AF37" stroke-width="3" fill="rgba(212,175,55,0.03)"/>
-                        <circle cx="50" cy="56" r="16" stroke="#ffffff" stroke-width="2"/>
-                        <circle cx="50" cy="56" r="5" fill="#D4AF37"/>
-                        <line x1="50" y1="12" x2="50" y2="82" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
-                    </svg>
-                    <h1 class="page-title">Ordo</h1>
-                    <div class="page-subtitle">Your Shield Against Chaos</div>
-                </header>
-                
-                <p style="font-size: 0.9rem; margin-top: 15px; color: rgba(255,255,255,0.8);">
-                    Welcome friend. The world outside doesn't always have clear rules, but you can build a stable space inside yourself.
-                </p>
+        <!-- HEADER / HERO BENTO BOX -->
+        <header class="module-card bento-hero text-center">
+            <!-- Elegant Sacred Geometry Symbol -->
+            <svg class="logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="50,15 15,82 85,82" stroke="#D4AF37" stroke-width="3" fill="rgba(212,175,55,0.03)"/>
+                <circle cx="50" cy="56" r="16" stroke="#ffffff" stroke-width="2"/>
+                <circle cx="50" cy="56" r="5" fill="#D4AF37"/>
+            </svg>
+            <h1 class="page-title animate-word">Ordo</h1>
+            <p class="highlight-text">
+                When the world feels heavy, messy, or completely unfair, you don't have to carry all that noise. <strong>Ordo</strong> is a simple, comforting way to clear the fog, protect your peace, and reclaim your personal balance.
+            </p>
+            <div style="margin-top: 25px;">
+                <a href="../knights/" class="action-btn return-btn">← Return to Knights Workspace</a>
+            </div>
+        </header>
 
-                <div class="action-zone" style="margin-top: 20px; display: flex; justify-content: center;">
-                    <a href="https://github.com" target="_blank" class="shimmer-gold-link">View Project Docs →</a>
-                </div>
+        <!-- THE THREE CORE VALUES BLOCKS (BENTO SYSTEM) -->
+        <section class="bento-triple-row">
+            
+            <div class="module-card text-center component-card" onclick="revealInsight('vessel')">
+                <div class="card-number">01</div>
+                <h3>The Container</h3>
+                <p class="simple-desc">Think of your life as a safe, sealed room. You get to decide who enters, what drama gets left outside, and when to just turn off the noise to rest.</p>
             </div>
 
-            <!-- ENCOURAGING STATS MATRIX -->
+            <div class="module-card text-center component-card" onclick="revealInsight('trinity')">
+                <div class="card-number">02</div>
+                <h3>Your Daily Fuel</h3>
+                <p class="simple-desc">You need three basic things to feel good: moving your physical body, keeping your thoughts kind and realistic, and remembering your worth.</p>
+            </div>
+
+            <div class="module-card text-center component-card" onclick="revealInsight('output')">
+                <div class="card-number">03</div>
+                <h3>Your Safe Space</h3>
+                <p class="simple-desc">When you focus on fixing your own habits first, you generate a quiet, steady confidence. Your calm energy naturally helps people around you relax.</p>
+            </div>
+
+        </section>
+
+        <!-- DYNAMIC INSIGHT VIEWER (SAVES SPACE, HIGHLIGHTS SELECTION) -->
+        <div id="fog-clearing-box" class="interactive-display-box text-center" style="display: none;"></div>
+
+        <!-- TWO CORE MINDFULNESS REMINDERS -->
+        <section class="bento-double-row">
+            
             <div class="module-card text-center">
-                <h2>Your Progress Tracker</h2>
-                <div class="diagnostic-stat">Mindset Balance: <span class="status-indicator ready">Steady</span></div>
-                <div class="diagnostic-stat">Inner Signal: <span class="status-indicator pulsing">Connected</span></div>
+                <h3 class="gold-title">👁️ Absolute Honesty</h3>
+                <p style="font-size: 0.95rem; line-height: 1.6; margin-bottom: 0;">
+                    When you look at toxic workspaces or broken rules around you, don't waste energy being angry at them. Take a deep breath and ask: <em>"What part of this can I actually control right now?"</em> Protect your energy by focusing strictly on the truth of your own next step.
+                </p>
             </div>
-        </aside>
-
-        <!-- MAIN FRIENDLY WORKSPACE GUIDES -->
-        <main class="main-content">
             
-            <!-- THE FRIENDLY MISSION STATEMENT -->
-            <section class="module-card text-center">
-                <p class="highlight-text">
-                    Life can feel messy and unpredictable. <strong>Ordo</strong> is a gentle, powerful way to find your footing, balance your everyday habits, and confidently handle whatever comes your way.
+            <div class="module-card text-center">
+                <h3 class="gold-title">⏳ Protecting Your Time</h3>
+                <p style="font-size: 0.95rem; line-height: 1.6; margin-bottom: 0;">
+                    Your time on this earth is a precious, limited gift. Don't let negative environments freeze you or steal your happy moments. Every second is yours to keep, spend it building up yourself instead of fighting the chaos.
                 </p>
-            </section>
+            </div>
 
-            <!-- TRINITY MATRIX DISCOVERY BLOCKS -->
-            <section class="module-card text-center">
-                <h2>01. Finding Balance (The Trinity)</h2>
-                <p>
-                    Think of yourself as a beautiful container called <strong>Aon</strong>. Inside you, three simple energies work together to create <strong>Ordo</strong> (your personal inner peace). Click an item below to see how it works in real life:
-                </p>
-                <div class="matrix-grid">
-                    <div class="matrix-item interactive-node" onclick="showNodeDetail('vessel')">
-                        <h3>Aon / The Container</h3>
-                        <p>Protecting your personal time and saying no to unwanted drama.</p>
-                    </div>
-                    <div class="matrix-item interactive-node" onclick="showNodeDetail('trinity')">
-                        <h3>The Fuel / Your Energy</h3>
-                        <p>Keeping your physical body healthy, your thoughts clear, and your spirit happy.</p>
-                    </div>
-                    <div class="matrix-item interactive-node" onclick="showNodeDetail('output')">
-                        <h3>Ordo / Your Law</h3>
-                        <p>The quiet, calming focus you bring to a room when you feel balanced.</p>
-                    </div>
-                </div>
-                <div id="node-reader" class="interactive-display-box" style="display: none; text-align: left;"></div>
-            </section>
+        </section>
 
-            <!-- USEFUL MINDSET ANCHORS EXPLAINED -->
-            <section class="module-card text-center">
-                <h2>02. Your Practical Mental Tools</h2>
-                <p>
-                    When life gets overwhelming, look at these two mental reminders to get back on track:
-                </p>
-                
-                <div class="matrix-grid" style="grid-template-columns: 1fr; gap: 20px;">
-                    <div class="matrix-item" style="text-align: left; padding: 25px;">
-                        <h3 style="color: #ffffff; font-size: 1.05rem; margin-bottom: 8px;">👁️ The All-Seeing Eye // Absolute Honesty</h3>
-                        <p style="font-size: 0.9rem; margin-bottom: 0; color: rgba(255,255,255,0.85); line-height: 1.6;">
-                            It's easy to make comfortable excuses when things go wrong. The Eye reminds you to sit back, breathe, and look at your problems honestly. Instead of asking why other people are breaking rules, ask yourself: <em>"What is the absolute truth of this situation, and what can I control?"</em>
-                        </p>
-                    </div>
-                    
-                    <div class="matrix-item" style="text-align: left; padding: 25px;">
-                        <h3 style="color: #ffffff; font-size: 1.05rem; margin-bottom: 8px;">⏳ The Hourglass of Fate // Precious Time</h3>
-                        <p style="font-size: 0.9rem; margin-bottom: 0; color: rgba(255,255,255,0.85); line-height: 1.6;">
-                            Your time on this earth is a beautiful, limited gift. Sand falls through the hourglass every second. Don't waste your energy frozen in worry or trapped in toxic environments. Use your moments intentionally.
-                        </p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ANONYMOUS GRATITUDE MESSAGE BOARD -->
-            <section class="module-card text-center">
-                <h2>Community Reflection Board</h2>
-                <p>Has centering your mind helped you find peace this week? Share an anonymous positive reflection or action step with the community.</p>
-                
-                <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 15px; text-align: left;">
-                    <textarea id="board-msg" rows="2" placeholder="Write a short message of strength or gratitude..."></textarea>
-                    <button class="action-btn gold-variant" style="margin: 5px auto 0 auto; max-width: 200px;" onclick="postToBoard()">Share Anonymously</button>
-                </div>
-
-                <div class="msg-board-area" id="msg-board-hook">
-                    <div class="board-post">
-                        <p class="post-text">"Reminded myself that I am Aon today. I turned off my notifications and protected my mental peace. It completely changed my evening."</p>
-                        <span class="post-time">— Anonymous Navigator</span>
-                    </div>
-                </div>
-            </section>
-
-            <!-- HIGH TURN-OVER ONBOARDING CTA WINDOW -->
-            <section class="module-card consulting-banner text-center" style="display: flex; flex-direction: column; align-items: center;">
-                <div class="banner-highlight-badge">Workplace Growth Consultation</div>
-                <h2>Struggling to understand your team?</h2>
-                <p style="max-width: 650px; margin: 0 auto 15px auto;">
-                    When your team's natural communication breaks down, it creates heavy friction, high stress, and organizational confusion. This directly turns into unexpected employee turnover and costly team burnout.
-                </p>
-                <p style="font-size: 0.95rem; margin: 0 auto 25px auto; color: rgba(255, 255, 255, 0.75); max-width: 650px;">
-                    Every single surprise resignation costs you lost momentum and real monetary capital. Let's analyze your group chemistry, re-establish baseline structural rules, and help your employees feel confident, supported, and motivated to stay.
-                </p>
-                
-                <a href="consulting.html" class="action-btn consulting-btn" style="max-width: 300px; margin: 0 auto;">
-                    Analyze Team Chemistry Together
-                </a>
-            </section>
+        <!-- CENTERED HEART-TO-HEART MESSAGE INPUT -->
+        <section class="module-card text-center center-form-layout">
+            <h2>Your Quiet Space</h2>
+            <p style="max-width: 550px; margin: 0 auto 15px auto;">
+                Did finding a sense of balance help you breathe a little easier today? Drop a thought or a goal below to clear it out of your head.
+            </p>
             
-        </main>
+            <div class="centered-form-wrapper">
+                <textarea id="board-msg" rows="2" placeholder="Let out a thought, an action step, or a simple win here..."></textarea>
+                <button class="action-btn gold-variant" onclick="postToBoard()">Commit To Mind</button>
+                <div id="comfort-response" class="friendly-feedback"></div>
+            </div>
+        </section>
+
+        <!-- TEAM CHEMISTRY UPGRADE CARD -->
+        <section class="module-card consulting-banner text-center">
+            <div class="banner-highlight-badge">Let's Fix The Friction</div>
+            <h2 class="animate-word">Struggling to understand your team?</h2>
+            <p style="max-width: 650px; margin: 0 auto 15px auto;">
+                When a team's communication breaks down, people stop talking, stress spikes, and confusion sets in. This heavy atmosphere quickly leads to regular team burnout and unexpected, expensive staff turnover.
+            </p>
+            <p style="font-size: 0.95rem; margin: 0 auto 25px auto; color: rgba(255, 255, 255, 0.75); max-width: 650px;">
+                Every surprise resignation stalls your business and drains your bank account. Let's look closely at your team chemistry, remove the friction points, and build a supportive environment where your staff feels confident and eager to stay.
+            </p>
+            
+            <a href="consulting.html" class="action-btn consulting-btn" style="max-width: 320px; margin: 0 auto;">
+                Analyze Team Chemistry Together
+            </a>
+        </section>
+        
     </div>
 
-    <!-- FIXED IMMUTABLE DYNAMIC FOOTER -->
+    <!-- POWERED BY FOOTER LAYER -->
     <div class="footer-pad">
         <footer class="system-footer">
             &copy; <span id="current-year"></span> Powered by Vanguard Citizen Services
         </footer>
     </div>
 
-    <!-- CODE SCRIPT EFFECTS AND CONTROLS -->
+    <!-- INTERACTIVE BEHAVIOR TRANSITIONS -->
     <script>
+        /* --- COMETS DRIFT EVERY FEW SECONDS --- */
         function spawnComet() {
             const container = document.getElementById('environment');
             if (!container) return;
             const comet = document.createElement('div');
             comet.classList.add('comet');
-            comet.style.top = `${Math.random() * 45}vh`;
+            comet.style.top = `${Math.random() * 40}vh`;
             comet.style.left = `${40 + (Math.random() * 50)}vw`;
             container.appendChild(comet);
             setTimeout(() => comet.remove(), 2000);
         }
-        setInterval(spawnComet, 4000);
+        setInterval(spawnComet, 4500);
         spawnComet();
 
         document.getElementById('current-year').innerText = new Date().getFullYear();
 
-        const nodeData = {
-            vessel: "<strong>Aon (The Container):</strong> Think of this as drawing a healthy boundary line. When a friend or workplace is full of noise, you don't absorb their chaos. Your container stays calm and safe.",
-            trinity: "<strong>The Fuel Matrix:</strong> Your Body needs movement, your Mind needs quiet focus, and your Soul needs a reason to smile. If you ignore one, the others run dry. Take care of all three equally.",
-            output: "<strong>Ordo Energy:</strong> Instead of entering a messy room or group project and feeling bad about it, you bring your own organized standards. Your calm behavior naturally helps everyone else drop their stress."
+        /* --- SIMPLE EXPLANATION DICTIONARY --- */
+        const insights = {
+            vessel: "✨ <strong>Your Boundary Rule:</strong> Think of this like turning off notifications on your phone. You have the right to ignore bad moods or gossip that isn't your business. Keep your space safe.",
+            trinity: "☀️ <strong>Your Fuel Checklist:</strong> If you feel down, check your balance: Have you eaten something nutritious? Have you taken a break from screens? Be gentle with yourself and fix the small physical basics first.",
+            output: "🌱 <strong>Your Influence Rule:</strong> You don't have to fix the whole company or the whole world today. Just focus on bringing a calm, organized attitude into the next room you walk into."
         };
 
-        function showNodeDetail(key) {
-            const reader = document.getElementById('node-reader');
-            reader.innerHTML = nodeData[key];
-            reader.style.display = 'block';
-            reader.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        function revealInsight(key) {
+            const box = document.getElementById('fog-clearing-box');
+            box.innerHTML = insights[key];
+            box.style.display = 'block';
+            box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
 
+        /* --- HUMANLIKE FEEDBACK LOOP FOR BRAIN FOG --- */
         function postToBoard() {
-            const txt = document.getElementById('board-msg').value.trim();
-            if(!txt) return;
+            const text = document.getElementById('board-msg').value.trim();
+            const feedback = document.getElementById('comfort-response');
             
-            const hook = document.getElementById('msg-board-hook');
-            const post = document.createElement('div');
-            post.className = 'board-post';
-            post.innerHTML = `<p class="post-text">"${txt}"</p><span class="post-time">— Anonymous Navigator</span>`;
+            if(!text) return;
             
-            hook.insertBefore(post, hook.firstChild);
+            feedback.innerText = "Good. You acknowledged it and let it out. Keep moving forward, you're doing great.";
+            feedback.style.opacity = "1";
             document.getElementById('board-msg').value = '';
+            
+            setTimeout(() => { feedback.style.opacity = "0"; }, 5000);
         }
     </script>
 </body>
