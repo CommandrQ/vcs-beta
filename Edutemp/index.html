@@ -137,6 +137,39 @@
         .instruction-step { font-size: 0.85rem; color: var(--white); margin-bottom: 6px; line-height: 1.4; }
         .instruction-step strong { color: var(--gold); }
 
+        /* --- SUB-HEADER NAVIGATION ARCHITECTURE --- */
+        .nav-chassis {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            width: 100%;
+        }
+        .sub-nav-btn {
+            background: rgba(212, 175, 55, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: var(--gold);
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: all 0.3s var(--ease-smooth);
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .sub-nav-btn:hover {
+            background: var(--gold);
+            color: #05040a;
+            box-shadow: 0 0 20px var(--gold-glow);
+            transform: translateY(-1px);
+            border-color: var(--gold);
+        }
+
         /* --- DONATION MODULE STYLING --- */
         .donation-module { text-align: center; padding: 25px; margin-top: 10px; }
         .pulse-text {
@@ -214,6 +247,9 @@
         <header class="page-header">
             <h1 class="page-title">Radcliff Civilian Index</h1>
             <div class="page-subtitle">Project V // 60-Second Temperature Check</div>
+            <div class="nav-chassis">
+                <a href="knights/index.html" class="sub-nav-btn">Vanguard Knights Roster</a>
+            </div>
         </header>
 
         <main class="module-card" id="engine-chassis">
