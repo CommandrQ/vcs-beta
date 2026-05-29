@@ -6,17 +6,21 @@
     <title>Home|CMDRQ</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css?v=8">
 </head>
 <body>
 
+    <!-- VISUAL SCENE LAYER -->
+    <div class="starfield-canvas" id="canvas-starfield-engine"></div>
     <div class="comet-canvas" id="canvas-comet-engine"></div>
     <div class="cyber-grid"></div>
     <div class="ambient-flare"></div>
 
+    <!-- PERSISTENT HUB CONTAINER -->
     <main class="terminal-container">
         
+        <!-- PROFILE IDENTITY BLOCK -->
         <header class="identity-module">
             <div class="hud-ring">
                 <img src="images/headshot.jpg" alt="Quincy Jones" class="avatar-img">
@@ -25,12 +29,14 @@
             <h2 class="commander-role">Chief Vision Officer</h2>
         </header>
 
+        <!-- DIRECTIVE PANEL -->
         <section class="glass-panel">
             <p class="intro-text">
                 Hey, I'm Quincy. Welcome to my creative dashboard. I build custom web tools, share raw human experiences, and design frameworks to help our communities work closer together. Everything I make loops directly back to my blueprint through <span class="manifesto-trigger" id="cmd-manifesto">Project V</span>—a real-world experiment to pool local voices together to fix real gaps in our daily quality of life. Explore the active sectors below.
             </p>
         </section>
 
+        <!-- INTERACTIVE LINK MODULES -->
         <nav class="link-matrix">
             <a class="action-card sys-launcher" data-url="about/" data-title="About Me">
                 <div class="card-data">
@@ -75,6 +81,7 @@
 
     </main>
 
+    <!-- MASTER COCKPIT FOOTER & LOGO CHASSIS -->
     <footer class="system-dock">
         <div class="dock-social-row">
             <a href="https://music.apple.com" target="_blank" class="dock-btn">
@@ -89,6 +96,7 @@
         </div>
     </footer>
 
+    <!-- TOOL SANDBOX OVERLAY -->
     <div class="overlay-screen" id="modal-sandbox">
         <header class="overlay-header">
             <span class="overlay-title" id="sandbox-header-title">System Loading...</span>
@@ -99,6 +107,7 @@
         </div>
     </div>
 
+    <!-- MANIFESTO OVERLAY -->
     <div class="overlay-screen" id="modal-manifesto">
         <header class="overlay-header">
             <span class="overlay-title">Project V // Core Directive</span>
@@ -117,6 +126,7 @@
         </div>
     </div>
 
+    <!-- ENGINE & CELESTIAL LOGIC -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             
@@ -130,6 +140,28 @@
             const btnManifesto = document.getElementById('cmd-manifesto');
             const manifestoModal = document.getElementById('modal-manifesto');
             const closeManifesto = document.getElementById('btn-close-manifesto');
+
+            // STARFIELD DRIFT ENGINE
+            const starfield = document.getElementById('canvas-starfield-engine');
+            const totalStars = window.innerWidth > 1024 ? 80 : 40;
+
+            for (let i = 0; i < totalStars; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                const speed = Math.random() * 30 + 20;
+                const size = Math.random() * 1.5 + 0.5;
+                
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.left = `${Math.random() * 100}vw`;
+                star.style.top = `${Math.random() * 100}vh`;
+                star.style.opacity = Math.random() * 0.7 + 0.3;
+                star.style.animation = `starDrift ${speed}s linear infinite`;
+                star.style.animationDelay = `-${Math.random() * speed}s`;
+                
+                starfield.appendChild(star);
+            }
 
             // DYNAMIC COMET ENGINE
             const canvas = document.getElementById('canvas-comet-engine');
