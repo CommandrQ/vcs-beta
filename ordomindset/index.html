@@ -5,35 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>The Ordo Path</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Load Supabase to handle the safe space message routing -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
-    <!-- CALMING NIGHT SKY GRADIENT -->
+    <!-- CALMING PURPLE SKY & STEADY COMETS -->
     <div id="environment">
         <div class="starfield"></div>
     </div>
 
-    <!-- MAIN SCROLL CONTAINER OPTIMIZED FOR DESKTOP & MOBILE -->
+    <!-- UNLOCKED JOURNEY ACHIEVEMENT BANNER -->
+    <div id="achievement-banner" class="achievement-toast">
+        <div class="achievement-icon">🛡️</div>
+        <div class="achievement-text">
+            <h3>Vessel Awakened</h3>
+            <p>You have illuminated your Mind, Body, and Soul. Your journey of self-discovery has officially begun.</p>
+        </div>
+    </div>
+
+    <!-- MAIN SCROLL CONTEXT FOR DESKTOP -->
     <div class="app-container">
         
-        <!-- HERO CARD -->
-        <header class="module-card text-center">
-            <!-- Elegant Mindset Sacred Geometry -->
-            <svg class="logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <polygon points="50,15 15,82 85,82" stroke="#D4AF37" stroke-width="3" fill="rgba(212,175,55,0.03)"/>
-                <circle cx="50" cy="56" r="16" stroke="#ffffff" stroke-width="2"/>
-                <circle cx="50" cy="56" r="5" fill="#D4AF37"/>
-            </svg>
-            <h1 class="page-title animate-word">Ordo</h1>
+        <!-- HERO CARD WITH REFINED INLINE LOGO -->
+        <header class="module-card header-inline-layout text-center">
+            <div class="brand-header-row">
+                <svg class="logo logo-shimmer" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <polygon points="50,20 20,80 80,80" stroke="#D4AF37" stroke-width="4" fill="rgba(212,175,55,0.03)"/>
+                    <circle cx="50" cy="60" r="12" stroke="#ffffff" stroke-width="2"/>
+                    <circle cx="50" cy="60" r="4" fill="#D4AF37"/>
+                </svg>
+                <h1 class="page-title animate-word">Ordo</h1>
+            </div>
+            
             <p class="highlight-text">
-                When the world around you feels completely overwhelming, you don't have to absorb the noise. You are <strong>Aon</strong>—a personal container meant to hold immense power, entirely driven by your own intentional focus. 
+                When the world around you feels completely overwhelming, you don't have to absorb the noise. You are <strong>Aon</strong>—a personal container meant to hold immense power, entirely driven by your own intentional focus.
             </p>
-            <div style="margin-top: 25px;">
+            <div style="margin-top: 20px;">
                 <a href="../knights/" class="action-btn return-btn">← Return to Knights Workspace</a>
             </div>
         </header>
 
-        <!-- HORIZONTAL DESKTOP / VERTICAL MOBILE ENGINE MATRIX -->
+        <!-- ENERGY MATRIX MATRIX ENGINE -->
         <section class="module-card text-center">
             <h2>Ignite Your Internal Energy</h2>
             <p style="max-width: 600px; margin: 0 auto 25px auto;">
@@ -41,23 +54,23 @@
             </p>
             
             <div class="energy-matrix">
-                <!-- MIND NODE -->
+                <!-- MIND NODE (GLOWS BLUE) -->
                 <div class="energy-node" id="node-mind" onclick="openInsight('mind')">
-                    <div class="node-spark"></div>
+                    <div class="node-spark blue-spark"></div>
                     <h3>Mind</h3>
                     <span class="node-status">Tap to Ignite</span>
                 </div>
 
-                <!-- BODY NODE -->
+                <!-- BODY NODE (GLOWS RED) -->
                 <div class="energy-node" id="node-body" onclick="openInsight('body')">
-                    <div class="node-spark"></div>
+                    <div class="node-spark red-spark"></div>
                     <h3>Body</h3>
                     <span class="node-status">Tap to Ignite</span>
                 </div>
 
-                <!-- SOUL NODE -->
+                <!-- SOUL NODE (GLOWS GOLD) -->
                 <div class="energy-node" id="node-soul" onclick="openInsight('soul')">
-                    <div class="node-spark"></div>
+                    <div class="node-spark gold-spark"></div>
                     <h3>Soul</h3>
                     <span class="node-status">Tap to Ignite</span>
                 </div>
@@ -66,48 +79,59 @@
 
         <!-- PRACTICAL OBSERVATION REMINDERS -->
         <section class="desktop-row">
-            
             <div class="module-card">
-                <h3 class="gold-title text-center">👁️ Absolute Honesty</h3>
+                <h3 class="gold-title text-center">Absolute Honesty</h3>
                 <p style="font-size: 0.95rem; line-height: 1.7; margin-bottom: 0;">
                     When you look at toxic spaces or broken environments around you, don't waste your limited energy being angry at them. Take a deep breath and ask: <em>"What part of this situation can I actually control right now?"</em> Protect your peace by focusing strictly on the truth of your own choices.
                 </p>
             </div>
             
             <div class="module-card">
-                <h3 class="gold-title text-center">⏳ Protecting Your Time</h3>
+                <h3 class="gold-title text-center">Protecting Your Time</h3>
                 <p style="font-size: 0.95rem; line-height: 1.7; margin-bottom: 0;">
                     Your time on this earth is a precious gift. Don't let negative or chaotic environments freeze you or steal your days. Every single second belongs entirely to you—spend it building your own path instead of fighting things you cannot change.
                 </p>
             </div>
-
         </section>
 
-        <!-- CENTERED HEART-TO-HEART THOUGHT PROCESSOR -->
+        <!-- QUIET SPACE & POPUP ACCESSIBLE OVERLAY MODULE -->
         <section class="module-card text-center center-form-layout">
-            <h2>Your Quiet Space</h2>
-            <p style="max-width: 550px; margin: 0 auto 15px auto;">
-                Did focusing on your path help you breathe a little easier today? Drop a thought or a single goal below to clear it out of your head.
+            <h2>The Quiet Space</h2>
+            <p style="max-width: 550px; margin: 0 auto 20px auto;">
+                This space is completely yours. If something is causing you pain, heavy pressure, or mental fog, remember you don't have to keep it locked inside your container. 
             </p>
-            
-            <div class="centered-form-wrapper">
-                <textarea id="board-msg" rows="2" placeholder="Let out a thought, an action step, or a simple win here..."></textarea>
-                <button class="action-btn gold-variant" onclick="processFogRelief()">Commit To Mind</button>
-                <div id="comfort-response" class="friendly-feedback"></div>
+            <button class="action-btn gold-variant" style="max-width: 260px;" onclick="toggleQuietForm(true)">Share Thoughts</button>
+        </section>
+
+        <!-- STATE SUPPORT RESOURCE INDEX PANEL -->
+        <section class="module-card resources-banner">
+            <h2>Kentucky Mental Health & Crisis Support</h2>
+            <p style="text-align: center; font-size: 0.9rem; color: rgba(255,255,255,0.7); margin-bottom: 20px;">
+                If you or a loved one are going through an incredibly dark moment, please know you are never alone. Reach out to these free, confidential resources anytime.
+            </p>
+            <div class="resource-flex-grid">
+                <div class="resource-block">
+                    <h4>National Suicide & Crisis Lifeline</h4>
+                    <p>Call or text <strong>988</strong> inside the US. Available 24 hours a day, 7 days a week. Completely free and anonymous.</p>
+                </div>
+                <div class="resource-block">
+                    <h4>Kentucky Community Crisis Lines</h4>
+                    <p>Connect with the <strong>Communicare Crisis Line</strong> at <strong>1-800-641-4673</strong> for regional support across Central Kentucky and Hardin County footprint areas.</p>
+                </div>
+                <div class="resource-block">
+                    <h4>Crisis Text Line</h4>
+                    <p>Text <strong>HOME</strong> to <strong>741741</strong> to link instantly with a compassionate, trained crisis counselor over secure messaging streams.</p>
+                </div>
             </div>
         </section>
 
-        <!-- LEADERSHIP CHEMISTRY UPGRADE CARD -->
+        <!-- CONSULTING ATTACHMENT CARD -->
         <section class="module-card consulting-banner text-center">
             <div class="banner-highlight-badge">Workplace Culture Analysis</div>
-            <h2 class="animate-word">Struggling to understand your team?</h2>
+            <h2>Struggling to understand your team?</h2>
             <p style="max-width: 650px; margin: 0 auto 15px auto;">
                 When a team's communication breaks down, stress spikes, morale drops, and confusion sets in. This heavy atmosphere quickly leads to severe burnout and unexpected, expensive employee turnover.
             </p>
-            <p style="font-size: 0.95rem; margin: 0 auto 25px auto; color: rgba(255, 255, 255, 0.75); max-width: 650px;">
-                Every surprise resignation stalls your business momentum and drains your financial resources. Let's look closely at your team dynamics, remove workplace stress points, and build a supportive environment where your staff feels confident and eager to stay.
-            </p>
-            
             <a href="consulting.html" class="action-btn consulting-btn" style="max-width: 320px; margin: 0 auto;">
                 Analyze Team Chemistry Together
             </a>
@@ -115,7 +139,7 @@
         
     </div>
 
-    <!-- CLOSABLE INTERACTIVE INSIGHT OVERLAY WINDOW -->
+    <!-- ENERGY DESCRIPTION CLOSABLE INSIGHT OVERLAY -->
     <div id="insight-modal" class="modal-overlay" onclick="if(event.target === this) closeInsight()">
         <div class="modal-window">
             <button class="btn-close" onclick="closeInsight()">✕</button>
@@ -123,16 +147,42 @@
         </div>
     </div>
 
-    <!-- SYSTEM FOOTER LAYER -->
+    <!-- QUIET SPACE SYSTEM TRANSACTION MODAL WINDOW -->
+    <div id="quiet-modal" class="modal-overlay" onclick="if(event.target === this) toggleQuietForm(false)">
+        <div class="modal-window" style="max-width: 550px;">
+            <button class="btn-close" onclick="toggleQuietForm(false)">✕</button>
+            <h2 style="margin-top: 0;">Release Your Thoughts</h2>
+            <p style="font-size: 0.9rem; margin-bottom: 20px; color: rgba(255,255,255,0.7);">
+                Write out whatever is holding you back. If you want us to reach out and support you through this process, optionally leave your contact email below. Otherwise, submit completely anonymously.
+            </p>
+            
+            <form id="quiet-space-form" onsubmit="handleQuietSubmit(event)">
+                <div style="margin-bottom: 15px; text-align: left;">
+                    <label style="display: block; font-size: 0.75rem; color: var(--gold); font-weight: bold; margin-bottom: 5px; text-transform: uppercase;">Your Private Message</label>
+                    <textarea id="quiet-message" rows="4" placeholder="Pour out whatever pains you or causes confusion here safely..." required style="text-align: left; font-size: 0.9rem;"></textarea>
+                </div>
+                
+                <div style="margin-bottom: 20px; text-align: left;">
+                    <label style="display: block; font-size: 0.75rem; color: var(--gold); font-weight: bold; margin-bottom: 5px; text-transform: uppercase;">Contact Email (Optional)</label>
+                    <input type="email" id="quiet-email" placeholder="Leave blank to remain completely anonymous" style="width: 100%; padding: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.5); color: white; text-align: center;">
+                </div>
+
+                <button type="submit" class="action-btn gold-variant" style="margin: 0 auto; max-width: 220px;">Submit Content</button>
+            </form>
+            <div id="quiet-feedback" class="friendly-feedback" style="text-align: center;"></div>
+        </div>
+    </div>
+
+    <!-- FIXED IMMUTABLE GLOBAL FOOTER -->
     <div class="footer-pad">
         <footer class="system-footer">
             &copy; <span id="current-year"></span> Powered by Vanguard Citizen Services
         </footer>
     </div>
 
-    <!-- INTERACTIVE RESPONSIVE FUNCTIONS -->
+    <!-- DYNAMIC CORE ROUTINE JAVASCRIPT LAYER -->
     <script>
-        /* --- CALMING BACKGROUND DRIFT --- */
+        /* --- COMET BACKGROUND SPEED ENGINE --- */
         function spawnComet() {
             const container = document.getElementById('environment');
             if (!container) return;
@@ -148,41 +198,105 @@
 
         document.getElementById('current-year').innerText = new Date().getFullYear();
 
-        /* --- SIMPLE TRINITY RESOURCE DICTIONARY --- */
+        /* --- TRINITY TRACKER & MOTIVATING RECORD DICTIONARY --- */
         const insights = {
             mind: "<h2>Mind // Mental Strength</h2><p>Your mind is the center of clear logic. When things feel overwhelming, stop trying to process everything at once. Use your intent to block out external noise, step away from negative thinking, and focus solely on the true facts of your immediate next task.</p>",
             body: "<h2>Body // Physical Wellness</h2><p>Your body is the engine that carries you through the world. True strength starts with simple physical choices. Drink clean water, stretch, move, and get adequate rest. When your body is fueled and cared for, your mind immediately clears up.</p>",
             soul: "<h2>Soul // Spiritual Strength</h2><p>Your soul is your inner peace and emotional wellness. It thrives when your actions match who you truly are. Protect your spirit by letting go of worries you can't change, keeping your intent pure, and remembering your ultimate worth.</p>"
         };
 
+        // Track node unlocks to dispatch the confidence milestone achievement
+        let unlockedNodes = { mind: false, body: false, soul: false };
+        let achievementDispatched = false;
+
         function openInsight(key) {
-            // Light up the specific HTML node element
+            unlockedNodes[key] = true;
             document.getElementById(`node-${key}`).classList.add('lit-up');
             
-            // Build and launch the modal window overlay
             const modal = document.getElementById('insight-modal');
             const content = document.getElementById('modal-content-area');
             content.innerHTML = insights[key];
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
+
+            checkAchievementStatus();
         }
 
         function closeInsight() {
-            const modal = document.getElementById('insight-modal');
-            modal.classList.remove('active');
+            document.getElementById('insight-modal').classList.remove('active');
             document.body.style.overflow = '';
         }
 
-        function processFogRelief() {
-            const text = document.getElementById('board-msg').value.trim();
-            const feedback = document.getElementById('comfort-response');
-            if(!text) return;
+        function checkAchievementStatus() {
+            if (unlockedNodes.mind && unlockedNodes.body && unlockedNodes.soul && !achievementDispatched) {
+                achievementDispatched = true;
+                setTimeout(() => {
+                    const toast = document.getElementById('achievement-banner');
+                    toast.classList.add('show-toast');
+                    setTimeout(() => { toast.classList.remove('show-toast'); }, 6000);
+                }, 800);
+            }
+        }
+
+        /* --- FORM OVERLAY VISIBILITY CONTROL --- */
+        function toggleQuietForm(open) {
+            const modal = document.getElementById('quiet-modal');
+            if (open) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            } else {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+                document.getElementById('quiet-feedback').style.opacity = "0";
+            }
+        }
+
+        /* --- SUPABASE CONNECT CONFIGURATION FOR USER ANXIETIES --- */
+        const SB_URL = 'https://dvyjupytbwbrcoyouxpf.supabase.co';
+        const SB_KEY = 'sb_publishable_wjgbPekKmodd5mSDXIeUeg_Wq73GzOk'; 
+        const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
+
+        async function handleQuietSubmit(event) {
+            event.preventDefault();
             
-            feedback.innerText = "Good. You acknowledged it and let it out. Keep moving forward, you're doing great.";
-            feedback.style.opacity = "1";
-            document.getElementById('board-msg').value = '';
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const feedback = document.getElementById('quiet-feedback');
             
-            setTimeout(() => { feedback.style.opacity = "0"; }, 5000);
+            const messageText = document.getElementById('quiet-message').value.trim();
+            const contactEmail = document.getElementById('quiet-email').value.trim();
+
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Releasing...";
+
+            try {
+                // Post entries straight to your new secure cloud repository table
+                const { error } = await supabaseClient
+                    .from('quietspace_log')
+                    .insert([
+                        {
+                            pain_points: messageText,
+                            user_email: contactEmail || 'Anonymous'
+                        }
+                    ]);
+
+                if (error) throw error;
+
+                feedback.innerText = "Your burden has been let out. Take a deep breath. Your container is lighter now.";
+                feedback.style.color = "var(--gold)";
+                feedback.style.opacity = "1";
+                event.target.reset();
+                
+                setTimeout(() => { toggleQuietForm(false); }, 4000);
+
+            } catch (err) {
+                console.error("Database submission error:", err);
+                feedback.innerText = "Connection dipped. Your thoughts are safe locally, please try submitting again in a moment.";
+                feedback.style.color = "#ff4081";
+                feedback.style.opacity = "1";
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = "Submit Content";
+            }
         }
     </script>
 </body>
