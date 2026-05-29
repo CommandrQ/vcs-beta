@@ -67,6 +67,28 @@ body::after {
     pointer-events: none;
 }
 
+.starfield-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.star {
+    position: absolute;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 4px #fff;
+}
+
+@keyframes starDrift {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100vw); }
+}
+
 .comet-canvas {
     position: fixed;
     inset: 0;
@@ -125,10 +147,14 @@ body::after {
     z-index: 10;
     opacity: 0;
     animation: bootUp 1s ease-out forwards;
+    scrollbar-width: none;
 }
 
-.terminal-container::-webkit-scrollbar { width: 4px; }
-.terminal-container::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 2px; }
+.terminal-container::-webkit-scrollbar {
+    display: none;
+    width: 0 !important;
+    height: 0 !important;
+}
 
 @keyframes bootUp {
     to { opacity: 1; transform: translateX(-50%) translateY(0); }
@@ -185,7 +211,7 @@ body::after {
 .commander-title {
     margin: 0;
     font-family: 'Cinzel', serif;
-    font-weight: 400;
+    font-weight: 700;
     font-size: 2rem;
     text-transform: uppercase;
     letter-spacing: 4px;
@@ -196,7 +222,7 @@ body::after {
 .commander-role {
     margin: 5px 0 0 0;
     font-family: 'Cinzel', serif;
-    font-weight: 400;
+    font-weight: 700;
     font-size: 0.85rem;
     color: var(--gold);
     text-transform: uppercase;
@@ -374,7 +400,8 @@ body::after {
 
 .overlay-close:hover { background: rgba(212, 175, 55, 0.1); border-color: var(--gold); color: var(--gold); }
 
-.overlay-body { flex-grow: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; background: #000; }
+.overlay-body { flex-grow: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; background: #000; scrollbar-width: none;}
+.overlay-body::-webkit-scrollbar { display: none; }
 
 .system-iframe { width: 100%; height: 100%; border: none; display: block; }
 
@@ -396,30 +423,48 @@ body::after {
    ========================================= */
 @media (min-width: 1024px) {
     .terminal-container {
-        max-width: 650px;
-        height: calc(100dvh - 170px);
-        gap: 2rem;
+        max-width: 900px;
+        height: calc(100dvh - 180px);
+        gap: 2.5rem;
+        padding-left: 20px;
+        padding-right: 20px;
     }
     .link-matrix {
         grid-template-columns: repeat(2, 1fr);
-        gap: 1.25rem;
+        gap: 1.5rem;
     }
     .commander-title {
-        font-size: 2.5rem;
-        letter-spacing: 6px;
+        font-size: 2.8rem;
+        letter-spacing: 8px;
+    }
+    .intro-text {
+        font-size: 1.05rem;
     }
 }
 
 @media (min-width: 1920px) {
     .terminal-container {
-        max-width: 800px;
-        height: calc(100dvh - 190px);
+        max-width: 1200px;
+        height: calc(100dvh - 200px);
+        gap: 3rem;
+    }
+    .link-matrix {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.75rem;
+    }
+    .commander-title {
+        font-size: 3.5rem;
+        letter-spacing: 12px;
     }
     .intro-text {
-        font-size: 1.05rem;
+        font-size: 1.2rem;
+        line-height: 1.8;
     }
     .card-data h3 {
-        font-size: 1.1rem;
+        font-size: 1.25rem;
+    }
+    .card-data p {
+        font-size: 0.95rem;
     }
 }
 
