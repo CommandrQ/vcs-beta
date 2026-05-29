@@ -4,21 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Team Chemistry Consultation</title>
+    <script src="../config.js"></script>
     <link rel="stylesheet" href="style.css">
-    <!-- Load the official Supabase engine library -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
-    <!-- CALMING PURPLE GRADIENT SKY -->
     <div id="environment">
         <div class="starfield"></div>
     </div>
 
-    <!-- MAIN READING STREAM -->
     <div class="app-container">
         
-        <!-- HERO CARD -->
         <header class="module-card text-center consulting-banner">
             <div class="banner-highlight-badge">Human Chemistry Matrix</div>
             <h1 class="page-title animate-word">Bridges, Not Dashboards</h1>
@@ -30,7 +27,6 @@
             </div>
         </header>
 
-        <!-- CORE CONSULTING PHILOSOPHY SECTION -->
         <section class="module-card">
             <h2>Our Approach to Workplace Harmony</h2>
             <p>
@@ -54,7 +50,6 @@
             </div>
         </section>
 
-        <!-- WHAT WE DO INSIDE A SESSION -->
         <section class="module-card">
             <h2>How We Re-Align Your Group</h2>
             <p style="text-align: center; max-width: 600px; margin: 0 auto 25px auto;">
@@ -80,7 +75,6 @@
             </div>
         </section>
 
-        <!-- ENGAGING INTENT ONBOARDING FORM -->
         <section class="module-card text-center center-form-layout">
             <h2>Let's Start the Conversation</h2>
             <p style="max-width: 550px; margin: 0 auto 20px auto;">
@@ -112,16 +106,13 @@
 
     </div>
 
-    <!-- UNIVERSAL SYSTEM FOOTER -->
     <div class="footer-pad">
         <footer class="system-footer">
-            &copy; <span id="current-year"></span> Powered by Vanguard Citizen Services
+            &copy; 2026 Powered by Vanguard Citizen Services
         </footer>
     </div>
 
-    <!-- DATABASE DESPATCH AND LOGIC SYSTEM scripts -->
     <script>
-        /* --- BACKGROUND ENVIRONMENT EFFECTS --- */
         function spawnComet() {
             const container = document.getElementById('environment');
             if (!container) return;
@@ -135,11 +126,8 @@
         setInterval(spawnComet, 5000);
         spawnComet();
 
-        document.getElementById('current-year').innerText = new Date().getFullYear();
-
-        /* --- LIVE SUPABASE INTEGRATION PIPELINE --- */
-        const SB_URL = 'https://dvyjupytbwbrcoyouxpf.supabase.co';
-        const SB_KEY = 'sb_publishable_wjgbPekKmodd5mSDXIeUeg_Wq73GzOk'; 
+        const SB_URL = window.supabaseConfig?.URL || window.SB_URL;
+        const SB_KEY = window.supabaseConfig?.KEY || window.SB_KEY; 
         const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
 
         async function handleConsultSubmit(event) {
@@ -157,7 +145,6 @@
             feedback.style.opacity = "0";
 
             try {
-                // Post records directly into your newly structured cloud database log
                 const { error } = await supabaseClient
                     .from('businessqueue')
                     .insert([
@@ -170,7 +157,6 @@
 
                 if (error) throw error;
 
-                // Fire humanlike encouragement display
                 feedback.innerText = "Thank you. Your message has been safely committed. We will read your notes carefully and reach out soon.";
                 feedback.className = "friendly-feedback"; 
                 feedback.style.opacity = "1";
