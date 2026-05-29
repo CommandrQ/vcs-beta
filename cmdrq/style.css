@@ -147,13 +147,22 @@ body::after {
     z-index: 10;
     opacity: 0;
     animation: bootUp 1s ease-out forwards;
-    scrollbar-width: none;
 }
 
 .terminal-container::-webkit-scrollbar {
-    display: none;
-    width: 0 !important;
-    height: 0 !important;
+    width: 6px;
+}
+.terminal-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+.terminal-container::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 3px;
+    transition: background 0.3s ease;
+}
+.terminal-container.scrolling::-webkit-scrollbar-thumb {
+    background: rgba(212, 175, 55, 0.7);
+    box-shadow: 0 0 6px var(--gold);
 }
 
 @keyframes bootUp {
@@ -400,10 +409,28 @@ body::after {
 
 .overlay-close:hover { background: rgba(212, 175, 55, 0.1); border-color: var(--gold); color: var(--gold); }
 
-.overlay-body { flex-grow: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; background: #000; scrollbar-width: none;}
-.overlay-body::-webkit-scrollbar { display: none; }
+.overlay-body { 
+    flex-grow: 1; 
+    overflow-y: auto; 
+    -webkit-overflow-scrolling: touch; 
+    background: #000;
+}
 
-.system-iframe { width: 100%; height: 100%; border: none; display: block; }
+.overlay-body::-webkit-scrollbar {
+    width: 6px;
+}
+.overlay-body::-webkit-scrollbar-track {
+    background: transparent;
+}
+.overlay-body::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 3px;
+    transition: background 0.3s ease;
+}
+.overlay-body.scrolling::-webkit-scrollbar-thumb {
+    background: rgba(212, 175, 55, 0.7);
+    box-shadow: 0 0 6px var(--gold);
+}
 
 .manifesto-content {
     max-width: 600px; margin: 0 auto; padding: 40px 20px;
@@ -423,11 +450,11 @@ body::after {
    ========================================= */
 @media (min-width: 1024px) {
     .terminal-container {
-        max-width: 900px;
+        max-width: 1000px; 
         height: calc(100dvh - 180px);
         gap: 2.5rem;
-        padding-left: 20px;
-        padding-right: 20px;
+        padding-left: 30px;
+        padding-right: 30px;
     }
     .link-matrix {
         grid-template-columns: repeat(2, 1fr);
@@ -444,7 +471,7 @@ body::after {
 
 @media (min-width: 1920px) {
     .terminal-container {
-        max-width: 1200px;
+        max-width: 1400px; 
         height: calc(100dvh - 200px);
         gap: 3rem;
     }
