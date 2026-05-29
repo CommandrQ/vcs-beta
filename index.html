@@ -2,547 +2,75 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>QUINCY JONES // HUB</title>
-    <link rel="stylesheet" href="style.css?v=11">
-    <style>
-        /* --- BRANDING & PAGE PARAMETERS --- */
-        :root {
-            --gold: #D4AF37;
-            --gold-glow: rgba(212, 175, 55, 0.4);
-            --glass-bg: rgba(10, 8, 18, 0.75);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --text-main: #ffffff;
-            --text-muted: rgba(255, 255, 255, 0.65);
-        }
-
-        *, *::before, *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html, body {
-            width: 100%;
-            min-height: 100dvh;
-            background-color: #030207;
-            color: var(--text-main);
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-            overflow-x: hidden !important;
-            overflow-y: auto !important;
-            padding-bottom: 120px;
-            -webkit-text-size-adjust: 100%;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        body::after {
-            content: "";
-            position: fixed;
-            inset: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.2) 50%);
-            background-size: 100% 3px;
-            z-index: 999;
-            pointer-events: none;
-            opacity: 0.4;
-        }
-
-        /* --- STABILIZED BACKGROUND ENVIRONMENT --- */
-        #environment {
-            position: fixed;
-            inset: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -2;
-            pointer-events: none;
-            overflow: hidden;
-            background: radial-gradient(circle at 50% 0%, #110b22 0%, #030207 80%);
-        }
-
-        .starfield {
-            position: absolute;
-            width: 200vw;
-            height: 200vh;
-            top: -50%;
-            left: -50%;
-            background-image: 
-                radial-gradient(1.5px 1.5px at 15% 20%, #ffffff, transparent),
-                radial-gradient(2px 2px at 45% 65%, var(--gold), transparent),
-                radial-gradient(1px 1px at 75% 35%, #ffffff, transparent),
-                radial-gradient(2.5px 2.5px at 85% 85%, var(--gold), transparent);
-            background-size: 300px 300px;
-            animation: cosmicRotation 300s linear infinite;
-            opacity: 0.6;
-        }
-
-        @keyframes cosmicRotation {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .ambient-glow {
-            position: fixed;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100vw;
-            height: 60vh;
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 70%);
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        /* --- SCREEN ARCHITECTURE LAYOUT --- */
-        .terminal-layout {
-            width: 100%;
-            max-width: 480px;
-            margin: 0 auto;
-            padding: 2.5rem 16px 0 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            animation: bootSequence 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        @keyframes bootSequence {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* --- PROFILE IDENTITY BLOCK --- */
-        .profile-card {
-            text-align: center;
-            width: 100%;
-        }
-
-        .avatar-frame {
-            width: 110px;
-            height: 110px;
-            margin: 0 auto 1.2rem auto;
-            position: relative;
-        }
-
-        .avatar-frame::before {
-            content: '';
-            position: absolute;
-            inset: -6px;
-            border-radius: 50%;
-            border: 2px dashed var(--gold);
-            animation: structuralSpin 25s linear infinite;
-            opacity: 0.4;
-        }
-
-        @keyframes structuralSpin { to { transform: rotate(360deg); } }
-
-        .avatar-img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--gold);
-            box-shadow: 0 0 25px var(--gold-glow);
-        }
-
-        .identity-title {
-            font-size: 1.8rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: #ffffff;
-        }
-
-        .identity-subtitle {
-            font-size: 0.8rem;
-            color: var(--gold);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 700;
-            margin-top: 4px;
-        }
-
-        /* --- GLASS CHASSIS BIO CARD --- */
-        .glass-chassis {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px) saturate(140%);
-            -webkit-backdrop-filter: blur(20px) saturate(140%);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 1.5rem;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-            width: 100%;
-        }
-
-        .prose-text {
-            font-size: 0.95rem;
-            line-height: 1.6;
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        .manifesto-link {
-            color: var(--gold);
-            font-weight: 800;
-            cursor: pointer;
-            text-decoration: underline;
-        }
-        .manifesto-link:hover {
-            color: #ffffff;
-            text-shadow: 0 0 8px var(--gold-glow);
-        }
-
-        /* --- LINK MATRIX --- */
-        .matrix-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            width: 100%;
-        }
-
-        .matrix-cell {
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            padding: 1.2rem;
-            text-decoration: none;
-            color: #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-            cursor: pointer;
-            width: 100%;
-        }
-
-        .matrix-cell:hover {
-            transform: translateY(-3px);
-            border-color: var(--gold);
-            background: rgba(212, 175, 55, 0.04);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4), 0 0 15px rgba(212, 175, 55, 0.1);
-        }
-
-        .cell-info {
-            max-width: 85%;
-        }
-
-        .cell-info h3 {
-            font-size: 0.95rem;
-            font-weight: 800;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-bottom: 4px;
-        }
-
-        .cell-info p {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            line-height: 1.4;
-        }
-
-        .cell-vector {
-            color: var(--gold);
-            font-size: 1.3rem;
-            transition: transform 0.2s ease;
-        }
-        .matrix-cell:hover .cell-vector {
-            transform: translateX(4px);
-        }
-
-        /* --- SYSTEM APP DOCK --- */
-        .app-dock {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 80px;
-            background: rgba(4, 3, 8, 0.9);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-top: 1px solid var(--glass-border);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 2.5rem;
-            z-index: 1000;
-            padding-bottom: env(safe-area-inset-bottom);
-        }
-
-        .dock-element {
-            color: rgba(255, 255, 255, 0.65);
-            text-decoration: none;
-            font-size: 0.75rem;
-            font-weight: 800;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            transition: color 0.25s ease;
-        }
-        .dock-element:hover {
-            color: var(--gold);
-        }
-
-        .dock-badge {
-            width: 32px;
-            height: 32px;
-            opacity: 0.75;
-            transition: opacity 0.25s, filter 0.25s;
-        }
-        .dock-element:hover .dock-badge {
-            opacity: 1;
-            filter: drop-shadow(0 0 8px var(--gold));
-        }
-
-        /* --- OVERLAY SYSTEMS --- */
-        .system-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: 9000;
-            background: #020105;
-            display: flex;
-            flex-direction: column;
-            transform: translateY(100%);
-            opacity: 0;
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
-            width: 100vw;
-            height: 100dvh;
-        }
-        .system-overlay.active {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        .overlay-navbar {
-            height: 60px;
-            background: #07060b;
-            border-bottom: 1px solid var(--gold);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 16px;
-            flex-shrink: 0;
-            width: 100%;
-        }
-        .overlay-caption {
-            color: var(--gold);
-            font-size: 0.85rem;
-            font-weight: 800;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-        
-        .overlay-terminal-exit {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            color: #ffffff;
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .overlay-terminal-exit:hover {
-            background: var(--gold);
-            color: #020105;
-        }
-
-        .overlay-frame-host {
-            flex-grow: 1;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-            width: 100%;
-            background: #000000;
-        }
-        
-        .sandbox-iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            display: block;
-        }
-
-        .manifesto-prose-bay {
-            max-width: 580px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 1.05rem;
-            line-height: 1.75;
-        }
-        .manifesto-prose-bay h2 {
-            color: var(--gold);
-            font-size: 1.35rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-top: 0;
-            margin-bottom: 15px;
-            border-bottom: 1px solid var(--glass-border);
-            padding-bottom: 8px;
-        }
-        .manifesto-prose-bay p {
-            margin-bottom: 20px;
-        }
-        .manifesto-prose-bay strong {
-            color: #ffffff;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vanguard Citizen Services</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div id="environment"><div class="starfield"></div></div>
-    <div class="ambient-glow"></div>
+    <div class="space-bg">
+        <div class="starfield"></div>
+    </div>
 
-    <div class="terminal-layout">
+    <div class="glass-window">
+        <img src="images/vanguardorglogo.png" alt="Vanguard Citizen Services Logo" class="logo">
+        <div class="tagline">Empower.Educate.Elevate</div>
         
-        <header class="profile-card">
-            <div class="avatar-frame">
-                <img src="images/headshot.jpg" alt="Quincy Jones" class="avatar-img">
-            </div>
-            <h1 class="identity-title">Quincy Jones</h1>
-            <h2 class="identity-subtitle">Chief Vision Officer</h2>
-        </header>
-
-        <section class="glass-chassis">
-            <p class="prose-text">
-                Hey, I'm Quincy. Welcome to my creative dashboard. I build custom web tools, share raw human experiences, and design frameworks to help our communities work closer together. Everything I make loops directly back to my blueprint through <span class="manifesto-link" id="trigger-manifesto">Project V</span>—a real-world experiment to pool local voices together to fix real gaps in our daily quality of life. Explore the active workspaces below.
-            </p>
-        </section>
-
-        <nav class="matrix-grid">
-            
-            <div class="matrix-cell client-route" data-url="about/" data-title="About Me">
-                <div class="cell-info">
-                    <h3>About Me</h3>
-                    <p>Core background, military service values, and personal journey.</p>
-                </div>
-                <div class="cell-vector">→</div>
-            </div>
-
-            <div class="matrix-cell client-route" data-url="../knights/index.html" data-title="Active Projects">
-                <div class="cell-info">
-                    <h3>Active Projects</h3>
-                    <p>Our collaborative hub layout hosting custom community reporting tools.</p>
-                </div>
-                <div class="cell-vector">→</div>
-            </div>
-
-            <div class="matrix-cell client-route" data-url="ordo/" data-title="Ordo">
-                <div class="cell-info">
-                    <h3>Ordo</h3>
-                    <p>Brutal self-questioning frameworks and performance philosophy for teams.</p>
-                </div>
-                <div class="cell-vector">→</div>
-            </div>
-
-            <div class="matrix-cell client-route" data-url="musicplayer/" data-title="Music Player">
-                <div class="cell-info">
-                    <h3>Music Player</h3>
-                    <p>Custom audio mashups, ambient design loops, and production remixes.</p>
-                </div>
-                <div class="cell-vector">→</div>
-            </div>
-
-            <div class="matrix-cell client-route" data-url="dreamscapedrift/" data-title="Dreamscape Drift">
-                <div class="cell-info">
-                    <h3>Dreamscape Drift</h3>
-                    <p>Physics spec sheets and tire tuning profiles for Forza builds.</p>
-                </div>
-                <div class="cell-vector">→</div>
-            </div>
-
-        </nav>
-
-    </div>
-
-    <footer class="app-dock">
-        <a href="https://music.apple.com" target="_blank" class="dock-element">Apple Music</a>
-        <div class="dock-element" style="cursor: default;">
-            <img src="images/vklogo.png" alt="VK Badge Logo" class="dock-badge">
-        </div>
-        <a href="https://tiktok.com" target="_blank" class="dock-element">TikTok</a>
-    </footer>
-
-    <div class="system-overlay" id="sandbox-overlay">
-        <header class="overlay-navbar">
-            <span class="overlay-caption" id="sandbox-caption">Loading Stream...</span>
-            <button class="overlay-terminal-exit" id="close-sandbox">Close Window</button>
-        </header>
-        <div class="overlay-frame-host">
-            <iframe src="about:blank" class="sandbox-iframe" id="sandbox-iframe"></iframe>
-        </div>
-    </div>
-
-    <div class="system-overlay" id="manifesto-overlay">
-        <header class="overlay-navbar">
-            <span class="overlay-caption">Project V // Core Directive</span>
-            <button class="overlay-terminal-exit" id="close-manifesto">Close Window</button>
-        </header>
-        <div class="overlay-frame-host">
-            <div class="manifesto-prose-bay">
-                <h2>The Project V Manifesto</h2>
-                <p>Project V started in the most honest way possible: <strong>I sat down and asked my kids and my family what their everyday lives were really like.</strong> What they told me was painful to hear. It made me realize how many daily struggles and quiet brick walls people hit just trying to get a decent education and build a life right here in their own towns.</p>
-                <p>When the structure around us breaks down, people end up completely cut off from each other. Project V is a straight-to-the-point experiment. We are using clean, anonymous digital tools to combine the true voices of a community. By cutting out the usual political red tape, we can map out exactly what people are feeling and experiencing in real time.</p>
-                <p><strong>The Goal:</strong> Take that data and put it directly in front of local leaders, business owners, and neighbors so we can make a clear, measurable change in how we live. We are starting with the everyday challenges of normal citizens—because a town can only move forward when its people are finally heard.</p>
-                <hr style="border:0; border-top:1px dashed rgba(212,175,55,0.3); margin:25px 0;">
-                <h2>What We Are Building Next</h2>
-                <p>This tracking infrastructure is laying the ground rules for something much larger. Soon, we are launching an interactive, community-driven book project. Readers will team up directly with the <strong>Vanguard Knights</strong> to hunt down a massive threat—a force that actively changes timelines to strip away human quality of life forever. Stay tuned. The coordinates are printing now.</p>
-            </div>
+        <div class="progress-container">
+            <div class="progress-bar" id="loading-bar"></div>
         </div>
     </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const routes = document.querySelectorAll('.client-route');
-            const sandboxOverlay = document.getElementById('sandbox-overlay');
-            const sandboxIframe = document.getElementById('sandbox-iframe');
-            const sandboxCaption = document.getElementById('sandbox-caption');
-            const closeSandboxBtn = document.getElementById('close-sandbox');
+            const progressBar = document.getElementById("loading-bar");
+            const spaceBg = document.querySelector(".space-bg");
+            let currentProgress = 0;
 
-            const openManifestoBtn = document.getElementById('trigger-manifesto');
-            const manifestoOverlay = document.getElementById('manifesto-overlay');
-            const closeManifestoBtn = document.getElementById('close-manifesto');
+            const simulation = setInterval(() => {
+                let step = Math.floor(Math.random() * 6) + 1; 
+                currentProgress += step;
 
-            routes.forEach(cell => {
-                cell.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const targetUrl = cell.getAttribute('data-url');
-                    const targetTitle = cell.getAttribute('data-title');
-                    
-                    if (targetUrl && targetUrl !== '#') {
-                        sandboxCaption.innerText = targetTitle;
-                        sandboxIframe.src = targetUrl;
-                        document.body.style.overflow = 'hidden'; 
-                        sandboxOverlay.classList.add('active');
-                    }
-                });
-            });
+                if (currentProgress >= 100) {
+                    currentProgress = 100;
+                    clearInterval(simulation);
+                    triggerExitSequence();
+                }
 
-            if (closeSandboxBtn) {
-                closeSandboxBtn.addEventListener('click', () => {
-                    sandboxOverlay.classList.remove('active');
-                    document.body.style.overflow = ''; 
-                    setTimeout(() => { sandboxIframe.src = 'about:blank'; }, 350);
-                });
+                progressBar.style.width = `${currentProgress}%`;
+            }, 120); 
+
+            function triggerExitSequence() {
+                setTimeout(() => {
+                    document.body.classList.add("fade-out");
+                    setTimeout(() => {
+                        window.location.href = "home/index.html";
+                    }, 800); 
+                }, 400); 
             }
 
-            if (openManifestoBtn) {
-                openManifestoBtn.addEventListener('click', () => {
-                    document.body.style.overflow = 'hidden';
-                    manifestoOverlay.classList.add('active');
-                });
+            function launchComet() {
+                const comet = document.createElement("div");
+                comet.classList.add("comet");
+                
+                const startTop = Math.random() * 40; 
+                const startLeft = Math.random() * 20;
+                
+                comet.style.top = `${startTop}vh`;
+                comet.style.left = `${startLeft}vw`;
+                comet.style.animation = "streak 3.2s cubic-bezier(0.25, 1, 0.5, 1) forwards";
+                
+                spaceBg.appendChild(comet);
+                
+                setTimeout(() => {
+                    comet.remove();
+                }, 3300);
             }
 
-            if (closeManifestoBtn) {
-                closeManifestoBtn.addEventListener('click', () => {
-                    manifestoOverlay.classList.remove('active');
-                    document.body.style.overflow = '';
-                });
-            }
-
-            const currentVersion = "11"; 
-            const storageKey = "hub_version_check";
-            if (localStorage.getItem(storageKey) !== currentVersion) {
-                localStorage.setItem(storageKey, currentVersion);
-                window.location.reload(window.location.href.split('?')[0] + '?v=' + currentVersion);
-            }
+            setInterval(launchComet, 4000);
+            setTimeout(launchComet, 500);
         });
     </script>
+
 </body>
 </html>
