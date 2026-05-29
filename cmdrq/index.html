@@ -3,451 +3,490 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>QUINCY JONES</title>
-    <link rel="stylesheet" href="style.css">
+    <title>COMMANDER Q // SYSTEM TERMINAL</title>
+    <link rel="stylesheet" href="style.css?v=8">
     <style>
-        /* --- DYNAMIC CANVAS SYSTEM --- */
+        /* =========================================
+           01 // CORE ENVIRONMENT & NATIVE SCROLL
+           ========================================= */
+        :root {
+            --gold: #D4AF37;
+            --gold-glow: rgba(212, 175, 55, 0.6);
+            --bg-deep: #05040a;
+            --glass-bg: rgba(12, 10, 18, 0.5);
+            --glass-border: rgba(212, 175, 55, 0.2);
+            --text-main: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.65);
+        }
+
         html, body {
-            overflow: hidden !important;
-            height: 100dvh;
-            width: 100vw;
             margin: 0;
             padding: 0;
-            background: #020108;
+            width: 100%;
+            min-height: 100dvh;
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            font-family: system-ui, -apple-system, sans-serif;
+            overflow-x: hidden;
+            /* Bottom padding ensures the fixed dock never hides the last piece of content */
+            padding-bottom: 90px; 
         }
 
-        body {
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        /* Scanline Overlay Effect */
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 2px, 3px 100%;
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0.3;
         }
-        body.fade-in { opacity: 1; }
-        body.fade-out { opacity: 0; }
 
-        /* FIXED STARFIELD BACKGROUND SPACE */
-        #environment { 
-            position: fixed; 
-            inset: 0; 
-            z-index: -1; 
-            pointer-events: none; 
-            overflow: hidden;
-            background: #020108;
-        }
-        .starfield {
-            position: absolute; width: 200vw; height: 200vh; top: -50%; left: -50%;
+        /* =========================================
+           02 // ANIMATED BACKGROUND
+           ========================================= */
+        .cyber-grid {
+            position: fixed;
+            inset: -50%;
+            width: 200vw;
+            height: 200vh;
             background-image: 
-                radial-gradient(1.5px 1.5px at 10% 10%, #fff, transparent),
-                radial-gradient(2px 2px at 30% 40%, #D4AF37, transparent),
-                radial-gradient(1px 1px at 80% 20%, #fff, transparent),
-                radial-gradient(2.5px 2.5px at 50% 80%, #D4AF37, transparent);
-            background-size: 350px 350px;
-            animation: stellar-drift 400s linear infinite;
-            opacity: 0.6;
-        }
-        @keyframes stellar-drift { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        
-        .brand-logo-container {
-            width: 65px;
-            height: 65px;
-            margin: 0 auto 10px auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .brand-logo-img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
+                linear-gradient(rgba(212, 175, 55, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(212, 175, 55, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            transform: perspective(500px) rotateX(60deg) translateY(-100px) translateZ(-200px);
+            animation: gridMove 20s linear infinite;
+            z-index: -2;
+            pointer-events: none;
         }
 
-        /* CENTERED PROFILE HEADSHOT */
-        .headshot-container {
-            width: 110px;
-            height: 110px;
-            margin: 0 auto 15px auto;
-            border-radius: 50%;
-            border: 2px solid #D4AF37;
-            overflow: hidden;
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
-        }
-        .headshot-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        @keyframes gridMove {
+            0% { transform: perspective(500px) rotateX(60deg) translateY(0) translateZ(-200px); }
+            100% { transform: perspective(500px) rotateX(60deg) translateY(40px) translateZ(-200px); }
         }
 
-        /* --- CONTAINER ARCHITECTURE --- */
-        .app-container {
-            width: 100%;
-            height: 100dvh;
+        .ambient-flare {
+            position: fixed;
+            top: -10%; left: 50%;
+            transform: translateX(-50%);
+            width: 80vw; height: 50vh;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* =========================================
+           03 // MASTER LAYOUT CHASSIS
+           ========================================= */
+        .terminal-container {
+            width: 90%;
+            max-width: 500px;
+            margin: 2rem auto 0 auto;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            gap: 1.5rem;
+            animation: bootUp 1s ease-out forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        @keyframes bootUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* =========================================
+           04 // PROFILE IDENTITY BLOCK
+           ========================================= */
+        .identity-module {
+            text-align: center;
             position: relative;
-            z-index: 10;
-            box-sizing: border-box;
         }
 
-        .hub-card {
-            display: flex;
-            flex-direction: column;
-            width: 92%;
-            max-width: 540px;
-            height: 78dvh; /* LOCKED LAYOUT WINDOW FOR TRAPPED SCROLLER BOUNDS */
-            background: rgba(10, 8, 18, 0.80);
-            backdrop-filter: blur(30px) saturate(160%);
-            -webkit-backdrop-filter: blur(30px) saturate(160%);
-            border: 1px solid rgba(212, 175, 55, 0.15);
-            border-radius: 28px;
-            padding: 24px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255,255,255,0.1);
-            box-sizing: border-box;
+        .hud-ring {
+            width: 110px; height: 110px;
+            margin: 0 auto 1rem auto;
+            position: relative;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .hud-ring::before {
+            content: ''; position: absolute; inset: -5px;
+            border-radius: 50%;
+            border: 2px dashed var(--gold);
+            animation: spinDash 10s linear infinite;
+            opacity: 0.5;
+        }
+        .hud-ring::after {
+            content: ''; position: absolute; inset: -10px;
+            border-radius: 50%;
+            border: 1px solid var(--gold-glow);
+            animation: spinDash 15s linear infinite reverse;
+            opacity: 0.3;
+        }
+        
+        @keyframes spinDash { to { transform: rotate(360deg); } }
+
+        .avatar-img {
+            width: 100%; height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--gold);
+            box-shadow: 0 0 20px var(--gold-glow);
+            position: relative;
+            z-index: 2;
         }
 
-        /* CRITICAL MOBILE SCROLL FIX: Force absolute touch pooling inside container bounds */
-        .scroller-bay {
-            flex: 1 1 auto;
-            overflow-y: scroll !important;
-            -webkit-overflow-scrolling: touch !important;
-            touch-action: pan-y !important;
-            padding-right: 4px;
-            margin-bottom: 5px;
-        }
-        .scroller-bay::-webkit-scrollbar { width: 4px; }
-        .scroller-bay::-webkit-scrollbar-track { background: transparent; }
-        .scroller-bay::-webkit-scrollbar-thumb { background: rgba(214, 175, 55, 0.3); border-radius: 10px; }
-
-        .core-statement-banner {
-            flex: 0 0 auto; /* Prevent sizing crush */
+        .commander-title {
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: #fff;
+            text-shadow: 0 0 10px var(--gold-glow);
         }
 
-        /* --- TEXT AND NAVIGATION --- */
-        .manifesto-trigger {
-            color: #D4AF37;
-            text-decoration: underline;
-            cursor: pointer;
+        .commander-role {
+            margin: 5px 0 0 0;
+            font-size: 0.85rem;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
             font-weight: 700;
         }
+
+        /* =========================================
+           05 // DIRECTIVE PANEL
+           ========================================= */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        .glass-panel::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 30%; height: 2px;
+            background: var(--gold);
+            box-shadow: 0 0 10px var(--gold);
+        }
+
+        .intro-text {
+            font-size: 0.95rem; line-height: 1.6; margin: 0; color: rgba(255,255,255,0.9);
+        }
+
+        .manifesto-trigger {
+            color: var(--gold); font-weight: 800; cursor: pointer; text-decoration: none;
+            border-bottom: 1px solid transparent; transition: all 0.3s ease;
+        }
         .manifesto-trigger:hover {
-            color: #ffffff;
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+            border-bottom-color: var(--gold);
+            text-shadow: 0 0 8px var(--gold-glow);
         }
 
-        .directive-text {
-            font-size: clamp(0.9rem, 2.5vw, 0.98rem);
-            line-height: 1.55;
+        /* =========================================
+           06 // INTERACTIVE LINK MODULES
+           ========================================= */
+        .link-matrix {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
         }
 
-        /* --- RECONFIGURED ASYMMETRIC LINKS --- */
-        .bio-link-btn {
-            display: flex;
-            flex-direction: column;
-            background: linear-gradient(135deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.00) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+        .action-card {
+            background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.2) 100%);
+            border: 1px solid rgba(255,255,255,0.1);
             border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 12px;
+            padding: 1.2rem;
             text-decoration: none;
-            transition: all 0.25s ease;
-            cursor: pointer;
-            box-sizing: border-box;
-        }
-        .bio-link-btn:last-of-type { margin-bottom: 0; }
-        .bio-link-btn:hover {
-            background: rgba(255, 255, 255, 0.04);
-            border-color: rgba(212, 175, 55, 0.4);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-            transform: translateY(-2px);
-        }
-
-        .bio-link-btn h3 {
-            margin: 0 0 4px 0;
-            font-size: 0.95rem;
-            font-weight: 800;
-            color: #ffffff;
-            letter-spacing: 1px;
-            text-transform: uppercase;
+            color: #fff;
             display: flex;
             align-items: center;
             justify-content: space-between;
-        }
-        .category-tag {
-            font-size: 0.65rem;
-            letter-spacing: 1px;
-            padding: 2px 8px;
-            border-radius: 20px;
-            font-weight: 700;
-        }
-        .tag-empower { background: rgba(187, 134, 252, 0.15); color: #bb86fc; border: 1px solid rgba(187, 134, 252, 0.3); }
-        .tag-educate { background: rgba(214, 175, 55, 0.15); color: #D4AF37; border: 1px solid rgba(214, 175, 55, 0.3); }
-        .tag-elevate { background: rgba(3, 169, 244, 0.15); color: #03a9f4; border: 1px solid rgba(3, 169, 244, 0.3); }
-
-        .bio-link-btn p {
-            margin: 0;
-            font-size: 0.8rem;
-            line-height: 1.4;
-            color: rgba(255, 255, 255, 0.65);
-        }
-
-        /* --- MODAL VIEWERS --- */
-        .sandbox-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(3, 2, 7, 0.96);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        .sandbox-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .sandbox-header {
-            height: 55px;
-            background: #06040d;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            display: flex;
-            align-items: center;
-            padding: 0 20px;
-            flex-shrink: 0;
-        }
-        .sandbox-title {
-            color: #D4AF37;
-            font-size: 0.8rem;
-            font-weight: 800;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        .sandbox-nav-footer {
-            height: 65px;
-            background: #06040d;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-shrink: 0;
-            padding-bottom: env(safe-area-inset-bottom);
-        }
-        .return-hub-btn {
-            background: transparent;
-            border: 1px solid rgba(214, 175, 55, 0.4);
-            color: #D4AF37;
-            padding: 10px 28px;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            overflow: hidden;
             cursor: pointer;
         }
 
-        .sandbox-frame {
-            width: 100%;
-            height: 100%;
-            border: none;
-            background: #000000;
-            flex-grow: 1;
+        .action-card::after {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(circle at center, var(--gold-glow) 0%, transparent 70%);
+            opacity: 0; transition: opacity 0.3s ease;
+            z-index: 1; pointer-events: none;
         }
 
-        .manifesto-body {
-            flex-grow: 1;
-            overflow-y: auto !important;
-            -webkit-overflow-scrolling: touch !important;
-            padding: 30px 20px;
-            max-width: 600px;
-            margin: 0 auto;
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 1rem;
-            line-height: 1.65;
-            box-sizing: border-box;
+        .action-card:hover {
+            transform: translateY(-4px) scale(1.02);
+            border-color: var(--gold);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4), 0 0 15px rgba(212, 175, 55, 0.2);
         }
-        .manifesto-body h2 {
-            color: #D4AF37;
-            font-size: 1.3rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-top: 0;
-            margin-bottom: 15px;
-            border-bottom: 1px dashed rgba(212, 175, 55, 0.3);
-            padding-bottom: 8px;
-        }
-        .manifesto-body p { margin-bottom: 15px; }
-        .manifesto-body strong { color: #ffffff; font-weight: 700; }
+        .action-card:hover::after { opacity: 0.15; }
+
+        .card-data { z-index: 2; position: relative; }
         
-        .channel-dock {
-            flex-shrink: 0;
+        .card-data h3 {
+            margin: 0 0 0.2rem 0; font-size: 1rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
         }
+        .card-data p {
+            margin: 0; font-size: 0.8rem; color: var(--text-muted); line-height: 1.4;
+        }
+
+        .card-icon {
+            z-index: 2; position: relative;
+            color: var(--gold); font-size: 1.5rem; font-weight: 300;
+            transition: transform 0.3s ease;
+        }
+        .action-card:hover .card-icon { transform: translateX(5px); }
+
+        /* =========================================
+           07 // ALWAYS-ON BOTTOM DOCK (FOOTER)
+           ========================================= */
+        .system-dock {
+            position: fixed;
+            bottom: 0; left: 0; width: 100%; height: 75px;
+            background: rgba(5, 4, 10, 0.85);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid var(--glass-border);
+            display: flex; justify-content: center; align-items: center; gap: 2rem;
+            z-index: 100;
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+
+        .dock-btn {
+            color: rgba(255,255,255,0.7); text-decoration: none;
+            font-size: 0.75rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
+            display: flex; flex-direction: column; align-items: center; gap: 4px;
+            transition: all 0.3s ease;
+        }
+        .dock-btn:hover { color: var(--gold); transform: translateY(-2px); }
+
+        .dock-logo { width: 30px; height: 30px; opacity: 0.8; transition: 0.3s; }
+        .dock-btn:hover .dock-logo { opacity: 1; filter: drop-shadow(0 0 5px var(--gold)); }
+
+        /* =========================================
+           08 // DYNAMIC MODAL SYSTEMS
+           ========================================= */
+        .overlay-screen {
+            position: fixed; inset: 0; z-index: 9000;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            display: flex; flex-direction: column;
+            transform: translateY(100%); opacity: 0;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+        }
+        .overlay-screen.active { transform: translateY(0); opacity: 1; }
+
+        .overlay-header {
+            height: 60px; background: #05040a; border-bottom: 1px solid var(--gold);
+            display: flex; align-items: center; justify-content: space-between; padding: 0 20px; flex-shrink: 0;
+        }
+        .overlay-title { color: var(--gold); font-size: 0.85rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; }
+        
+        .overlay-close {
+            background: rgba(255,255,255,0.05); border: 1px solid transparent; color: #fff;
+            width: 35px; height: 35px; border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            cursor: pointer; transition: 0.2s; font-size: 1.2rem;
+        }
+        .overlay-close:hover { background: rgba(212, 175, 55, 0.1); border-color: var(--gold); color: var(--gold); }
+
+        .overlay-body { flex-grow: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; background: #000; }
+        
+        /* Iframe specifics */
+        .system-iframe { width: 100%; height: 100%; border: none; display: block; }
+
+        /* Manifesto specifics */
+        .manifesto-content {
+            max-width: 600px; margin: 0 auto; padding: 40px 20px;
+            color: rgba(255,255,255,0.9); font-size: 1.05rem; line-height: 1.7;
+        }
+        .manifesto-content h2 {
+            color: var(--gold); font-size: 1.4rem; text-transform: uppercase; letter-spacing: 2px;
+            margin-top: 0; margin-bottom: 15px; border-bottom: 1px solid var(--glass-border); padding-bottom: 10px;
+        }
+        .manifesto-content p { margin-bottom: 20px; }
+        .manifesto-content strong { color: #fff; }
     </style>
 </head>
 <body>
 
-    <!-- REFIXED ENVIRONMENT LAYER CHASSIS -->
-    <div id="environment"><div class="starfield"></div></div>
-    <div class="ambient-glow"></div>
+    <!-- VISUAL SCENE -->
+    <div class="cyber-grid"></div>
+    <div class="ambient-flare"></div>
 
-    <div class="app-container">
+    <!-- MAIN INTERFACE -->
+    <main class="terminal-container">
         
-        <header class="central-header">
-            <div class="brand-logo-container">
-                <img src="../images/vklogo.png" alt="Vanguard Knights Logo" class="brand-logo-img">
+        <header class="identity-module">
+            <div class="hud-ring">
+                <img src="images/headshot.jpg" alt="Quincy Jones" class="avatar-img">
             </div>
-            <h1 class="shimmer-title">Commander Q</h1>
-            
-            <!-- CENTERED HEADSHOT TARGET HOUSING -->
-            <div class="headshot-container">
-                <img src="../images/headshot.jpg" alt="Quincy Jones" class="headshot-img">
-            </div>
+            <h1 class="commander-title">Commander Q</h1>
+            <h2 class="commander-role">Chief Vision Officer</h2>
         </header>
 
-        <main class="hub-card">
+        <section class="glass-panel">
+            <p class="intro-text">
+                Hey, I'm Quincy. Welcome to my creative dashboard. I build custom web tools, share raw human experiences, and design frameworks to help our communities work closer together. Everything I make loops directly back to my blueprint through <span class="manifesto-trigger" id="cmd-manifesto">Project V</span>—a real-world experiment to pool local voices together to fix real gaps in our daily quality of life. Explore the active sectors below.
+            </p>
+        </section>
 
-            <div class="core-statement-banner">
-                <p class="directive-tag">Chief Vision Officer // Quincy Jones</p>
-                <p class="directive-text">
-                    Hey, I'm Quincy. Welcome to my creative dashboard. I build custom web tools, share raw human experiences, and design frameworks to help our communities work closer together. Everything I make loops directly back to my blueprint through <span class="manifesto-trigger" id="open-manifesto-btn">Project V</span>—a real-world experiment to see if we can pool local voices together to fix real gaps in our daily quality of life. Check out my active workspaces below.
-                </p>
-            </div>
-
-            <div class="scroller-bay">
-                
-                <!-- EMPOWER SECTOR CELL -->
-                <div class="bio-link-btn" data-target="about/" data-title="About Me Platform">
-                    <h3>About Me <span class="category-tag tag-empower">Empower</span></h3>
-                    <p>My core background, military service values, and personal journey.</p>
+        <nav class="link-matrix">
+            <a class="action-card sys-launcher" data-url="about/" data-title="About Me">
+                <div class="card-data">
+                    <h3>About Me</h3>
+                    <p>Core background, military service values, and personal journey.</p>
                 </div>
+                <div class="card-icon">→</div>
+            </a>
 
-                <!-- EDUCATE SECTOR CELL -->
-                <div class="bio-link-btn" data-target="../knights/index.html" data-title="Active Projects Registry">
-                    <h3>Active Projects <span class="category-tag tag-educate">Educate</span></h3>
-                    <p>Our collaborative hub layout hosting custom community reporting tools.</p>
+            <a class="action-card sys-launcher" data-url="../knights/index.html" data-title="Active Projects">
+                <div class="card-data">
+                    <h3>Active Projects</h3>
+                    <p>Collaborative hub hosting custom community reporting tools.</p>
                 </div>
-                <div class="bio-link-btn" data-target="ordo/" data-title="Ordo Platform">
-                    <h3>Ordo <span class="category-tag tag-educate">Educate</span></h3>
-                    <p>Brutal self-questioning frameworks and performance philosophy for teams.</p>
+                <div class="card-icon">→</div>
+            </a>
+
+            <a class="action-card sys-launcher" data-url="ordo/" data-title="Ordo">
+                <div class="card-data">
+                    <h3>Ordo</h3>
+                    <p>Brutal self-questioning frameworks and performance philosophy.</p>
                 </div>
+                <div class="card-icon">→</div>
+            </a>
 
-                <!-- ELEVATE SECTOR LINKS -->
-                <div class="bio-link-btn" data-target="musicplayer/" data-title="Audio Console Architecture">
-                    <h3>Music Player <span class="category-tag tag-elevate">Elevate</span></h3>
-                    <p>Custom audio mashups, ambient design loops, and production remixes.</p>
+            <a class="action-card sys-launcher" data-url="musicplayer/" data-title="Music Player">
+                <div class="card-data">
+                    <h3>Music Player</h3>
+                    <p>Custom audio mashups, ambient design loops, and remixes.</p>
                 </div>
-                <div class="bio-link-btn" data-target="dreamscapedrift/" data-title="Dreamscape Telemetry Interface">
-                    <h3>Dreamscape Drift <span class="category-tag tag-elevate">Elevate</span></h3>
-                    <p>Physics spec sheets and telemetry logs for Forza track builds.</p>
+                <div class="card-icon">→</div>
+            </a>
+
+            <a class="action-card sys-launcher" data-url="dreamscapedrift/" data-title="Dreamscape Drift">
+                <div class="card-data">
+                    <h3>Dreamscape Drift</h3>
+                    <p>Physics spec sheets and telemetry logs for Forza builds.</p>
                 </div>
+                <div class="card-icon">→</div>
+            </a>
+        </nav>
 
-            </div>
+    </main>
 
-            <footer class="channel-dock" style="margin-top: 15px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.05);">
-                <a href="https://music.apple.com" target="_blank" class="dock-link">APPLE_MUSIC</a>
-                <a href="https://tiktok.com" target="_blank" class="dock-link">TIKTOK</a>
-            </footer>
-
-        </main>
-    </div>
-
-    <!-- INLINE HOVER CONSOLE SANDBOX VIEWER -->
-    <div class="sandbox-overlay" id="sandbox-viewer">
-        <header class="sandbox-header">
-            <span class="sandbox-title" id="sandbox-title-display">System Explorer</span>
-        </header>
-        <iframe src="about:blank" class="sandbox-frame" id="sandbox-iframe"></iframe>
-        <footer class="sandbox-nav-footer">
-            <button class="return-hub-btn" id="sandbox-close-btn">Return to Hub</button>
-        </footer>
-    </div>
-
-    <!-- THE PROJECT V MANIFESTO POPUP CONSOLE -->
-    <div class="sandbox-overlay" id="manifesto-viewer">
-        <header class="sandbox-header">
-            <span class="sandbox-title">Project V // Core Directive</span>
-        </header>
-        <div class="manifesto-body">
-            <h2>The Project V Manifesto</h2>
-            <p>Project V started in the most honest way possible: <strong>I sat down and asked my kids and my family what their everyday lives were really like.</strong> What they told me was painful to hear. It made me realize how many daily struggles and quiet brick walls people hit just trying to get a decent education and build a life right here in their own towns.</p>
-            <p>When the structure around us breaks down, people end up completely cut off from each other. Project V is a straight-to-the-point experiment. We are using clean, anonymous digital tools to combine the true voices of a community. By cutting out the usual political red tape, we can map out exactly what people are feeling and experiencing in real time.</p>
-            <p><strong>The Goal:</strong> Take that data and put it directly in front of local leaders, business owners, and neighbors so we can make a clear, measurable change in how we live. We are starting with the everyday challenges of normal citizens—because a town can only move forward when its people are finally heard.</p>
-            <hr style="border:0; border-top:1px dashed rgba(212,175,55,0.2); margin:25px 0;">
-            <h2>What We Are Building Next</h2>
-            <p>This tracking infrastructure is laying the ground rules for something much larger. Soon, we are launching an interactive, community-driven book project. Readers will team up directly with the <strong>Vanguard Knights</strong> to hunt down a massive threat—a force that actively changes timelines to strip away human quality of life forever. Stay tuned. The coordinates are printing now.</p>
+    <!-- FIXED APP DOCK (ALWAYS VISIBLE FOOTER) -->
+    <footer class="system-dock">
+        <a href="https://music.apple.com" target="_blank" class="dock-btn">
+            <span>Apple Music</span>
+        </a>
+        <div class="dock-btn" style="cursor: default;">
+            <img src="images/vklogo.png" alt="VK Logo" class="dock-logo">
         </div>
-        <footer class="sandbox-nav-footer">
-            <button class="return-hub-btn" id="manifesto-close-btn">Return to Hub</button>
-        </footer>
+        <a href="https://tiktok.com" target="_blank" class="dock-btn">
+            <span>TikTok</span>
+        </a>
+    </footer>
+
+    <!-- =========================================
+         SYSTEM OVERLAYS
+         ========================================= -->
+
+    <!-- TOOL SANDBOX -->
+    <div class="overlay-screen" id="modal-sandbox">
+        <header class="overlay-header">
+            <span class="overlay-title" id="sandbox-header-title">System Loading...</span>
+            <button class="overlay-close" id="btn-close-sandbox">✕</button>
+        </header>
+        <div class="overlay-body">
+            <iframe src="about:blank" class="system-iframe" id="sandbox-iframe"></iframe>
+        </div>
     </div>
 
-    <script>
-        /* --- PORTFOLIO ACCESS AND INLINE VIEW ENGINE --- */
-        (function() {
-            const currentVersion = "5"; 
-            const storageKey = "hub_version_check";
-            const lastChecked = localStorage.getItem(storageKey);
+    <!-- MANIFESTO -->
+    <div class="overlay-screen" id="modal-manifesto">
+        <header class="overlay-header">
+            <span class="overlay-title">Project V // Core Directive</span>
+            <button class="overlay-close" id="btn-close-manifesto">✕</button>
+        </header>
+        <div class="overlay-body">
+            <div class="manifesto-content">
+                <h2>The Project V Manifesto</h2>
+                <p>Project V started in the most honest way possible: <strong>I sat down and asked my kids and my family what their everyday lives were really like.</strong> What they told me was painful to hear. It made me realize how many daily struggles and quiet brick walls people hit just trying to get a decent education and build a life right here in their own towns.</p>
+                <p>When the structure around us breaks down, people end up completely cut off from each other. Project V is a straight-to-the-point experiment. We are using clean, anonymous digital tools to combine the true voices of a community. By cutting out the usual political red tape, we can map out exactly what people are feeling and experiencing in real time.</p>
+                <p><strong>The Goal:</strong> Take that data and put it directly in front of local leaders, business owners, and neighbors so we can make a clear, measurable change in how we live. We are starting with the everyday challenges of normal citizens—because a town can only move forward when its people are finally heard.</p>
+                <hr style="border:0; border-top:1px dashed rgba(212,175,55,0.3); margin:30px 0;">
+                <h2>What We Are Building Next</h2>
+                <p>This tracking infrastructure is laying the ground rules for something much larger. Soon, we are launching an interactive, community-driven book project. Readers will team up directly with the <strong>Vanguard Knights</strong> to hunt down a massive threat—a force that actively changes timelines to strip away human quality of life forever. Stay tuned. The coordinates are printing now.</p>
+            </div>
+        </div>
+    </div>
 
-            if (lastChecked !== currentVersion) {
+    <!-- =========================================
+         ENGINE LOGIC
+         ========================================= -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            
+            // UI Elements
+            const appLinks = document.querySelectorAll('.sys-launcher');
+            const sandboxModal = document.getElementById('modal-sandbox');
+            const sandboxIframe = document.getElementById('sandbox-iframe');
+            const sandboxTitle = document.getElementById('sandbox-header-title');
+            const closeSandbox = document.getElementById('btn-close-sandbox');
+
+            const btnManifesto = document.getElementById('cmd-manifesto');
+            const manifestoModal = document.getElementById('modal-manifesto');
+            const closeManifesto = document.getElementById('btn-close-manifesto');
+
+            // Handle App Launches
+            appLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const url = link.getAttribute('data-url');
+                    const title = link.getAttribute('data-title');
+                    
+                    if (url) {
+                        sandboxTitle.innerText = title;
+                        sandboxIframe.src = url;
+                        document.body.style.overflow = 'hidden'; // Lock background scroll
+                        sandboxModal.classList.add('active');
+                    }
+                });
+            });
+
+            // Close App Sandbox
+            closeSandbox.addEventListener('click', () => {
+                sandboxModal.classList.remove('active');
+                document.body.style.overflow = ''; 
+                setTimeout(() => { sandboxIframe.src = 'about:blank'; }, 400); 
+            });
+
+            // Open Manifesto
+            btnManifesto.addEventListener('click', () => {
+                document.body.style.overflow = 'hidden';
+                manifestoModal.classList.add('active');
+            });
+
+            // Close Manifesto
+            closeManifesto.addEventListener('click', () => {
+                manifestoModal.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+
+            // Version Control Force Refresh
+            const currentVersion = "8"; 
+            const storageKey = "hub_version_check";
+            if (localStorage.getItem(storageKey) !== currentVersion) {
                 localStorage.setItem(storageKey, currentVersion);
                 window.location.reload(window.location.href.split('?')[0] + '?v=' + currentVersion);
-                return;
             }
-
-            document.addEventListener("DOMContentLoaded", () => {
-                document.body.classList.add("fade-in");
-
-                // Sandbox Frame Viewers
-                const viewer = document.getElementById('sandbox-viewer');
-                const iframe = document.getElementById('sandbox-iframe');
-                const titleDisplay = document.getElementById('sandbox-title-display');
-                const closeBtn = document.getElementById('sandbox-close-btn');
-
-                // Manifesto Popup Viewers
-                const manifestoViewer = document.getElementById('manifesto-viewer');
-                const openManifestoBtn = document.getElementById('open-manifesto-btn');
-                const closeManifestoBtn = document.getElementById('manifesto-close-btn');
-
-                // Sandboxed App Inline Frame Engine
-                document.querySelectorAll(".bio-link-btn").forEach(btn => {
-                    btn.addEventListener("click", (e) => {
-                        const targetUrl = btn.getAttribute('data-target');
-                        const targetTitle = btn.getAttribute('data-title');
-
-                        if (targetUrl && targetUrl !== '#') {
-                            titleDisplay.innerText = targetTitle;
-                            iframe.src = targetUrl;
-                            viewer.classList.add('active');
-                        }
-                    });
-                });
-
-                if (closeBtn) {
-                    closeBtn.addEventListener("click", () => {
-                        viewer.classList.remove('active');
-                        iframe.src = "about:blank"; 
-                    });
-                }
-
-                // Manifesto Core Modal Trigger
-                if (openManifestoBtn && manifestoViewer) {
-                    openManifestoBtn.addEventListener("click", () => {
-                        manifestoViewer.classList.add('active');
-                    });
-                }
-
-                if (closeManifestoBtn) {
-                    closeManifestoBtn.addEventListener("click", () => {
-                        manifestoViewer.classList.remove('active');
-                    });
-                }
-            });
-        })();
+        });
     </script>
 </body>
 </html>
