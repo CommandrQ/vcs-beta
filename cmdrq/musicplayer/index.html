@@ -22,6 +22,7 @@
             padding: 1.5rem;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             position: relative;
+            margin: 0 auto; /* Completely blocks displacement to center the unit */
         }
 
         .mp4-chassis::before {
@@ -117,16 +118,13 @@
 </head>
 <body>
 
-    <!-- VISUAL SCENE LAYER -->
     <div class="starfield-canvas" id="canvas-starfield-engine"></div>
     <div class="comet-canvas" id="canvas-comet-engine"></div>
     <div class="cyber-grid"></div>
     <div class="ambient-flare"></div>
 
-    <!-- PERSISTENT HUB CONTAINER -->
     <main class="terminal-container" id="main-scroller">
         
-        <!-- PROFILE IDENTITY BLOCK -->
         <header class="identity-module">
             <div class="hud-ring">
                 <img src="../images/headshot.jpg" alt="Quincy Jones" class="avatar-img">
@@ -137,7 +135,6 @@
             </a>
         </header>
 
-        <!-- PLAYER HARDWARE INTERFACE -->
         <section class="mp4-chassis">
 
             <div class="mp4-screen-viewport">
@@ -159,22 +156,12 @@
 
     </main>
 
-    <!-- MASTER COCKPIT FOOTER -->
     <footer class="system-dock">
-        <div class="dock-social-row">
-            <a href="https://music.apple.com/profile/cmdrq_music" target="_blank" class="dock-btn">
-                <span>Apple Music</span>
-            </a>
-            <a href="https://www.tiktok.com/@commandr_q" target="_blank" class="dock-btn">
-                <span>TikTok</span>
-            </a>
-        </div>
         <div class="center-logo-container">
             <img src="../images/vklogo.png" alt="VK Logo" class="dock-logo">
         </div>
     </footer>
 
-    <!-- ENGINE & CELESTIAL LOGIC -->
     <script src="https://www.youtube.com/iframe_api"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
