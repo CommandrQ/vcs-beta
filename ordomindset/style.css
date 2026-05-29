@@ -1,12 +1,12 @@
-/* ==========================================
-   1. CORE VALUES & CUSTOM VARIABLE VARIABLES
-   ========================================== */
+/* ==========================================================================
+   1. CORE ARCHITECTURE, BRANDING & THEME TOKENS
+   ========================================================================== */
 :root {
     --gold: #D4AF37;
     --gold-glow: rgba(212, 175, 55, 0.35);
     --bg-black: #000000;
     --white: #ffffff;
-    --glass-bg: rgba(12, 10, 20, 0.94); /* Solidified dark fill profile protects against screen noise */
+    --glass-bg: rgba(12, 10, 20, 0.94); /* Deep backing ensures readability through fog */
     --glass-border: rgba(255, 255, 255, 0.08);
     --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -28,9 +28,9 @@ body {
     -webkit-overflow-scrolling: touch; 
 }
 
-/* ==========================================
-   2. COSMIC GRADAUNT ENVIRONMENT
-   ========================================== */
+/* ==========================================================================
+   2. COSMIC ENVIRONMENT (STARFIELD & COMETS)
+   ========================================================================== */
 #environment { 
     position: fixed; 
     inset: 0; 
@@ -64,12 +64,12 @@ body {
     100% { transform: translate(-800px, 320px) rotate(-22deg); opacity: 0; }
 }
 
-/* ==========================================
-   3. CONTENT CONTAINER ARCHITECTURE
-   ========================================== */
+/* ==========================================================================
+   3. RESPONSIVE DOCUMENT LAYOUT SYSTEM
+   ========================================================================== */
 .app-container {
     width: 90%;
-    max-width: 800px; /* Centered, clean reading column layout */
+    max-width: 800px; /* Clean, balanced horizontal centered stack */
     margin: 50px auto;
     display: flex;
     flex-direction: column;
@@ -88,9 +88,9 @@ body {
     .desktop-row { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* ==========================================
-   4. GLASS SURFACE CARD INTERFACES
-   ========================================== */
+/* ==========================================================================
+   4. GLASS SURFACE MODULE PANELS
+   ========================================================================== */
 .module-card {
     background: var(--glass-bg);
     backdrop-filter: blur(20px) saturate(130%);
@@ -101,9 +101,41 @@ body {
     box-shadow: 0 20px 45px rgba(0,0,0,0.5);
 }
 
-/* ==========================================
-   5. INTERACTIVE ENERGY FLAME MATRIX
-   ========================================== */
+/* ==========================================================================
+   5. REFINED INLINE HEADER ENGINE
+   ========================================================================== */
+.header-inline-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.brand-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.brand-header-row .logo {
+    width: 44px; /* Integrated seamlessly in line with text headings */
+    height: 44px;
+    margin: 0;
+}
+
+.logo-shimmer {
+    animation: goldEdgeShimmer 3s ease-in-out infinite alternate;
+}
+
+@keyframes goldEdgeShimmer {
+    0% { filter: drop-shadow(0 0 2px transparent); opacity: 0.85; }
+    100% { filter: drop-shadow(0 0 12px var(--gold)); opacity: 1; }
+}
+
+/* ==========================================================================
+   6. DYNAMIC ENERGY NODES & INDIVIDUAL GLOWS
+   ========================================================================== */
 .energy-matrix {
     display: grid;
     grid-template-columns: 1fr;
@@ -123,7 +155,7 @@ body {
     cursor: pointer;
     position: relative;
     transition: all 0.4s var(--ease-smooth);
-    opacity: 0.55; /* Faded initial state minimizes active distraction */
+    opacity: 0.55; /* Faded rest state encourages intentional touch */
 }
 
 .energy-node h3 {
@@ -143,38 +175,60 @@ body {
 }
 
 .node-spark {
-    width: 6px; height: 6px; background: rgba(255,255,255,0.2); border-radius: 50%;
-    margin: 0 auto 12px auto; transition: all 0.4s ease;
+    width: 6px; height: 6px; border-radius: 50%; margin: 0 auto 12px auto; transition: all 0.4s ease;
 }
 
-/* Hover Transitions */
+/* Hover Adjustments */
 .energy-node:hover {
     opacity: 0.85;
     transform: translateY(-2px);
     border-color: rgba(255,255,255,0.2);
 }
 
-/* Triggered Spark State */
-.energy-node.lit-up {
-    opacity: 1 !important;
-    border-color: var(--gold);
-    background: rgba(212, 175, 55, 0.02);
-    box-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
-}
-.energy-node.lit-up h3 { color: var(--gold); }
-.energy-node.lit-up .node-spark { background: var(--gold); box-shadow: 0 0 10px var(--gold); }
-.energy-node.lit-up .node-status { color: var(--gold); font-weight: 600; }
+/* Distinct Core Spark Overrides */
+.blue-spark { background: #3498db !important; }
+.red-spark { background: #e74c3c !important; }
+.gold-spark { background: #f1c40f !important; }
 
-/* ==========================================
-   6. TEXT CONFIGURATION SYSTEM
-   ========================================== */
-.text-center { text-align: center; p, h2, h3 { text-align: center; } }
+/* Custom Glow Fire Channels on Activation */
+#node-mind.lit-up {
+    border-color: #3498db !important;
+    box-shadow: 0 0 25px rgba(52, 152, 219, 0.2);
+    background: rgba(52, 152, 219, 0.02);
+    opacity: 1 !important;
+}
+#node-mind.lit-up h3, #node-mind.lit-up .node-status { color: #3498db !important; }
+#node-mind.lit-up .node-spark { box-shadow: 0 0 12px #3498db; }
+
+#node-body.lit-up {
+    border-color: #e74c3c !important;
+    box-shadow: 0 0 25px rgba(231, 76, 60, 0.2);
+    background: rgba(231, 76, 60, 0.02);
+    opacity: 1 !important;
+}
+#node-body.lit-up h3, #node-body.lit-up .node-status { color: #e74c3c !important; }
+#node-body.lit-up .node-spark { box-shadow: 0 0 12px #e74c3c; }
+
+#node-soul.lit-up {
+    border-color: #f1c40f !important;
+    box-shadow: 0 0 25px rgba(241, 196, 15, 0.2);
+    background: rgba(241, 196, 15, 0.02);
+    opacity: 1 !important;
+}
+#node-soul.lit-up h3, #node-soul.lit-up .node-status { color: #f1c40f !important; }
+#node-soul.lit-up .node-spark { box-shadow: 0 0 12px #f1c40f; }
+
+/* ==========================================================================
+   7. TYPOGRAPHY MATRIX
+   ========================================================================== */
+.text-center { text-align: center; }
+.text-center h2, .text-center h3, .text-center p { text-align: center; }
 
 .page-title { 
     font-size: clamp(2.4rem, 5vw, 3rem); font-weight: 900; letter-spacing: 6px; text-transform: uppercase;
     background: linear-gradient(180deg, #ffffff 0%, var(--gold) 100%);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    margin-bottom: 15px;
+    margin: 0;
 }
 
 .animate-word { animation: gold-pulse-text 4s ease-in-out infinite alternate; }
@@ -189,25 +243,27 @@ p:last-child { margin-bottom: 0; }
 
 .highlight-text { font-size: 1.15rem; color: var(--white); font-weight: 300; line-height: 1.6; max-width: 700px; margin: 0 auto; }
 
-/* ==========================================
-   7. PROMPT WINDOW INPUT BAY
-   ========================================== */
+/* ==========================================================================
+   8. FORMS, INTERACTIVE BUTTON ACCENTS & FEEDBACK
+   ========================================================================== */
 .center-form-layout { display: flex; flex-direction: column; align-items: center; }
 .centered-form-wrapper { width: 100%; max-width: 500px; margin-top: 15px; text-align: center; }
 
-textarea { 
-    width: 100%; padding: 15px; border-radius: 14px; border: 1px solid rgba(255, 255, 255, 0.12);
-    background: rgba(0, 0, 0, 0.5); color: white; font-family: inherit; font-size: 0.95rem; 
-    transition: all 0.3s ease; resize: none; text-align: center;
+label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 0.85rem; color: var(--gold); text-transform: uppercase; letter-spacing: 0.5px; }
+
+input, textarea { 
+    width: 100%; padding: 15px; border-radius: 12px; 
+    border: 1px solid rgba(255, 255, 255, 0.12); background: rgba(0, 0, 0, 0.5); color: white; 
+    font-family: inherit; font-size: 0.95rem; transition: all 0.3s ease; box-sizing: border-box;
 }
-textarea:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 15px var(--gold-glow); background: rgba(0,0,0,0.6); }
+textarea:focus, input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 15px var(--gold-glow); background: rgba(0,0,0,0.6); }
 
 .friendly-feedback {
     margin-top: 12px; font-size: 0.85rem; color: var(--gold); font-weight: 500;
     opacity: 0; transition: opacity 0.4s ease; min-height: 18px;
 }
 
-/* Centered Button Engine Elements */
+/* Centered Unified Buttons */
 .action-btn {
     width: 100%; padding: 16px 24px; border-radius: 14px; border: none; 
     background: var(--white); color: #000000; font-weight: 800; font-size: 0.85rem;
@@ -223,9 +279,42 @@ textarea:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 15px 
 .return-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); color: #fff; max-width: 320px; }
 .return-btn:hover { background: rgba(255,255,255,0.1); border-color: #fff; transform: none; box-shadow: none; }
 
-/* ==========================================
-   8. INTERACTIVE MODAL OVERLAY (CLOSABLE)
-   ========================================== */
+/* ==========================================================================
+   9. MILESTONE TOAST MILESTONE DISPATCHER
+   ========================================================================== */
+.achievement-toast {
+    position: fixed;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(10, 8, 16, 0.98);
+    border: 1px solid var(--gold);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 25px rgba(212,175,55,0.15);
+    border-radius: 16px;
+    padding: 15px 25px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    z-index: 9999;
+    width: 90%;
+    max-width: 480px;
+    transition: top 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.achievement-toast.show-toast {
+    top: 30px;
+    opacity: 1;
+}
+
+.achievement-icon { font-size: 1.8rem; }
+.achievement-text h3 { color: var(--gold); margin: 0 0 2px 0; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; text-align: left; }
+.achievement-text p { font-size: 0.85rem; color: rgba(255,255,255,0.8); margin: 0; line-height: 1.4; text-align: left; }
+
+/* ==========================================================================
+   10. INTERACTIVE CLOSABLE OVERLAY WINDOW MODAL
+   ========================================================================== */
 .modal-overlay {
     position: fixed; inset: 0; background: rgba(0, 0, 0, 0.8);
     backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
@@ -257,31 +346,83 @@ textarea:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 15px 
 }
 .btn-close:hover { background: rgba(255,255,255,0.12); color: var(--gold); }
 
-/* ==========================================
-   9. B2B UPGRADE SYSTEM BANNER
-   ========================================== */
+/* ==========================================================================
+   11. B2B TEAM CHEMISTRY PROFILE ADDITIONS
+   ========================================================================== */
 .consulting-banner { border: 1px solid rgba(212, 175, 55, 0.2); background: rgba(14,11,24,0.96); }
+
 .banner-highlight-badge {
     display: inline-block; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;
     background: rgba(212, 175, 55, 0.08); color: var(--gold); padding: 5px 14px; border-radius: 30px;
     border: 1px solid rgba(212, 175, 55, 0.15); margin-bottom: 15px;
 }
+
 .consulting-btn { background: transparent; border: 2px solid var(--gold); color: var(--gold); }
 .consulting-btn:hover { background: var(--gold); color: #000000; }
 
-/* ==========================================
-   10. GLOBAL SYSTEM IMMUTABLE FOOTER
-   ========================================== */
+.matrix-item {
+    transition: background 0.3s ease, border-color 0.3s ease;
+}
+.matrix-item:hover {
+    background: rgba(255,255,255,0.02) !important;
+    border-color: rgba(255,255,255,0.1) !important;
+}
+
+/* ==========================================================================
+   12. HEALTHY COMMUNITY & REGIONAL SUPPORT INDEXING
+   ========================================================================== */
+.resources-banner {
+    border: 1px solid rgba(255,255,255,0.06);
+    background: rgba(5, 4, 10, 0.6);
+}
+
+.resource-flex-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+@media (min-width: 768px) {
+    .resource-flex-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.resource-block {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.04);
+    border-radius: 14px;
+    padding: 20px;
+    transition: background 0.3s ease;
+}
+.resource-block:hover { background: rgba(255,255,255,0.04); }
+
+.resource-block h4 {
+    color: var(--gold); font-size: 0.9rem; text-transform: uppercase;
+    letter-spacing: 0.5px; margin-bottom: 8px; font-weight: 700;
+}
+
+.resource-block p {
+    font-size: 0.8rem; line-height: 1.5; color: rgba(255,255,255,0.75); margin: 0;
+}
+.resource-block strong { color: #ffffff; }
+
+/* ==========================================================================
+   13. IMMUTABLE SOLID SYSTEM FOOTER LAYER
+   ========================================================================== */
 .footer-pad { margin-top: auto; width: 100%; display: flex; justify-content: center; z-index: 10; }
 .system-footer { 
     padding: 45px 20px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; 
     color: #ffffff !important; text-align: center; font-weight: 600;
 }
 
-/* Mobile Adjustments */
+/* ==========================================================================
+   14. COMPACT MOBILE DISPLAY PORT PANELS OVERRIDES
+   ========================================================================== */
 @media (max-width: 767px) {
     .app-container { margin: 25px auto; width: 92%; gap: 20px; }
     .module-card { padding: 30px 20px; border-radius: 20px; }
-    .comet { display: none; }
+    .comet { display: none; } /* Drops heavy rendering computations on handheld units */
     .page-title { font-size: 2.3rem; }
+    .brand-header-row { gap: 10px; }
+    .brand-header-row .logo { width: 36px; height: 36px; }
 }
