@@ -16,8 +16,8 @@
             margin: 0;
             padding: 0;
             width: 100vw;
-            height: 100dvh; /* Strict viewport height */
-            overflow: hidden !important; /* Total scroll lock */
+            height: 100dvh; 
+            overflow: hidden !important; 
             background-color: #05020c;
             display: flex;
             flex-direction: column;
@@ -126,7 +126,8 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 60px;
+            height: 80px; /* STRICT HEIGHT LOCK: Prevents layout shift when text changes */
+            overflow: hidden; /* Clips anything that tries to push past the height */
         }
 
         .mp4-track-title {
@@ -137,7 +138,7 @@
             width: 100%;
             white-space: normal;
             word-wrap: break-word;
-            word-break: break-word; /* Forces long unbroken strings to wrap */
+            word-break: break-word;
             line-height: 1.3;
         }
 
@@ -222,8 +223,11 @@
            ========================================= */
         @media (min-width: 1024px) {
             .mp4-chassis {
-                max-width: 600px; /* Wider footprint on desktop */
+                max-width: 600px;
                 padding: 2rem;
+            }
+            .mp4-metadata-deck {
+                height: 90px; /* Scaled up fixed height for desktop */
             }
             .mp4-track-title {
                 font-size: 1.3rem;
@@ -345,7 +349,6 @@
 
         function extractMetadata() {
             try {
-                // Safely grab metadata using playerInfo to bypass deprecated console warnings
                 const videoData = player.playerInfo.videoData; 
                 if (videoData && videoData.title) {
                     liveTitle.innerText = videoData.title.toUpperCase();
@@ -375,7 +378,7 @@
 
         // Hardware Button Listeners
         playToggleBtn.addEventListener('click', () => {
-            if (!player) return; // API not ready yet
+            if (!player) return; 
 
             if (!isLoaded) {
                 player.playVideo();
