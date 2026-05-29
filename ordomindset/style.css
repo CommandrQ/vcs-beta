@@ -1,0 +1,334 @@
+/* ==========================================================================
+   STYLE TOKENS & SYSTEM VARIABLES
+   ========================================================================== */
+:root {
+    --bg-deep: #06040d;
+    --purple-muted: #9575cd;
+    --purple-glow: #b388ff;
+    --blue-muted: #4dd0e1;
+    --pink-neon: #ff4081;
+    --pink-glow: #ff0055;
+    --card-surface: rgba(14, 10, 26, 0.85);
+    --border-color: rgba(149, 117, 205, 0.3);
+    --text-primary: #f1ecfb;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* --- Force Screen System Lock (Stop Layout Breakouts) --- */
+html, body {
+    overflow: hidden !important;
+    height: 100dvh;
+    width: 100vw;
+    background-color: var(--bg-deep);
+    color: var(--text-primary);
+    font-family: 'SF Pro Display', -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+}
+
+/* ==========================================================================
+   COSMIC ENVIRONMENT LAYER
+   ========================================================================== */
+.space-field {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    background: radial-gradient(circle at center, #11092c 0%, var(--bg-deep) 100%);
+    pointer-events: none;
+}
+
+.stars {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(1.5px 1.5px at 15% 10%, #fff 100%, transparent),
+        radial-gradient(1px 1px at 25% 35%, #fff 100%, transparent),
+        radial-gradient(2px 2px at 45% 20%, var(--blue-muted) 100%, transparent),
+        radial-gradient(1px 1px at 55% 65%, #fff 100%, transparent),
+        radial-gradient(1.5px 1.5px at 70% 45%, var(--purple-muted) 100%, transparent),
+        radial-gradient(1px 1px at 85% 15%, #fff 100%, transparent),
+        radial-gradient(2.5px 2.5px at 92% 75%, #fff 100%, transparent),
+        radial-gradient(1px 1px at 35% 85%, var(--purple-muted) 100%, transparent),
+        radial-gradient(1.5px 1.5px at 62% 90%, var(--blue-muted) 100%, transparent);
+    background-size: 400px 400px;
+    animation: driftStars 90s linear infinite;
+}
+
+@keyframes driftStars {
+    from { background-position: 0 0; }
+    to { background-position: 400px 400px; }
+}
+
+.ambient-glow {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 80vw;
+    height: 80vh;
+    background: radial-gradient(circle, rgba(149, 117, 205, 0.08) 0%, rgba(77, 208, 225, 0.03) 50%, transparent 100%);
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* ==========================================================================
+   HUB CONTAINER PROFILE
+   ========================================================================== */
+.hub-container {
+    height: 100dvh;
+    max-height: 100dvh;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 92%; 
+    max-width: 500px;
+    margin: 0 auto;
+    transition: max-width 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    position: relative;
+    z-index: 3;
+}
+
+@media (min-width: 901px) {
+    .hub-container { 
+        max-width: 1100px !important; 
+    }
+}
+
+/* ==========================================================================
+   IDENTITY HEADER ARRAY
+   ========================================================================== */
+.central-header {
+    width: 100%;
+    padding: 10px 0 15px 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.monogram-outer {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 2px solid var(--blue-muted);
+    box-shadow: 0 0 15px rgba(77, 208, 225, 0.3);
+    margin-bottom: 12px;
+    padding: 3px;
+}
+
+.monogram-inner {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: rgba(14, 10, 26, 0.9);
+    border: 1px dashed var(--purple-muted);
+    font-size: 2rem;
+    font-weight: 900;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--pink-neon);
+    text-shadow: 0 0 8px var(--pink-glow);
+}
+
+.shimmer-title {
+    font-size: 1.6rem;
+    font-weight: 900;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    text-align: center;
+    animation: lightPurpleShimmer 3s infinite ease-in-out;
+}
+
+@keyframes lightPurpleShimmer {
+    0%, 100% { text-shadow: 0 0 8px rgba(77, 208, 225, 0.3); color: var(--blue-muted); }
+    50% { text-shadow: 0 0 18px var(--purple-glow), 0 0 28px var(--purple-glow); color: #e1d5ff; }
+}
+
+/* ==========================================================================
+   PULSING EDGE FRAME (THE HUB CARD ENGINE)
+   ========================================================================== */
+.hub-card {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    max-height: 78dvh;
+    padding: 24px;
+    margin-bottom: 0;
+    overflow: hidden;
+    background: var(--card-surface);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    animation: borderGlowPulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes borderGlowPulse {
+    0%, 100% {
+        border-color: rgba(255, 255, 255, 0.15);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+    50% {
+        border-color: var(--blue-muted);
+        box-shadow: 0 20px 50px rgba(77, 208, 225, 0.15), 0 0 20px rgba(77, 208, 225, 0.2);
+    }
+}
+
+.core-statement-banner {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 25px;
+    flex-shrink: 0;
+}
+
+.directive-tag {
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: var(--blue-muted);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.directive-text {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #ffffff;
+}
+
+/* ==========================================================================
+   INDEPENDENT SCROLLER SYSTEM BAY
+   ========================================================================== */
+.scroller-bay {
+    overflow-y: auto;
+    flex-grow: 1;
+    padding-right: 6px;
+    margin-bottom: 20px;
+    -webkit-overflow-scrolling: touch;
+}
+
+.scroller-bay::-webkit-scrollbar { width: 4px; }
+.scroller-bay::-webkit-scrollbar-track { background: transparent; }
+.scroller-bay::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 10px; }
+
+/* Workspace Matrix Configurations */
+.workspace-grid {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 24px;
+    width: 100%;
+}
+
+.workspace-column {
+    flex: 1;
+}
+
+.column-header {
+    margin-bottom: 20px;
+    border-left: 3px solid var(--blue-muted);
+    padding-left: 10px;
+}
+
+.column-num {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--pink-neon);
+    display: block;
+}
+
+.column-header h2 {
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    margin-top: 1px;
+}
+
+/* ==========================================================================
+   ACTION CARDS OVERRIDES (PROTECTED FROM LINKS RESET)
+   ========================================================================== */
+.action-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    display: block;
+    text-decoration: none !important;
+    color: var(--text-primary) !important;
+    transition: all 0.2s ease;
+    text-align: left;
+}
+
+.action-card:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: var(--pink-neon);
+}
+
+.action-card h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+}
+
+.action-card p {
+    font-size: 0.8rem;
+    line-height: 1.4;
+    color: #ffffff;
+}
+
+/* ==========================================================================
+   FIXED FOOTER CHANNEL DOCK
+   ========================================================================== */
+.channel-dock {
+    flex-shrink: 0;
+    width: 100%;
+    padding-top: 15px;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+}
+
+.dock-link {
+    color: #ffffff !important;
+    text-decoration: none !important;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.dock-link:hover {
+    color: var(--pink-neon) !important;
+    text-shadow: 0 0 8px var(--pink-glow);
+}
+
+/* ==========================================================================
+   RESPONSIVE LAYOUT CONVERSIONS
+   ========================================================================== */
+@media (max-width: 900px) {
+    .workspace-grid {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .workspace-column {
+        width: 100%;
+        margin-bottom: 25px;
+    }
+}
