@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>COMMANDER Q // CREATIVE ENGINE</title>
-    <link rel="stylesheet" href="style.css?v=4">
+    <title>QUINCY JONES</title>
+    <link rel="stylesheet" href="../style.css?v=5">
     <style>
-        /* --- DYNAMIC GLASS CANVAS SYSTEM --- */
+        /* --- DYNAMIC CANVAS SYSTEM --- */
         html, body {
             overflow: hidden !important;
             height: 100dvh;
             width: 100vw;
             margin: 0;
             padding: 0;
+            background: #020108;
         }
 
         body {
@@ -21,10 +22,31 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: #05040a;
         }
         body.fade-in { opacity: 1; }
         body.fade-out { opacity: 0; }
+
+        /* FIXED STARFIELD BACKGROUND SPACE */
+        #environment { 
+            position: fixed; 
+            inset: 0; 
+            z-index: -1; 
+            pointer-events: none; 
+            overflow: hidden;
+            background: #020108;
+        }
+        .starfield {
+            position: absolute; width: 200vw; height: 200vh; top: -50%; left: -50%;
+            background-image: 
+                radial-gradient(1.5px 1.5px at 10% 10%, #fff, transparent),
+                radial-gradient(2px 2px at 30% 40%, #D4AF37, transparent),
+                radial-gradient(1px 1px at 80% 20%, #fff, transparent),
+                radial-gradient(2.5px 2.5px at 50% 80%, #D4AF37, transparent);
+            background-size: 350px 350px;
+            animation: stellar-drift 400s linear infinite;
+            opacity: 0.6;
+        }
+        @keyframes stellar-drift { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         
         .brand-logo-container {
             width: 65px;
@@ -40,46 +62,74 @@
             object-fit: contain;
         }
 
-        /* --- CONTEMPORARY ARCHITECTURE BLENDING VISUAL FIELDS --- */
+        /* CENTERED PROFILE HEADSHOT */
+        .headshot-container {
+            width: 110px;
+            height: 110px;
+            margin: 0 auto 15px auto;
+            border-radius: 50%;
+            border: 2px solid #D4AF37;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+        }
+        .headshot-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* --- CONTAINER ARCHITECTURE --- */
+        .app-container {
+            width: 100%;
+            height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+            box-sizing: border-box;
+        }
+
         .hub-card {
             display: flex;
             flex-direction: column;
             width: 92%;
-            max-width: 540px; /* INCREASED TO FIT TEXT BETTER ON DESKTOP */
-            height: auto;
-            max-height: 85dvh; 
-            margin: 0 auto;
-            background: rgba(10, 8, 18, 0.75);
+            max-width: 540px;
+            height: 78dvh; /* LOCKED LAYOUT WINDOW FOR TRAPPED SCROLLER BOUNDS */
+            background: rgba(10, 8, 18, 0.80);
             backdrop-filter: blur(30px) saturate(160%);
             -webkit-backdrop-filter: blur(30px) saturate(160%);
             border: 1px solid rgba(212, 175, 55, 0.15);
             border-radius: 28px;
             padding: 24px;
             box-shadow: 0 30px 60px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255,255,255,0.1);
-            overflow: hidden;
             box-sizing: border-box;
         }
 
-        /* FIX: Ensure scrolling works on all mobile devices by isolating layout bounds */
+        /* CRITICAL MOBILE SCROLL FIX: Force absolute touch pooling inside container bounds */
         .scroller-bay {
-            overflow-y: auto !important;
-            touch-action: pan-y !important;
+            flex: 1 1 auto;
+            overflow-y: scroll !important;
             -webkit-overflow-scrolling: touch !important;
-            flex-grow: 1;
-            padding-right: 8px;
-            margin-bottom: 10px;
+            touch-action: pan-y !important;
+            padding-right: 4px;
+            margin-bottom: 5px;
         }
         .scroller-bay::-webkit-scrollbar { width: 4px; }
         .scroller-bay::-webkit-scrollbar-track { background: transparent; }
         .scroller-bay::-webkit-scrollbar-thumb { background: rgba(214, 175, 55, 0.3); border-radius: 10px; }
 
-        /* --- INLINE LINKS AND INTERFACE TYPOGRAPHY --- */
+        .core-statement-banner {
+            flex: 0 0 auto; /* Prevent sizing crush */
+        }
+
+        /* --- TEXT AND NAVIGATION --- */
         .manifesto-trigger {
             color: #D4AF37;
             text-decoration: underline;
             cursor: pointer;
             font-weight: 700;
-            transition: color 0.2s ease;
         }
         .manifesto-trigger:hover {
             color: #ffffff;
@@ -87,11 +137,11 @@
         }
 
         .directive-text {
-            font-size: clamp(0.9rem, 2.5vw, 1rem); /* MEDIUM AND LEGIBLE */
-            line-height: 1.6;
+            font-size: clamp(0.9rem, 2.5vw, 0.98rem);
+            line-height: 1.55;
         }
 
-        /* --- CONTENT MATRIX CELLS (ASYMMETRIC GRID COEXISTENCE) --- */
+        /* --- RECONFIGURED ASYMMETRIC LINKS --- */
         .bio-link-btn {
             display: flex;
             flex-direction: column;
@@ -101,27 +151,15 @@
             padding: 16px;
             margin-bottom: 12px;
             text-decoration: none;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.25s ease;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-        .bio-link-btn::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.04), transparent);
-            transform: translateX(-100%);
-            transition: transform 0.5s ease;
-        }
-        .bio-link-btn:hover::before {
-            transform: translateX(100%);
+            box-sizing: border-box;
         }
         .bio-link-btn:last-of-type { margin-bottom: 0; }
         .bio-link-btn:hover {
             background: rgba(255, 255, 255, 0.04);
             border-color: rgba(212, 175, 55, 0.4);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3), 0 0 15px rgba(212, 175, 55, 0.1);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
             transform: translateY(-2px);
         }
 
@@ -154,11 +192,11 @@
             color: rgba(255, 255, 255, 0.65);
         }
 
-        /* --- POPUP MODAL ARCHITECTURE (SANDBOX & MANIFESTO) --- */
+        /* --- MODAL VIEWERS --- */
         .sandbox-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(3, 2, 7, 0.95);
+            background: rgba(3, 2, 7, 0.96);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             z-index: 1000;
@@ -166,7 +204,7 @@
             flex-direction: column;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: opacity 0.3s ease;
         }
         .sandbox-overlay.active {
             opacity: 1;
@@ -178,7 +216,6 @@
             background: #06040d;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             display: flex;
-            justify-content: space-between;
             align-items: center;
             padding: 0 20px;
             flex-shrink: 0;
@@ -191,33 +228,27 @@
             text-transform: uppercase;
         }
 
-        /* STYLED NAV FOOTER TO RETURN TO HUB CARD FROM FULLSCREEN VIEWERS */
         .sandbox-nav-footer {
-            height: 60px;
+            height: 65px;
             background: #06040d;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
             display: flex;
             justify-content: center;
             align-items: center;
             flex-shrink: 0;
+            padding-bottom: env(safe-area-inset-bottom);
         }
         .return-hub-btn {
             background: transparent;
             border: 1px solid rgba(214, 175, 55, 0.4);
             color: #D4AF37;
-            padding: 8px 24px;
+            padding: 10px 28px;
             border-radius: 20px;
             font-weight: 700;
             font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        .return-hub-btn:hover {
-            background: #D4AF37;
-            color: #05040a;
-            box-shadow: 0 0 15px var(--gold-glow);
         }
 
         .sandbox-frame {
@@ -228,7 +259,6 @@
             flex-grow: 1;
         }
 
-        /* --- MANIFESTO LAYOUT ENGINE --- */
         .manifesto-body {
             flex-grow: 1;
             overflow-y: auto !important;
@@ -237,13 +267,13 @@
             max-width: 600px;
             margin: 0 auto;
             color: rgba(255, 255, 255, 0.9);
-            font-size: clamp(0.95rem, 2.5vw, 1.05rem); /* MEDIUM AND LEGIBLE */
-            line-height: 1.7;
+            font-size: 1rem;
+            line-height: 1.65;
             box-sizing: border-box;
         }
         .manifesto-body h2 {
             color: #D4AF37;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             text-transform: uppercase;
             letter-spacing: 2px;
             margin-top: 0;
@@ -253,10 +283,15 @@
         }
         .manifesto-body p { margin-bottom: 15px; }
         .manifesto-body strong { color: #ffffff; font-weight: 700; }
+        
+        .channel-dock {
+            flex-shrink: 0;
+        }
     </style>
 </head>
 <body>
 
+    <!-- REFIXED ENVIRONMENT LAYER CHASSIS -->
     <div id="environment"><div class="starfield"></div></div>
     <div class="ambient-glow"></div>
 
@@ -267,14 +302,19 @@
                 <img src="../images/vklogo.png" alt="Vanguard Knights Logo" class="brand-logo-img">
             </div>
             <h1 class="shimmer-title">Commander Q</h1>
+            
+            <!-- CENTERED HEADSHOT TARGET HOUSING -->
+            <div class="headshot-container">
+                <img src="../images/headshot.jpg" alt="Quincy Jones" class="headshot-img">
+            </div>
         </header>
 
         <main class="hub-card">
 
             <div class="core-statement-banner">
-                <p class="directive-tag">Creative Studio Framework // Quincy Jones</p>
+                <p class="directive-tag">Chief Vision Officer // Quincy Jones</p>
                 <p class="directive-text">
-                    Hey, I'm Quincy. Welcome to my creative engine. I focus on building tools, sharing experiences, and designing new ways for people in our communities to thrive together. Everything I do connects right back to my vision through <span class="manifesto-trigger" id="open-manifesto-btn">Project V</span>—an experiment to see if we can unite local voices to make a real, lasting impact on our everyday quality of life. Explore the sectors below to see how these different worlds collide.
+                    Hey, I'm Quincy. Welcome to my creative dashboard. I build custom web tools, share raw human experiences, and design frameworks to help our communities work closer together. Everything I make loops directly back to my blueprint through <span class="manifesto-trigger" id="open-manifesto-btn">Project V</span>—a real-world experiment to see if we can pool local voices together to fix real gaps in our daily quality of life. Check out my active workspaces below.
                 </p>
             </div>
 
@@ -283,27 +323,27 @@
                 <!-- EMPOWER SECTOR CELL -->
                 <div class="bio-link-btn" data-target="about/" data-title="About Me Platform">
                     <h3>About Me <span class="category-tag tag-empower">Empower</span></h3>
-                    <p>My background, military service values, and personal journey.</p>
+                    <p>My core background, military service values, and personal journey.</p>
                 </div>
 
                 <!-- EDUCATE SECTOR CELL -->
                 <div class="bio-link-btn" data-target="../knights/index.html" data-title="Active Projects Registry">
                     <h3>Active Projects <span class="category-tag tag-educate">Educate</span></h3>
-                    <p>Our collaborative dashboard hosting active community reporting tools.</p>
+                    <p>Our collaborative hub layout hosting custom community reporting tools.</p>
                 </div>
-                <div class="bio-link-btn" data-target="ordo/" data-title="Ordo Mindset Platform">
+                <div class="bio-link-btn" data-target="ordo/" data-title="Ordo Platform">
                     <h3>Ordo <span class="category-tag tag-educate">Educate</span></h3>
-                    <p>Leadership modules and structured inquiry frameworks for teams.</p>
+                    <p>Brutal self-questioning frameworks and performance philosophy for teams.</p>
                 </div>
 
                 <!-- ELEVATE SECTOR LINKS -->
                 <div class="bio-link-btn" data-target="musicplayer/" data-title="Audio Console Architecture">
                     <h3>Music Player <span class="category-tag tag-elevate">Elevate</span></h3>
-                    <p>Interactive dashboard playing custom track mashups and remixes.</p>
+                    <p>Custom audio mashups, ambient design loops, and production remixes.</p>
                 </div>
                 <div class="bio-link-btn" data-target="dreamscapedrift/" data-title="Dreamscape Telemetry Interface">
                     <h3>Dreamscape Drift <span class="category-tag tag-elevate">Elevate</span></h3>
-                    <p>Physics spec sheets and tire tuning profiles for Forza logs.</p>
+                    <p>Physics spec sheets and telemetry logs for Forza track builds.</p>
                 </div>
 
             </div>
@@ -334,12 +374,12 @@
         </header>
         <div class="manifesto-body">
             <h2>The Project V Manifesto</h2>
-            <p>Project V started in the most honest way possible: <strong>I sat down and asked my kids and my family what their everyday experiences were really like.</strong> What they told me was painful to hear. It laid bare the quiet struggles, daily hurdles, and structural gaps that everyday Americans face just trying to learn, grow, and work in their own towns.</p>
-            <p>We realized that when a system collapses, traditional lines leave neighbors isolated. Project V is a direct, active experiment to see if we can use clean, anonymous digital tools to unite the real voices within a community. By dropping the standard red tape, we can map out the actual temperature of what people are dealing with.</p>
-            <p><strong>The Objective:</strong> Turn shared data into undeniable visibility so local leaders, business owners, and citizens can make a measurable impact on our collective quality of life. We are starting by tackling the simple, daily challenges of everyday citizens—because a community can only move forward when its people are finally heard.</p>
+            <p>Project V started in the most honest way possible: <strong>I sat down and asked my kids and my family what their everyday lives were really like.</strong> What they told me was painful to hear. It made me realize how many daily struggles and quiet brick walls people hit just trying to get a decent education and build a life right here in their own towns.</p>
+            <p>When the structure around us breaks down, people end up completely cut off from each other. Project V is a straight-to-the-point experiment. We are using clean, anonymous digital tools to combine the true voices of a community. By cutting out the usual political red tape, we can map out exactly what people are feeling and experiencing in real time.</p>
+            <p><strong>The Goal:</strong> Take that data and put it directly in front of local leaders, business owners, and neighbors so we can make a clear, measurable change in how we live. We are starting with the everyday challenges of normal citizens—because a town can only move forward when its people are finally heard.</p>
             <hr style="border:0; border-top:1px dashed rgba(212,175,55,0.2); margin:25px 0;">
-            <h2>The Next Frontier</h2>
-            <p>This data framework is laying the groundwork for something much bigger. Soon, we will be launching an interactive, community-driven book project. Readers will work directly alongside the <strong>Vanguard Knights</strong> to track down and confront a massive threat—a force with the terrifying ability to manipulate timelines and strip away human quality of life forever. Stay tuned. The coordinates are currently printing.</p>
+            <h2>What We Are Building Next</h2>
+            <p>This tracking infrastructure is laying the ground rules for something much larger. Soon, we are launching an interactive, community-driven book project. Readers will team up directly with the <strong>Vanguard Knights</strong> to hunt down a massive threat—a force that actively changes timelines to strip away human quality of life forever. Stay tuned. The coordinates are printing now.</p>
         </div>
         <footer class="sandbox-nav-footer">
             <button class="return-hub-btn" id="manifesto-close-btn">Return to Hub</button>
@@ -349,7 +389,7 @@
     <script>
         /* --- PORTFOLIO ACCESS AND INLINE VIEW ENGINE --- */
         (function() {
-            const currentVersion = "4"; 
+            const currentVersion = "5"; 
             const storageKey = "hub_version_check";
             const lastChecked = localStorage.getItem(storageKey);
 
