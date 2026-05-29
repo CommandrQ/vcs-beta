@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Team Chemistry Consultation</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Load the official Supabase engine library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -117,8 +119,9 @@
         </footer>
     </div>
 
-    <!-- RESPONSIVE DECORATIVE SCRIPT RUNNERS -->
+    <!-- DATABASE DESPATCH AND LOGIC SYSTEM scripts -->
     <script>
+        /* --- BACKGROUND ENVIRONMENT EFFECTS --- */
         function spawnComet() {
             const container = document.getElementById('environment');
             if (!container) return;
@@ -134,15 +137,53 @@
 
         document.getElementById('current-year').innerText = new Date().getFullYear();
 
-        function handleConsultSubmit(event) {
+        /* --- LIVE SUPABASE INTEGRATION PIPELINE --- */
+        const SB_URL = 'https://dvyjupytbwbrcoyouxpf.supabase.co';
+        const SB_KEY = 'sb_publishable_wjgbPekKmodd5mSDXIeUeg_Wq73GzOk'; 
+        const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
+
+        async function handleConsultSubmit(event) {
             event.preventDefault();
+            
+            const submitBtn = event.target.querySelector('button[type="submit"]');
             const feedback = document.getElementById('consult-feedback');
             
-            feedback.innerText = "Thank you. Your message has been safely committed. We will read your notes carefully and reach out soon.";
-            feedback.style.opacity = "1";
-            
-            document.getElementById('consult-form').reset();
-            setTimeout(() => { feedback.style.opacity = "0"; }, 7000);
+            const organizationName = document.getElementById('consult-name').value.trim();
+            const contactEmail = document.getElementById('consult-email').value.trim();
+            const employeeChallenges = document.getElementById('consult-notes').value.trim();
+
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Sending...";
+            feedback.style.opacity = "0";
+
+            try {
+                // Post records directly into your newly structured cloud database log
+                const { error } = await supabaseClient
+                    .from('businessqueue')
+                    .insert([
+                        {
+                            organization_name: organizationName,
+                            contact_email: contactEmail,
+                            employee_challenges: employeeChallenges
+                        }
+                    ]);
+
+                if (error) throw error;
+
+                // Fire humanlike encouragement display
+                feedback.innerText = "Thank you. Your message has been safely committed. We will read your notes carefully and reach out soon.";
+                feedback.className = "friendly-feedback"; 
+                feedback.style.opacity = "1";
+                event.target.reset();
+
+            } catch (err) {
+                console.error("Transmission error logged:", err);
+                feedback.innerText = "We couldn't connect to our system right now. Please check your network and try again.";
+                feedback.style.opacity = "1";
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = "Request a Sit-Down";
+            }
         }
     </script>
 </body>
